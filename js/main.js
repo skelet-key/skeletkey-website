@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
       links.classList.toggle("open");
     });
 
-    // Close menu when a link is clicked
     links.querySelectorAll("a").forEach((a) => {
       a.addEventListener("click", () => {
         links.classList.remove("open");
@@ -25,4 +24,24 @@ document.addEventListener("DOMContentLoaded", () => {
       nav.style.background = "rgba(11, 15, 25, 0.85)";
     }
   });
+
+  // Order form basic feedback
+  const form = document.getElementById("orderForm");
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      // If the Formspree ID hasn't been replaced yet, fall back to mailto
+      if (form.action.includes("YOUR_FORM_ID")) {
+        e.preventDefault();
+        const name = form.name.value;
+        const email = form.email.value;
+        const interest = form.interest.value;
+        const message = form.message.value || "";
+        const subject = encodeURIComponent("SkeletKey Reservation Request");
+        const body = encodeURIComponent(
+          `Name: ${name}\nEmail: ${email}\nInterest: ${interest}\n\nMessage:\n${message}`
+        );
+        window.location.href = `mailto:orders@skeletkey.com?subject=${subject}&body=${body}`;
+      }
+    });
+  }
 });

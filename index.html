@@ -219,7 +219,40 @@
     <p>
       Join the first wave of SkeletKey owners. Reserve your place in the production queue and be among the first to ride a true folding, long-range electric motorcycle.
     </p>
-    <a href="mailto:orders@skeletkey.com?subject=Reservation%20Request" class="btn btn-primary">Request a Reservation</a>
+
+    <form class="order-form" id="orderForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required placeholder="Your name" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="you@email.com" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Phone (optional)</label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" />
+        </div>
+        <div class="form-group">
+          <label for="interest">Interest</label>
+          <select id="interest" name="interest">
+            <option value="reservation">Reserve a production slot</option>
+            <option value="deposit">Ready to place a deposit</option>
+            <option value="info">Just want more information</option>
+            <option value="fleet">Fleet / wholesale inquiry</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="message">Message (optional)</label>
+        <textarea id="message" name="message" rows="3" placeholder="Anything you'd like us to know..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">Submit Reservation Request</button>
+      <p class="form-note">No payment required at this stage. We’ll follow up within 24–48 hours.</p>
+    </form>
   </section>
 
   <!-- FOOTER -->
