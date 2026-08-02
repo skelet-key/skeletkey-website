@@ -383,6 +383,18 @@ a {
   letter-spacing: 0.05em;
 }
 
+.compare-table th.brand-header {
+  text-transform: none;
+  letter-spacing: -0.02em;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.compare-table th.brand-header span {
+  color: var(--accent);
+}
+
 .compare-table td:first-child {
   color: var(--text-secondary);
 }
