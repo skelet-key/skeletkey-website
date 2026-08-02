@@ -347,6 +347,13 @@ a {
   margin-top: 0.2rem;
 }
 
+.weight-breakdown {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0 0 1.5rem;
+  line-height: 1.5;
+}
+
 /* ========== SPECS / COMPARISON ========== */
 .specs {
   background: var(--surface);
