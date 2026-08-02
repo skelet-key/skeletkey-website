@@ -6,6 +6,8 @@
   --border: #2A3142;
   --accent: #7A8494;
   --accent-hover: #9AA3B0;
+  --brake-red: #C41E3A;
+  --brake-red-hover: #E03050;
   --text: #F8FAFC;
   --text-secondary: #D8DEE9;
   --text-muted: #A8B4C4;
@@ -90,8 +92,8 @@ a {
 }
 
 .nav-cta {
-  background: var(--accent);
-  color: #0B0F19 !important;
+  background: var(--brake-red);
+  color: #F8FAFC !important;
   padding: 0.55rem 1.25rem;
   border-radius: 999px;
   font-weight: 600;
@@ -100,7 +102,7 @@ a {
 }
 
 .nav-cta:hover {
-  background: var(--accent-hover);
+  background: var(--brake-red-hover);
   transform: translateY(-1px);
 }
 
@@ -132,8 +134,8 @@ a {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
-  border: 1px solid var(--accent);
+  color: var(--brake-red);
+  border: 1px solid var(--brake-red);
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
   margin-bottom: 1.75rem;
@@ -181,12 +183,12 @@ a {
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: #0B0F19;
+  background: var(--brake-red);
+  color: #F8FAFC;
 }
 
 .btn-primary:hover {
-  background: var(--accent-hover);
+  background: var(--brake-red-hover);
   transform: translateY(-2px);
 }
 
@@ -473,7 +475,7 @@ a {
   display: inline-block;
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--brake-red);
   margin-bottom: 0.5rem;
 }
 
