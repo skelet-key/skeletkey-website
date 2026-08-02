@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const body = encodeURIComponent(
           `Name: ${name}\nEmail: ${email}\nInterest: ${interest}\n\nMessage:\n${message}`
         );
-        window.location.href = `mailto:orders@skeletkey.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:nate@skeletkey.com?subject=${subject}&body=${body}`;
       }
     });
   }
