@@ -302,12 +302,20 @@ a {
   overflow: hidden;
 }
 
+.bike-visual picture,
+.battery-visual picture {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .bike-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   padding: 0;
+  display: block;
 }
 
 .bike-copy h2 {
