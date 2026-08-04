@@ -1031,3 +1031,41 @@ p strong,
   transform: translateX(-50%) translateY(0);
   opacity: 1;
 }
+
+/* ========== MAINTAINABILITY ========== */
+.maintain-section {
+  background: var(--bg);
+}
+
+.maintain-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.maintain-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem 1.4rem;
+}
+
+.maintain-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.maintain-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+  .maintain-grid {
+    grid-template-columns: 1fr;
+  }
+}
