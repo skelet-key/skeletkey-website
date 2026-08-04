@@ -981,3 +981,16 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+/* Highlighted competitive claims */
+p strong,
+.section-lead strong,
+.hero-sub strong,
+.diff-card strong,
+.fold-card strong,
+.phone-card strong,
+.own-card strong,
+.battery-copy strong {
+  color: var(--text);
+  font-weight: 700;
+}
