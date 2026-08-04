@@ -995,3 +995,39 @@ p strong,
   color: var(--text);
   font-weight: 700;
 }
+
+/* Toast notification after form submit */
+.sk-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  z-index: 9999;
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  max-width: min(420px, calc(100vw - 2rem));
+  text-align: center;
+  pointer-events: none;
+}
+
+.sk-toast-success {
+  border-color: #3d8b5f;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(61, 139, 95, 0.3);
+}
+
+.sk-toast-error {
+  border-color: var(--brake-red);
+}
+
+.sk-toast-show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
