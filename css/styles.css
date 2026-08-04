@@ -943,3 +943,41 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+/* ========== SMART DISPLAY / PHONE ========== */
+.phone-section {
+  background: var(--surface);
+}
+
+.phone-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.phone-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem 1.4rem;
+}
+
+.phone-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.phone-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+  .phone-grid {
+    grid-template-columns: 1fr;
+  }
+}
