@@ -725,10 +725,11 @@ a {
 }
 
 .battery-visual .bike-image {
-  padding: 0;
-  object-fit: cover;
+  padding: 0.75rem;
+  object-fit: contain;
   width: 100%;
   aspect-ratio: 6/5;
+  background: #0a0a0f;
 }
 
 .battery-caption {
