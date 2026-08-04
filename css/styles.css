@@ -896,3 +896,50 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+/* ========== HISTORY / ITERATIONS ========== */
+.history-section {
+  background: var(--bg);
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+  margin-top: 2rem;
+}
+
+.history-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.history-img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  display: block;
+  background: #0a0a0f;
+}
+
+.history-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.1rem 1.25rem 0.4rem;
+  color: var(--text);
+}
+
+.history-card p {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0 1.25rem 1.25rem;
+}
+
+@media (max-width: 700px) {
+  .history-grid {
+    grid-template-columns: 1fr;
+  }
+}
