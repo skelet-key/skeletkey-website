@@ -25,22 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Order form basic feedback
+  // Order form — submits via FormSubmit to nateclaudemcdowel@gmail.com
   const form = document.getElementById("orderForm");
   if (form) {
-    form.addEventListener("submit", (e) => {
-      // If the Formspree ID hasn't been replaced yet, fall back to mailto
-      if (form.action.includes("YOUR_FORM_ID")) {
-        e.preventDefault();
-        const name = form.name.value;
-        const email = form.email.value;
-        const interest = form.interest.value;
-        const message = form.message.value || "";
-        const subject = encodeURIComponent("SkeletKey Reservation Request");
-        const body = encodeURIComponent(
-          `Name: ${name}\nEmail: ${email}\nInterest: ${interest}\n\nMessage:\n${message}`
-        );
-        window.location.href = `mailto:nate@skeletkey.com?subject=${subject}&body=${body}`;
+    form.addEventListener("submit", () => {
+      const btn = form.querySelector(".form-submit");
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Sending…";
       }
     });
   }
