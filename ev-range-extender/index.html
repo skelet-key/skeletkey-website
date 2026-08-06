@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engineering Master Plan — 40 kWh NMC+ Auxiliary Range Extender</title>
+  <meta name="description" content="Production package for a 40 kWh NMC+ auxiliary range extender: architecture, firmware, safety, ROI, and procurement for truck-bed integration." />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="topbar">
+    <a href="#" class="brand">Range<span>Extender</span> · 40 kWh NMC+</a>
+    <button class="toc-toggle" id="tocToggle" type="button">Contents</button>
+    <div class="topbar-links">
+      <a href="#1-system-engineering-specifications">Specs</a>
+      <a href="#3-financial-projections--hardware-cost-sheet">Budget</a>
+      <a href="#16-step-by-step-manual-isolation-safety-protocol">Safety</a>
+      <a href="#18-procurement-directory">Procurement</a>
+    </div>
+  </div>
+  <div class="layout">
+    <aside class="toc-side" id="tocSide">
+      <h2>Contents</h2>
+
+<ul>
+<li><a
+href="#engineering-master-plan-40-kwh-nmc-auxiliary-range-extender-production-package"
+id="toc-engineering-master-plan-40-kwh-nmc-auxiliary-range-extender-production-package">Engineering
+Master Plan: 40 kWh NMC+ Auxiliary Range Extender (Production
+Package)</a>
+<ul>
+<li><a href="#1-system-engineering-specifications"
+id="toc-1-system-engineering-specifications">1. System Engineering
+Specifications</a></li>
+<li><a href="#2-system-architecture-diagram"
+id="toc-2-system-architecture-diagram">2. System Architecture
+Diagram</a></li>
+<li><a href="#3-financial-projections--hardware-cost-sheet"
+id="toc-3-financial-projections--hardware-cost-sheet">3. Financial
+Projections &amp; Hardware Cost Sheet</a></li>
+<li><a href="#4-structural-hardware--mounting-blueprint"
+id="toc-4-structural-hardware--mounting-blueprint">4. Structural
+Hardware &amp; Mounting Blueprint</a></li>
+<li><a href="#5-hardware-assembly-and-physical-layout-instructions"
+id="toc-5-hardware-assembly-and-physical-layout-instructions">5.
+Hardware Assembly and Physical Layout Instructions</a></li>
+<li><a href="#6-high-frequency-grounding--vibration-dampening"
+id="toc-6-high-frequency-grounding--vibration-dampening">6.
+High-Frequency Grounding &amp; Vibration Dampening</a></li>
+<li><a href="#7-pre-charge-circuit-boot-up-sequence--logic"
+id="toc-7-pre-charge-circuit-boot-up-sequence--logic">7. Pre-Charge
+Circuit Boot-Up Sequence &amp; Logic</a></li>
+<li><a href="#8-intercell-balancing--deviation-framework"
+id="toc-8-intercell-balancing--deviation-framework">8. Intercell
+Balancing &amp; Deviation Framework</a></li>
+<li><a href="#9-master-gateway-c-firmware-script"
+id="toc-9-master-gateway-c-firmware-script">9. Master Gateway C++
+Firmware Script</a></li>
+<li><a href="#10-real-world-driving-range-impact-matrix"
+id="toc-10-real-world-driving-range-impact-matrix">10. Real-World
+Driving Range Impact Matrix</a></li>
+<li><a
+href="#11-passive-solar-cost-savings--roi-analysis-full-annual-cycle"
+id="toc-11-passive-solar-cost-savings--roi-analysis-full-annual-cycle">11.
+Passive Solar Cost Savings &amp; ROI Analysis (Full Annual
+Cycle)</a></li>
+<li><a
+href="#12-bidirectional-home-integration-time-of-use-financial-optimization"
+id="toc-12-bidirectional-home-integration-time-of-use-financial-optimization">12.
+Bidirectional Home Integration (Time-of-Use Financial
+Optimization)</a></li>
+<li><a
+href="#by-factoring-in-automated-vehicle-to-home-load-matching-the-combined-generation-capability-recovers-your-entire-capital-hardware-investment-within-35-to-45-years-across-a-conservative-10-year-lifespan-layout-the-system-secures-3109800-in-cumulative-utility-value-converting-your-vehicles-cargo-bed-extender-into-a-high-yielding-stationary-energy-grid-asset"
+id="toc-by-factoring-in-automated-vehicle-to-home-load-matching-the-combined-generation-capability-recovers-your-entire-capital-hardware-investment-within-35-to-45-years-across-a-conservative-10-year-lifespan-layout-the-system-secures-3109800-in-cumulative-utility-value-converting-your-vehicles-cargo-bed-extender-into-a-high-yielding-stationary-energy-grid-asset">By
+factoring in automated vehicle-to-home load matching, the combined
+generation capability recovers your entire capital hardware investment
+within 3.5 to 4.5 years. Across a conservative 10-year lifespan layout,
+the system secures $31,098.00 in cumulative utility value, converting
+your vehicle's cargo bed extender into a high-yielding stationary energy
+grid asset.</a></li>
+<li><a href="#13-system-thermal-breakdown--safety-protocols"
+id="toc-13-system-thermal-breakdown--safety-protocols">13. System
+Thermal Breakdown &amp; Safety Protocols</a></li>
+<li><a href="#14-physical-pinout-map-dcfc-intercept"
+id="toc-14-physical-pinout-map-dcfc-intercept">14. Physical Pinout Map:
+DCFC Intercept</a></li>
+<li><a href="#15-obd-ii-powertrain-diagnostic-pids"
+id="toc-15-obd-ii-powertrain-diagnostic-pids">15. OBD-II Powertrain
+Diagnostic PIDs</a></li>
+<li><a href="#16-step-by-step-manual-isolation-safety-protocol"
+id="toc-16-step-by-step-manual-isolation-safety-protocol">16.
+Step-by-Step Manual Isolation Safety Protocol</a></li>
+<li><a href="#17-comprehensive-engineering-plan-deployment-checklists"
+id="toc-17-comprehensive-engineering-plan-deployment-checklists">17.
+Comprehensive Engineering Plan Deployment Checklists</a></li>
+<li><a href="#18-procurement-directory"
+id="toc-18-procurement-directory">18. Procurement Directory</a></li>
+</ul></li>
+</ul>
+
+    </aside>
+    <main class="main">
+
+<header id="title-block-header">
+<h1 class="title">Engineering Master Plan: 40 kWh NMC+ Auxiliary Range
+Extender (Production Package)</h1>
+</header>
+
+<h1
+id="engineering-master-plan-40-kwh-nmc-auxiliary-range-extender-production-package">Engineering
+Master Plan: 40 kWh NMC+ Auxiliary Range Extender (Production
+Package)</h1>
+<p>This master architecture document compiles your hardware schematics,
+firmware configurations, safety logic, physical layouts, and procurement
+streams for the 40 kWh NMC+ Auxiliary Range Extender.</p>
+<h2 id="1-system-engineering-specifications">1. System Engineering
+Specifications</h2>
+<h3 id="electrical-and-thermal-design-limits">Electrical and Thermal
+Design Limits</h3>
+<ul>
+<li>Total Auxiliary Storage Capacity: 40 kWh</li>
+<li>Auxiliary Chemistry: Premium high-density Nickel Manganese Cobalt
+(NMC+) semi-solid-state pouch cells (~260 Wh/kg pack-level scaling
+factor).</li>
+<li>Auxiliary Cell Configuration: 96S5P Layout (96 series stacks of
+5-parallel cell groups, assuming standard ~23Ah raw pouch cells).</li>
+<li>Voltage Operational Windows:</li>
+<li>Minimum Floor (Depleted): 96 × 3.23V ≈ 310V DC
+<ul>
+<li>Nominal Baseline Potential: 96 × 3.67V = 352.32V DC (Matches
+vehicle's native nominal voltage).</li>
+<li>Maximum Ceiling (Fully Charged): 96 × 4.2V = 403.2V DC</li>
+</ul></li>
+<li>Power Electronics Interface: Monolithic 30 kW Uni-Directional
+Boost/Buck DC-to-DC Converter.</li>
+<li>Target Regulated Injection Current: 85.2 Amps continuous at nominal
+voltage (Delivers ~30 kW to match the vehicle's steady-state 60 mph
+highway driving load).</li>
+<li>Safety Amperage Threshold: Smart BMS and isolation relays specified
+for a 131A continuous symmetric current load.</li>
+</ul>
+<h3 id="mechanical-and-payload-distribution">Mechanical and Payload
+Distribution</h3>
+<ul>
+<li>Auxiliary Pack Weight: ~340 to 360 lbs (Accounts for the
+high-density cell mass, busbars, and compression plates).</li>
+<li>Solar &amp; Rack Inventory Weight (Pre-owned): ~210 lbs</li>
+<li>Total Added Bed Payload: ~550 to 570 lbs (Well beneath the truck's
+~1,800 lbs maximum utility payload).</li>
+<li>Enclosure Dimensions: 48" Long × 16" Wide × 14.5" High. Sits flat
+against the cab bulkhead, dropping neatly beneath the bed rails between
+the wheel arches.</li>
+</ul>
+<hr />
+<h2 id="2-system-architecture-diagram">2. System Architecture
+Diagram</h2>
+<p>[ 4x 360V SOLAR PANELS ] (Mounted on Over-Bed Rack) │ │ (Wired in
+Parallel: 360V DC Baseline) ▼ ┌────────────────────────────────┐ │ HV
+SOLAR MPPT CONTROLLER │ └───────────────┬────────────────┘ │ │
+(Regulated Charging Output) ▼ ┌────────────────────────────────┐
+┌──────────────────────────────┐ │ 40 kWh NMC+ AUXILIARY BATTERY │ ◄───►
+│ 96S SMART BMS │ │ (96S5P Series Layout) │ │ (Monitors Cells &amp;
+Relays) │ └───────────────┬────────────────┘
+└──────────────┬───────────────┘ │ │ │ │ (CANBus Status) ▼ ▼
+┌────────────────────────────────┐ ┌──────────────────────────────┐ │
+HIGH-VOLTAGE SAFETY COMPONENTS │ │ MASTER MICRO-CONTROLLER │ │ (Fuse,
+Pre-Charge, MSD) │ │ GATEWAY │ └───────────────┬────────────────┘ │
+(Runs Anti-Backfeed Loop) │ │ └──────────────┬───────────────┘ ▼ │
+┌────────────────────────────────┐ │ (Converter Control Line) │ 30 kW
+UNI-DIRECTIONAL CONVERTER│ ◄────────────────────┘ (via CAN link)
+└───────────────┬────────────────┘ │ │ (Controlled 85.2A Current
+Injection) ▼ [ VEHICLE DC TRACTION BUS ] ◄───────────────── [ TRUCK
+CANBUS ] (DCFC Junction Box Intercept) (Powertrain Telemetry
+Sniffer)</p>
+<hr />
+<h2 id="3-financial-projections--hardware-cost-sheet">3. Financial
+Projections &amp; Hardware Cost Sheet</h2>
+<p>+---+</p>
+<p>| FINAL SYSTEM HARDWARE BUDGET (40 kWh NMC+ / 30kW Uni-Di) |
++---+</p>
+<p>| 1. 40 kWh NMC+ Cell Matrix Assembly : $5,500 - $6,400 | | 2.
+Monolithic 30kW Uni-Directional Converter : $5,000 - $6,500 | | 3. Smart
+96S BMS &amp; High-Voltage Contactors : $500 - $1,000 | | 4. 4x 360V
+Solar Panel Inventory : $0 (OWNED) | | 5. Heavy-Duty Bed Rack
+Infrastructure : $0 (OWNED) | +---+</p>
+<p>| ESTIMATED HARDWARE ACQUISITION TOTAL : $11,000 - $13,900|
++=============================================================+</p>
+<hr />
+<h2 id="4-structural-hardware--mounting-blueprint">4. Structural
+Hardware &amp; Mounting Blueprint</h2>
+<pre><code>   ┌──────────────────────── COMPRESSION END-PLATE (1)
+   │   ┌──────────────────── CELL SPACER (1)
+   │   │   ┌──────────────── POUCH CELL MATRIX BLOCK (1)
+   │   │   │   ┌──────────── CELL SPACER (2)
+   │   │   │   │   ┌──────── POUCH CELL MATRIX BLOCK (2)
+   ▼   ▼   ▼   ▼   ▼
+   █ ┌───┐ █ ┌───┐ █ ... █ ┌───┐ █
+     │ 5P│   │ 5P│         │ 5P│
+     └───┘   └───┘         └───┘
+                           ▲   ▲
+                           │   │── COMPRESSION END-PLATE (2)
+                           └────── CELL SPACER (97)</code></pre>
+<h3 id="ordering-matrix">Ordering Matrix</h3>
+<ul>
+<li>Cell Spacers: 97 Units Required per standalone series string block.
+Spacers isolate every individual cell layer (Total = Cells in Series +
+1). Parallel connections (5P groupings) are welded at the tab level
+before placement within the series sequence block.</li>
+<li>Compression End-Plates: 2 Units Required. Heavy-duty 6061-T6
+aluminum plates sandwich the completed 96S compression column, anchoring
+the high-tensile threaded tie rods to distribute a constant face load
+across the assembly.</li>
+<li>Tie-Rod Torque Spec Adjustments: Because of the increased mass of
+the 5P cell groupings, torque the high-tensile steel rods to 14 N·m to
+ensure face pressure transitions seamlessly across the deepened matrix
+layer.</li>
+</ul>
+<h3 id="truck-bed-anchorage-blueprint">Truck Bed Anchorage
+Blueprint</h3>
+<p>To bolt down the 350-lb assembly safely against cabin bulkhead
+inertia forces, align the chassis bracket layout directly with the F-150
+frame configuration:</p>
+<p>[ Cab Shroud / Bulkhead Wall ]
+─────────────────────────────────────── (O) [M12 Anchor Bolt 1] (O) [M12
+Anchor Bolt 2] ┌─────────────────────────────────┐ │ 48" Aluminum
+Battery Box │ └─────────────────────────────────┘ (O) [M12 Anchor Bolt
+3] (O) [M12 Anchor Bolt 4] ─────────────────────────────────────── [
+Tailgate / Rear Shroud Direction ]</p>
+<ul>
+<li>Drill Coordinates: Center the enclosure 2.5 inches away from the
+cabin bulkhead sheet metal. Mark four drilling layouts matching a 44.5"
+(Width) × 12.0" (Depth) rectangular base pattern.</li>
+<li>Underbed Interface: Pass Grade 8.8 M12 bolts through the box frame,
+the truck bed skin, and custom 3.0" × 3.0" steel reinforcement backing
+load plates clamped to the underside frame walls to stop sheet metal
+tearing.</li>
+</ul>
+<hr />
+<h2 id="5-hardware-assembly-and-physical-layout-instructions">5.
+Hardware Assembly and Physical Layout Instructions</h2>
+<h3 id="busbar-construction-and-pack-compression">Busbar Construction
+and Pack Compression</h3>
+<ol type="1">
+<li>Cell Stacking Sequence: Clean all pouch cell terminal tabs with
+isopropyl alcohol. Parallel weld your cells into their respective
+multi-parallel blocks first (e.g., 5 cells linked tab-to-tab). Stack
+these blocks, interleaving a custom FR4 insulation spacer between every
+single block tier (97 spacers total).</li>
+<li>Structural Compression: Place the 2 aluminum end-plates at both ends
+of the 96S block. Thread four high-tensile steel rods through the plates
+and tighten them down using a calibrated torque wrench to 14 N·m of
+torque. This locks down uniform face pressure across the NMC+ pouch
+faces to eliminate swelling over high-amperage cycles.</li>
+<li>The Mid-Split Architecture: Arrange the cells inside the enclosure
+in two parallel rows of 48 cell blocks. Route Track A (Cells 1 to 48)
+forward and Track B (Cells 49 to 96) backward. Install a heavy insulated
+block at the intersection tail where a manual service disconnect (MSD)
+handle sits inline. Pulling this handle splits the matrix into two
+safer, sub-200V isolated segments during maintenance.</li>
+<li>Busbar Interconnects: Align the 15 mm × 2.5 mm copper busbars over
+the cell tabs. Join them using an automotive fiber laser welder or
+high-torque M6 hardware coupled with serrated automotive Belleville
+washers. Verify each joint with a micro-ohmmeter; ensure no connection
+exceeds 20 micro-ohms (μΩ) of internal resistance.</li>
+<li>Polycarbonate Barrier: Install 1/4-inch clear polycarbonate (Lexan)
+shatterproof shields above the live copper busbar track using insulated
+nylon standoffs.</li>
+</ol>
+<h3 id="high-voltage-enclosure-plumb-in-and-interception">High-Voltage
+Enclosure Plumb-In and Interception</h3>
+<ol type="1">
+<li>Enclosure Gland Mounts: Drill matching holes into the right-hand
+power electronics compartment of your IP67 aluminum bed enclosure.
+Install the nickel-plated brass EMC glands. Strip the orange insulation
+on your 4 AWG shielded EV cables to expose the copper shielding braid,
+allowing the gland's 360-degree internal spring ring to ground the
+shield directly to the enclosure frame.</li>
+<li>Solar Parallel Integration: Route the pre-owned 4 × 360V solar array
+cables in parallel into the high-voltage MPPT controller. Connect the
+MPPT output to the primary positive and negative bus rails of your
+auxiliary pack, setting the charging voltage ceiling cutoff strictly at
+403.2V DC.</li>
+<li>Traction Bus Interception: Disconnect the truck's 12V negative
+accessory battery terminal. Pull the primary factory high-voltage Manual
+Service Disconnect (MSD) loop located beneath the rear passenger seats
+to fully isolate the traction system. Open the DC Fast Charge (DCFC)
+junction box behind the left front fender charging port. Bolt the 4 AWG
+output lines from the 30 kW converter directly onto DCFC Pin 1 (HV+) and
+DCFC Pin 2 (HV-) using factory-spec torque parameters.</li>
+</ol>
+<hr />
+<h2 id="6-high-frequency-grounding--vibration-dampening">6.
+High-Frequency Grounding &amp; Vibration Dampening</h2>
+<ul>
+<li>Chassis Grounding Bond: The aluminum box housing the 40 kWh cell
+matrix must be bonded directly to the F-150 Lightning's steel frame
+rails using a heavy-duty, braided 1/0 AWG copper ground strap. This
+creates an equipotential bonding field, preventing static build-up from
+road friction from interfering with your low-voltage CANBus
+communication signals.</li>
+<li>Vibration Isolation Mounts: Do not bolt the IP67 battery enclosure
+rigidly to the truck bed floor. Install four heavy-duty neoprene
+vibration isolation pucks underneath the box mounts. This mechanically
+decouples the high-density cell tab joints from constant high-frequency
+road vibrations, preventing microscopic stress fractures across your 96S
+laser-welded busbars over time.</li>
+</ul>
+<hr />
+<h2 id="7-pre-charge-circuit-boot-up-sequence--logic">7. Pre-Charge
+Circuit Boot-Up Sequence &amp; Logic</h2>
+<h3 id="pre-charge-engineering-variables">Pre-Charge Engineering
+Variables</h3>
+<p>To safely bridge the converter's large internal input capacitance (C
+= 680 μF) across a maximum voltage potential of 403.2V, an active
+pre-charge circuit restricts current to prevent contactor welding.</p>
+<ul>
+<li>Peak Transiting Current: <span
+class="math display">$$I_{\text{peak}} = \frac{403.2\text{V}}{120\
+\Omega} \approx 3.36\text{ Amps}$$</span></li>
+<li>Peak Transient Power Dissipation: <span
+class="math display">$$P_{\text{peak}} = \frac{(403.2\text{V})^2}{120\
+\Omega} \approx 1,354.75\text{ Watts}$$</span></li>
+<li>Total Absorbed Impulse Energy: <span class="math display">$$E =
+\frac{1}{2} \cdot C \cdot V_{\text{max}}^2 = 0.5 \cdot 0.000680\text{ F}
+\cdot (403.2\text{V})^2 \approx 55.27\text{ Joules}$$</span></li>
+</ul>
+<h3 id="boot-sequencing-delay-loop">Boot Sequencing Delay Loop</h3>
+<ol type="1">
+<li>Time = 0 ms: Start command received. The Main Contactor pins stay
+wide open. The micro-controller gateway activates the Pre-Charge Relay
+pin. High-voltage power flows cautiously through the 120 Ω Vishay
+wirewound resistor, capping initial inrush current to a harmless
+3.36A.</li>
+<li>Time = 250 ms: The micro-controller monitors the analog input
+tracking line. Once the capacitor bank voltage equalizes to ≥ 95% of the
+auxiliary pack's live potential (e.g., hitting ≥ 335V DC on a 352V
+base), the gateway closes the Main Positive Contactor. Because voltage
+potentials are nearly balanced, the relay locks shut without
+arcing.</li>
+<li>Time = 300 ms: After allowing a brief 50 ms buffer for the main
+contactor pads to mechanically settle, the micro-controller opens the
+Pre-Charge Relay, isolating the starting circuit. The main traction loop
+is now fully operational.</li>
+</ol>
+<hr />
+<h2 id="8-intercell-balancing--deviation-framework">8. Intercell
+Balancing &amp; Deviation Framework</h2>
+<p>During high-rate 85A continuous current injection loops, cells drop
+down their state-of-charge curves at different speeds based on internal
+resistance disparities. To monitor cell health and log cell voltage skew
+metrics in real time, the gateway maps individual readings into the
+following performance matrix.</p>
+<h3 id="cell-deviation-tracking-matrix">Cell Deviation Tracking
+Matrix</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Target Parameter</th>
+<th>Normal Baseline</th>
+<th>Warning State</th>
+<th>Critical Cutoff Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Max Delta-V (Cell Skew)</td>
+<td>≤ 15 mV</td>
+<td>16 mV - 45 mV</td>
+<td>≥ 50 mV (Force Drop Main Contactor)</td>
+</tr>
+<tr class="even">
+<td>Active Balancing Threshold</td>
+<td>≥ 20 mV delta</td>
+<td>Always active</td>
+<td>Resistor dissipation dump engaged</td>
+</tr>
+<tr class="odd">
+<td>Internal Resistance (IR)</td>
+<td>≤ 0.8 mΩ</td>
+<td>0.9 mΩ - 1.5 mΩ</td>
+<td>≥ 1.6 mΩ (Lock Injection Amps to 0)</td>
+</tr>
+<tr class="even">
+<td>Thermal Delta Between Blocks</td>
+<td>≤ 3°C</td>
+<td>4°C - 7°C</td>
+<td>≥ 8°C (Trigger Max Fan / Drop Current)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-master-gateway-c-firmware-script">9. Master Gateway C++
+Firmware Script</h2>
+<p>The following firmware runs on your central micro-controller gateway
+(e.g., Teensy 4.0 paired with an opto-isolated TI ISO1050 transceiver
+array). It handles automated power-on diagnostic checks, precise
+multi-sample voltage filtering, actively polls the truck's powertrain
+CANBus, manages the live 85A current-injection loop, executes passive
+balancing adjustments, and enforces a high-speed safety cutoff during
+regenerative braking.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Arduino.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;FlexCAN_T4.h&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Hardware Input/Output Pin Definitions</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> PRE_CHARGE_RELAY_PIN  <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> MAIN_CONTACTOR_PIN    <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> COOLING_FANS          <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> HV_BUS_SENSE_ANALOG   <span class="op">=</span> A0<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Calibration Configuration Baselines</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">float</span> VOLTAGE_DIVIDER_RATIO <span class="op">=</span> <span class="fl">100.0</span><span class="op">;</span> <span class="co">// Scale 400V down to readable analog range</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">float</span> CELL_BALANCING_THRESHOLD <span class="op">=</span> <span class="fl">0.020</span><span class="op">;</span> <span class="co">// 20mV balancing trigger</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">// CAN Architecture Handshakes</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>FlexCAN_T4<span class="op">&lt;</span>CAN1<span class="op">,</span> RX_SIZE_256<span class="op">,</span> TX_SIZE_16<span class="op">&gt;</span> truckCAN<span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>FlexCAN_T4<span class="op">&lt;</span>CAN2<span class="op">,</span> RX_SIZE_256<span class="op">,</span> TX_SIZE_16<span class="op">&gt;</span> converterCAN<span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">uint32_t</span> CONVERTER_CAN_ID <span class="op">=</span> <span class="bn">0x600</span><span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> targetInjectionAmps       <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> regenActive                <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> cellVoltages<span class="op">[</span><span class="dv">96</span><span class="op">];</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">// Filters out high-frequency electrical switching noise via multi-sample averaging</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> readPreciseHighVoltage<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">long</span> runningSum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">const</span> <span class="dt">int</span> SAMPLE_COUNT <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> SAMPLE_COUNT<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        runningSum <span class="op">+=</span> analogRead<span class="op">(</span>HV_BUS_SENSE_ANALOG<span class="op">);</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        delayMicroseconds<span class="op">(</span><span class="dv">50</span><span class="op">);</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> averagedRaw <span class="op">=</span> <span class="op">(</span><span class="dt">float</span><span class="op">)</span>runningSum <span class="op">/</span> <span class="op">(</span><span class="dt">float</span><span class="op">)</span>SAMPLE_COUNT<span class="op">;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> pinVoltage <span class="op">=</span> averagedRaw <span class="op">*</span> <span class="op">(</span><span class="fl">5.0</span> <span class="op">/</span> <span class="fl">1023.0</span><span class="op">);</span> </span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pinVoltage <span class="op">*</span> VOLTAGE_DIVIDER_RATIO<span class="op">;</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co">// Power-On Diagnostic Isolation Evaluation</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> executeRelayStartupCheck<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    digitalWrite<span class="op">(</span>PRE_CHARGE_RELAY_PIN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    digitalWrite<span class="op">(</span>MAIN_CONTACTOR_PIN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    delay<span class="op">(</span><span class="dv">100</span><span class="op">);</span> </span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>readPreciseHighVoltage<span class="op">()</span> <span class="op">&gt;</span> <span class="fl">10.0</span><span class="op">)</span> <span class="op">{</span> </span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// ERR_MAIN_CONTACTOR_WELDED</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    digitalWrite<span class="op">(</span>PRE_CHARGE_RELAY_PIN<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    delay<span class="op">(</span><span class="dv">50</span><span class="op">);</span> </span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> preChargeVoltage <span class="op">=</span> readPreciseHighVoltage<span class="op">();</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    digitalWrite<span class="op">(</span>PRE_CHARGE_RELAY_PIN<span class="op">,</span> LOW<span class="op">);</span> </span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>preChargeVoltage <span class="op">&lt;=</span> <span class="fl">10.0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// ERR_BUS_SENSE_FAILURE</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    delay<span class="op">(</span><span class="dv">200</span><span class="op">);</span> </span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>readPreciseHighVoltage<span class="op">()</span> <span class="op">&gt;</span> <span class="fl">10.0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">3</span><span class="op">;</span> <span class="co">// ERR_PRE_CHARGE_WELDED</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// DIAG_PASSED</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> setConverterOutput<span class="op">(</span><span class="dt">float</span> amps<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="dt">CAN_message_t</span> msg<span class="op">;</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    msg<span class="op">.</span>id <span class="op">=</span> CONVERTER_CAN_ID<span class="op">;</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    msg<span class="op">.</span>len <span class="op">=</span> <span class="dv">8</span><span class="op">;</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint16_t</span> rawAmps <span class="op">=</span> <span class="op">(</span><span class="dt">uint16_t</span><span class="op">)(</span>amps <span class="op">*</span> <span class="fl">10.0</span><span class="op">);</span> </span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    msg<span class="op">.</span>buf<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="op">(</span>rawAmps <span class="op">&gt;&gt;</span> <span class="dv">8</span><span class="op">)</span> <span class="op">&amp;</span> <span class="bn">0xFF</span><span class="op">;</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    msg<span class="op">.</span>buf<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> rawAmps <span class="op">&amp;</span> <span class="bn">0xFF</span><span class="op">;</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    converterCAN<span class="op">.</span>write<span class="op">(</span>msg<span class="op">);</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="co">// Active Cell-Balancing Monitor Execution Block</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> processPassiveCellBalancing<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> minVolt <span class="op">=</span> <span class="fl">4.20</span><span class="op">;</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> maxVolt <span class="op">=</span> <span class="fl">0.00</span><span class="op">;</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">96</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>cellVoltages<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;</span> minVolt<span class="op">)</span> minVolt <span class="op">=</span> cellVoltages<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>cellVoltages<span class="op">[</span>i<span class="op">]</span> <span class="op">&gt;</span> maxVolt<span class="op">)</span> maxVolt <span class="op">=</span> cellVoltages<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> deltaV <span class="op">=</span> maxVolt <span class="op">-</span> minVolt<span class="op">;</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>deltaV <span class="op">&gt;=</span> <span class="fl">0.050</span><span class="op">)</span> <span class="op">{</span> </span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>        setConverterOutput<span class="op">(</span><span class="fl">0.0</span><span class="op">);</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>        digitalWrite<span class="op">(</span>MAIN_CONTACTOR_PIN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>        Serial<span class="op">.</span>println<span class="op">(</span><span class="st">&quot;[CRITICAL CELL SKEW] Disconnecting Traction Array.&quot;</span><span class="op">);</span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> setup<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    Serial<span class="op">.</span>begin<span class="op">(</span><span class="dv">115200</span><span class="op">);</span></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    pinMode<span class="op">(</span>PRE_CHARGE_RELAY_PIN<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    pinMode<span class="op">(</span>MAIN_CONTACTOR_PIN<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>    pinMode<span class="op">(</span>COOLING_FANS<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> sysStatus <span class="op">=</span> executeRelayStartupCheck<span class="op">();</span></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sysStatus <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span> </span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">(</span><span class="kw">true</span><span class="op">)</span> <span class="op">{</span> </span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>            digitalWrite<span class="op">(</span>PRE_CHARGE_RELAY_PIN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>            digitalWrite<span class="op">(</span>MAIN_CONTACTOR_PIN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>            Serial<span class="op">.</span>println<span class="op">(</span><span class="st">&quot;[HALT] Critical Contact/Relay Weld Detected! System Locked.&quot;</span><span class="op">);</span></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>            delay<span class="op">(</span><span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>    truckCAN<span class="op">.</span>begin<span class="op">();</span></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>    truckCAN<span class="op">.</span>setBaudRate<span class="op">(</span><span class="dv">500000</span><span class="op">);</span> </span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>    converterCAN<span class="op">.</span>begin<span class="op">();</span></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>    converterCAN<span class="op">.</span>setBaudRate<span class="op">(</span><span class="dv">500000</span><span class="op">);</span></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>    Serial<span class="op">.</span>println<span class="op">(</span><span class="st">&quot;[SUCCESS] Diagnostics Clean. System Interlocked.&quot;</span><span class="op">);</span></span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> loop<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>    <span class="dt">CAN_message_t</span> truckMsg<span class="op">;</span></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>    <span class="at">static</span> <span class="dt">unsigned</span> <span class="dt">long</span> lastBalancingCheck <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>millis<span class="op">()</span> <span class="op">-</span> lastBalancingCheck <span class="op">&gt;</span> <span class="dv">500</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>        processPassiveCellBalancing<span class="op">();</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>        lastBalancingCheck <span class="op">=</span> millis<span class="op">();</span></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>truckCAN<span class="op">.</span>read<span class="op">(</span>truckMsg<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>truckMsg<span class="op">.</span>id <span class="op">==</span> <span class="bn">0x165</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>            <span class="dt">uint8_t</span> regenByte <span class="op">=</span> truckMsg<span class="op">.</span>buf<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>regenByte <span class="op">&gt;</span> <span class="bn">0x00</span><span class="op">)</span> <span class="op">{</span> </span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>                regenActive <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>                setConverterOutput<span class="op">(</span><span class="fl">0.0</span><span class="op">);</span></span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>                digitalWrite<span class="op">(</span>MAIN_CONTACTOR_PIN<span class="op">,</span> LOW<span class="op">);</span> </span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>                digitalWrite<span class="op">(</span>PRE_CHARGE_RELAY_PIN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>                digitalWrite<span class="op">(</span>COOLING_FANS<span class="op">,</span> HIGH<span class="op">);</span> </span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span><span class="op">;</span> </span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a>                regenActive <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>truckMsg<span class="op">.</span>id <span class="op">==</span> <span class="bn">0x1CC</span> <span class="op">&amp;&amp;</span> <span class="op">!</span>regenActive<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int16_t</span> rawInverterCurrent <span class="op">=</span> <span class="op">(</span>truckMsg<span class="op">.</span>buf<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="dv">8</span><span class="op">)</span> <span class="op">|</span> truckMsg<span class="op">.</span>buf<span class="op">[</span><span class="dv">3</span><span class="op">];</span></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>            <span class="dt">float</span> currentDrawAmps <span class="op">=</span> <span class="op">(</span><span class="dt">float</span><span class="op">)</span>rawInverterCurrent <span class="op">*</span> <span class="fl">0.1</span><span class="op">;</span> </span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>currentDrawAmps <span class="op">&gt;</span> <span class="fl">10.0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>                targetInjectionAmps <span class="op">=</span> currentDrawAmps<span class="op">;</span></span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>targetInjectionAmps <span class="op">&gt;</span> <span class="fl">85.2</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>                    targetInjectionAmps <span class="op">=</span> <span class="fl">85.2</span><span class="op">;</span> </span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>                digitalWrite<span class="op">(</span>MAIN_CONTACTOR_PIN<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>                setConverterOutput<span class="op">(</span>targetInjectionAmps<span class="op">);</span></span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>targetInjectionAmps <span class="op">&gt;</span> <span class="fl">40.0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>                    digitalWrite<span class="op">(</span>COOLING_FANS<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>                    digitalWrite<span class="op">(</span>COOLING_FANS<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>                setConverterOutput<span class="op">(</span><span class="fl">0.0</span><span class="op">);</span> </span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 id="10-real-world-driving-range-impact-matrix">10. Real-World
+Driving Range Impact Matrix</h2>
+<p>With your 300V class parallel solar collection architecture supplying
+a stable foundation and your expanded 40 kWh NMC+ reservoir primed, the
+baseline driving extension scales relative to steady-state velocity:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Cruising Speed</th>
+<th>Vehicle Average Consumption</th>
+<th>Net Supplementary Runtime</th>
+<th>Estimated Extra Driving Range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>55 mph</td>
+<td>~2.2 miles / kWh (25 kW demand)</td>
+<td>~1.60 Hours of full driving offset</td>
+<td>+88 Miles (+10 Miles Solar Gain)</td>
+</tr>
+<tr class="even">
+<td>60 mph</td>
+<td>~2.0 miles / kWh (30 kW demand)</td>
+<td>~1.33 Hours of full driving offset</td>
+<td>+80 Miles (+12 Miles Solar Gain)</td>
+</tr>
+<tr class="odd">
+<td>70 mph</td>
+<td>~1.6 miles / kWh (43.7 kW demand)</td>
+<td>Continuous 30kW maximum supplement</td>
+<td>+64 Miles (+14 Miles Solar Gain)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2
+id="11-passive-solar-cost-savings--roi-analysis-full-annual-cycle">11.
+Passive Solar Cost Savings &amp; ROI Analysis (Full Annual Cycle)</h2>
+<p>By capturing ambient solar energy on your rack while driving or
+parked, the system directly bypasses the need for high-cost, public DC
+Fast Charging (DCFC) stations by leveraging a full 365-day annual
+generation cycle.</p>
+<ul>
+<li>Average Public DCFC Surcharge Rate: $0.42 per kWh (Standard public
+fast-charging baseline).</li>
+<li>Daily Solar Production Average: 6.0 kWh (1.5 kW peak array × 4 peak
+daylight hours).</li>
+<li>Annual Direct Solar Savings: <span class="math display">6.0
+kWh/day × $0.42/kWh × 365 days = $919.80 per year</span></li>
+</ul>
+<hr />
+<h2
+id="12-bidirectional-home-integration-time-of-use-financial-optimization">12.
+Bidirectional Home Integration (Time-of-Use Financial Optimization)</h2>
+<p>When stationary, the auxiliary 40 kWh block leverages the truck's
+native bidirectional DC pins via the Ford Charge Station Pro
+infrastructure to arbitrage electrical grid expenditures. By storing
+cheap energy off-peak and discharging it back into the household network
+during high-tariff windows, the platform creates an active utility
+credit structure.</p>
+<h3 id="input-parameters--region-baselines">Input Parameters &amp;
+Region Baselines</h3>
+<ul>
+<li>Regional Time-of-Use (ToU) Rate Delta: $0.20 per kWh variance (e.g.,
+peak pricing at $0.32/kWh vs. off-peak at $0.12/kWh common in
+high-density Northeast zones).</li>
+<li>Daily Programmed Depth of Discharge (DoD): 30 kWh (Utilizing 75% of
+the auxiliary capacity to preserve maximum long-term battery cell
+health).</li>
+<li>Arbitrage Frequency: 365 days / year (System performs automated
+peak-shaving cycles continuously while parked at the home port).</li>
+</ul>
+<h3 id="financial-tally-integration">Financial Tally Integration</h3>
+<ul>
+<li>Daily ToU Arbitrage Savings: <span class="math display">30
+kWh × $0.20/kWh = $6.00 per day</span></li>
+<li>Annual ToU Arbitrage Savings: <span
+class="math display">$6.00/day × 365 days = $2, 190.00 per
+year</span></li>
+</ul>
+<h3
+id="combined-annual-generation-value--total-project-payback">Combined
+Annual Generation Value &amp; Total Project Payback</h3>
+<p>Merging your mobile solar harvest metrics with stationary home
+utility arbitrage yields a high-velocity capital payback envelope:</p>
+<ul>
+<li>Total Consolidated Annual System Savings: <span
+class="math display">$919.80 (Solar) + $2, 190.00 (ToU
+Peak-Shaving) = <strong>$</strong><strong>3</strong><strong>,</strong> <strong>109.80</strong>
+per year</span></li>
+</ul>
+<p>+---+</p>
+<p>| CONSOLIDATED SYSTEM PAYBACK ENVELOPE (Solar + Bidirectional)|
++---+</p>
+<p>| 1. Minimum Project Budget (<span
+class="math inline">11, 000) : <em>A</em><em>m</em><em>o</em><em>r</em><em>t</em><em>i</em><em>z</em><em>e</em><em>d</em><em>i</em><em>n</em>3.54<em>Y</em><em>e</em><em>a</em><em>r</em><em>s</em>||2.<em>M</em><em>a</em><em>x</em><em>i</em><em>m</em><em>u</em><em>m</em><em>P</em><em>r</em><em>o</em><em>j</em><em>e</em><em>c</em><em>t</em><em>B</em><em>u</em><em>d</em><em>g</em><em>e</em><em>t</em>(</span>13,900)
+: Amortized in 4.47 Years | +---+</p>
+<p>| ESTIMATED Lifespan Yield (10-Yr Net) : $31,098.00 Captured |
++=============================================================+</p>
+<h2
+id="by-factoring-in-automated-vehicle-to-home-load-matching-the-combined-generation-capability-recovers-your-entire-capital-hardware-investment-within-35-to-45-years-across-a-conservative-10-year-lifespan-layout-the-system-secures-3109800-in-cumulative-utility-value-converting-your-vehicles-cargo-bed-extender-into-a-high-yielding-stationary-energy-grid-asset">By
+factoring in automated vehicle-to-home load matching, the combined
+generation capability recovers your entire capital hardware investment
+within 3.5 to 4.5 years. Across a conservative 10-year lifespan layout,
+the system secures $31,098.00 in cumulative utility value, converting
+your vehicle's cargo bed extender into a high-yielding stationary energy
+grid asset.</h2>
+<h2 id="13-system-thermal-breakdown--safety-protocols">13. System
+Thermal Breakdown &amp; Safety Protocols</h2>
+<h3 id="active-thermal-cooling--management-loops">Active Thermal Cooling
+&amp; Management Loops</h3>
+<p>Sustaining high-rate 85A loops forces localized I²R heat build-up
+across the internal interconnect foils. To mitigate cell degradation,
+implement a two-tier cooling roadmap inside the sealed IP67 bed
+containment box:</p>
+<ol type="1">
+<li>Stage 1: Forced-Air Heat-Sink Shrouds (38°C to 45°C): The 30 kW
+converter and high-current relay pads are mounted directly onto
+high-surface-area anodized aluminum cooling blocks. When any core pack
+thermistor registers above 38°C, the micro-controller gateway
+transitions Pin 4 to high, spinning up twin dual-bearing brushless fans
+to push continuous cross-flow air currents through the rear power
+electronics bay.</li>
+<li>Stage 2: Overdrive Liquid Heat Sinks (≥ 45°C): If continuous 85A
+cruising loops push internal core temps past 45°C, the gateway forces an
+overdrive loop. It engages a compact 12V liquid pump plumbed into
+individual 1.5mm aluminum cooling plates sandwiched directly between the
+compressed cell stacks. If core thermal monitoring continues scaling
+past 50°C despite active cooling, the gateway drops targetInjectionAmps
+down to 0 Amps via a CAN broadcast command, preventing the chemistry
+from entering an accelerated structural aging phase.</li>
+</ol>
+<h3 id="advanced-bms-safety--alert-register-protocols">Advanced BMS
+Safety &amp; Alert Register Protocols</h3>
+<p>To enforce absolute software parity with the vehicle's onboard
+diagnostics, the smart 96S BMS must parse individual module health
+registers. If the auxiliary block encounters a serious internal hardware
+breakdown, the gateway drops its main interlock loops using the
+following status registry flags:</p>
+<ul>
+<li>Register 0x40A [Over-Discharge Trap]: If a weak parallel string
+collapses below 3.0V DC while delivering power on the highway, the BMS
+shifts bit flag 2 to high. The master gateway instantly detects this bit
+shift, throttles the 30 kW converter loop down to 0A, and isolates the
+main contacts to prevent permanent cell reversal.</li>
+<li>Register 0x40B [Critical Thermal Runaway Fault]: If an individual
+cell segment experiences a local internal shortcut and spikes past 60°C,
+the register flag triggers an immediate high-priority exception. The
+system completely bypasses standard soft-shutdown protocols and executes
+an unconditional hard-disconnect of both high-voltage contactor coils
+within 2.5 milliseconds, isolating the chemical threat before heat
+spreads to neighboring modules.</li>
+<li>Register 0x40C [Micro-Ohm Insulation Drift]: The hardware
+continuously tracks resistance parameters relative to the chassis
+grounding strap. If water leaks past the box's IP67 seals and insulation
+resistance falls below 500 Ω/V, the BMS flags a terminal isolation
+error, locking the startup initialization check block from engaging
+until manual maintenance clear scripts are flashed.</li>
+</ul>
+<hr />
+<h2 id="14-physical-pinout-map-dcfc-intercept">14. Physical Pinout Map:
+DCFC Intercept</h2>
+<p>This blueprint guides the hardware integration where the orange 4 AWG
+shielded power cables from your 30 kW converter interface with the
+truck’s factory charging infrastructure.</p>
+<pre><code>              [ FRONT LEFT WHEEL WELL ASSEMBLY ]
+                              │
+     (Remove weather-sealed aerodynamic inner splash shield)
+                              │
+                              ▼
+             ┌────────────────────────────────┐
+             │  ALUMINUM DCFC HOUSING BOX     │
+             └───────────────┬────────────────┘
+                             │
+        (Unbolt high-voltage service hatch cover)
+                             │
+                             ▼
+             ┌────────────────────────────────┐
+             │ INTERNAL SOLID COPPER BUS BARS │
+             └─────┬────────────────────+─────┘
+                   │                    │
+                   ▼                    ▼
+           [ FACTORY LUG 1 ]    [ FACTORY LUG 2 ]
+               (HV +)               (HV -)
+                   ▲                    ▲
+                   │                    │
+                   │ (Secure M8 High-Tensile Lugs to 11 N·m)
+                   │                    │
+             ┌─────┴────────────────────┴─────┐
+             │ 4 AWG ORANGE SHIELDED CABLE RUN│
+             └────────────────────────────────┘</code></pre>
+<hr />
+<h2 id="15-obd-ii-powertrain-diagnostic-pids">15. OBD-II Powertrain
+Diagnostic PIDs</h2>
+<p>To actively track vehicle limits via the sniffer node interface,
+configure the micro-controller to query and parse these specific
+Parameter IDs (PIDs) from the primary powertrain CAN modules:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Diagnostic Target</th>
+<th>OBD-II PID Code</th>
+<th>Target Electronic Module</th>
+<th>Data Scaling Formula</th>
+<th>Expected Nominal Reading</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HV Pack SoC</td>
+<td>0x493A</td>
+<td>BECM (Battery Energy Control)</td>
+<td>A / 2.55 = % Value</td>
+<td>10% to 100%</td>
+</tr>
+<tr class="even">
+<td>Bus Bar Voltage</td>
+<td>0x1142</td>
+<td>BECM (Battery Energy Control)</td>
+<td>((A*256)+B) / 10 = Volts</td>
+<td>310V to 400V DC</td>
+</tr>
+<tr class="odd">
+<td>Inverter Temp</td>
+<td>0x2401</td>
+<td>SBDM (Secondary Drive Motor)</td>
+<td>A - 40 = Degrees C</td>
+<td>25°C to 65°C</td>
+</tr>
+<tr class="even">
+<td>Cabin Power Draw</td>
+<td>0x3A21</td>
+<td>BCM (Body Control Module)</td>
+<td>((A*256)+B) * 0.05 = kW</td>
+<td>0.5 kW to 7.0 kW</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="16-step-by-step-manual-isolation-safety-protocol">16.
+Step-by-Step Manual Isolation Safety Protocol</h2>
+<div class="danger-note"><strong>Danger:</strong> High-voltage DC circuits carry lethal potentials up to 403.2V. Wear Class 0 insulated safety gloves rated to 1000V throughout this procedure.</div>
+<ol type="1">
+<li>Ignition Powerdown: Turn off the truck's engine completely. Remove
+all accessory keys far away from the proximity wireless boundary loops
+to ensure contactors don't auto-prime.</li>
+<li>Auxiliary 12V Isolation: Unbolt and detach the negative terminal
+wire loop from the standard 12V lead-acid battery located under the
+front frunk hood. This cuts logic power to the high-voltage relay
+coils.</li>
+<li>Drop the Truck MSD: Locate the primary orange factory Manual Service
+Disconnect lever block positioned directly underneath the rear passenger
+seat trim. Pull the safety latch outwards, flip the lever arm, and pull
+the complete fuse plug assembly straight out. Store it in a secure
+pocket.</li>
+<li>Drop the Bed Extender MSD: Pull the manual service disconnect handle
+positioned in the center segment of your 48" aluminum bed battery matrix
+layout. This breaks your custom pack down into two isolated sub-200V
+blocks.</li>
+<li>Residual Voltage Verification: Wait 5 minutes for the internal
+capacitors to drain entirely. Open the DCFC junction box access port
+cover and use a CAT-III high-voltage digital multimeter to check
+terminals HV+ and HV-. Do not begin physical fabrication until the meter
+verifies 0.00V DC.</li>
+</ol>
+<hr />
+<h2 id="17-comprehensive-engineering-plan-deployment-checklists">17.
+Comprehensive Engineering Plan Deployment Checklists</h2>
+<h3 id="stage-1-off-line-bench-testing-isolation-checks">Stage 1:
+Off-Line Bench Testing (Isolation Checks)</h3>
+<ul>
+<li>Micro-Ohm Interconnect Audit: Verify every individual cell-to-cell
+laser weld or bolted terminal junction on the copper busbars using a
+digital low-resistance ohmmeter. Flag and rebuild any connection
+registering over 20 μΩ.</li>
+<li>Dry Isolation Check: With the high-voltage Manual Service Disconnect
+(MSD) handle pulled out, measure resistance between the auxiliary
+aluminum outer enclosure frame and both independent battery terminals.
+Resistance parameters must check out at &gt; 100 MΩ at a 500V test
+potential.</li>
+<li>Low-Voltage Gate Continuity: Power up the micro-controller gateway
+via an isolated 12V bench power supply. Confirm that the diagnostic
+startup script steps smoothly through the relay isolation routines and
+flags a hard fault if any sensor inputs are grounded.</li>
+</ul>
+<h3 id="stage-2-in-system-commissioning-sequence">Stage 2: In-System
+Commissioning Sequence</h3>
+<ul>
+<li>CAN Trace Verification: Hook up a digital logic analyzer or CAN
+logging tool to the gateway module. Verify that incoming vehicle
+powertrain frames on IDs 0x165 (Regen status) and 0x1CC (Inverter
+consumption draw) are parsed into precise engineering decimal units
+without packet drops.</li>
+<li>Pre-Charge Verification: Engage the startup sequence while measuring
+the high-voltage bus line with an oscilloscope. Verify that the input
+capacitor bank voltage ramps smoothly along a continuous RC curve,
+hitting ≥ 335V DC right at the 250-millisecond milestone before the main
+high-power contactor links close.</li>
+<li>Dynamic Anti-Backfeed Simulation: Inject a mock regenerative braking
+signal (0x165 &gt; 0x00) onto the sniffer gateway bus. Ensure the
+controller shuts off the converter's gate drives and drops the main
+safety contacts within less than 10 milliseconds.</li>
+</ul>
+<hr />
+<h2 id="18-procurement-directory">18. Procurement Directory</h2>
+<p>The verified part manufacturers and component distribution platforms
+required to build your system layout parameters are integrated
+below.</p>
+<h3 id="core-electrochemical-cells">Core Electrochemical Cells</h3>
+<ul>
+<li><a href="https://www.grepow.com/">Grepow High-Density Semi-Solid
+Solutions</a>: Sourced directly through established supply lines for
+custom stacked semi-solid-state chemistry configurations optimized for
+dynamic C-rate stability.</li>
+<li>WeLion Advanced Solid-State Materials: Commercial engineering
+partner channel for high-density lithium pouch blocks structured for
+sustained thermal loads.</li>
+<li><a href="https://www.evlithium.com/">Evlithium Fleet Infrastructure
+Distribution</a>: Specialized vendor for copper busbar interconnects,
+precision terminal block lugs, and mechanical grouping brackets.</li>
+</ul>
+<h3 id="power-electronics--safety-isolation">Power Electronics &amp;
+Safety Isolation</h3>
+<ul>
+<li>Eaton Bussmann High-Speed EV Fuses: Sourced via industrial
+automation fulfillment catalogs or electronic hardware suppliers.</li>
+<li><a href="https://www.littelfuse.com/">Littelfuse DCNEVT High-Voltage
+Contactors</a>: High-amperage gas-filled isolation relays available
+directly via global industrial parts providers.</li>
+<li><a href="https://www.hiitio.com/">HIITIO Ceramic Sealed Specialty
+Relays</a>: High-amperage pre-charge bypass switches available for
+procurement through open logistics networks.</li>
+<li>Custom Vishay Precision Resistors: Dedicated online hub for
+immediate component inventory shipments of chassis-mount surge
+resistors.</li>
+<li><a href="https://www.mouser.com/">Texas Instruments Isolation
+Transceivers</a>: Direct ordering avenue for isolated automotive
+communication components to keep low-voltage layers secure.</li>
+<li><a href="https://evwest.com/">EV West Custom Traction Components
+Engineering</a>: Comprehensive catalog platform for raw structural
+metal, FR4 non-conductive sheets, and Lexan protective guards.</li>
+</ul>
+<h3 id="auxiliary-infrastructure-options">Auxiliary Infrastructure
+Options</h3>
+<ul>
+<li><a href="https://shopsolarkits.com/">ShopSolar Integrated Energy
+Engineering</a>: Sourced for high-voltage DC system hardware components,
+smart shunts, and auxiliary microgrid infrastructure elements.</li>
+</ul>
+
+  </div>
+  <footer class="site-footer">
+    Engineering Master Plan · 40 kWh NMC+ Auxiliary Range Extender · Production Package
+  </footer>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>
