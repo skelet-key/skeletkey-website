@@ -1096,3 +1096,48 @@ p strong,
   padding: 0.75rem 1rem 1rem;
   margin: 0;
 }
+
+/* Work with us / Co-Founder */
+.work-section .section-lead {
+  max-width: 640px;
+  margin-bottom: 1.75rem;
+}
+.work-card {
+  background: var(--surface, #12141c);
+  border: 1px solid var(--border, #2a2d3a);
+  border-radius: 14px;
+  padding: 1.35rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.work-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+  color: var(--text, #e8eaf0);
+}
+.work-card ul {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--text-secondary, #9aa3b5);
+}
+.work-card li {
+  margin-bottom: 0.55rem;
+  line-height: 1.55;
+}
+.work-card li strong {
+  color: var(--text, #e8eaf0);
+}
+.work-card p {
+  color: var(--text-secondary, #9aa3b5);
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+.work-cta-card {
+  border-color: rgba(192, 197, 204, 0.35);
+}
+.work-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
