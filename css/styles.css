@@ -65,7 +65,7 @@ a {
 .nav-logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   font-weight: 700;
   font-size: 1.35rem;
   letter-spacing: -0.02em;
@@ -82,7 +82,7 @@ a {
   width: 42px;
   height: 40px;
   object-fit: contain;
-  margin: 0 0.2rem 0 0;
+  margin: 0 0.1rem 0 0;
   flex-shrink: 0;
 }
 
