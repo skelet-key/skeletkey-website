@@ -9,6 +9,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <!-- Google Maps 3D (replace YOUR_GOOGLE_MAPS_API_KEY with a key that has Maps JavaScript API enabled) -->
+  <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&v=beta&libraries=maps3d"></script>
+  <style>
+    gmp-map-3d {
+      width: 100%;
+      height: 700px;
+      display: block;
+      border: 0;
+      background: #0a0a0f;
+    }
+  </style>
 </head>
 <body>
 
@@ -367,18 +378,20 @@
 
       <figure class="charge-map">
         <div class="charge-map-embed" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-          <embed
-            src="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx"
-            type="text/html"
-            width="100%"
-            height="700"
-            style="border:0; display: block; width: 100%; height: 700px;"
-            title="Nationwide Tesla and CCS1 charger map" />
+          <gmp-map-3d
+            mode="hybrid"
+            center="39.8283,-98.5795,1200000"
+            range="4200000"
+            tilt="45"
+            heading="0"
+            default-ui-disabled="false">
+          </gmp-map-3d>
         </div>
         <figcaption>
-          <strong>Nationwide charge map</strong> — interactive Google Earth view of Tesla and CCS1 fast-charge coverage.
-          If the map does not load in-browser, <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">open it in Google Earth ↗</a>.
-          Always confirm live station availability in your charge app before you ride.
+          <strong>Nationwide charge map (3D)</strong> — interactive Google Maps 3D overview of the U.S.
+          Your full charger layers and markers live in the Google Earth project:
+          <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">open Tesla + CCS1 layers in Google Earth ↗</a>.
+          <br /><span style="opacity:0.85">Requires a Google Maps JavaScript API key (Maps 3D / maps3d). Replace <code>YOUR_GOOGLE_MAPS_API_KEY</code> in the page script. Earth project data cannot be loaded into <code>gmp-map-3d</code> directly — export KML/GeoJSON from Earth if you want those markers on this 3D map.</span>
         </figcaption>
       </figure>
     </div>
