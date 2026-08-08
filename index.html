@@ -366,16 +366,18 @@
       </div>
 
       <figure class="charge-map">
-        <a class="charge-map-link" href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">
-          <picture>
-            <source srcset="assets/charge-network-map.webp" type="image/webp" />
-            <img src="assets/charge-network-map.jpg" alt="United States map of public DCFC and Tesla Supercharger stations — click to open interactive Google Earth map" class="charge-map-img" />
-          </picture>
-          <span class="charge-map-cta">Open interactive map in Google Earth ↗</span>
-        </a>
+        <div class="charge-map-embed" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+          <embed
+            src="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx"
+            type="text/html"
+            width="100%"
+            height="700"
+            style="border:0; display: block; width: 100%; height: 700px;"
+            title="Nationwide Tesla and CCS1 charger map" />
+        </div>
         <figcaption>
-          <strong>Nationwide charge map</strong> — Tesla Superchargers and public CCS / DC fast stations across the U.S.
-          Google Earth does not allow embedding in-site, so the interactive map opens in a new tab.
+          <strong>Nationwide charge map</strong> — interactive Google Earth view of Tesla and CCS1 fast-charge coverage.
+          If the map does not load in-browser, <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">open it in Google Earth ↗</a>.
           Always confirm live station availability in your charge app before you ride.
         </figcaption>
       </figure>
