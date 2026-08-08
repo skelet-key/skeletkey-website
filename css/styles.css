@@ -1218,3 +1218,33 @@ p strong,
     grid-template-columns: 1fr;
   }
 }
+
+.charge-map-link {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+.charge-map-link:hover .charge-map-img {
+  opacity: 0.92;
+}
+.charge-map-cta {
+  position: absolute;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%);
+  background: rgba(10, 12, 18, 0.88);
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  color: #f8fafc;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+.charge-map-link:hover .charge-map-cta {
+  border-color: #d4af37;
+  background: rgba(18, 20, 28, 0.95);
+}
