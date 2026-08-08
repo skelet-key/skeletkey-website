@@ -444,14 +444,14 @@
         </div>
         <figcaption>
           <strong>Global network · Tesla Superchargers + CCS (≥3&nbsp;kW)</strong> —
-          Red = Tesla · Blue = CCS. Worldwide coverage (N. America, Europe, Asia, Oceania & more). Pins are fixed to real coordinates and stay put as you rotate.
-          Puca ships by plane anywhere customs allows. Click near a pin for details + Google Maps.
+          Red = Tesla · Blue = CCS. Opens at your location; pan or use region buttons for the rest of the world.
+          Pins are real stations and fill the view as you move. Puca ships by plane anywhere customs allows.
           <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">Curated layers in Google Earth</a>.
         </figcaption>
       </figure>
       <script>
         (function () {
-          var REGION_ALT = 0.18;
+          var REGION_ALT = 0.28;
           var ALL = [];
           var globe = null;
           var popupRoot = null;
@@ -527,65 +527,70 @@
             if (s) s.classList.add("is-hidden");
           }
 
-          var RENDER = []; // stratified global sample for WebGL (performance)
+          var RENDER = [];
           var isMobile = (function () {
             try {
               return window.matchMedia("(max-width: 900px), (pointer: coarse)").matches
                 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent || "");
             } catch (e) { return false; }
           })();
-          var RENDER_CAP = isMobile ? 420 : 900;
+          var VIEW_CAP = isMobile ? 280 : 450;
 
           function isTesla(d) {
             return d && (d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || "")));
           }
 
-          // Even global sample so every region is represented and points never move
-          function buildGlobalSample(pts, cap) {
-            if (!pts.length) return [];
-            if (pts.length <= cap) return pts.slice();
-            var cells = {};
+          // Fill the current camera viewport with real stations (fixed lat/lng — never invented)
+          function pickInView(pov) {
+            if (!ALL.length) return [];
+            var alt = Math.max(0.04, pov.altitude || 1);
+            var lat0 = pov.lat, lng0 = pov.lng;
+            var cos = Math.max(0.25, Math.cos(lat0 * Math.PI / 180));
+            // Match visible globe window roughly
+            var band = Math.min(40, Math.max(0.8, alt * 22));
+            var cap = VIEW_CAP;
+            var cells = isMobile ? 6 : 8;
+            var cellSize = (band * 2) / cells;
+            var buckets = {};
             var keys = [];
-            // ~18x9 grid over the world
-            var nx = 18, ny = 9;
-            for (var i = 0; i < pts.length; i++) {
-              var p = pts[i];
-              var cx = Math.min(nx - 1, Math.max(0, Math.floor((p.lng + 180) / 360 * nx)));
-              var cy = Math.min(ny - 1, Math.max(0, Math.floor((p.lat + 90) / 180 * ny)));
-              var k = cx + ":" + cy;
-              if (!cells[k]) { cells[k] = []; keys.push(k); }
-              cells[k].push(p);
+            for (var i = 0; i < ALL.length; i++) {
+              var p = ALL[i];
+              var dlat = p.lat - lat0;
+              var dlng = p.lng - lng0;
+              while (dlng > 180) dlng -= 360;
+              while (dlng < -180) dlng += 360;
+              var dlngA = dlng * cos;
+              if (Math.abs(dlat) > band || Math.abs(dlngA) > band) continue;
+              var cx = Math.min(cells - 1, Math.max(0, Math.floor((dlngA + band) / cellSize)));
+              var cy = Math.min(cells - 1, Math.max(0, Math.floor((dlat + band) / cellSize)));
+              var ck = cx + ":" + cy;
+              if (!buckets[ck]) { buckets[ck] = []; keys.push(ck); }
+              buckets[ck].push({ p: p, dist: dlat * dlat + dlngA * dlngA });
             }
-            // shuffle each cell lightly by taking stride
-            var per = Math.max(1, Math.ceil(cap / Math.max(1, keys.length)));
+            for (var k = 0; k < keys.length; k++) {
+              buckets[keys[k]].sort(function (a, b) { return a.dist - b.dist; });
+            }
             var out = [];
             var seen = {};
-            // pass 1: at least one per occupied cell
-            for (var c = 0; c < keys.length && out.length < cap; c++) {
-              var list = cells[keys[c]];
-              var pick = list[Math.floor(list.length * 0.37) % list.length];
-              var id = pick.lat.toFixed(3) + "," + pick.lng.toFixed(3);
-              if (seen[id]) continue;
-              seen[id] = 1;
-              out.push(pick);
-            }
-            // pass 2: fill remaining quota round-robin
-            var idx = 1;
-            var added = true;
+            var per = Math.max(1, Math.ceil(cap / Math.max(1, keys.length)));
+            var idx = 0, added = true;
             while (out.length < cap && added) {
               added = false;
-              for (var c2 = 0; c2 < keys.length && out.length < cap; c2++) {
-                var list2 = cells[keys[c2]];
-                if (idx >= list2.length) continue;
-                var pick2 = list2[idx];
-                var id2 = pick2.lat.toFixed(3) + "," + pick2.lng.toFixed(3);
-                if (seen[id2]) continue;
-                seen[id2] = 1;
-                out.push(pick2);
-                added = true;
+              for (var c = 0; c < keys.length && out.length < cap; c++) {
+                var list = buckets[keys[c]];
+                if (idx >= list.length) continue;
+                var take = Math.min(per, list.length - idx);
+                for (var t = 0; t < take && out.length < cap; t++) {
+                  var pt = list[idx + t].p;
+                  var id = pt.lat.toFixed(4) + "," + pt.lng.toFixed(4);
+                  if (seen[id]) continue;
+                  seen[id] = 1;
+                  out.push(pt);
+                  added = true;
+                }
               }
-              idx += 1;
-              if (idx > 50) break;
+              idx += per;
+              if (idx > 80) break;
             }
             return out;
           }
@@ -593,16 +598,15 @@
           function applyPointStyle() {
             if (!globe || cleanedUp) return;
             var pov = globe.pointOfView() || {};
-            var alt = Math.max(0.04, pov.altitude || 2);
-            var r = Math.max(0.02, Math.min(0.26, 0.11 * alt));
+            var alt = Math.max(0.04, pov.altitude || 1);
+            var r = Math.max(0.022, Math.min(0.22, 0.1 * alt));
             try {
               globe.pointRadius(r);
-              globe.pointAltitude(Math.min(0.015, 0.005 + alt * 0.0015));
+              globe.pointAltitude(Math.min(0.012, 0.004 + alt * 0.001));
             } catch (e) {}
           }
 
           function nearestCharger(lat, lng, maxDeg) {
-            // Search full ALL so clicks resolve real stations worldwide
             var pool = ALL.length ? ALL : RENDER;
             if (!pool.length) return null;
             maxDeg = maxDeg || 1.5;
@@ -621,21 +625,31 @@
             return best;
           }
 
-          function bindFixedPoints() {
-            if (!globe || cleanedUp) return;
-            if (!RENDER.length && ALL.length) {
-              RENDER = buildGlobalSample(ALL, RENDER_CAP);
-            }
-            if (!RENDER.length) return;
+          function refreshView(force) {
+            if (!globe || !mapVisible || cleanedUp || !ALL.length) return;
+            var pov = globe.pointOfView();
+            if (!pov) return;
+            var key = pov.lat.toFixed(2) + "," + pov.lng.toFixed(2) + "," + pov.altitude.toFixed(2);
+            if (!force && key === lastKey) return;
+            lastKey = key;
+            RENDER = pickInView(pov);
             globe.pointsData(RENDER);
             applyPointStyle();
-            setStatus(ALL.length.toLocaleString() + " stations worldwide · showing global sample");
+            // status only when popup is not open
+            var s = document.getElementById("charge-globe-status");
+            if (s && !s.classList.contains("is-hidden")) {
+              setStatus(RENDER.length + " chargers in view");
+            }
           }
 
           function scheduleRefresh() {
             if (!mapVisible || cleanedUp) return;
             clearTimeout(refreshTimer);
-            refreshTimer = setTimeout(function () { applyPointStyle(); }, 80);
+            refreshTimer = setTimeout(function () { refreshView(true); }, 100);
+          }
+
+          function bindFixedPoints() {
+            refreshView(true);
           }
 
           function disposeGlobe() {
@@ -688,7 +702,7 @@
             if (cleanedUp) return;
             mapVisible = true;
             if (!pollTimer) {
-              pollTimer = setInterval(function () { applyPointStyle(); }, 300);
+              pollTimer = setInterval(function () { refreshView(false); }, 400);
             }
             bindFixedPoints();
             if (globe && globeEl) {
@@ -722,7 +736,6 @@
                     kw: p.kw || ""
                   });
                 }
-                RENDER = buildGlobalSample(ALL, RENDER_CAP);
                 bindFixedPoints();
               })
               .catch(function (e) {
@@ -822,11 +835,11 @@
 
             function goTo(lat, lng, alt) {
               if (!globe) return;
-              globe.pointOfView({ lat: lat, lng: lng, altitude: alt }, 800);
-              setTimeout(function () { applyPointStyle(); }, 450);
+              globe.pointOfView({ lat: lat, lng: lng, altitude: alt }, 700);
+              setTimeout(function () { refreshView(true); }, 280);
+              setTimeout(function () { refreshView(true); }, 750);
             }
 
-            goTo(20, 10, 2.0);
 
             function setRegion(lat, lng, label) {
               goTo(lat, lng, REGION_ALT);
@@ -855,32 +868,36 @@
                 });
             }
 
-            // Start worldwide so the full network is visible, then geolocate if permitted
-            goTo(15, 10, 2.2);
-            setTimeout(function () {
+            // Go straight to the user — no world/Africa flash
+            setStatus("Finding your location…");
+            function zoomTo(lat, lng, label) {
               if (cleanedUp) return;
-              function zoomTo(lat, lng, label) {
-                setRegion(lat, lng, label || "you");
-              }
-              if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                  function (pos) {
-                    if (cleanedUp) return;
-                    zoomTo(pos.coords.latitude, pos.coords.longitude, "you");
-                  },
-                  function () {
-                    locateByIP().then(function (loc) {
-                      if (loc) zoomTo(loc.lat, loc.lng, loc.source);
-                    }).catch(function () {});
-                  },
-                  { enableHighAccuracy: false, timeout: 6000, maximumAge: 600000 }
-                );
-              } else {
-                locateByIP().then(function (loc) {
-                  if (loc) zoomTo(loc.lat, loc.lng, loc.source);
-                }).catch(function () {});
-              }
-            }, 1400);
+              setRegion(lat, lng, label || "you");
+            }
+            function fallbackWorld() {
+              // Only if location fails entirely
+              goTo(39, -98, 1.15);
+              setStatus("N. America · enable location for local chargers");
+            }
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(
+                function (pos) {
+                  zoomTo(pos.coords.latitude, pos.coords.longitude, "you");
+                },
+                function () {
+                  locateByIP().then(function (loc) {
+                    if (loc) zoomTo(loc.lat, loc.lng, loc.source);
+                    else fallbackWorld();
+                  }).catch(fallbackWorld);
+                },
+                { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
+              );
+            } else {
+              locateByIP().then(function (loc) {
+                if (loc) zoomTo(loc.lat, loc.lng, loc.source);
+                else fallbackWorld();
+              }).catch(fallbackWorld);
+            }
 
             // World / region jump controls so the full global network is one click away
             (function addMapControls() {
