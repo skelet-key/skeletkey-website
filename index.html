@@ -384,12 +384,13 @@
       <figure class="charge-map">
         <div class="charge-map-embed" style="position: relative; width: 100%; max-width: 100%; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
           <div id="charge-globe"></div>
+          <div id="charger-popup-root"></div>
           <div id="charge-globe-status" style="position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(0,0,0,0.65);color:#e8eaf0;font-size:12px;padding:6px 10px;border-radius:8px;">Loading map…</div>
         </div>
         <figcaption>
           <strong>3D Earth · Tesla Superchargers + CCS (≥3&nbsp;kW)</strong> —
           Red pins = Tesla Supercharger · Blue pins = CCS / Combo DC (≥3&nbsp;kW).
-          Markers scale as you zoom. Drag to spin, scroll to zoom.
+          Click a pin for details. Drag to spin, scroll to zoom.
           Curated <strong>Tesla + CCS1</strong> layers
           <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">in Google Earth</a>.
         </figcaption>
@@ -402,20 +403,83 @@
           }
 
           var REGION_ALT = 0.28;
+          var popupRoot = null;
+
+          function closePopup() {
+            if (!popupRoot) popupRoot = document.getElementById("charger-popup-root");
+            if (popupRoot) popupRoot.innerHTML = "";
+          }
+
+          function showPopup(d, clientX, clientY) {
+            if (!popupRoot) popupRoot = document.getElementById("charger-popup-root");
+            if (!popupRoot) return;
+            var isTesla = (d.type === "tesla") || /tesla/i.test(d.op || "") || /supercharger/i.test(d.name || "");
+            var kind = isTesla ? "Tesla Supercharger" : "CCS / Combo DC";
+            var place = d.name || "Charging station";
+            var network = d.op || (isTesla ? "Tesla" : "CCS network");
+            var power = d.kw || (isTesla ? "72 kW+" : "≥ 3 kW");
+            // Open/available stalls are live-only; we don't have real-time occupancy in the static dataset
+            var openInfo = d.open != null
+              ? String(d.open) + (d.stalls != null ? " of " + d.stalls + " stalls open" : " open")
+              : (d.stalls != null ? d.stalls + " stalls (live availability in Maps / Tesla app)" : "Live availability in Google Maps or Tesla app");
+
+            var mapsUrl = "https://www.google.com/maps/search/?api=1&query=" +
+              encodeURIComponent(Number(d.lat).toFixed(6) + "," + Number(d.lng).toFixed(6));
+
+            var box = document.createElement("div");
+            box.className = "charger-popup";
+            // Position near click, clamped inside the embed
+            var embed = document.querySelector(".charge-map-embed");
+            var rect = embed.getBoundingClientRect();
+            var x = clientX - rect.left + 12;
+            var y = clientY - rect.top + 12;
+            if (x + 280 > rect.width) x = Math.max(8, rect.width - 290);
+            if (y + 180 > rect.height) y = Math.max(8, rect.height - 190);
+            box.style.left = x + "px";
+            box.style.top = y + "px";
+
+            box.innerHTML =
+              '<button type="button" class="close-x" aria-label="Close">&times;</button>' +
+              "<h4></h4>" +
+              '<div class="meta"><strong>Type:</strong> <span class="t-type"></span></div>' +
+              '<div class="meta"><strong>Network:</strong> <span class="t-net"></span></div>' +
+              '<div class="meta"><strong>Power:</strong> <span class="t-kw"></span></div>' +
+              '<div class="meta"><strong>Open chargers:</strong> <span class="t-open"></span></div>' +
+              '<a class="gmaps" target="_blank" rel="noopener noreferrer">Open in Google Maps ↗</a>';
+
+            box.querySelector("h4").textContent = place;
+            box.querySelector(".t-type").textContent = kind;
+            box.querySelector(".t-net").textContent = network;
+            box.querySelector(".t-kw").textContent = power;
+            box.querySelector(".t-open").textContent = openInfo;
+            box.querySelector("a.gmaps").href = mapsUrl;
+            box.querySelector(".close-x").onclick = function (e) {
+              e.stopPropagation();
+              closePopup();
+            };
+            box.addEventListener("click", function (e) { e.stopPropagation(); });
+
+            popupRoot.innerHTML = "";
+            popupRoot.appendChild(box);
+          }
 
           function pinElement(d) {
             var wrap = document.createElement("div");
             wrap.className = "charger-pin";
             wrap.style.cssText = "transform:translate(-50%,-100%) scale(0.4);cursor:pointer;pointer-events:auto;line-height:0;";
             var isTesla = (d.type === "tesla") || /tesla/i.test(d.op || "") || /supercharger/i.test(d.name || "");
-            var fill = isTesla ? "#e53935" : "#1e88e5"; // red Tesla, blue CCS
+            var fill = isTesla ? "#e53935" : "#1e88e5";
             wrap.innerHTML =
               '<svg width="11" height="15" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">' +
               '<path d="M12 0C5.9 0 1 4.9 1 11c0 8.3 11 21 11 21s11-12.7 11-21C23 4.9 18.1 0 12 0z" fill="' + fill + '" stroke="#fff" stroke-width="1.5"/>' +
               '<circle cx="12" cy="11" r="4" fill="#fff"/>' +
               "</svg>";
-            var label = (d.name || "Charger") + (d.op ? " · " + d.op : "") + (d.kw ? " · " + d.kw : "");
-            wrap.title = label;
+            wrap.title = (d.name || "Charger") + " — click for details";
+            wrap.addEventListener("click", function (ev) {
+              ev.preventDefault();
+              ev.stopPropagation();
+              showPopup(d, ev.clientX, ev.clientY);
+            });
             return wrap;
           }
 
@@ -455,6 +519,7 @@
           function bootGlobe() {
             var el = document.getElementById("charge-globe");
             if (!el || typeof Globe === "undefined") return;
+            popupRoot = document.getElementById("charger-popup-root");
 
             var globe = Globe()(el)
               .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg")
@@ -468,6 +533,9 @@
               .htmlElementVisibilityModifier(function (el, show) {
                 el.style.opacity = show ? 1 : 0;
               });
+
+            // Close popup when clicking empty globe area
+            el.addEventListener("click", function () { closePopup(); });
 
             function size() {
               globe.width(el.clientWidth);
@@ -484,6 +552,7 @@
                 if (Math.abs(pov.altitude - lastAlt) > 0.008) {
                   lastAlt = pov.altitude;
                   scalePins(pov.altitude);
+                  closePopup();
                 }
               } catch (e) {}
             }, 180);
@@ -515,7 +584,6 @@
             fetch("assets/chargers-us.json", { cache: "force-cache" })
               .then(function (r) { return r.json(); })
               .then(function (pts) {
-                // Safety filter client-side: only tesla + ccs, drop unknown
                 pts = pts.filter(function (p) {
                   return p.type === "tesla" || p.type === "ccs" || /tesla|supercharger|ccs|combo/i.test((p.op || "") + (p.name || ""));
                 });
@@ -523,12 +591,13 @@
                 setTimeout(function () {
                   try { scalePins(globe.pointOfView().altitude || REGION_ALT); } catch (e) {}
                 }, 300);
-                var nTesla = pts.filter(function (p) { return p.type === "tesla" || /tesla|supercharger/i.test((p.op || "") + (p.name || "")); }).length;
-                var nCcs = pts.length - nTesla;
                 setTimeout(function () {
                   var s = document.getElementById("charge-globe-status");
                   if (s && s.textContent.indexOf("110") === -1 && s.textContent.indexOf("around") === -1) {
-                    s.textContent = nTesla.toLocaleString() + " Tesla · " + Math.max(0, nCcs).toLocaleString() + " CCS (≥3 kW)";
+                    var nTesla = pts.filter(function (p) {
+                      return p.type === "tesla" || /tesla|supercharger/i.test((p.op || "") + (p.name || ""));
+                    }).length;
+                    s.textContent = nTesla.toLocaleString() + " Tesla · " + (pts.length - nTesla).toLocaleString() + " CCS (≥3 kW) — click a pin";
                   }
                 }, 1200);
               })
