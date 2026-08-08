@@ -389,7 +389,7 @@
         </div>
         <figcaption>
           <strong>3D Earth · Tesla Superchargers + CCS (≥3&nbsp;kW)</strong> —
-          Red = Tesla · Blue = CCS. Zoom in; pins load around the view. Click for name + Google Maps.
+          Red = Tesla · Blue = CCS. Pins fill the full viewport as you pan and zoom. Click for name + Google Maps.
           <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">Curated layers in Google Earth</a>.
         </figcaption>
       </figure>
@@ -415,6 +415,8 @@
           var onGlobeClick = null;
           var onWheel = null;
           var onPointerUp = null;
+          var onPointerMove = null;
+          var onControlsChange = null;
           var onVisibility = null;
           var onPageHide = null;
 
@@ -490,27 +492,60 @@
             var alt = Math.max(0.05, pov.altitude || 1);
             var lat0 = pov.lat;
             var lng0 = pov.lng;
-            var cos = Math.max(0.3, Math.cos(lat0 * Math.PI / 180));
-            var band = Math.min(25, Math.max(0.6, alt * 12));
-            var maxPins = alt > 0.8 ? 40 : (alt > 0.35 ? 80 : 120);
-            var candidates = [];
+            var cos = Math.max(0.25, Math.cos(lat0 * Math.PI / 180));
+            // FOV-sized band so the whole viewport is covered, not just the center
+            var band = Math.min(55, Math.max(1.2, alt * 28));
+            var maxPins = alt > 1.0 ? 160 : (alt > 0.5 ? 220 : (alt > 0.25 ? 280 : 320));
+            // Grid cells across the view → even spread instead of nearest-to-center cluster
+            var cells = alt > 0.8 ? 6 : (alt > 0.35 ? 8 : 10);
+            var cellSize = (band * 2) / cells;
+            var buckets = {};
+            var cellKeys = [];
             for (var i = 0; i < ALL.length; i++) {
               var p = ALL[i];
-              var dlat = Math.abs(p.lat - lat0);
-              var dlng = Math.abs(p.lng - lng0) * cos;
-              if (dlat <= band && dlng <= band) {
-                candidates.push({ p: p, dist: dlat * dlat + dlng * dlng });
+              var dlat = p.lat - lat0;
+              var dlng = (p.lng - lng0) * cos;
+              // wrap longitude distance
+              if (dlng > 180 * cos) dlng -= 360 * cos;
+              if (dlng < -180 * cos) dlng += 360 * cos;
+              if (Math.abs(dlat) > band || Math.abs(dlng) > band) continue;
+              var cx = Math.min(cells - 1, Math.max(0, Math.floor((dlng + band) / cellSize)));
+              var cy = Math.min(cells - 1, Math.max(0, Math.floor((dlat + band) / cellSize)));
+              var ck = cx + "," + cy;
+              var dist = dlat * dlat + dlng * dlng;
+              if (!buckets[ck]) {
+                buckets[ck] = [];
+                cellKeys.push(ck);
               }
+              buckets[ck].push({ p: p, dist: dist });
             }
-            candidates.sort(function (a, b) { return a.dist - b.dist; });
+            // Sort each cell by distance to cell center-ish (prefer variety)
+            for (var j = 0; j < cellKeys.length; j++) {
+              buckets[cellKeys[j]].sort(function (a, b) { return a.dist - b.dist; });
+            }
+            // Round-robin across cells so pins fill the whole viewport
             var out = [];
             var seen = {};
-            for (var k = 0; k < candidates.length && out.length < maxPins; k++) {
-              var pt = candidates[k].p;
-              var key = pt.lat.toFixed(3) + "," + pt.lng.toFixed(3);
-              if (seen[key]) continue;
-              seen[key] = 1;
-              out.push(pt);
+            var perCell = Math.max(1, Math.ceil(maxPins / Math.max(1, cellKeys.length)));
+            var idx = 0;
+            var added = true;
+            while (out.length < maxPins && added) {
+              added = false;
+              for (var c = 0; c < cellKeys.length && out.length < maxPins; c++) {
+                var list = buckets[cellKeys[c]];
+                if (idx >= list.length) continue;
+                // take up to a few per pass
+                var take = Math.min(perCell, list.length - idx);
+                for (var t = 0; t < take && out.length < maxPins; t++) {
+                  var pt = list[idx + t].p;
+                  var key = pt.lat.toFixed(3) + "," + pt.lng.toFixed(3);
+                  if (seen[key]) continue;
+                  seen[key] = 1;
+                  out.push(pt);
+                  added = true;
+                }
+              }
+              idx += perCell;
             }
             return out;
           }
@@ -530,7 +565,7 @@
           function scheduleRefresh() {
             if (!mapVisible || cleanedUp) return;
             clearTimeout(refreshTimer);
-            refreshTimer = setTimeout(function () { refreshPins(true); }, 120);
+            refreshTimer = setTimeout(function () { refreshPins(true); }, 60);
           }
 
           function disposeGlobe() {
@@ -664,11 +699,22 @@
             };
             onWheel = function () { scheduleRefresh(); };
             onPointerUp = function () { scheduleRefresh(); };
+            onPointerMove = function () { scheduleRefresh(); };
 
             window.addEventListener("resize", onResize);
             globeEl.addEventListener("click", onGlobeClick);
             globeEl.addEventListener("wheel", onWheel, { passive: true });
             globeEl.addEventListener("pointerup", onPointerUp);
+            globeEl.addEventListener("pointermove", onPointerMove, { passive: true });
+
+            // Continuous refresh while OrbitControls animate (pan/zoom/rotate)
+            try {
+              var ctrl = typeof globe.controls === "function" ? globe.controls() : null;
+              if (ctrl && ctrl.addEventListener) {
+                onControlsChange = function () { scheduleRefresh(); };
+                ctrl.addEventListener("change", onControlsChange);
+              }
+            } catch (e) {}
 
             function goTo(lat, lng, alt) {
               if (!globe) return;
@@ -757,7 +803,12 @@
               if (onGlobeClick) globeEl.removeEventListener("click", onGlobeClick);
               if (onWheel) globeEl.removeEventListener("wheel", onWheel);
               if (onPointerUp) globeEl.removeEventListener("pointerup", onPointerUp);
+              if (onPointerMove) globeEl.removeEventListener("pointermove", onPointerMove);
             }
+            try {
+              var ctrl = globe && typeof globe.controls === "function" ? globe.controls() : null;
+              if (ctrl && onControlsChange) ctrl.removeEventListener("change", onControlsChange);
+            } catch (e) {}
             if (onVisibility) document.removeEventListener("visibilitychange", onVisibility);
             if (onPageHide) {
               window.removeEventListener("pagehide", onPageHide);
