@@ -389,8 +389,7 @@
         </div>
         <figcaption>
           <strong>3D Earth · Tesla Superchargers + CCS (≥3&nbsp;kW)</strong> —
-          Red pins = Tesla Supercharger · Blue pins = CCS / Combo DC (≥3&nbsp;kW).
-          Click a pin for details. Drag to spin, scroll to zoom.
+          Red = Tesla Supercharger · Blue = CCS (≥3&nbsp;kW). Click a point for details.
           Curated <strong>Tesla + CCS1</strong> layers
           <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">in Google Earth</a>.
         </figcaption>
@@ -403,6 +402,8 @@
           }
 
           var REGION_ALT = 0.28;
+          var ALL_POINTS = [];
+          var globe = null;
           var popupRoot = null;
 
           function closePopup() {
@@ -412,32 +413,31 @@
 
           function showPopup(d, clientX, clientY) {
             if (!popupRoot) popupRoot = document.getElementById("charger-popup-root");
-            if (!popupRoot) return;
-            var isTesla = (d.type === "tesla") || /tesla/i.test(d.op || "") || /supercharger/i.test(d.name || "");
+            if (!popupRoot || !d) return;
+            var isTesla = d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || ""));
             var kind = isTesla ? "Tesla Supercharger" : "CCS / Combo DC";
             var place = d.name || "Charging station";
             var network = d.op || (isTesla ? "Tesla" : "CCS network");
             var power = d.kw || (isTesla ? "72 kW+" : "≥ 3 kW");
-            // Open/available stalls are live-only; we don't have real-time occupancy in the static dataset
             var openInfo = d.open != null
               ? String(d.open) + (d.stalls != null ? " of " + d.stalls + " stalls open" : " open")
-              : (d.stalls != null ? d.stalls + " stalls (live availability in Maps / Tesla app)" : "Live availability in Google Maps or Tesla app");
-
+              : (d.stalls != null
+                  ? d.stalls + " stalls (live status in Maps / Tesla app)"
+                  : "Live availability in Google Maps or Tesla app");
             var mapsUrl = "https://www.google.com/maps/search/?api=1&query=" +
               encodeURIComponent(Number(d.lat).toFixed(6) + "," + Number(d.lng).toFixed(6));
 
-            var box = document.createElement("div");
-            box.className = "charger-popup";
-            // Position near click, clamped inside the embed
             var embed = document.querySelector(".charge-map-embed");
             var rect = embed.getBoundingClientRect();
-            var x = clientX - rect.left + 12;
-            var y = clientY - rect.top + 12;
+            var x = (clientX != null ? clientX - rect.left : rect.width / 2) + 10;
+            var y = (clientY != null ? clientY - rect.top : 40) + 10;
             if (x + 280 > rect.width) x = Math.max(8, rect.width - 290);
-            if (y + 180 > rect.height) y = Math.max(8, rect.height - 190);
+            if (y + 190 > rect.height) y = Math.max(8, rect.height - 200);
+
+            var box = document.createElement("div");
+            box.className = "charger-popup";
             box.style.left = x + "px";
             box.style.top = y + "px";
-
             box.innerHTML =
               '<button type="button" class="close-x" aria-label="Close">&times;</button>' +
               "<h4></h4>" +
@@ -446,7 +446,6 @@
               '<div class="meta"><strong>Power:</strong> <span class="t-kw"></span></div>' +
               '<div class="meta"><strong>Open chargers:</strong> <span class="t-open"></span></div>' +
               '<a class="gmaps" target="_blank" rel="noopener noreferrer">Open in Google Maps ↗</a>';
-
             box.querySelector("h4").textContent = place;
             box.querySelector(".t-type").textContent = kind;
             box.querySelector(".t-net").textContent = network;
@@ -458,62 +457,57 @@
               closePopup();
             };
             box.addEventListener("click", function (e) { e.stopPropagation(); });
-
             popupRoot.innerHTML = "";
             popupRoot.appendChild(box);
           }
 
-          function pinElement(d) {
-            var wrap = document.createElement("div");
-            wrap.className = "charger-pin";
-            wrap.style.cssText = "transform:translate(-50%,-100%) scale(0.4);cursor:pointer;pointer-events:auto;line-height:0;";
-            var isTesla = (d.type === "tesla") || /tesla/i.test(d.op || "") || /supercharger/i.test(d.name || "");
-            var fill = isTesla ? "#e53935" : "#1e88e5";
-            wrap.innerHTML =
-              '<svg width="11" height="15" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">' +
-              '<path d="M12 0C5.9 0 1 4.9 1 11c0 8.3 11 21 11 21s11-12.7 11-21C23 4.9 18.1 0 12 0z" fill="' + fill + '" stroke="#fff" stroke-width="1.5"/>' +
-              '<circle cx="12" cy="11" r="4" fill="#fff"/>' +
-              "</svg>";
-            wrap.title = (d.name || "Charger") + " — click for details";
-            wrap.addEventListener("click", function (ev) {
-              ev.preventDefault();
-              ev.stopPropagation();
-              showPopup(d, ev.clientX, ev.clientY);
-            });
-            return wrap;
+          // Haversine-ish for local filter (degrees approx)
+          function visibleSubset(pov) {
+            if (!ALL_POINTS.length) return [];
+            var alt = pov.altitude || 1.5;
+            // Far out: sparse sample only (keeps GPU light)
+            if (alt > 1.2) {
+              var step = Math.ceil(ALL_POINTS.length / 400);
+              var sparse = [];
+              for (var i = 0; i < ALL_POINTS.length; i += step) sparse.push(ALL_POINTS[i]);
+              return sparse;
+            }
+            // Medium: denser sample
+            if (alt > 0.55) {
+              var step2 = Math.ceil(ALL_POINTS.length / 1200);
+              var mid = [];
+              for (var j = 0; j < ALL_POINTS.length; j += step2) mid.push(ALL_POINTS[j]);
+              return mid;
+            }
+            // Close (~110 mi and in): points near camera center only
+            var lat0 = pov.lat, lng0 = pov.lng;
+            // ~3 deg ≈ 200 mi band
+            var band = alt > 0.35 ? 4.5 : 2.2;
+            var local = [];
+            for (var k = 0; k < ALL_POINTS.length; k++) {
+              var p = ALL_POINTS[k];
+              if (Math.abs(p.lat - lat0) <= band && Math.abs(p.lng - lng0) <= band / Math.max(0.4, Math.cos(lat0 * Math.PI / 180))) {
+                local.push(p);
+              }
+            }
+            // Cap for safety
+            if (local.length > 2500) {
+              var st = Math.ceil(local.length / 2500);
+              var capped = [];
+              for (var m = 0; m < local.length; m += st) capped.push(local[m]);
+              return capped;
+            }
+            return local;
           }
 
-          function scalePins(altitude) {
-            var scale = Math.max(0.25, Math.min(0.75, 0.18 / Math.max(0.15, altitude)));
-            document.querySelectorAll(".charger-pin").forEach(function (el) {
-              el.style.transform = "translate(-50%,-100%) scale(" + scale.toFixed(3) + ")";
-            });
-          }
-
-          function goTo(globe, lat, lng, alt) {
-            globe.pointOfView({ lat: lat, lng: lng, altitude: alt }, 1100);
-            setTimeout(function () { scalePins(alt); }, 250);
-          }
-
-          function locateByIP() {
-            return fetch("https://ipapi.co/json/", { cache: "no-store" })
-              .then(function (r) { return r.json(); })
-              .then(function (d) {
-                if (d && typeof d.latitude === "number" && typeof d.longitude === "number") {
-                  return { lat: d.latitude, lng: d.longitude, source: (d.city || "your area") + (d.country_name ? ", " + d.country_name : "") };
-                }
-                throw new Error("ipapi empty");
-              })
-              .catch(function () {
-                return fetch("https://ipwho.is/")
-                  .then(function (r) { return r.json(); })
-                  .then(function (d) {
-                    if (d && d.success !== false && d.latitude != null) {
-                      return { lat: d.latitude, lng: d.longitude, source: (d.city || "your area") + (d.country ? ", " + d.country : "") };
-                    }
-                    throw new Error("ipwho empty");
-                  });
-              });
+          function refreshPoints() {
+            if (!globe) return;
+            var pov = globe.pointOfView();
+            var subset = visibleSubset(pov);
+            // point radius scales with altitude
+            var r = Math.max(0.12, Math.min(0.45, 0.08 / Math.max(0.12, pov.altitude)));
+            globe.pointRadius(r);
+            globe.pointsData(subset);
           }
 
           function bootGlobe() {
@@ -521,21 +515,50 @@
             if (!el || typeof Globe === "undefined") return;
             popupRoot = document.getElementById("charger-popup-root");
 
-            var globe = Globe()(el)
-              .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg")
-              .bumpImageUrl("https://unpkg.com/three-globe/example/img/earth-topology.png")
+            globe = Globe()(el)
+              .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-night.jpg")
               .backgroundColor("#02040a")
               .showAtmosphere(true)
               .atmosphereColor("#4a6fa5")
-              .atmosphereAltitude(0.15)
-              .htmlElementsData([])
-              .htmlElement(pinElement)
-              .htmlElementVisibilityModifier(function (el, show) {
-                el.style.opacity = show ? 1 : 0;
+              .atmosphereAltitude(0.12)
+              .pointsData([])
+              .pointAltitude(0.004)
+              .pointRadius(0.2)
+              .pointResolution(6)
+              .pointsMerge(true) // big perf win: merge into fewer draw calls
+              .pointColor(function (d) {
+                var isTesla = d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || ""));
+                return isTesla ? "#e53935" : "#1e88e5";
+              })
+              .onPointClick(function (d, ev) {
+                if (!d) return;
+                var cx = ev && (ev.clientX || (ev.point && ev.point.x));
+                var cy = ev && (ev.clientY || (ev.point && ev.point.y));
+                // globe.gl may pass different event shapes
+                if (ev && ev.srcElement && ev.clientX == null && typeof ev === "object") {
+                  // try original event
+                }
+                showPopup(d, (ev && ev.clientX) || null, (ev && ev.clientY) || null);
               });
 
-            // Close popup when clicking empty globe area
-            el.addEventListener("click", function () { closePopup(); });
+            // Also handle pointer for older globe.gl event args
+            try {
+              globe.onPointClick(function (point, event, coords) {
+                var cx = event && event.clientX;
+                var cy = event && event.clientY;
+                showPopup(point, cx, cy);
+              });
+            } catch (e) {}
+
+            el.addEventListener("click", function (e) {
+              // if click is not on popup, and no point handled, close
+              if (!e.target.closest || !e.target.closest(".charger-popup")) {
+                // delay so point click can fire first
+                setTimeout(function () {
+                  /* leave open if just opened */
+                }, 0);
+              }
+            });
 
             function size() {
               globe.width(el.clientWidth);
@@ -544,62 +567,77 @@
             size();
             window.addEventListener("resize", size);
 
-            var lastAlt = REGION_ALT;
-            setInterval(function () {
-              try {
-                var pov = globe.pointOfView();
-                if (!pov) return;
-                if (Math.abs(pov.altitude - lastAlt) > 0.008) {
-                  lastAlt = pov.altitude;
-                  scalePins(pov.altitude);
-                  closePopup();
-                }
-              } catch (e) {}
-            }, 180);
+            // Throttled refresh on camera move
+            var t = null;
+            var last = 0;
+            function onMove() {
+              var now = Date.now();
+              if (now - last < 200) {
+                clearTimeout(t);
+                t = setTimeout(function () { last = Date.now(); refreshPoints(); }, 220);
+                return;
+              }
+              last = now;
+              refreshPoints();
+            }
+            // Poll POV changes (globe.gl controls don't always emit)
+            setInterval(onMove, 400);
 
-            goTo(globe, 20, 10, 1.8);
+            function goTo(lat, lng, alt) {
+              globe.pointOfView({ lat: lat, lng: lng, altitude: alt }, 1000);
+              setTimeout(refreshPoints, 300);
+            }
+
+            goTo(20, 10, 1.7);
             setStatus("Locating…");
 
             function setRegion(lat, lng, label) {
-              goTo(globe, lat, lng, REGION_ALT);
-              setStatus("~110 miles around " + label);
+              goTo(lat, lng, REGION_ALT);
+              setStatus("~110 miles around " + label + " — click a point");
+            }
+
+            function locateByIP() {
+              return fetch("https://ipapi.co/json/", { cache: "no-store" })
+                .then(function (r) { return r.json(); })
+                .then(function (d) {
+                  if (d && typeof d.latitude === "number") {
+                    return { lat: d.latitude, lng: d.longitude, source: (d.city || "your area") + (d.country_name ? ", " + d.country_name : "") };
+                  }
+                  throw new Error("ipapi");
+                })
+                .catch(function () {
+                  return fetch("https://ipwho.is/").then(function (r) { return r.json(); }).then(function (d) {
+                    if (d && d.latitude != null) {
+                      return { lat: d.latitude, lng: d.longitude, source: (d.city || "your area") + (d.country ? ", " + d.country : "") };
+                    }
+                    throw new Error("ipwho");
+                  });
+                });
             }
 
             if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(
                 function (pos) { setRegion(pos.coords.latitude, pos.coords.longitude, "you"); },
                 function () {
-                  locateByIP()
-                    .then(function (loc) { setRegion(loc.lat, loc.lng, loc.source); })
-                    .catch(function () { goTo(globe, 20, 10, 1.6); setStatus("World view"); });
+                  locateByIP().then(function (loc) { setRegion(loc.lat, loc.lng, loc.source); })
+                    .catch(function () { goTo(20, 10, 1.5); setStatus("World view — zoom in & click points"); });
                 },
                 { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
               );
             } else {
-              locateByIP()
-                .then(function (loc) { setRegion(loc.lat, loc.lng, loc.source); })
-                .catch(function () { goTo(globe, 20, 10, 1.6); setStatus("World view"); });
+              locateByIP().then(function (loc) { setRegion(loc.lat, loc.lng, loc.source); })
+                .catch(function () { goTo(20, 10, 1.5); setStatus("World view — zoom in & click points"); });
             }
 
             fetch("assets/chargers-us.json", { cache: "force-cache" })
               .then(function (r) { return r.json(); })
               .then(function (pts) {
-                pts = pts.filter(function (p) {
-                  return p.type === "tesla" || p.type === "ccs" || /tesla|supercharger|ccs|combo/i.test((p.op || "") + (p.name || ""));
+                ALL_POINTS = pts.filter(function (p) {
+                  return p && p.lat != null && p.lng != null &&
+                    (p.type === "tesla" || p.type === "ccs" || /tesla|supercharger|ccs|combo/i.test((p.op || "") + (p.name || "")));
                 });
-                globe.htmlElementsData(pts);
-                setTimeout(function () {
-                  try { scalePins(globe.pointOfView().altitude || REGION_ALT); } catch (e) {}
-                }, 300);
-                setTimeout(function () {
-                  var s = document.getElementById("charge-globe-status");
-                  if (s && s.textContent.indexOf("110") === -1 && s.textContent.indexOf("around") === -1) {
-                    var nTesla = pts.filter(function (p) {
-                      return p.type === "tesla" || /tesla|supercharger/i.test((p.op || "") + (p.name || ""));
-                    }).length;
-                    s.textContent = nTesla.toLocaleString() + " Tesla · " + (pts.length - nTesla).toLocaleString() + " CCS (≥3 kW) — click a pin";
-                  }
-                }, 1200);
+                refreshPoints();
+                setStatus(ALL_POINTS.length.toLocaleString() + " Tesla/CCS sites — zoom in, click a point");
               })
               .catch(function (err) {
                 console.warn(err);
