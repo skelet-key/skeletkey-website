@@ -9,8 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
-  <!-- Google Maps 3D (replace YOUR_GOOGLE_MAPS_API_KEY with a key that has Maps JavaScript API enabled) -->
-  <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&v=beta&libraries=maps3d"></script>
+  <!-- Google Maps 3D: key loaded from assets/maps-key.js (not committed) -->
   <style>
     gmp-map-3d {
       width: 100%;
@@ -20,6 +19,28 @@
       background: #0a0a0f;
     }
   </style>
+  <script>
+    // Loads Maps 3D after reading key from /assets/maps-key.js
+    (function () {
+      var s = document.createElement("script");
+      s.src = "assets/maps-key.js";
+      s.onload = function () {
+        var key = window.SKELETKEY_MAPS_KEY;
+        if (!key) {
+          console.warn("SKELETKEY_MAPS_KEY missing — add assets/maps-key.js");
+          return;
+        }
+        var api = document.createElement("script");
+        api.async = true;
+        api.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(key) + "&v=beta&libraries=maps3d";
+        document.head.appendChild(api);
+      };
+      s.onerror = function () {
+        console.warn("assets/maps-key.js not found");
+      };
+      document.head.appendChild(s);
+    })();
+  </script>
 </head>
 <body>
 
