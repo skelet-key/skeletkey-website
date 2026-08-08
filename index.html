@@ -389,9 +389,8 @@
         </div>
         <figcaption>
           <strong>Global network · Tesla Superchargers + CCS (≥3&nbsp;kW)</strong> —
-          Red = Tesla · Blue = CCS. Zoom out for the full worldwide map; pan to explore every region.
-          Puca ships by plane — charge wherever CCS1 or Tesla (with adapter) is available.
-          Click a pin for name + Google Maps.
+          Red = Tesla · Blue = CCS. All ~15,000+ worldwide stations are fixed on the globe — rotate and zoom freely; pins stay put and only change size with altitude.
+          Puca ships by plane anywhere customs allows. Click near a pin for name + Google Maps.
           <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">Curated layers in Google Earth</a>.
         </figcaption>
       </figure>
@@ -469,127 +468,54 @@
             popupRoot.appendChild(box);
           }
 
-          function makePin(d) {
-            var isTesla = d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || ""));
-            var fill = isTesla ? "#ea4335" : "#1a73e8";
-            var el = document.createElement("div");
-            el.className = "gmaps-pin";
-            el.style.cssText = "width:10px;height:16px;margin-left:-5px;margin-top:-16px;cursor:pointer;pointer-events:auto;line-height:0;filter:drop-shadow(0 1px 1px rgba(0,0,0,.4));";
-            el.innerHTML =
-              '<svg width="10" height="16" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">' +
-              '<path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z" fill="' + fill + '"/>' +
-              '<circle cx="12" cy="12" r="5" fill="#fff"/>' +
-              "</svg>";
-            el.title = d.name || "EV charger";
-            el.addEventListener("click", function onPinClick(ev) {
-              ev.preventDefault();
-              ev.stopPropagation();
-              showPopup(d, ev.clientX, ev.clientY);
-            });
-            return el;
+          function isTesla(d) {
+            return d && (d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || "")));
           }
 
-          function pickVisible(pov) {
-            if (!ALL.length) return [];
-            var alt = Math.max(0.05, pov.altitude || 1);
-            var lat0 = pov.lat;
-            var lng0 = pov.lng;
-            var cos = Math.max(0.2, Math.cos(lat0 * Math.PI / 180));
-            // World / continent / region / city FOV bands
-            var band, maxPins, cells;
-            if (alt >= 1.6) {          // whole-Earth
-              band = 180;
-              maxPins = 700;
-              cells = 14;
-            } else if (alt >= 1.0) {   // multi-continent
-              band = 90;
-              maxPins = 550;
-              cells = 12;
-            } else if (alt >= 0.5) {   // continent
-              band = Math.min(55, alt * 40);
-              maxPins = 400;
-              cells = 10;
-            } else if (alt >= 0.22) {  // country / multi-state
-              band = Math.min(30, alt * 35);
-              maxPins = 320;
-              cells = 9;
-            } else {                   // metro
-              band = Math.min(12, Math.max(1.5, alt * 28));
-              maxPins = 280;
-              cells = 8;
-            }
-            var cellSize = (band * 2) / cells;
-            var buckets = {};
-            var cellKeys = [];
+          function applyPointStyle() {
+            if (!globe || cleanedUp) return;
+            var pov = globe.pointOfView() || {};
+            var alt = Math.max(0.05, pov.altitude || 2);
+            // Visual size only — data never changes, so pins stay locked to lat/lng
+            var r = Math.max(0.12, Math.min(0.55, 0.22 / Math.sqrt(alt)));
+            try { globe.pointRadius(r); } catch (e) {}
+          }
+
+          function nearestCharger(lat, lng, maxDeg) {
+            if (!ALL.length) return null;
+            maxDeg = maxDeg || 1.5;
+            var best = null, bestD = Infinity;
+            var cos = Math.max(0.2, Math.cos(lat * Math.PI / 180));
             for (var i = 0; i < ALL.length; i++) {
               var p = ALL[i];
-              var dlat = p.lat - lat0;
-              var dlng = (p.lng - lng0);
-              // shortest longitude delta
+              var dlat = p.lat - lat;
+              var dlng = p.lng - lng;
               while (dlng > 180) dlng -= 360;
               while (dlng < -180) dlng += 360;
-              var dlngAdj = dlng * cos;
-              if (Math.abs(dlat) > band || Math.abs(dlngAdj) > band) continue;
-              var cx = Math.min(cells - 1, Math.max(0, Math.floor((dlngAdj + band) / cellSize)));
-              var cy = Math.min(cells - 1, Math.max(0, Math.floor((dlat + band) / cellSize)));
-              var ck = cx + "," + cy;
-              var dist = dlat * dlat + dlngAdj * dlngAdj;
-              if (!buckets[ck]) {
-                buckets[ck] = [];
-                cellKeys.push(ck);
-              }
-              buckets[ck].push({ p: p, dist: dist });
+              var d = dlat * dlat + (dlng * cos) * (dlng * cos);
+              if (d < bestD) { bestD = d; best = p; }
             }
-            for (var j = 0; j < cellKeys.length; j++) {
-              buckets[cellKeys[j]].sort(function (a, b) { return a.dist - b.dist; });
-            }
-            // Round-robin so every region of the viewport gets pins
-            var out = [];
-            var seen = {};
-            var perCell = Math.max(1, Math.ceil(maxPins / Math.max(1, cellKeys.length)));
-            var idx = 0;
-            var added = true;
-            while (out.length < maxPins && added) {
-              added = false;
-              for (var c = 0; c < cellKeys.length && out.length < maxPins; c++) {
-                var list = buckets[cellKeys[c]];
-                if (idx >= list.length) continue;
-                var take = Math.min(perCell, list.length - idx);
-                for (var t = 0; t < take && out.length < maxPins; t++) {
-                  var pt = list[idx + t].p;
-                  var key = pt.lat.toFixed(3) + "," + pt.lng.toFixed(3);
-                  if (seen[key]) continue;
-                  seen[key] = 1;
-                  out.push(pt);
-                  added = true;
-                }
-              }
-              idx += perCell;
-            }
-            return out;
+            if (!best || bestD > maxDeg * maxDeg) return null;
+            return best;
           }
 
-          function refreshPins(force) {
-            if (!globe || !mapVisible || cleanedUp) return;
-            var pov = globe.pointOfView();
-            if (!pov) return;
-            var key = pov.lat.toFixed(2) + "," + pov.lng.toFixed(2) + "," + pov.altitude.toFixed(2);
-            if (!force && key === lastKey) return;
-            lastKey = key;
-            var subset = pickVisible(pov);
-            globe.htmlElementsData(subset);
-            setStatus(subset.length + " in view · " + ALL.length.toLocaleString() + " Tesla + CCS worldwide · click for details");
+          function bindFixedPoints() {
+            if (!globe || cleanedUp || !ALL.length) return;
+            globe.pointsData(ALL);
+            applyPointStyle();
+            setStatus(ALL.length.toLocaleString() + " Tesla + CCS chargers worldwide · click a pin for details");
           }
 
           function scheduleRefresh() {
+            // Only restyle size on zoom — never reload / reshuffle pin positions
             if (!mapVisible || cleanedUp) return;
             clearTimeout(refreshTimer);
-            refreshTimer = setTimeout(function () { refreshPins(true); }, 60);
+            refreshTimer = setTimeout(function () { applyPointStyle(); }, 50);
           }
 
           function disposeGlobe() {
             if (!globe) return;
-            try { globe.htmlElementsData([]); } catch (e) {}
+            try { globe.pointsData([]); } catch (e) {}
             try {
               // three-globe / globe.gl: release WebGL resources when possible
               var renderer = typeof globe.renderer === "function" ? globe.renderer() : globe._renderer;
@@ -630,18 +556,16 @@
             clearTimeout(refreshTimer);
             refreshTimer = null;
             closePopup();
-            if (globe) {
-              try { globe.htmlElementsData([]); } catch (e) {}
-            }
+            // Keep pointsData loaded so pins stay fixed on the globe (no pop-in on return)
           }
 
           function resumeMap() {
             if (cleanedUp) return;
             mapVisible = true;
             if (!pollTimer) {
-              pollTimer = setInterval(function () { refreshPins(false); }, 300);
+              pollTimer = setInterval(function () { applyPointStyle(); }, 300);
             }
-            refreshPins(true);
+            bindFixedPoints();
             if (globe && globeEl) {
               try {
                 globe.width(globeEl.clientWidth);
@@ -673,7 +597,7 @@
                     kw: p.kw || ""
                   });
                 }
-                if (mapVisible) refreshPins(true);
+                bindFixedPoints();
               })
               .catch(function (e) {
                 if (!cleanedUp) setStatus("Could not load chargers");
@@ -698,15 +622,14 @@
               .showAtmosphere(true)
               .atmosphereColor("#6aa0d8")
               .atmosphereAltitude(0.15)
-              .htmlLat("lat")
-              .htmlLng("lng")
-              .htmlAltitude(0.01)
-              .htmlElementsData([])
-              .htmlElement(makePin)
-              .htmlElementVisibilityModifier(function (node, show) {
-                node.style.opacity = show ? "1" : "0";
-                node.style.pointerEvents = show ? "auto" : "none";
-              });
+              .pointsData([])
+              .pointLat("lat")
+              .pointLng("lng")
+              .pointAltitude(0.008)
+              .pointRadius(0.25)
+              .pointColor(function (d) { return isTesla(d) ? "#ea4335" : "#1a73e8"; })
+              .pointsMerge(true)
+              .pointsTransitionDuration(0);
 
             onResize = function () {
               if (!mapVisible || !globe || !globeEl) return;
@@ -714,7 +637,9 @@
               globe.height(globeEl.clientHeight || 700);
             };
             onGlobeClick = function (e) {
-              if (!e.target.closest(".gmaps-pin") && !e.target.closest(".charger-popup")) closePopup();
+              if (e.target.closest && e.target.closest(".charger-popup")) return;
+              // If click isn't on popup, try to resolve nearest fixed charger under cursor via globe coords
+              closePopup();
             };
             onWheel = function () { scheduleRefresh(); };
             onPointerUp = function () { scheduleRefresh(); };
@@ -735,10 +660,29 @@
               }
             } catch (e) {}
 
+            // Click on globe → open nearest charger (positions are fixed forever)
+            try {
+              globe.onGlobeClick(function (coords, ev) {
+                if (!coords || cleanedUp) return;
+                var pov = globe.pointOfView() || {};
+                var alt = Math.max(0.05, pov.altitude || 2);
+                // Tighter pick radius when zoomed in
+                var maxDeg = alt > 1.2 ? 2.5 : (alt > 0.5 ? 1.2 : (alt > 0.2 ? 0.45 : 0.15));
+                var hit = nearestCharger(coords.lat, coords.lng, maxDeg);
+                if (hit) {
+                  var cx = ev && ev.clientX != null ? ev.clientX : null;
+                  var cy = ev && ev.clientY != null ? ev.clientY : null;
+                  showPopup(hit, cx, cy);
+                } else {
+                  closePopup();
+                }
+              });
+            } catch (e) {}
+
             function goTo(lat, lng, alt) {
               if (!globe) return;
               globe.pointOfView({ lat: lat, lng: lng, altitude: alt }, 800);
-              setTimeout(function () { refreshPins(true); }, 400);
+              setTimeout(function () { applyPointStyle(); }, 450);
             }
 
             goTo(20, 10, 2.0);
