@@ -475,10 +475,14 @@
           function applyPointStyle() {
             if (!globe || cleanedUp) return;
             var pov = globe.pointOfView() || {};
-            var alt = Math.max(0.05, pov.altitude || 2);
-            // Visual size only — data never changes, so pins stay locked to lat/lng
-            var r = Math.max(0.12, Math.min(0.55, 0.22 / Math.sqrt(alt)));
-            try { globe.pointRadius(r); } catch (e) {}
+            var alt = Math.max(0.04, pov.altitude || 2);
+            // Radius in degrees of latitude — shrinks as you zoom in so pins stay dots, not blobs
+            // world (alt~2.2) → ~0.25°; continent (~1.0) → ~0.12°; metro (~0.18) → ~0.03°
+            var r = Math.max(0.018, Math.min(0.28, 0.12 * alt));
+            try {
+              globe.pointRadius(r);
+              globe.pointAltitude(Math.min(0.02, 0.006 + alt * 0.002));
+            } catch (e) {}
           }
 
           function nearestCharger(lat, lng, maxDeg) {
@@ -625,9 +629,12 @@
               .pointsData([])
               .pointLat("lat")
               .pointLng("lng")
-              .pointAltitude(0.008)
-              .pointRadius(0.25)
-              .pointColor(function (d) { return isTesla(d) ? "#ea4335" : "#1a73e8"; })
+              .pointAltitude(0.01)
+              .pointRadius(0.12)
+              .pointColor(function (d) {
+                return (d && (d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || ""))))
+                  ? "#ea4335" : "#1a73e8";
+              })
               .pointsMerge(true)
               .pointsTransitionDuration(0);
 
