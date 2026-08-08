@@ -9,38 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
-  <!-- Google Maps 3D: key loaded from assets/maps-key.js (not committed) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZsMNDdlqY+qlSgaiV8gVqKbIBF0=" crossorigin=""></script>
   <style>
-    gmp-map-3d {
+    #charge-leaflet-map {
       width: 100%;
       height: 700px;
-      display: block;
-      border: 0;
       background: #0a0a0f;
+      z-index: 0;
     }
   </style>
-  <script>
-    // Loads Maps 3D after reading key from /assets/maps-key.js
-    (function () {
-      var s = document.createElement("script");
-      s.src = "assets/maps-key.js";
-      s.onload = function () {
-        var key = window.SKELETKEY_MAPS_KEY;
-        if (!key) {
-          console.warn("SKELETKEY_MAPS_KEY missing — add assets/maps-key.js");
-          return;
-        }
-        var api = document.createElement("script");
-        api.async = true;
-        api.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(key) + "&v=beta&libraries=maps3d";
-        document.head.appendChild(api);
-      };
-      s.onerror = function () {
-        console.warn("assets/maps-key.js not found");
-      };
-      document.head.appendChild(s);
-    })();
-  </script>
 </head>
 <body>
 
@@ -399,22 +377,57 @@
 
       <figure class="charge-map">
         <div class="charge-map-embed" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-          <gmp-map-3d
-            mode="hybrid"
-            center="39.8283,-98.5795,1200000"
-            range="4200000"
-            tilt="45"
-            heading="0"
-            default-ui-disabled="false">
-          </gmp-map-3d>
+          <div id="charge-leaflet-map" role="img" aria-label="United States map for EV charging coverage"></div>
         </div>
         <figcaption>
-          <strong>Nationwide charge map (3D)</strong> — interactive Google Maps 3D overview of the U.S.
-          Your full charger layers and markers live in the Google Earth project:
-          <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">open Tesla + CCS1 layers in Google Earth ↗</a>.
-          <br /><span style="opacity:0.85">Map key is loaded from <code>assets/maps-key.js</code>. Earth project data cannot be loaded into <code>gmp-map-3d</code> directly — export KML/GeoJSON from Earth if you want those charger markers on this 3D map.</span>
+          <strong>Nationwide charge map</strong> — free interactive map (OpenStreetMap).
+          For Tesla Superchargers and CCS1 layers with your markers:
+          <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">open the full charger map in Google Earth ↗</a>
+          (no paid Google Cloud account required for this page).
         </figcaption>
       </figure>
+      <script>
+        (function () {
+          function initChargeMap() {
+            var el = document.getElementById("charge-leaflet-map");
+            if (!el || typeof L === "undefined") return;
+            if (el._leaflet_id) return;
+            var map = L.map("charge-leaflet-map", {
+              scrollWheelZoom: false,
+              worldCopyJump: true
+            }).setView([39.5, -98.35], 4);
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+              maxZoom: 18,
+              attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
+            }).addTo(map);
+            // Rough US coverage outline note markers (illustrative hubs)
+            var hubs = [
+              { name: "West Coast corridor", lat: 37.7, lng: -122.4 },
+              { name: "Southwest", lat: 33.4, lng: -112.0 },
+              { name: "Texas", lat: 32.8, lng: -96.8 },
+              { name: "Midwest", lat: 41.9, lng: -87.6 },
+              { name: "Northeast", lat: 40.7, lng: -74.0 },
+              { name: "Southeast", lat: 33.7, lng: -84.4 },
+              { name: "Florida", lat: 28.5, lng: -81.4 }
+            ];
+            hubs.forEach(function (h) {
+              L.circleMarker([h.lat, h.lng], {
+                radius: 7,
+                color: "#d4af37",
+                weight: 2,
+                fillColor: "#d4af37",
+                fillOpacity: 0.85
+              }).bindPopup("<strong>" + h.name + "</strong><br>See Google Earth for full Tesla + CCS1 stations.").addTo(map);
+            });
+            setTimeout(function () { map.invalidateSize(); }, 200);
+          }
+          if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initChargeMap);
+          } else {
+            initChargeMap();
+          }
+        })();
+      </script>
     </div>
   </section>
 
