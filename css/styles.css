@@ -1154,3 +1154,67 @@ p strong,
   margin-top: 1rem;
   margin-bottom: 0;
 }
+
+/* Fast Charge network */
+.charge-section .section-lead {
+  max-width: 720px;
+}
+.charge-pair,
+.charge-stations {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin: 1.75rem 0 1.5rem;
+}
+.charge-card {
+  margin: 0;
+  background: var(--surface, #12141c);
+  border: 1px solid var(--border, #2a2d3a);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.charge-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  background: #0a0a0f;
+}
+.charge-card figcaption {
+  padding: 0.85rem 1rem 1rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--text-secondary, #9aa3b5);
+}
+.charge-card figcaption strong {
+  color: var(--text, #e8eaf0);
+}
+.charge-map {
+  margin: 1.5rem 0 0;
+  background: var(--surface, #12141c);
+  border: 1px solid var(--border, #2a2d3a);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.charge-map-img {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+  background: #0e1118;
+}
+.charge-map figcaption {
+  padding: 1rem 1.15rem 1.15rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #9aa3b5);
+}
+.charge-map figcaption strong {
+  color: var(--text, #e8eaf0);
+}
+@media (max-width: 768px) {
+  .charge-pair,
+  .charge-stations {
+    grid-template-columns: 1fr;
+  }
+}
