@@ -9,14 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.31.1/dist/globe.gl.min.js"></script>
   <style>
-    #charge-leaflet-map {
+    #charge-globe {
       width: 100%;
       height: 700px;
-      background: #0a0a0f;
-      z-index: 0;
+      background: #02040a;
+    }
+    .charge-map-embed {
+      background: #02040a;
     }
   </style>
 </head>
@@ -377,55 +379,87 @@
 
       <figure class="charge-map">
         <div class="charge-map-embed" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-          <div id="charge-leaflet-map" role="img" aria-label="United States map for EV charging coverage"></div>
+          <div id="charge-globe"></div>
         </div>
         <figcaption>
-          <strong>Nationwide charge map</strong> — free interactive map (OpenStreetMap).
-          For Tesla Superchargers and CCS1 layers with your markers:
-          <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">open the full charger map in Google Earth ↗</a>
-          (no paid Google Cloud account required for this page).
+          <strong>3D Earth · public EV chargers</strong> — live stations from OpenStreetMap worldwide (free, no Google Cloud).
+          Gold points = charging locations. Drag to spin, scroll to zoom.
+          For your curated <strong>Tesla + CCS1</strong> layers:
+          <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">open the full project in Google Earth ↗</a>
         </figcaption>
       </figure>
       <script>
         (function () {
-          function initChargeMap() {
-            var el = document.getElementById("charge-leaflet-map");
-            if (!el || typeof L === "undefined") return;
-            if (el._leaflet_id) return;
-            var map = L.map("charge-leaflet-map", {
-              scrollWheelZoom: false,
-              worldCopyJump: true
-            }).setView([39.5, -98.35], 4);
-            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-              maxZoom: 18,
-              attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
-            }).addTo(map);
-            // Rough US coverage outline note markers (illustrative hubs)
-            var hubs = [
-              { name: "West Coast corridor", lat: 37.7, lng: -122.4 },
-              { name: "Southwest", lat: 33.4, lng: -112.0 },
-              { name: "Texas", lat: 32.8, lng: -96.8 },
-              { name: "Midwest", lat: 41.9, lng: -87.6 },
-              { name: "Northeast", lat: 40.7, lng: -74.0 },
-              { name: "Southeast", lat: 33.7, lng: -84.4 },
-              { name: "Florida", lat: 28.5, lng: -81.4 }
-            ];
-            hubs.forEach(function (h) {
-              L.circleMarker([h.lat, h.lng], {
-                radius: 7,
-                color: "#d4af37",
-                weight: 2,
-                fillColor: "#d4af37",
-                fillOpacity: 0.85
-              }).bindPopup("<strong>" + h.name + "</strong><br>See Google Earth for full Tesla + CCS1 stations.").addTo(map);
+          var el = document.getElementById("charge-globe");
+          if (!el || typeof Globe === "undefined") return;
+
+          var globe = Globe()(el)
+            .globeImageUrl("https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg")
+            .bumpImageUrl("https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png")
+            .backgroundColor("#02040a")
+            .showAtmosphere(true)
+            .atmosphereColor("#4a6fa5")
+            .atmosphereAltitude(0.15)
+            .pointsData([])
+            .pointAltitude(0.002)
+            .pointRadius(0.22)
+            .pointColor(function () { return "#d4af37"; })
+            .pointLabel(function (d) {
+              return (d.name || "EV charger") + (d.operator ? " · " + d.operator : "");
             });
-            setTimeout(function () { map.invalidateSize(); }, 200);
+
+          // Start over the US
+          globe.pointOfView({ lat: 37.5, lng: -95, altitude: 1.8 }, 0);
+
+          function size() {
+            var w = el.clientWidth;
+            var h = el.clientHeight || 700;
+            globe.width(w);
+            globe.height(h);
           }
-          if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", initChargeMap);
-          } else {
-            initChargeMap();
-          }
+          size();
+          window.addEventListener("resize", size);
+
+          // OpenStreetMap charging stations via Overpass (US-focused bbox, free, no key)
+          var query =
+            "[out:json][timeout:60];" +
+            "node[\"amenity\"=\"charging_station\"](24.5,-125.0,49.5,-66.0);" +
+            "out body 4000;";
+
+          fetch("https://overpass-api.de/api/interpreter", {
+            method: "POST",
+            body: "data=" + encodeURIComponent(query),
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
+          })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+              var pts = (data.elements || [])
+                .filter(function (n) { return n.lat != null && n.lon != null; })
+                .map(function (n) {
+                  var tags = n.tags || {};
+                  return {
+                    lat: n.lat,
+                    lng: n.lon,
+                    name: tags.name || tags.operator || "EV charging station",
+                    operator: tags.operator || tags.network || ""
+                  };
+                });
+              globe.pointsData(pts);
+              console.log("Loaded " + pts.length + " public chargers on 3D Earth");
+            })
+            .catch(function (err) {
+              console.warn("Overpass charger load failed", err);
+              // Fallback sample hubs so the globe is never empty
+              globe.pointsData([
+                { lat: 37.7, lng: -122.4, name: "Bay Area" },
+                { lat: 34.0, lng: -118.2, name: "Los Angeles" },
+                { lat: 32.8, lng: -96.8, name: "Dallas" },
+                { lat: 41.9, lng: -87.6, name: "Chicago" },
+                { lat: 40.7, lng: -74.0, name: "New York" },
+                { lat: 33.7, lng: -84.4, name: "Atlanta" },
+                { lat: 47.6, lng: -122.3, name: "Seattle" }
+              ]);
+            });
         })();
       </script>
     </div>
