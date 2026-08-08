@@ -379,16 +379,21 @@
       <figure class="charge-map">
         <div class="charge-map-embed" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
           <div id="charge-globe"></div>
+          <div id="charge-globe-status" style="position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(0,0,0,0.65);color:#e8eaf0;font-size:12px;padding:6px 10px;border-radius:8px;">Loading chargers…</div>
         </div>
         <figcaption>
-          <strong>3D Earth · public EV chargers</strong> — live stations from OpenStreetMap worldwide (free, no Google Cloud).
-          Gold points = charging locations. Drag to spin, scroll to zoom.
-          For your curated <strong>Tesla + CCS1</strong> layers:
-          <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">open the full project in Google Earth ↗</a>
+          <strong>3D Earth · public EV chargers</strong> — stations from OpenStreetMap (free). Gold pins = chargers. Drag to spin, scroll to zoom.
+          Curated <strong>Tesla + CCS1</strong> layers:
+          <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">open in Google Earth ↗</a>
         </figcaption>
       </figure>
       <script>
         (function () {
+          function setStatus(msg) {
+            var s = document.getElementById("charge-globe-status");
+            if (s) s.textContent = msg;
+          }
+
           function bootGlobe() {
             var el = document.getElementById("charge-globe");
             if (!el || typeof Globe === "undefined") return;
@@ -401,14 +406,17 @@
               .atmosphereColor("#4a6fa5")
               .atmosphereAltitude(0.15)
               .pointsData([])
-              .pointAltitude(0.002)
-              .pointRadius(0.22)
-              .pointColor(function () { return "#d4af37"; })
+              .pointAltitude(0.012)
+              .pointRadius(0.55)
+              .pointResolution(8)
+              .pointColor(function () { return "#f0c14a"; })
               .pointLabel(function (d) {
-                return (d.name || "EV charger") + (d.operator ? " · " + d.operator : "");
+                return "<b>" + (d.name || "EV charger") + "</b>" +
+                  (d.operator ? "<br>" + d.operator : "") +
+                  (d.sockets ? "<br>" + d.sockets : "");
               });
 
-            globe.pointOfView({ lat: 37.5, lng: -95, altitude: 1.8 }, 0);
+            globe.pointOfView({ lat: 38.5, lng: -97, altitude: 1.55 }, 0);
 
             function size() {
               globe.width(el.clientWidth);
@@ -417,44 +425,130 @@
             size();
             window.addEventListener("resize", size);
 
-            var query =
-              "[out:json][timeout:60];" +
-              'node["amenity"="charging_station"](24.5,-125.0,49.5,-66.0);' +
-              "out body 4000;";
+            function applyPoints(pts, source) {
+              globe.pointsData(pts);
+              setStatus(pts.length.toLocaleString() + " chargers · " + source);
+              console.log("Chargers loaded:", pts.length, source);
+            }
 
-            fetch("https://overpass-api.de/api/interpreter", {
-              method: "POST",
-              body: "data=" + encodeURIComponent(query),
-              headers: { "Content-Type": "application/x-www-form-urlencoded" }
-            })
-              .then(function (r) { return r.json(); })
-              .then(function (data) {
-                var pts = (data.elements || [])
-                  .filter(function (n) { return n.lat != null && n.lon != null; })
-                  .map(function (n) {
-                    var tags = n.tags || {};
-                    return {
-                      lat: n.lat,
-                      lng: n.lon,
-                      name: tags.name || tags.operator || "EV charging station",
-                      operator: tags.operator || tags.network || ""
-                    };
-                  });
-                globe.pointsData(pts);
-                console.log("Loaded " + pts.length + " public chargers on 3D Earth");
-              })
-              .catch(function (err) {
-                console.warn("Overpass charger load failed", err);
-                globe.pointsData([
-                  { lat: 37.7, lng: -122.4, name: "Bay Area" },
-                  { lat: 34.0, lng: -118.2, name: "Los Angeles" },
-                  { lat: 32.8, lng: -96.8, name: "Dallas" },
-                  { lat: 41.9, lng: -87.6, name: "Chicago" },
-                  { lat: 40.7, lng: -74.0, name: "New York" },
-                  { lat: 33.7, lng: -84.4, name: "Atlanta" },
-                  { lat: 47.6, lng: -122.3, name: "Seattle" }
-                ]);
+            // Split US into tiles so Overpass returns more stations reliably
+            var tiles = [
+              [24.5, -125, 37, -110],   // SW
+              [24.5, -110, 37, -95],    // SC
+              [24.5, -95, 37, -80],     // SE
+              [24.5, -80, 37, -66],     // Florida/Atlantic
+              [37, -125, 49.5, -110],   // NW
+              [37, -110, 49.5, -95],    // NC
+              [37, -95, 49.5, -80],     // NE-midwest
+              [37, -80, 49.5, -66]      // NE
+            ];
+
+            var endpoints = [
+              "https://overpass-api.de/api/interpreter",
+              "https://overpass.kumi.systems/api/interpreter"
+            ];
+
+            function queryTile(south, west, north, east) {
+              return "[out:json][timeout:90];(" +
+                'node["amenity"="charging_station"](' + south + "," + west + "," + north + "," + east + ");" +
+                'node["highway"="charging_station"](' + south + "," + west + "," + north + "," + east + ");" +
+                'node["socket:type1"](' + south + "," + west + "," + north + "," + east + ");" +
+                'node["socket:type2"](' + south + "," + west + "," + north + "," + east + ");" +
+                ");out body;";
+            }
+
+            function fetchOverpass(url, q) {
+              return fetch(url, {
+                method: "POST",
+                body: "data=" + encodeURIComponent(q),
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+              }).then(function (r) {
+                if (!r.ok) throw new Error("HTTP " + r.status);
+                return r.json();
               });
+            }
+
+            function parseElements(elements) {
+              var seen = {};
+              var pts = [];
+              (elements || []).forEach(function (n) {
+                if (n.lat == null || n.lon == null) return;
+                var key = n.lat.toFixed(4) + "," + n.lon.toFixed(4);
+                if (seen[key]) return;
+                seen[key] = 1;
+                var tags = n.tags || {};
+                pts.push({
+                  lat: n.lat,
+                  lng: n.lon,
+                  name: tags.name || tags.operator || tags.brand || "EV charging station",
+                  operator: tags.operator || tags.network || tags.brand || "",
+                  sockets: tags["socket:type1"] || tags["socket:type2"] || tags["socket:chademo"] || tags["socket:tesla_supercharger"] || ""
+                });
+              });
+              return pts;
+            }
+
+            setStatus("Fetching charger tiles…");
+
+            var all = [];
+            var endpoint = endpoints[0];
+            var chain = Promise.resolve();
+
+            tiles.forEach(function (t, i) {
+              chain = chain.then(function () {
+                setStatus("Loading region " + (i + 1) + "/" + tiles.length + "…");
+                var q = queryTile(t[0], t[1], t[2], t[3]);
+                return fetchOverpass(endpoint, q)
+                  .catch(function () {
+                    endpoint = endpoints[1];
+                    return fetchOverpass(endpoint, q);
+                  })
+                  .then(function (data) {
+                    var pts = parseElements(data.elements);
+                    all = all.concat(pts);
+                    // progressive update so user sees pins appear
+                    applyPoints(parseElements(
+                      all.map(function (p, idx) { return { lat: p.lat, lon: p.lng, tags: { name: p.name, operator: p.operator } }; })
+                    ).length ? all : all, "OpenStreetMap");
+                    // simpler progressive:
+                    var seen = {};
+                    var uniq = [];
+                    all.forEach(function (p) {
+                      var k = p.lat.toFixed(4) + "," + p.lng.toFixed(4);
+                      if (seen[k]) return;
+                      seen[k] = 1;
+                      uniq.push(p);
+                    });
+                    applyPoints(uniq, "OpenStreetMap");
+                  })
+                  .catch(function (err) {
+                    console.warn("Tile failed", t, err);
+                  });
+              });
+            });
+
+            chain.then(function () {
+              if (!all.length) {
+                setStatus("Using fallback hubs (Overpass unavailable)");
+                applyPoints([
+                  { lat: 37.77, lng: -122.42, name: "San Francisco" },
+                  { lat: 34.05, lng: -118.24, name: "Los Angeles" },
+                  { lat: 32.78, lng: -96.80, name: "Dallas" },
+                  { lat: 29.76, lng: -95.37, name: "Houston" },
+                  { lat: 41.88, lng: -87.63, name: "Chicago" },
+                  { lat: 40.71, lng: -74.01, name: "New York" },
+                  { lat: 42.36, lng: -71.06, name: "Boston" },
+                  { lat: 38.91, lng: -77.04, name: "Washington DC" },
+                  { lat: 33.75, lng: -84.39, name: "Atlanta" },
+                  { lat: 25.76, lng: -80.19, name: "Miami" },
+                  { lat: 47.61, lng: -122.33, name: "Seattle" },
+                  { lat: 39.74, lng: -104.99, name: "Denver" },
+                  { lat: 36.17, lng: -115.14, name: "Las Vegas" },
+                  { lat: 45.52, lng: -122.68, name: "Portland" },
+                  { lat: 35.23, lng: -80.84, name: "Charlotte" }
+                ], "fallback");
+              }
+            });
           }
 
           function whenReady(attempt) {
@@ -463,8 +557,8 @@
               bootGlobe();
               return;
             }
-            if (attempt > 50) {
-              console.error("globe.gl failed to load");
+            if (attempt > 60) {
+              setStatus("3D library failed to load");
               return;
             }
             setTimeout(function () { whenReady(attempt + 1); }, 100);
