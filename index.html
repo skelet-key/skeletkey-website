@@ -687,10 +687,36 @@
           // IntersectionObserver: only boot/run while Charge map is on screen
           var target = document.getElementById("charge-map-figure") ||
             document.getElementById("charge-globe");
+          var io = null;
+          var cleanedUp = false;
+
+          function cleanup() {
+            if (cleanedUp) return;
+            cleanedUp = true;
+            pauseMap();
+            if (io) {
+              try {
+                if (target) io.unobserve(target);
+                io.disconnect();
+              } catch (e) {}
+              io = null;
+            }
+            clearTimeout(refreshTimer);
+            clearInterval(pollTimer);
+            refreshTimer = null;
+            pollTimer = null;
+            closePopup();
+            // Release pin DOM + heavy data reference
+            if (globe) {
+              try { globe.htmlElementsData([]); } catch (e) {}
+            }
+            ALL = [];
+          }
 
           if (target && "IntersectionObserver" in window) {
-            var io = new IntersectionObserver(
+            io = new IntersectionObserver(
               function (entries) {
+                if (cleanedUp) return;
                 entries.forEach(function (entry) {
                   if (entry.isIntersecting && entry.intersectionRatio > 0.05) {
                     if (!booted) whenGlobeReady(0);
@@ -707,6 +733,22 @@
             // Fallback: boot immediately
             whenGlobeReady(0);
           }
+
+          // Cleanup when tab is discarded / page is torn down
+          window.addEventListener("pagehide", cleanup);
+          window.addEventListener("beforeunload", cleanup);
+          document.addEventListener("visibilitychange", function () {
+            if (document.visibilityState === "hidden") {
+              pauseMap();
+            } else if (document.visibilityState === "visible" && booted && !cleanedUp) {
+              // Only resume if the map section is still intersecting
+              if (target) {
+                var rect = target.getBoundingClientRect();
+                var vh = window.innerHeight || document.documentElement.clientHeight;
+                if (rect.bottom > 0 && rect.top < vh) resumeMap();
+              }
+            }
+          });
         })();
       </script>
     </div>
