@@ -381,11 +381,11 @@
         </figure>
       </div>
 
-      <figure class="charge-map">
+      <figure class="charge-map" id="charge-map-figure">
         <div class="charge-map-embed" style="position: relative; width: 100%; max-width: 100%; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
           <div id="charge-globe"></div>
           <div id="charger-popup-root"></div>
-          <div id="charge-globe-status" style="position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(0,0,0,0.65);color:#e8eaf0;font-size:12px;padding:6px 10px;border-radius:8px;">Loading map…</div>
+          <div id="charge-globe-status" style="position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(0,0,0,0.65);color:#e8eaf0;font-size:12px;padding:6px 10px;border-radius:8px;">Scroll to load map…</div>
         </div>
         <figcaption>
           <strong>3D Earth · Tesla Superchargers + CCS (≥3&nbsp;kW)</strong> —
@@ -395,13 +395,16 @@
       </figure>
       <script>
         (function () {
-          // Closer default ~ city / metro view (~60–90 mi)
           var REGION_ALT = 0.18;
           var ALL = [];
           var globe = null;
           var popupRoot = null;
           var lastKey = "";
           var refreshTimer = null;
+          var pollTimer = null;
+          var mapVisible = false;
+          var booted = false;
+          var dataLoaded = false;
 
           function setStatus(msg) {
             var s = document.getElementById("charge-globe-status");
@@ -453,7 +456,6 @@
             var fill = isTesla ? "#ea4335" : "#1a73e8";
             var el = document.createElement("div");
             el.className = "gmaps-pin";
-            // Much smaller pin
             el.style.cssText = [
               "width:10px",
               "height:16px",
@@ -462,7 +464,6 @@
               "cursor:pointer",
               "pointer-events:auto",
               "line-height:0",
-              "transform:scale(1)",
               "filter:drop-shadow(0 1px 1px rgba(0,0,0,.4))"
             ].join(";");
             el.innerHTML =
@@ -485,9 +486,6 @@
             var lat0 = pov.lat;
             var lng0 = pov.lng;
             var cos = Math.max(0.3, Math.cos(lat0 * Math.PI / 180));
-
-            // Viewport band scales with altitude (lazy load around view)
-            // ~1 deg lat ≈ 69 mi; at alt 0.18 aim ~2 deg band
             var band = Math.min(25, Math.max(0.6, alt * 12));
             var maxPins = alt > 0.8 ? 40 : (alt > 0.35 ? 80 : 120);
 
@@ -502,7 +500,6 @@
             }
             candidates.sort(function (a, b) { return a.dist - b.dist; });
 
-            // Deduplicate near-identical coordinates so pins don't stack into one blob
             var out = [];
             var seen = {};
             for (var k = 0; k < candidates.length && out.length < maxPins; k++) {
@@ -516,27 +513,90 @@
           }
 
           function refreshPins(force) {
-            if (!globe) return;
+            if (!globe || !mapVisible) return;
             var pov = globe.pointOfView();
             if (!pov) return;
             var key = pov.lat.toFixed(2) + "," + pov.lng.toFixed(2) + "," + pov.altitude.toFixed(2);
             if (!force && key === lastKey) return;
             lastKey = key;
             var subset = pickVisible(pov);
-            // Explicit lat/lng accessors — critical so pins spread on the globe
             globe.htmlElementsData(subset);
             setStatus(subset.length + " pins in view · click for details");
           }
 
           function scheduleRefresh() {
+            if (!mapVisible) return;
             clearTimeout(refreshTimer);
             refreshTimer = setTimeout(function () { refreshPins(true); }, 120);
           }
 
+          function pauseMap() {
+            mapVisible = false;
+            clearInterval(pollTimer);
+            pollTimer = null;
+            clearTimeout(refreshTimer);
+            closePopup();
+            // Drop pins from DOM while off-screen
+            if (globe) {
+              try { globe.htmlElementsData([]); } catch (e) {}
+            }
+          }
+
+          function resumeMap() {
+            mapVisible = true;
+            if (!pollTimer) {
+              pollTimer = setInterval(function () { refreshPins(false); }, 300);
+            }
+            refreshPins(true);
+            if (globe) {
+              try {
+                var el = document.getElementById("charge-globe");
+                globe.width(el.clientWidth);
+                globe.height(el.clientHeight || 700);
+              } catch (e) {}
+            }
+          }
+
+          function loadData() {
+            if (dataLoaded) return;
+            dataLoaded = true;
+            fetch("assets/chargers-us.json", { cache: "force-cache" })
+              .then(function (r) { return r.json(); })
+              .then(function (pts) {
+                ALL = [];
+                for (var i = 0; i < pts.length; i++) {
+                  var p = pts[i];
+                  if (!p) continue;
+                  var lat = Number(p.lat);
+                  var lng = Number(p.lng != null ? p.lng : p.lon);
+                  if (!isFinite(lat) || !isFinite(lng)) continue;
+                  ALL.push({
+                    lat: lat,
+                    lng: lng,
+                    name: p.name || "EV charger",
+                    op: p.op || "",
+                    type: p.type || "",
+                    kw: p.kw || ""
+                  });
+                }
+                if (mapVisible) refreshPins(true);
+              })
+              .catch(function (e) {
+                console.warn(e);
+                setStatus("Could not load chargers");
+              });
+          }
+
           function boot() {
+            if (booted) return;
+            booted = true;
             var el = document.getElementById("charge-globe");
-            if (!el || typeof Globe === "undefined") return;
+            if (!el || typeof Globe === "undefined") {
+              setStatus("3D library failed");
+              return;
+            }
             popupRoot = document.getElementById("charger-popup-root");
+            setStatus("Loading map…");
 
             globe = Globe()(el)
               .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg")
@@ -549,12 +609,13 @@
               .htmlAltitude(0.01)
               .htmlElementsData([])
               .htmlElement(makePin)
-              .htmlElementVisibilityModifier(function (el, show) {
-                el.style.opacity = show ? "1" : "0";
-                el.style.pointerEvents = show ? "auto" : "none";
+              .htmlElementVisibilityModifier(function (node, show) {
+                node.style.opacity = show ? "1" : "0";
+                node.style.pointerEvents = show ? "auto" : "none";
               });
 
             function size() {
+              if (!mapVisible) return;
               globe.width(el.clientWidth);
               globe.height(el.clientHeight || 700);
             }
@@ -564,10 +625,6 @@
             el.addEventListener("click", function (e) {
               if (!e.target.closest(".gmaps-pin") && !e.target.closest(".charger-popup")) closePopup();
             });
-
-            // Continuous lazy load as user pans/zooms
-            setInterval(function () { refreshPins(false); }, 300);
-            // Also on wheel / pointer
             el.addEventListener("wheel", scheduleRefresh, { passive: true });
             el.addEventListener("pointerup", scheduleRefresh);
 
@@ -577,7 +634,6 @@
             }
 
             goTo(20, 10, 1.5);
-            setStatus("Locating…");
 
             function setRegion(lat, lng, label) {
               goTo(lat, lng, REGION_ALT);
@@ -617,42 +673,40 @@
                 .catch(function () { goTo(20, 10, 1.4); });
             }
 
-            fetch("assets/chargers-us.json", { cache: "force-cache" })
-              .then(function (r) { return r.json(); })
-              .then(function (pts) {
-                ALL = [];
-                for (var i = 0; i < pts.length; i++) {
-                  var p = pts[i];
-                  if (!p) continue;
-                  var lat = Number(p.lat);
-                  var lng = Number(p.lng != null ? p.lng : p.lon);
-                  if (!isFinite(lat) || !isFinite(lng)) continue;
-                  ALL.push({
-                    lat: lat,
-                    lng: lng,
-                    name: p.name || "EV charger",
-                    op: p.op || "",
-                    type: p.type || "",
-                    kw: p.kw || ""
-                  });
-                }
-                refreshPins(true);
-              })
-              .catch(function (e) {
-                console.warn(e);
-                setStatus("Could not load chargers");
-              });
+            loadData();
+            resumeMap();
           }
 
-          function whenReady(n) {
+          function whenGlobeReady(n) {
             n = n || 0;
             if (typeof Globe !== "undefined") return boot();
-            if (n > 60) return setStatus("3D library failed");
-            setTimeout(function () { whenReady(n + 1); }, 100);
+            if (n > 80) return setStatus("3D library failed");
+            setTimeout(function () { whenGlobeReady(n + 1); }, 100);
           }
-          if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", function () { whenReady(0); });
-          } else whenReady(0);
+
+          // IntersectionObserver: only boot/run while Charge map is on screen
+          var target = document.getElementById("charge-map-figure") ||
+            document.getElementById("charge-globe");
+
+          if (target && "IntersectionObserver" in window) {
+            var io = new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (entry) {
+                  if (entry.isIntersecting && entry.intersectionRatio > 0.05) {
+                    if (!booted) whenGlobeReady(0);
+                    else resumeMap();
+                  } else {
+                    if (booted) pauseMap();
+                  }
+                });
+              },
+              { root: null, rootMargin: "120px 0px", threshold: [0, 0.05, 0.15] }
+            );
+            io.observe(target);
+          } else {
+            // Fallback: boot immediately
+            whenGlobeReady(0);
+          }
         })();
       </script>
     </div>
