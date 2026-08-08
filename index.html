@@ -387,7 +387,9 @@
           <div id="charge-globe-status" style="position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(0,0,0,0.65);color:#e8eaf0;font-size:12px;padding:6px 10px;border-radius:8px;">Loading map…</div>
         </div>
         <figcaption>
-          <strong>3D Earth · public EV chargers</strong> — worldwide pins. Markers scale as you zoom. Drag to spin, scroll to zoom.
+          <strong>3D Earth · Tesla Superchargers + CCS (≥3&nbsp;kW)</strong> —
+          Red pins = Tesla Supercharger · Blue pins = CCS / Combo DC (≥3&nbsp;kW).
+          Markers scale as you zoom. Drag to spin, scroll to zoom.
           Curated <strong>Tesla + CCS1</strong> layers
           <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">in Google Earth</a>.
         </figcaption>
@@ -399,26 +401,26 @@
             if (s) s.textContent = msg;
           }
 
-          // ~110 miles regional view in globe.gl altitude units
           var REGION_ALT = 0.28;
 
           function pinElement(d) {
             var wrap = document.createElement("div");
             wrap.className = "charger-pin";
-            // Base size is small; scalePins multiplies this
-            wrap.style.cssText = "transform:translate(-50%,-100%) scale(0.45);cursor:pointer;pointer-events:auto;line-height:0;";
+            wrap.style.cssText = "transform:translate(-50%,-100%) scale(0.4);cursor:pointer;pointer-events:auto;line-height:0;";
+            var isTesla = (d.type === "tesla") || /tesla/i.test(d.op || "") || /supercharger/i.test(d.name || "");
+            var fill = isTesla ? "#e53935" : "#1e88e5"; // red Tesla, blue CCS
             wrap.innerHTML =
-              '<svg width="12" height="16" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">' +
-              '<path d="M12 0C5.9 0 1 4.9 1 11c0 8.3 11 21 11 21s11-12.7 11-21C23 4.9 18.1 0 12 0z" fill="#e53935" stroke="#fff" stroke-width="1.5"/>' +
+              '<svg width="11" height="15" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">' +
+              '<path d="M12 0C5.9 0 1 4.9 1 11c0 8.3 11 21 11 21s11-12.7 11-21C23 4.9 18.1 0 12 0z" fill="' + fill + '" stroke="#fff" stroke-width="1.5"/>' +
               '<circle cx="12" cy="11" r="4" fill="#fff"/>' +
               "</svg>";
-            wrap.title = (d.name || "EV charger") + (d.op ? " · " + d.op : "");
+            var label = (d.name || "Charger") + (d.op ? " · " + d.op : "") + (d.kw ? " · " + d.kw : "");
+            wrap.title = label;
             return wrap;
           }
 
           function scalePins(altitude) {
-            // Much smaller overall; grows modestly when zoomed in
-            var scale = Math.max(0.28, Math.min(0.85, 0.22 / Math.max(0.15, altitude)));
+            var scale = Math.max(0.25, Math.min(0.75, 0.18 / Math.max(0.15, altitude)));
             document.querySelectorAll(".charger-pin").forEach(function (el) {
               el.style.transform = "translate(-50%,-100%) scale(" + scale.toFixed(3) + ")";
             });
@@ -429,7 +431,6 @@
             setTimeout(function () { scalePins(alt); }, 250);
           }
 
-          // IP-based location (no permission prompt) — works server-equivalent from free edge APIs
           function locateByIP() {
             return fetch("https://ipapi.co/json/", { cache: "no-store" })
               .then(function (r) { return r.json(); })
@@ -487,61 +488,49 @@
               } catch (e) {}
             }, 180);
 
-            // Start world view while we resolve location + data
             goTo(globe, 20, 10, 1.8);
             setStatus("Locating…");
 
-            // Prefer GPS; fall back to IP geolocation (no prompt)
             function setRegion(lat, lng, label) {
               goTo(globe, lat, lng, REGION_ALT);
-              setStatus("Showing ~110 miles around " + label);
+              setStatus("~110 miles around " + label);
             }
 
             if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(
-                function (pos) {
-                  setRegion(pos.coords.latitude, pos.coords.longitude, "you");
-                },
+                function (pos) { setRegion(pos.coords.latitude, pos.coords.longitude, "you"); },
                 function () {
                   locateByIP()
                     .then(function (loc) { setRegion(loc.lat, loc.lng, loc.source); })
-                    .catch(function () {
-                      goTo(globe, 20, 10, 1.6);
-                      setStatus("World view");
-                    });
+                    .catch(function () { goTo(globe, 20, 10, 1.6); setStatus("World view"); });
                 },
                 { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
               );
             } else {
               locateByIP()
                 .then(function (loc) { setRegion(loc.lat, loc.lng, loc.source); })
-                .catch(function () {
-                  goTo(globe, 20, 10, 1.6);
-                  setStatus("World view");
-                });
+                .catch(function () { goTo(globe, 20, 10, 1.6); setStatus("World view"); });
             }
 
-            // Instant worldwide pins from prebuilt JSON
             fetch("assets/chargers-us.json", { cache: "force-cache" })
               .then(function (r) { return r.json(); })
               .then(function (pts) {
+                // Safety filter client-side: only tesla + ccs, drop unknown
+                pts = pts.filter(function (p) {
+                  return p.type === "tesla" || p.type === "ccs" || /tesla|supercharger|ccs|combo/i.test((p.op || "") + (p.name || ""));
+                });
                 globe.htmlElementsData(pts);
                 setTimeout(function () {
                   try { scalePins(globe.pointOfView().altitude || REGION_ALT); } catch (e) {}
                 }, 300);
-                setStatus(function () {
-                  var s = document.getElementById("charge-globe-status");
-                  var base = pts.length.toLocaleString() + " pins worldwide";
-                  if (s && s.textContent.indexOf("110") !== -1) return s.textContent;
-                  return base;
-                }());
-                // Prefer not to clobber location status if already set
+                var nTesla = pts.filter(function (p) { return p.type === "tesla" || /tesla|supercharger/i.test((p.op || "") + (p.name || "")); }).length;
+                var nCcs = pts.length - nTesla;
                 setTimeout(function () {
                   var s = document.getElementById("charge-globe-status");
                   if (s && s.textContent.indexOf("110") === -1 && s.textContent.indexOf("around") === -1) {
-                    s.textContent = pts.length.toLocaleString() + " pins worldwide";
+                    s.textContent = nTesla.toLocaleString() + " Tesla · " + Math.max(0, nCcs).toLocaleString() + " CCS (≥3 kW)";
                   }
-                }, 1500);
+                }, 1200);
               })
               .catch(function (err) {
                 console.warn(err);
@@ -551,14 +540,8 @@
 
           function whenReady(attempt) {
             attempt = attempt || 0;
-            if (typeof Globe !== "undefined") {
-              bootGlobe();
-              return;
-            }
-            if (attempt > 60) {
-              setStatus("3D library failed to load");
-              return;
-            }
+            if (typeof Globe !== "undefined") { bootGlobe(); return; }
+            if (attempt > 60) { setStatus("3D library failed to load"); return; }
             setTimeout(function () { whenReady(attempt + 1); }, 100);
           }
 
