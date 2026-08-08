@@ -13,9 +13,14 @@
   <style>
     .music-page {
       min-height: 100vh;
-      padding: 6.5rem 1.5rem 4rem;
+      padding: 8.5rem 1.5rem 4rem;
       max-width: 920px;
       margin: 0 auto;
+    }
+    @media (max-width: 700px) {
+      .music-page {
+        padding: 7.25rem 1.25rem 3.5rem;
+      }
     }
     .music-page .eyebrow {
       font-size: 0.75rem;
@@ -39,6 +44,7 @@
       line-height: 1.65;
     }
     .sc-embed {
+      margin-top: 0.5rem;
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--border);
