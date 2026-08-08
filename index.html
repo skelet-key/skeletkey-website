@@ -465,39 +465,28 @@
           function visibleSubset(pov) {
             if (!ALL_POINTS.length) return [];
             var alt = pov.altitude || 1.5;
-            // Far out: sparse sample only (keeps GPU light)
-            if (alt > 1.2) {
-              var step = Math.ceil(ALL_POINTS.length / 400);
-              var sparse = [];
-              for (var i = 0; i < ALL_POINTS.length; i += step) sparse.push(ALL_POINTS[i]);
-              return sparse;
-            }
-            // Medium: denser sample
-            if (alt > 0.55) {
-              var step2 = Math.ceil(ALL_POINTS.length / 1200);
-              var mid = [];
-              for (var j = 0; j < ALL_POINTS.length; j += step2) mid.push(ALL_POINTS[j]);
-              return mid;
-            }
-            // Close (~110 mi and in): points near camera center only
             var lat0 = pov.lat, lng0 = pov.lng;
-            // ~3 deg ≈ 200 mi band
-            var band = alt > 0.35 ? 4.5 : 2.2;
-            var local = [];
-            for (var k = 0; k < ALL_POINTS.length; k++) {
-              var p = ALL_POINTS[k];
-              if (Math.abs(p.lat - lat0) <= band && Math.abs(p.lng - lng0) <= band / Math.max(0.4, Math.cos(lat0 * Math.PI / 180))) {
-                local.push(p);
+            // Always show a global sample so the globe never looks empty
+            var globalCap = alt > 1.0 ? 800 : (alt > 0.5 ? 1500 : 2200);
+            var step = Math.max(1, Math.ceil(ALL_POINTS.length / globalCap));
+            var sample = [];
+            for (var i = 0; i < ALL_POINTS.length; i += step) sample.push(ALL_POINTS[i]);
+            // When zoomed in, add all points near the camera
+            if (alt <= 0.6) {
+              var band = alt > 0.35 ? 6 : 3.5;
+              var cos = Math.max(0.35, Math.cos(lat0 * Math.PI / 180));
+              var seen = {};
+              sample.forEach(function (p) { seen[p.lat + "," + p.lng] = 1; });
+              for (var k = 0; k < ALL_POINTS.length; k++) {
+                var p = ALL_POINTS[k];
+                if (Math.abs(p.lat - lat0) <= band && Math.abs(p.lng - lng0) <= band / cos) {
+                  var key = p.lat + "," + p.lng;
+                  if (!seen[key]) { seen[key] = 1; sample.push(p); }
+                }
               }
+              if (sample.length > 3000) sample = sample.slice(0, 3000);
             }
-            // Cap for safety
-            if (local.length > 2500) {
-              var st = Math.ceil(local.length / 2500);
-              var capped = [];
-              for (var m = 0; m < local.length; m += st) capped.push(local[m]);
-              return capped;
-            }
-            return local;
+            return sample;
           }
 
           function refreshPoints() {
@@ -505,9 +494,11 @@
             var pov = globe.pointOfView();
             var subset = visibleSubset(pov);
             // point radius scales with altitude
-            var r = Math.max(0.12, Math.min(0.45, 0.08 / Math.max(0.12, pov.altitude)));
+            var r = Math.max(0.28, Math.min(0.85, 0.22 / Math.max(0.15, pov.altitude)));
             globe.pointRadius(r);
+            globe.pointAltitude(0.02);
             globe.pointsData(subset);
+            console.log("points visible", subset.length, "alt", pov.altitude);
           }
 
           function bootGlobe() {
@@ -516,19 +507,19 @@
             popupRoot = document.getElementById("charger-popup-root");
 
             globe = Globe()(el)
-              .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-night.jpg")
+              .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg")
               .backgroundColor("#02040a")
               .showAtmosphere(true)
-              .atmosphereColor("#4a6fa5")
-              .atmosphereAltitude(0.12)
+              .atmosphereColor("#6aa0d8")
+              .atmosphereAltitude(0.15)
               .pointsData([])
-              .pointAltitude(0.004)
-              .pointRadius(0.2)
-              .pointResolution(6)
-              .pointsMerge(true) // big perf win: merge into fewer draw calls
+              .pointAltitude(0.02)
+              .pointRadius(0.55)
+              .pointResolution(8)
+              .pointsMerge(false)
               .pointColor(function (d) {
                 var isTesla = d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || ""));
-                return isTesla ? "#e53935" : "#1e88e5";
+                return isTesla ? "#ff5252" : "#40c4ff";
               })
               .onPointClick(function (d, ev) {
                 if (!d) return;
