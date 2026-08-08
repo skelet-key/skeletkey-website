@@ -20,10 +20,11 @@
       background: #02040a;
     }
   </style>
-  <link rel="icon" href="assets/favicon.ico" sizes="any" />
-  <link rel="icon" type="image/png" href="assets/favicon-32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="assets/favicon-48.png" sizes="48x48" />
-  <link rel="apple-touch-icon" href="assets/favicon-180.png" sizes="180x180" />
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/favicon-32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/assets/favicon-48.png" sizes="48x48" />
+  <link rel="apple-touch-icon" href="/assets/favicon-180.png" sizes="180x180" />
+  <link rel="shortcut icon" href="/assets/favicon.ico" />
 </head>
 <body>
 
@@ -386,7 +387,7 @@
           <div id="charge-globe-status" style="position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(0,0,0,0.65);color:#e8eaf0;font-size:12px;padding:6px 10px;border-radius:8px;">Loading map…</div>
         </div>
         <figcaption>
-          <strong>3D Earth · public EV chargers</strong> — stations across the U.S. Gold pins scale as you zoom. Drag to spin, scroll to zoom.
+          <strong>3D Earth · public EV chargers</strong> — worldwide pins. Markers scale as you zoom. Drag to spin, scroll to zoom.
           Curated <strong>Tesla + CCS1</strong> layers
           <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">in Google Earth</a>.
         </figcaption>
@@ -398,28 +399,56 @@
             if (s) s.textContent = msg;
           }
 
-          // ~110 miles in globe.gl altitude units (approx)
+          // ~110 miles regional view in globe.gl altitude units
           var REGION_ALT = 0.28;
 
           function pinElement(d) {
             var wrap = document.createElement("div");
             wrap.className = "charger-pin";
-            wrap.style.cssText = "transform:translate(-50%,-100%);cursor:pointer;pointer-events:auto;";
+            // Base size is small; scalePins multiplies this
+            wrap.style.cssText = "transform:translate(-50%,-100%) scale(0.45);cursor:pointer;pointer-events:auto;line-height:0;";
             wrap.innerHTML =
-              '<svg width="18" height="24" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">' +
-              '<path d="M12 0C5.9 0 1 4.9 1 11c0 8.3 11 21 11 21s11-12.7 11-21C23 4.9 18.1 0 12 0z" fill="#e53935" stroke="#fff" stroke-width="1.2"/>' +
-              '<circle cx="12" cy="11" r="4.2" fill="#fff"/>' +
+              '<svg width="12" height="16" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">' +
+              '<path d="M12 0C5.9 0 1 4.9 1 11c0 8.3 11 21 11 21s11-12.7 11-21C23 4.9 18.1 0 12 0z" fill="#e53935" stroke="#fff" stroke-width="1.5"/>' +
+              '<circle cx="12" cy="11" r="4" fill="#fff"/>' +
               "</svg>";
             wrap.title = (d.name || "EV charger") + (d.op ? " · " + d.op : "");
             return wrap;
           }
 
           function scalePins(altitude) {
-            // Smaller when zoomed out, larger when closer
-            var scale = Math.max(0.35, Math.min(1.35, 0.55 / Math.max(0.12, altitude)));
+            // Much smaller overall; grows modestly when zoomed in
+            var scale = Math.max(0.28, Math.min(0.85, 0.22 / Math.max(0.15, altitude)));
             document.querySelectorAll(".charger-pin").forEach(function (el) {
               el.style.transform = "translate(-50%,-100%) scale(" + scale.toFixed(3) + ")";
             });
+          }
+
+          function goTo(globe, lat, lng, alt) {
+            globe.pointOfView({ lat: lat, lng: lng, altitude: alt }, 1100);
+            setTimeout(function () { scalePins(alt); }, 250);
+          }
+
+          // IP-based location (no permission prompt) — works server-equivalent from free edge APIs
+          function locateByIP() {
+            return fetch("https://ipapi.co/json/", { cache: "no-store" })
+              .then(function (r) { return r.json(); })
+              .then(function (d) {
+                if (d && typeof d.latitude === "number" && typeof d.longitude === "number") {
+                  return { lat: d.latitude, lng: d.longitude, source: (d.city || "your area") + (d.country_name ? ", " + d.country_name : "") };
+                }
+                throw new Error("ipapi empty");
+              })
+              .catch(function () {
+                return fetch("https://ipwho.is/")
+                  .then(function (r) { return r.json(); })
+                  .then(function (d) {
+                    if (d && d.success !== false && d.latitude != null) {
+                      return { lat: d.latitude, lng: d.longitude, source: (d.city || "your area") + (d.country ? ", " + d.country : "") };
+                    }
+                    throw new Error("ipwho empty");
+                  });
+              });
           }
 
           function bootGlobe() {
@@ -446,46 +475,53 @@
             size();
             window.addEventListener("resize", size);
 
-            // Zoom-linked pin scale
             var lastAlt = REGION_ALT;
             setInterval(function () {
               try {
                 var pov = globe.pointOfView();
                 if (!pov) return;
-                if (Math.abs(pov.altitude - lastAlt) > 0.01) {
+                if (Math.abs(pov.altitude - lastAlt) > 0.008) {
                   lastAlt = pov.altitude;
                   scalePins(pov.altitude);
                 }
               } catch (e) {}
-            }, 200);
+            }, 180);
 
-            function goTo(lat, lng, alt) {
-              globe.pointOfView({ lat: lat, lng: lng, altitude: alt }, 1200);
-              setTimeout(function () { scalePins(alt); }, 200);
+            // Start world view while we resolve location + data
+            goTo(globe, 20, 10, 1.8);
+            setStatus("Locating…");
+
+            // Prefer GPS; fall back to IP geolocation (no prompt)
+            function setRegion(lat, lng, label) {
+              goTo(globe, lat, lng, REGION_ALT);
+              setStatus("Showing ~110 miles around " + label);
             }
-
-            // Default US overview briefly, then geolocate to ~110-mile regional view
-            goTo(38.5, -97, 1.4);
-            setStatus("Finding your area…");
 
             if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(
                 function (pos) {
-                  goTo(pos.coords.latitude, pos.coords.longitude, REGION_ALT);
-                  setStatus("Showing chargers within ~110 miles of you");
+                  setRegion(pos.coords.latitude, pos.coords.longitude, "you");
                 },
                 function () {
-                  goTo(38.5, -97, 0.9);
-                  setStatus("Location blocked — U.S. view");
+                  locateByIP()
+                    .then(function (loc) { setRegion(loc.lat, loc.lng, loc.source); })
+                    .catch(function () {
+                      goTo(globe, 20, 10, 1.6);
+                      setStatus("World view");
+                    });
                 },
-                { enableHighAccuracy: false, timeout: 8000, maximumAge: 600000 }
+                { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
               );
             } else {
-              goTo(38.5, -97, 0.9);
+              locateByIP()
+                .then(function (loc) { setRegion(loc.lat, loc.lng, loc.source); })
+                .catch(function () {
+                  goTo(globe, 20, 10, 1.6);
+                  setStatus("World view");
+                });
             }
 
-            // Instant load from prebuilt JSON (no slow Overpass on page)
-            setStatus("Loading chargers…");
+            // Instant worldwide pins from prebuilt JSON
             fetch("assets/chargers-us.json", { cache: "force-cache" })
               .then(function (r) { return r.json(); })
               .then(function (pts) {
@@ -493,7 +529,19 @@
                 setTimeout(function () {
                   try { scalePins(globe.pointOfView().altitude || REGION_ALT); } catch (e) {}
                 }, 300);
-                setStatus(pts.length.toLocaleString() + " charger pins ready");
+                setStatus(function () {
+                  var s = document.getElementById("charge-globe-status");
+                  var base = pts.length.toLocaleString() + " pins worldwide";
+                  if (s && s.textContent.indexOf("110") !== -1) return s.textContent;
+                  return base;
+                }());
+                // Prefer not to clobber location status if already set
+                setTimeout(function () {
+                  var s = document.getElementById("charge-globe-status");
+                  if (s && s.textContent.indexOf("110") === -1 && s.textContent.indexOf("around") === -1) {
+                    s.textContent = pts.length.toLocaleString() + " pins worldwide";
+                  }
+                }, 1500);
               })
               .catch(function (err) {
                 console.warn(err);
