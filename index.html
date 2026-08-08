@@ -19,6 +19,61 @@
     .charge-map-embed {
       background: #02040a;
     }
+    #charger-popup-root {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .charger-popup {
+      position: absolute;
+      z-index: 21;
+      pointer-events: auto;
+      min-width: 220px;
+      max-width: min(300px, calc(100% - 24px));
+      background: rgba(12, 14, 22, 0.96);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      padding: 14px 16px 12px;
+      color: #e8eaf0;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .charger-popup h4 {
+      margin: 0 28px 8px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .charger-popup .meta {
+      color: #b6bcd0;
+      margin: 2px 0;
+    }
+    .charger-popup .meta strong { color: #d5d9e8; }
+    .charger-popup a.gmaps {
+      display: inline-block;
+      margin-top: 10px;
+      color: #7eb6ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .charger-popup a.gmaps:hover { text-decoration: underline; }
+    .charger-popup .close-x {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background: transparent;
+      border: 0;
+      color: #9aa3b8;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .charger-popup .close-x:hover { color: #fff; }
+    #charge-globe-status.is-hidden { display: none !important; }
   </style>
   <link rel="icon" href="/assets/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/favicon-32.png" sizes="32x32" />
@@ -385,12 +440,12 @@
         <div class="charge-map-embed" style="position: relative; width: 100%; max-width: 100%; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
           <div id="charge-globe"></div>
           <div id="charger-popup-root"></div>
-          <div id="charge-globe-status" style="position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(0,0,0,0.65);color:#e8eaf0;font-size:12px;padding:6px 10px;border-radius:8px;">Scroll to load map…</div>
+          <div id="charge-globe-status" style="position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(0,0,0,0.65);color:#e8eaf0;font-size:12px;padding:6px 10px;border-radius:8px;max-width:min(280px,70%);pointer-events:none;">Scroll to load map…</div>
         </div>
         <figcaption>
           <strong>Global network · Tesla Superchargers + CCS (≥3&nbsp;kW)</strong> —
-          Red = Tesla · Blue = CCS. All ~15,000+ worldwide stations are fixed on the globe — rotate and zoom freely; pins stay put and only change size with altitude.
-          Puca ships by plane anywhere customs allows. Click near a pin for name + Google Maps.
+          Red = Tesla · Blue = CCS. Worldwide coverage (N. America, Europe, Asia, Oceania & more). Pins are fixed to real coordinates and stay put as you rotate.
+          Puca ships by plane anywhere customs allows. Click near a pin for details + Google Maps.
           <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">Curated layers in Google Earth</a>.
         </figcaption>
       </figure>
@@ -429,6 +484,8 @@
           function closePopup() {
             if (!popupRoot) popupRoot = document.getElementById("charger-popup-root");
             if (popupRoot) popupRoot.innerHTML = "";
+            var s = document.getElementById("charge-globe-status");
+            if (s) s.classList.remove("is-hidden");
           }
 
           function showPopup(d, clientX, clientY) {
@@ -466,32 +523,93 @@
             box.onclick = function (e) { e.stopPropagation(); };
             popupRoot.innerHTML = "";
             popupRoot.appendChild(box);
+            var s = document.getElementById("charge-globe-status");
+            if (s) s.classList.add("is-hidden");
           }
+
+          var RENDER = []; // stratified global sample for WebGL (performance)
+          var isMobile = (function () {
+            try {
+              return window.matchMedia("(max-width: 900px), (pointer: coarse)").matches
+                || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent || "");
+            } catch (e) { return false; }
+          })();
+          var RENDER_CAP = isMobile ? 420 : 900;
 
           function isTesla(d) {
             return d && (d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || "")));
+          }
+
+          // Even global sample so every region is represented and points never move
+          function buildGlobalSample(pts, cap) {
+            if (!pts.length) return [];
+            if (pts.length <= cap) return pts.slice();
+            var cells = {};
+            var keys = [];
+            // ~18x9 grid over the world
+            var nx = 18, ny = 9;
+            for (var i = 0; i < pts.length; i++) {
+              var p = pts[i];
+              var cx = Math.min(nx - 1, Math.max(0, Math.floor((p.lng + 180) / 360 * nx)));
+              var cy = Math.min(ny - 1, Math.max(0, Math.floor((p.lat + 90) / 180 * ny)));
+              var k = cx + ":" + cy;
+              if (!cells[k]) { cells[k] = []; keys.push(k); }
+              cells[k].push(p);
+            }
+            // shuffle each cell lightly by taking stride
+            var per = Math.max(1, Math.ceil(cap / Math.max(1, keys.length)));
+            var out = [];
+            var seen = {};
+            // pass 1: at least one per occupied cell
+            for (var c = 0; c < keys.length && out.length < cap; c++) {
+              var list = cells[keys[c]];
+              var pick = list[Math.floor(list.length * 0.37) % list.length];
+              var id = pick.lat.toFixed(3) + "," + pick.lng.toFixed(3);
+              if (seen[id]) continue;
+              seen[id] = 1;
+              out.push(pick);
+            }
+            // pass 2: fill remaining quota round-robin
+            var idx = 1;
+            var added = true;
+            while (out.length < cap && added) {
+              added = false;
+              for (var c2 = 0; c2 < keys.length && out.length < cap; c2++) {
+                var list2 = cells[keys[c2]];
+                if (idx >= list2.length) continue;
+                var pick2 = list2[idx];
+                var id2 = pick2.lat.toFixed(3) + "," + pick2.lng.toFixed(3);
+                if (seen[id2]) continue;
+                seen[id2] = 1;
+                out.push(pick2);
+                added = true;
+              }
+              idx += 1;
+              if (idx > 50) break;
+            }
+            return out;
           }
 
           function applyPointStyle() {
             if (!globe || cleanedUp) return;
             var pov = globe.pointOfView() || {};
             var alt = Math.max(0.04, pov.altitude || 2);
-            // Radius in degrees of latitude — shrinks as you zoom in so pins stay dots, not blobs
-            // world (alt~2.2) → ~0.25°; continent (~1.0) → ~0.12°; metro (~0.18) → ~0.03°
-            var r = Math.max(0.018, Math.min(0.28, 0.12 * alt));
+            var r = Math.max(0.02, Math.min(0.26, 0.11 * alt));
             try {
               globe.pointRadius(r);
-              globe.pointAltitude(Math.min(0.02, 0.006 + alt * 0.002));
+              globe.pointAltitude(Math.min(0.015, 0.005 + alt * 0.0015));
             } catch (e) {}
           }
 
           function nearestCharger(lat, lng, maxDeg) {
-            if (!ALL.length) return null;
+            // Search full ALL so clicks resolve real stations worldwide
+            var pool = ALL.length ? ALL : RENDER;
+            if (!pool.length) return null;
             maxDeg = maxDeg || 1.5;
             var best = null, bestD = Infinity;
             var cos = Math.max(0.2, Math.cos(lat * Math.PI / 180));
-            for (var i = 0; i < ALL.length; i++) {
-              var p = ALL[i];
+            for (var i = 0; i < pool.length; i++) {
+              var p = pool[i];
               var dlat = p.lat - lat;
               var dlng = p.lng - lng;
               while (dlng > 180) dlng -= 360;
@@ -504,17 +622,20 @@
           }
 
           function bindFixedPoints() {
-            if (!globe || cleanedUp || !ALL.length) return;
-            globe.pointsData(ALL);
+            if (!globe || cleanedUp) return;
+            if (!RENDER.length && ALL.length) {
+              RENDER = buildGlobalSample(ALL, RENDER_CAP);
+            }
+            if (!RENDER.length) return;
+            globe.pointsData(RENDER);
             applyPointStyle();
-            setStatus(ALL.length.toLocaleString() + " Tesla + CCS chargers worldwide · click a pin for details");
+            setStatus(ALL.length.toLocaleString() + " stations worldwide · showing global sample");
           }
 
           function scheduleRefresh() {
-            // Only restyle size on zoom — never reload / reshuffle pin positions
             if (!mapVisible || cleanedUp) return;
             clearTimeout(refreshTimer);
-            refreshTimer = setTimeout(function () { applyPointStyle(); }, 50);
+            refreshTimer = setTimeout(function () { applyPointStyle(); }, 80);
           }
 
           function disposeGlobe() {
@@ -601,6 +722,7 @@
                     kw: p.kw || ""
                   });
                 }
+                RENDER = buildGlobalSample(ALL, RENDER_CAP);
                 bindFixedPoints();
               })
               .catch(function (e) {
@@ -637,6 +759,18 @@
               })
               .pointsMerge(true)
               .pointsTransitionDuration(0);
+
+            // Mobile / Firefox performance: cap pixel ratio, prefer power-saving
+            try {
+              var rdr = typeof globe.renderer === "function" ? globe.renderer() : null;
+              if (rdr) {
+                rdr.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.5));
+                if (rdr.powerPreference !== undefined) rdr.powerPreference = "low-power";
+              }
+              if (isMobile) {
+                try { globe.showAtmosphere(false); } catch (e1) {}
+              }
+            } catch (e) {}
 
             onResize = function () {
               if (!mapVisible || !globe || !globeEl) return;
@@ -721,9 +855,32 @@
                 });
             }
 
-            // Stay on world view by default so the full global network is visible.
-            // "Near you" is available as a control button instead of auto-zooming in.
+            // Start worldwide so the full network is visible, then geolocate if permitted
             goTo(15, 10, 2.2);
+            setTimeout(function () {
+              if (cleanedUp) return;
+              function zoomTo(lat, lng, label) {
+                setRegion(lat, lng, label || "you");
+              }
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                  function (pos) {
+                    if (cleanedUp) return;
+                    zoomTo(pos.coords.latitude, pos.coords.longitude, "you");
+                  },
+                  function () {
+                    locateByIP().then(function (loc) {
+                      if (loc) zoomTo(loc.lat, loc.lng, loc.source);
+                    }).catch(function () {});
+                  },
+                  { enableHighAccuracy: false, timeout: 6000, maximumAge: 600000 }
+                );
+              } else {
+                locateByIP().then(function (loc) {
+                  if (loc) zoomTo(loc.lat, loc.lng, loc.source);
+                }).catch(function () {});
+              }
+            }, 1400);
 
             // World / region jump controls so the full global network is one click away
             (function addMapControls() {
