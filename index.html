@@ -388,8 +388,10 @@
           <div id="charge-globe-status" style="position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(0,0,0,0.65);color:#e8eaf0;font-size:12px;padding:6px 10px;border-radius:8px;">Scroll to load map…</div>
         </div>
         <figcaption>
-          <strong>3D Earth · Tesla Superchargers + CCS (≥3&nbsp;kW)</strong> —
-          Red = Tesla · Blue = CCS. Pins fill the full viewport as you pan and zoom. Click for name + Google Maps.
+          <strong>Global network · Tesla Superchargers + CCS (≥3&nbsp;kW)</strong> —
+          Red = Tesla · Blue = CCS. Zoom out for the full worldwide map; pan to explore every region.
+          Puca ships by plane — charge wherever CCS1 or Tesla (with adapter) is available.
+          Click a pin for name + Google Maps.
           <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">Curated layers in Google Earth</a>.
         </figcaption>
       </figure>
@@ -492,38 +494,56 @@
             var alt = Math.max(0.05, pov.altitude || 1);
             var lat0 = pov.lat;
             var lng0 = pov.lng;
-            var cos = Math.max(0.25, Math.cos(lat0 * Math.PI / 180));
-            // FOV-sized band so the whole viewport is covered, not just the center
-            var band = Math.min(55, Math.max(1.2, alt * 28));
-            var maxPins = alt > 1.0 ? 160 : (alt > 0.5 ? 220 : (alt > 0.25 ? 280 : 320));
-            // Grid cells across the view → even spread instead of nearest-to-center cluster
-            var cells = alt > 0.8 ? 6 : (alt > 0.35 ? 8 : 10);
+            var cos = Math.max(0.2, Math.cos(lat0 * Math.PI / 180));
+            // World / continent / region / city FOV bands
+            var band, maxPins, cells;
+            if (alt >= 1.6) {          // whole-Earth
+              band = 180;
+              maxPins = 700;
+              cells = 14;
+            } else if (alt >= 1.0) {   // multi-continent
+              band = 90;
+              maxPins = 550;
+              cells = 12;
+            } else if (alt >= 0.5) {   // continent
+              band = Math.min(55, alt * 40);
+              maxPins = 400;
+              cells = 10;
+            } else if (alt >= 0.22) {  // country / multi-state
+              band = Math.min(30, alt * 35);
+              maxPins = 320;
+              cells = 9;
+            } else {                   // metro
+              band = Math.min(12, Math.max(1.5, alt * 28));
+              maxPins = 280;
+              cells = 8;
+            }
             var cellSize = (band * 2) / cells;
             var buckets = {};
             var cellKeys = [];
             for (var i = 0; i < ALL.length; i++) {
               var p = ALL[i];
               var dlat = p.lat - lat0;
-              var dlng = (p.lng - lng0) * cos;
-              // wrap longitude distance
-              if (dlng > 180 * cos) dlng -= 360 * cos;
-              if (dlng < -180 * cos) dlng += 360 * cos;
-              if (Math.abs(dlat) > band || Math.abs(dlng) > band) continue;
-              var cx = Math.min(cells - 1, Math.max(0, Math.floor((dlng + band) / cellSize)));
+              var dlng = (p.lng - lng0);
+              // shortest longitude delta
+              while (dlng > 180) dlng -= 360;
+              while (dlng < -180) dlng += 360;
+              var dlngAdj = dlng * cos;
+              if (Math.abs(dlat) > band || Math.abs(dlngAdj) > band) continue;
+              var cx = Math.min(cells - 1, Math.max(0, Math.floor((dlngAdj + band) / cellSize)));
               var cy = Math.min(cells - 1, Math.max(0, Math.floor((dlat + band) / cellSize)));
               var ck = cx + "," + cy;
-              var dist = dlat * dlat + dlng * dlng;
+              var dist = dlat * dlat + dlngAdj * dlngAdj;
               if (!buckets[ck]) {
                 buckets[ck] = [];
                 cellKeys.push(ck);
               }
               buckets[ck].push({ p: p, dist: dist });
             }
-            // Sort each cell by distance to cell center-ish (prefer variety)
             for (var j = 0; j < cellKeys.length; j++) {
               buckets[cellKeys[j]].sort(function (a, b) { return a.dist - b.dist; });
             }
-            // Round-robin across cells so pins fill the whole viewport
+            // Round-robin so every region of the viewport gets pins
             var out = [];
             var seen = {};
             var perCell = Math.max(1, Math.ceil(maxPins / Math.max(1, cellKeys.length)));
@@ -534,7 +554,6 @@
               for (var c = 0; c < cellKeys.length && out.length < maxPins; c++) {
                 var list = buckets[cellKeys[c]];
                 if (idx >= list.length) continue;
-                // take up to a few per pass
                 var take = Math.min(perCell, list.length - idx);
                 for (var t = 0; t < take && out.length < maxPins; t++) {
                   var pt = list[idx + t].p;
@@ -559,7 +578,7 @@
             lastKey = key;
             var subset = pickVisible(pov);
             globe.htmlElementsData(subset);
-            setStatus(subset.length + " pins in view · click for details");
+            setStatus(subset.length + " in view · " + ALL.length.toLocaleString() + " Tesla + CCS worldwide · click for details");
           }
 
           function scheduleRefresh() {
@@ -722,7 +741,7 @@
               setTimeout(function () { refreshPins(true); }, 400);
             }
 
-            goTo(20, 10, 1.5);
+            goTo(20, 10, 2.0);
 
             function setRegion(lat, lng, label) {
               goTo(lat, lng, REGION_ALT);
@@ -751,27 +770,65 @@
                 });
             }
 
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(
-                function (pos) {
-                  if (cleanedUp) return;
-                  setRegion(pos.coords.latitude, pos.coords.longitude, "you");
-                },
-                function () {
-                  if (cleanedUp) return;
+            // Stay on world view by default so the full global network is visible.
+            // "Near you" is available as a control button instead of auto-zooming in.
+            goTo(15, 10, 2.2);
+
+            // World / region jump controls so the full global network is one click away
+            (function addMapControls() {
+              var embed = document.querySelector(".charge-map-embed");
+              if (!embed || document.getElementById("charge-globe-jumps")) return;
+              var bar = document.createElement("div");
+              bar.id = "charge-globe-jumps";
+              bar.style.cssText = "position:absolute;top:12px;left:12px;z-index:3;display:flex;flex-wrap:wrap;gap:6px;";
+              var places = [
+                { label: "World", lat: 15, lng: 10, alt: 2.2 },
+                { label: "N. America", lat: 39, lng: -98, alt: 1.15 },
+                { label: "Europe", lat: 50, lng: 10, alt: 0.95 },
+                { label: "Asia", lat: 30, lng: 105, alt: 1.2 },
+                { label: "Oceania", lat: -25, lng: 135, alt: 1.1 }
+              ];
+              places.forEach(function (pl) {
+                var b = document.createElement("button");
+                b.type = "button";
+                b.textContent = pl.label;
+                b.style.cssText = "background:rgba(0,0,0,0.7);color:#e8eaf0;border:1px solid rgba(255,255,255,0.18);border-radius:999px;padding:5px 10px;font-size:12px;cursor:pointer;backdrop-filter:blur(6px);";
+                b.addEventListener("click", function () {
+                  goTo(pl.lat, pl.lng, pl.alt);
+                  setStatus(pl.label + " · global CCS + Tesla network");
+                });
+                bar.appendChild(b);
+              });
+              var nearBtn = document.createElement("button");
+              nearBtn.type = "button";
+              nearBtn.textContent = "Near you";
+              nearBtn.style.cssText = "background:rgba(234,67,53,0.85);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:999px;padding:5px 10px;font-size:12px;cursor:pointer;";
+              nearBtn.addEventListener("click", function () {
+                setStatus("Locating…");
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(
+                    function (pos) {
+                      if (cleanedUp) return;
+                      setRegion(pos.coords.latitude, pos.coords.longitude, "you");
+                    },
+                    function () {
+                      locateByIP().then(function (loc) {
+                        if (loc) setRegion(loc.lat, loc.lng, loc.source);
+                        else setStatus("Could not locate");
+                      }).catch(function () { setStatus("Could not locate"); });
+                    },
+                    { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
+                  );
+                } else {
                   locateByIP().then(function (loc) {
                     if (loc) setRegion(loc.lat, loc.lng, loc.source);
-                    else goTo(20, 10, 1.4);
-                  }).catch(function () { goTo(20, 10, 1.4); });
-                },
-                { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
-              );
-            } else {
-              locateByIP().then(function (loc) {
-                if (loc) setRegion(loc.lat, loc.lng, loc.source);
-                else goTo(20, 10, 1.4);
-              }).catch(function () { goTo(20, 10, 1.4); });
-            }
+                    else setStatus("Could not locate");
+                  }).catch(function () { setStatus("Could not locate"); });
+                }
+              });
+              bar.appendChild(nearBtn);
+              embed.appendChild(bar);
+            })();
 
             loadData();
             resumeMap();
