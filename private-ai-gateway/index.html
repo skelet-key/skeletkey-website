@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Private Enterprise AI Gateway — Zero-Trust AI for Finance & Legal</title>
+  <meta name="description" content="Air-gapped Private AI Gateway for Tier-1 financial institutions and premium legal firms. FINRA/SEC compliant. LDAP/Kerberos SSO. No prompts leave your perimeter." />
+  <link rel="stylesheet" href="/private-ai-gateway/css/styles.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a href="/private-ai-gateway/" class="logo">Private<span>AI</span> Gateway</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#solution">Solution</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#compliance">Compliance</a></li>
+      <li><a href="#deploy">Deploy</a></li>
+      <li><a href="https://github.com/skelet-key/private-ai-gateway" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="/" class="nav-cta">SkeletKey</a></li>
+      <li><a href="#contact" class="nav-cta">Request Briefing</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-badge">Zero-Trust · Air-Gapped · NYC Finance & Legal</div>
+    <h1>Private AI inside your perimeter.<br><span class="accent">Nothing leaves the building.</span></h1>
+    <p class="hero-sub">
+      Production-grade AI gateway engineered for Tier-1 financial institutions and premium legal firms.
+      FINRA, SEC, and corporate confidentiality requirements — met by design, not by policy alone.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">Request Architecture Briefing</a>
+      <a href="#architecture" class="btn btn-secondary">View Architecture</a>
+    </div>
+  </header>
+
+  <section class="diff">
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="icon">🔒</div>
+        <h3>Air-Gapped by Default</h3>
+        <p>All prompts, embeddings, and token processing stay inside your private loopback or VPC. No diagnostic data, conversational content, or model weights reach public clouds.</p>
+      </div>
+      <div class="diff-card">
+        <div class="icon">🏛️</div>
+        <h3>FINRA / SEC Ready</h3>
+        <p>Built for New York Tier-1 finance and global litigation groups. Zero prompt retention, sanitized audit logs, and institutional security policy documentation included.</p>
+      </div>
+      <div class="diff-card">
+        <div class="icon">🔑</div>
+        <h3>Enterprise SSO</h3>
+        <p>Native LDAPS and Kerberos SPNEGO. Pre-seeded connection pools to Active Directory. Group-based RBAC for legal vs. trading desks.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="problem">
+    <div class="section-inner">
+      <div class="section-label">The Problem</div>
+      <h2 class="section-title">Public AI is a compliance liability.</h2>
+      <p class="section-lead">
+        Traders, analysts, and partners already use generative AI. Every prompt that leaves the firm is a potential record retention, confidentiality, or regulatory failure.
+      </p>
+      <div class="two-col">
+        <div class="col-card">
+          <h3>What breaks today</h3>
+          <ul>
+            <li>Sensitive deal data and client documents in external LLM chats</li>
+            <li>No audit trail of who asked what, when, and under which role</li>
+            <li>Shadow IT tools that bypass SSO and DLP</li>
+            <li>Inability to prove “prompts never left the perimeter” to regulators</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h3>Who feels it first</h3>
+          <ul>
+            <li>Chief Compliance Officers at broker-dealers</li>
+            <li>General Counsel at litigation and corporate firms</li>
+            <li>CISO / InfoSec teams under FINRA and SEC scrutiny</li>
+            <li>Risk committees approving any AI pilot</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="solution">
+    <div class="section-inner">
+      <div class="section-label">The Solution</div>
+      <h2 class="section-title">A private gateway between your people and models.</h2>
+      <p class="section-lead">
+        One hardened ingress. Corporate identity at the edge. Orchestration that never routes payloads outside your network boundary.
+      </p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>Hardened Proxy Layer</h3>
+          <p>Nginx bound to loopback, TLS 1.2/1.3 only, security headers (HSTS, CSP, X-Frame-Options DENY), JSON access logs with payload scrubbing.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Identity Broker</h3>
+          <p>Go-based high-performance broker with LDAPS connection pools and Kerberos keytab validation. No volatile credentials in transit.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Private Orchestrator</h3>
+          <p>Validated local traffic only. Multi-tenant policy engine separates legal discovery from capital markets with strict group and classification limits.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Zero Prompt Retention</h3>
+          <p>Prompts exist only in runtime memory. Overwritten after the transaction. No disk writes of conversational content — by architecture, not configuration.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="architecture">
+    <div class="section-inner">
+      <div class="section-label">Architecture</div>
+      <h2 class="section-title">Three isolated execution boundaries.</h2>
+      <p class="section-lead">
+        Everything runs on an internal, non-routable Docker network. The proxy is the only process that ever touches a host port — and only on <code>127.0.0.1</code>.
+      </p>
+
+      <div class="arch-stack">
+        <div class="arch-layer">
+          <span class="arch-num">01</span>
+          <div>
+            <h3>Perimeter — Nginx</h3>
+            <p>Singular ingress. Terminates enterprise TLS, strips identifying headers, enforces CSP. Bound exclusively to loopback.</p>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <span class="arch-num">02</span>
+          <div>
+            <h3>Identity — Go Broker</h3>
+            <p>Pre-seeded LDAP pools and Kerberos SPNEGO. Translates AD groups into gateway roles without exposing credentials.</p>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <span class="arch-num">03</span>
+          <div>
+            <h3>Orchestration — Private AI Core</h3>
+            <p>Routes validated requests to isolated model space. Multi-tenant policies, token limits, and classification gates per desk.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-note">
+        <strong>Network posture:</strong> Docker bridge marked <code>internal: true</code> — no external internet routing from the application plane. Air-gap preserved even if a container is compromised.
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="compliance">
+    <div class="section-inner">
+      <div class="section-label">Compliance</div>
+      <h2 class="section-title">Designed for the people who sign off.</h2>
+      <p class="section-lead">
+        Risk, compliance, and security get documentation and controls they can audit — not a slide deck about “best efforts.”
+      </p>
+      <div class="comp-grid">
+        <div class="comp-card">
+          <h3>Security Policy Pack</h3>
+          <p>Institutional ISP covering data retention, zero-leak credentials, encryption-at-rest, and transit standards ready for board and regulator review.</p>
+        </div>
+        <div class="comp-card">
+          <h3>CIS Hardening Guide</h3>
+          <p>Kernel sysctl matrices, non-root UIDs, read-only mounts, <code>no-new-privileges</code> — aligned with CIS Docker benchmarks.</p>
+        </div>
+        <div class="comp-card">
+          <h3>Audit-Safe Logging</h3>
+          <p>Structured JSON logs with automated scrubbers. Performance indices and tracking IDs only — no prompt text in SIEM feeds.</p>
+        </div>
+        <div class="comp-card">
+          <h3>Multi-Tenant RBAC</h3>
+          <p>Policy engine separates legal and finance domains with group allow-lists, classification limits, and MFA-required roles.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="deploy">
+    <div class="section-inner">
+      <div class="section-label">Deployment</div>
+      <h2 class="section-title">Zero-touch production playbook.</h2>
+      <p class="section-lead">
+        One orchestrated script: dependency audit, config integrity checks, containerized unit tests, dual-stack rollout, and post-flight health handshake.
+      </p>
+      <div class="deploy-steps">
+        <div class="step">
+          <span class="step-n">1</span>
+          <h4>Pre-flight</h4>
+          <p>Validate Docker, OpenSSL, curl, and required config assets.</p>
+        </div>
+        <div class="step">
+          <span class="step-n">2</span>
+          <h4>TLS & layout</h4>
+          <p>Provision certificates and workspace directories via setup script.</p>
+        </div>
+        <div class="step">
+          <span class="step-n">3</span>
+          <h4>Test gate</h4>
+          <p>Isolated unit tests for LDAP pool, timeout, and starvation scenarios — must pass before rollout.</p>
+        </div>
+        <div class="step">
+          <span class="step-n">4</span>
+          <h4>Rollout</h4>
+          <p>Primary gateway + monitoring plane. Loopback E2E probe confirms perimeter is live.</p>
+        </div>
+      </div>
+      <p class="deploy-foot">
+        Includes admin CLI for cert rotation, policy hot-swap, config checks, and telemetry dumps — without disrupting active sessions.
+      </p>
+    </div>
+  </section>
+
+  <section class="section alt" id="market">
+    <div class="section-inner">
+      <div class="section-label">Market</div>
+      <h2 class="section-title">Built for New York’s most regulated desks.</h2>
+      <div class="market-grid">
+        <div class="market-card">
+          <h3>Capital Markets</h3>
+          <p>Quantitative traders and risk managers need AI on restricted market data without creating a new data-exfiltration path.</p>
+        </div>
+        <div class="market-card">
+          <h3>Legal & Litigation</h3>
+          <p>Partners and compliance auditors require document analysis inside highly confidential boundaries with full auditability.</p>
+        </div>
+        <div class="market-card">
+          <h3>Enterprise Security</h3>
+          <p>CISOs get a controllable ingress: SSO, group gates, sanitized logs, and a clear answer when regulators ask where the data went.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="order-section" id="contact">
+    <div class="section-label">Next Step</div>
+    <h2>Request an architecture briefing.</h2>
+    <p class="order-lead">
+      Walk through topology, identity integration, and compliance artifacts with your security and compliance stakeholders.
+    </p>
+    <form class="order-form" id="contactForm" action="https://formsubmit.co/ajax/nateclaudemcdowel@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="Private AI Gateway — Briefing Request" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required placeholder="Your name" />
+        </div>
+        <div class="form-group">
+          <label for="email">Work Email</label>
+          <input type="email" id="email" name="email" required placeholder="you@firm.com" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firm">Firm / Organization</label>
+          <input type="text" id="firm" name="firm" required placeholder="Firm name" />
+        </div>
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select id="role" name="role">
+            <option value="ciso">CISO / InfoSec</option>
+            <option value="compliance">Compliance / Risk</option>
+            <option value="legal">General Counsel / Legal Ops</option>
+            <option value="tech">Engineering / Architecture</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="message">What are you evaluating?</label>
+        <textarea id="message" name="message" rows="3" placeholder="Pilot scope, identity stack, timeline…"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">Request Briefing</button>
+      <p class="form-note">We respond within 1–2 business days. No spam, no public cloud processing of your message beyond mail delivery.</p>
+    </form>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Private<span>AI</span> Gateway</div>
+        <p class="footer-desc">Zero-trust AI infrastructure for regulated enterprises. Air-gapped. Auditable. Deployable on your terms.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#architecture">Architecture</a></li>
+          <li><a href="#compliance">Compliance</a></li>
+          <li><a href="#deploy">Deployment</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#contact">Request Briefing</a></li>
+          <li><a href="mailto:nateclaudemcdowel@gmail.com">nateclaudemcdowel@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Private Enterprise AI Gateway</span>
+    </div>
+  </footer>
+
+  <script src="/private-ai-gateway/js/main.js"></script>
+</body>
+</html>
