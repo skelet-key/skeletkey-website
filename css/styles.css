@@ -167,6 +167,12 @@ a {
   color: var(--accent);
 }
 
+.hero-sub + .hero-sub {
+  margin-top: 0.75rem;
+}
+.section-lead + .section-lead {
+  margin-top: 0.85rem;
+}
 .hero-sub {
   font-size: 1.15rem;
   color: var(--text-secondary);
