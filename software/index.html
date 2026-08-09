@@ -176,7 +176,7 @@
     <p class="eyebrow">Open source · npm</p>
     <h1>Software</h1>
     <p class="lead">
-      Open-source packages and utilities — Angular e2e tooling, GitHub release automation, multiplayer networking, and hardware helpers.
+      Open-source packages and utilities — Angular e2e tooling, GitHub release automation, multiplayer networking, hardware helpers, and smart-home access.
     </p>
 
     <h2 class="pkg-title"><code>angular-mock-record</code></h2>
@@ -337,6 +337,44 @@ afterAll(() => {
     <div class="soft-actions">
       <a class="primary" href="https://github.com/natemcdowel/nvidia-shield-controller" target="_blank" rel="noopener noreferrer">
         nvidia-shield-controller on GitHub ↗
+      </a>
+    </div>
+
+    <hr class="pkg-rule" />
+
+    <h2 class="pkg-title"><code>tupelo-zwave</code></h2>
+    <div class="soft-meta">
+      <span>Z-Wave</span>
+      <span>Tupelo</span>
+      <span>Raspberry Pi</span>
+      <span>React Native</span>
+    </div>
+    <p class="pkg-lead">
+      Smart-home access stack on OpenZWave and Tupelo — pair Z-Wave locks, run a host app on a Raspberry Pi, and let guests unlock via a React Native app with ChainTree-backed user IDs.
+    </p>
+
+    <div class="soft-card">
+      <h2>Highlights</h2>
+      <ul>
+        <li>OpenZWave integration for pairing and controlling Z-Wave devices</li>
+        <li>Host app on Raspberry Pi (Node server + UI at <code>localhost:3000</code>)</li>
+        <li>Guest app for Android / iOS via React Native — lock and unlock with a userId code</li>
+        <li>Tupelo ChainTree storage for guest identity and valid keys</li>
+      </ul>
+    </div>
+
+    <div class="soft-card">
+      <h2>Setup snapshot</h2>
+      <ul>
+        <li>Install and compile OpenZWave; set NetworkKey in <code>options.xml</code></li>
+        <li>Pair devices with <code>zwave.addDevice(true)</code> from the Node server REPL</li>
+        <li>Start the host with <code>npm start</code> in <code>host-app</code>; guests use <code>guest-app</code></li>
+      </ul>
+    </div>
+
+    <div class="soft-actions">
+      <a class="primary" href="https://github.com/natemcdowel/tupelo-zwave" target="_blank" rel="noopener noreferrer">
+        tupelo-zwave on GitHub ↗
       </a>
       <a href="/">← Back to SkeletKey</a>
     </div>
