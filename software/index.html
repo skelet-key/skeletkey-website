@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Software | SkeletKey</title>
-  <meta name="description" content="Open-source npm packages by Nathan McDowell — angular-mock-record and github-release-manager." />
+  <meta name="description" content="Open-source software by Nathan McDowell — angular-mock-record, github-release-manager, and socketObject." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -176,7 +176,7 @@
     <p class="eyebrow">Open source · npm</p>
     <h1>Software</h1>
     <p class="lead">
-      Open-source packages published on npm — tooling for Angular e2e testing and GitHub release automation.
+      Open-source packages and libraries — Angular e2e tooling, GitHub release automation, and multiplayer game networking.
     </p>
 
     <h2 class="pkg-title"><code>angular-mock-record</code></h2>
@@ -270,6 +270,45 @@ afterAll(() => {
     <div class="soft-actions">
       <a class="primary" href="https://www.npmjs.com/package/github-release-manager" target="_blank" rel="noopener noreferrer">
         github-release-manager on npm ↗
+      </a>
+    </div>
+
+    <hr class="pkg-rule" />
+
+    <h2 class="pkg-title"><code>socketObject</code></h2>
+    <div class="soft-meta">
+      <span>Node.js</span>
+      <span>Socket.io</span>
+      <span>Multiplayer</span>
+      <span>MelonJS-friendly</span>
+    </div>
+    <p class="pkg-lead">
+      Framework for action-based multiplayer games on Node.js and Socket.io — host/slave networking from the client,
+      entity sync via a shared socket object structure, and position interpolation to smooth latency.
+    </p>
+
+    <div class="soft-card">
+      <h2>Highlights</h2>
+      <ul>
+        <li>Extend game entities with <code>socketObjectEntity.js</code> to pass them as socket objects</li>
+        <li>Host / slave model — host is <code>clientid == 0</code> (open a port on the host machine)</li>
+        <li>Position interpolation to compensate for network latency</li>
+        <li>Works with MelonJS-style entity inheritance; adaptable to other engines</li>
+      </ul>
+    </div>
+
+    <div class="soft-card">
+      <h2>Core pieces</h2>
+      <ul>
+        <li><code>socketObjectEntity.js</code> — base entity with <code>defineSocketObjectStructure</code>, <code>socketInit</code>, and <code>updateSocketEntity</code></li>
+        <li><code>socketClient.js</code> — client-side wiring to add hosted objects and keep state in sync</li>
+        <li>Host-only behavior logic; slaves receive interpolated position / animation state</li>
+      </ul>
+    </div>
+
+    <div class="soft-actions">
+      <a class="primary" href="https://github.com/natemcdowel/socketObject" target="_blank" rel="noopener noreferrer">
+        socketObject on GitHub ↗
       </a>
       <a href="/">← Back to SkeletKey</a>
     </div>
