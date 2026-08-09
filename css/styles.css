@@ -130,13 +130,13 @@ a {
 
 /* ========== HERO ========== */
 .hero {
-  min-height: 100vh;
+  min-height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 8rem 1.5rem 4rem;
+  padding: 7rem 1.5rem 1.25rem;
   position: relative;
   background: radial-gradient(ellipse at 50% 0%, #1A1F2B 0%, var(--bg) 70%);
 }
@@ -269,6 +269,12 @@ a {
 /* ========== SECTIONS COMMON ========== */
 .section {
   padding: 5.5rem 1.5rem;
+}
+
+/* Pull product photo up under hero CTAs */
+#bike.section {
+  padding-top: 1.5rem;
+  padding-bottom: 4rem;
 }
 
 .section-inner {
