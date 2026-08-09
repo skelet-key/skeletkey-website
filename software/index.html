@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Software — angular-mock-record | SkeletKey</title>
-  <meta name="description" content="angular-mock-record — An Angular / Protractor framework that mocks and records HTTP requests like VCR. By Nathan McDowell." />
+  <title>Software | SkeletKey</title>
+  <meta name="description" content="Open-source npm packages by Nathan McDowell — angular-mock-record and github-release-manager." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -126,6 +126,28 @@
       border-color: var(--brake-red-hover);
     }
     .nav-links a.active { color: #fff; }
+    .pkg-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0.5rem 0 0.75rem;
+    }
+    .pkg-title code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #f0f3fa;
+    }
+    .pkg-lead {
+      color: var(--text-secondary);
+      font-size: 1.02rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      max-width: 40rem;
+    }
+    .pkg-rule {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
   </style>
 </head>
 <body>
@@ -152,18 +174,19 @@
 
   <main class="soft-page">
     <p class="eyebrow">Open source · npm</p>
-    <h1><code>angular-mock-record</code></h1>
+    <h1>Software</h1>
     <p class="lead">
-      An Angular / Protractor framework that mocks and records HTTP requests — manually or automatically, VCR-style — so end-to-end tests stay fast, deterministic, and offline-friendly.
+      Open-source packages published on npm — tooling for Angular e2e testing and GitHub release automation.
     </p>
 
+    <h2 class="pkg-title"><code>angular-mock-record</code></h2>
     <div class="soft-meta">
       <span>v1.6.4</span>
       <span>Angular 4+</span>
       <span>Protractor</span>
-      <span>ISC License</span>
-      <span>Nathan McDowell</span>
+      <span>ISC</span>
     </div>
+    <p class="pkg-lead">Mocks and records HTTP requests for Angular / Protractor — VCR-style fixtures for fast, deterministic e2e tests.</p>
 
     <div class="soft-card">
       <h2>What it does</h2>
@@ -212,10 +235,41 @@ afterAll(() => {
 
     <div class="soft-actions">
       <a class="primary" href="https://www.npmjs.com/package/angular-mock-record" target="_blank" rel="noopener noreferrer">
-        View on npm ↗
+        angular-mock-record on npm ↗
       </a>
-      <a href="https://www.npmjs.com/package/angular-mock-record?activeTab=readme" target="_blank" rel="noopener noreferrer">
-        Full readme ↗
+    </div>
+
+    <hr class="pkg-rule" />
+
+    <h2 class="pkg-title"><code>github-release-manager</code></h2>
+    <div class="soft-meta">
+      <span>v1.1.3</span>
+      <span>GitHub Releases</span>
+      <span>Deployment</span>
+      <span>ISC</span>
+    </div>
+    <p class="pkg-lead">Creates and downloads GitHub releases — gzip the <code>/release</code> directory, publish by branch, and pull artifacts back down for deployment.</p>
+
+    <div class="soft-card">
+      <h2>Install</h2>
+      <pre><code>npm install github-release-manager</code></pre>
+    </div>
+
+    <div class="soft-card">
+      <h2>Create a release</h2>
+      <p>Gzip the contents of <code>/release</code> and upload to a GitHub release versioned by branch name:</p>
+      <pre><code>node create-release.js &lt;branch&gt; &lt;github_token&gt; &lt;owner&gt; &lt;repo&gt;</code></pre>
+    </div>
+
+    <div class="soft-card">
+      <h2>Download a release</h2>
+      <p>Download the zipped release and unzip into <code>/release</code>:</p>
+      <pre><code>node ./node_modules/github-release-manager/download-release.js &lt;branch&gt; &lt;github_token&gt; &lt;owner&gt; &lt;repo&gt;</code></pre>
+    </div>
+
+    <div class="soft-actions">
+      <a class="primary" href="https://www.npmjs.com/package/github-release-manager" target="_blank" rel="noopener noreferrer">
+        github-release-manager on npm ↗
       </a>
       <a href="/">← Back to SkeletKey</a>
     </div>
