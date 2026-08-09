@@ -1163,8 +1163,15 @@ p strong,
 .charge-stations {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  margin: 1.75rem 0 1.5rem;
+  gap: 1.5rem;
+  margin: 1.75rem 1.25rem 1.75rem;
+}
+@media (min-width: 900px) {
+  .charge-pair,
+  .charge-stations {
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+  }
 }
 .charge-card {
   margin: 0;
@@ -1190,11 +1197,17 @@ p strong,
   color: var(--text, #e8eaf0);
 }
 .charge-map {
-  margin: 1.5rem 0 0;
+  margin: 1.75rem 1.25rem 0;
   background: var(--surface, #12141c);
   border: 1px solid var(--border, #2a2d3a);
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
+}
+@media (min-width: 900px) {
+  .charge-map {
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+  }
 }
 .charge-map-img {
   display: block;

@@ -13,11 +13,17 @@
   <style>
     #charge-globe {
       width: 100%;
-      height: 700px;
+      height: 720px;
       background: #02040a;
     }
     .charge-map-embed {
       background: #02040a;
+      margin: 0 auto;
+    }
+    @media (min-width: 900px) {
+      #charge-globe {
+        height: 760px;
+      }
     }
     #charger-popup-root {
       position: absolute;
@@ -958,18 +964,19 @@
               bar.appendChild(nearBtn);
               embed.appendChild(bar);
 
-              // Zoom in / out controls (fixed positions, scale altitude)
-              if (!document.getElementById("charge-globe-zoom")) {
+              // Zoom in / out — top-right and bottom-right of the globe
+              function zoomBy(factor) {
+                if (!globe || cleanedUp) return;
+                var pov = globe.pointOfView() || { lat: 20, lng: 0, altitude: 1.5 };
+                var alt = Math.max(0.05, Math.min(4.5, (pov.altitude || 1.5) * factor));
+                goTo(pov.lat, pov.lng, alt);
+              }
+              function makeZoomBar(id, positionCss) {
+                if (document.getElementById(id)) return;
                 var zoomBar = document.createElement("div");
-                zoomBar.id = "charge-globe-zoom";
-                zoomBar.style.cssText = "position:absolute;top:12px;right:12px;z-index:3;display:flex;flex-direction:column;gap:6px;";
-                var btnStyle = "width:36px;height:36px;border-radius:10px;background:rgba(0,0,0,0.75);color:#e8eaf0;border:1px solid rgba(255,255,255,0.18);font-size:20px;line-height:1;cursor:pointer;backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:0;";
-                function zoomBy(factor) {
-                  if (!globe || cleanedUp) return;
-                  var pov = globe.pointOfView() || { lat: 20, lng: 0, altitude: 1.5 };
-                  var alt = Math.max(0.05, Math.min(4.5, (pov.altitude || 1.5) * factor));
-                  goTo(pov.lat, pov.lng, alt);
-                }
+                zoomBar.id = id;
+                zoomBar.style.cssText = "position:absolute;" + positionCss + "z-index:3;display:flex;flex-direction:column;gap:6px;";
+                var btnStyle = "width:40px;height:40px;border-radius:12px;background:rgba(0,0,0,0.78);color:#e8eaf0;border:1px solid rgba(255,255,255,0.2);font-size:22px;line-height:1;cursor:pointer;backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:0;";
                 var zin = document.createElement("button");
                 zin.type = "button";
                 zin.setAttribute("aria-label", "Zoom in");
@@ -988,6 +995,8 @@
                 zoomBar.appendChild(zout);
                 embed.appendChild(zoomBar);
               }
+              makeZoomBar("charge-globe-zoom", "top:12px;right:12px;");
+              makeZoomBar("charge-globe-zoom-br", "bottom:52px;right:12px;");
             })();
 
             loadData();
