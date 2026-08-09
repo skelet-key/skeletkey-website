@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software — angular-mock-record | SkeletKey</title>
+  <meta name="description" content="angular-mock-record — An Angular / Protractor framework that mocks and records HTTP requests like VCR. By Nathan McDowell." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <style>
+    .soft-page {
+      min-height: 100vh;
+      padding: 7.5rem 1.5rem 4rem;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .soft-page .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .soft-page h1 {
+      font-size: clamp(1.9rem, 4.5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+    .soft-page h1 code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.92em;
+      color: #f0f3fa;
+    }
+    .soft-page .lead {
+      color: var(--text-secondary);
+      font-size: 1.08rem;
+      max-width: 40rem;
+      margin-bottom: 1.75rem;
+      line-height: 1.65;
+    }
+    .soft-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .soft-meta span {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-secondary);
+    }
+    .soft-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem 1.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .soft-card h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+    .soft-card p, .soft-card li {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+    .soft-card ul {
+      margin: 0.5rem 0 0 1.15rem;
+    }
+    .soft-card li { margin-bottom: 0.35rem; }
+    .soft-card pre {
+      margin-top: 0.85rem;
+      background: #0a0c12;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      color: #d7deea;
+      line-height: 1.5;
+    }
+    .soft-card code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    .soft-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+    }
+    .soft-actions a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .soft-actions a:hover {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+    .soft-actions a.primary {
+      background: var(--brake-red);
+      border-color: var(--brake-red);
+      color: #fff;
+    }
+    .soft-actions a.primary:hover {
+      background: var(--brake-red-hover);
+      border-color: var(--brake-red-hover);
+    }
+    .nav-links a.active { color: #fff; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <img
+        src="/assets/skeletkey-logo-key-nav.png"
+        srcset="/assets/skeletkey-logo-key-nav.png 2x, /assets/skeletkey-logo-key-nav@3x.png 3x"
+        alt=""
+        class="nav-logo-key"
+        width="42"
+        height="40"
+      />
+      <span class="nav-logo-text">Skelet<span>Key</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/#bike">The Bike</a></li>
+      <li><a href="/software/" class="active">Software</a></li>
+      <li><a href="/puca/">Music</a></li>
+      <li><a href="/#order" class="nav-cta">Order</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+  </nav>
+
+  <main class="soft-page">
+    <p class="eyebrow">Open source · npm</p>
+    <h1><code>angular-mock-record</code></h1>
+    <p class="lead">
+      An Angular / Protractor framework that mocks and records HTTP requests — manually or automatically, VCR-style — so end-to-end tests stay fast, deterministic, and offline-friendly.
+    </p>
+
+    <div class="soft-meta">
+      <span>v1.6.4</span>
+      <span>Angular 4+</span>
+      <span>Protractor</span>
+      <span>ISC License</span>
+      <span>Nathan McDowell</span>
+    </div>
+
+    <div class="soft-card">
+      <h2>What it does</h2>
+      <ul>
+        <li>Mock API responses in Protractor specs with a simple client utility</li>
+        <li>Record real traffic to fixture files (VCR-style tapes) for replay</li>
+        <li>Configure domain, headers, recording directory, and param normalization</li>
+        <li>Optional CI mode that fails when unexpected new recordings appear</li>
+      </ul>
+    </div>
+
+    <div class="soft-card">
+      <h2>Install</h2>
+      <pre><code>npm install angular-mock-record</code></pre>
+    </div>
+
+    <div class="soft-card">
+      <h2>Quick config</h2>
+      <p>Add a <code>mock.record.config.json</code> at the root of your Angular app:</p>
+      <pre><code>{
+  "domain": "http://your.api.domain",
+  "port": 3000,
+  "cors": false,
+  "tape_name": "vcr",
+  "proxied_mock_server_route": "/e2e",
+  "request_headers": ["X-XSRF-TOKEN", "cookie"],
+  "recording_dir": "./e2e/mocks",
+  "allow_recording": false,
+  "exclude_params": [],
+  "normalize_params": []
+}</code></pre>
+    </div>
+
+    <div class="soft-card">
+      <h2>Mock in a Protractor spec</h2>
+      <pre><code>import { MockUtilities } from 'angular-mock-record/client/mock.utilities';
+
+beforeAll(() => {
+  mockUtilities.mockRequest('path/yourRequest.json', { foo: 'bar' });
+});
+
+afterAll(() => {
+  mockUtilities.clearMocks();
+});</code></pre>
+    </div>
+
+    <div class="soft-actions">
+      <a class="primary" href="https://www.npmjs.com/package/angular-mock-record" target="_blank" rel="noopener noreferrer">
+        View on npm ↗
+      </a>
+      <a href="https://www.npmjs.com/package/angular-mock-record?activeTab=readme" target="_blank" rel="noopener noreferrer">
+        Full readme ↗
+      </a>
+      <a href="/">← Back to SkeletKey</a>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var toggle = document.getElementById("navToggle");
+      var links = document.getElementById("navLinks");
+      if (toggle && links) {
+        toggle.addEventListener("click", function () {
+          links.classList.toggle("open");
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
