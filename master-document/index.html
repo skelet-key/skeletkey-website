@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Master Document — Puca Schematics &amp; Design Plan | SkeletKey</title>
+  <meta name="description" content="Internal SkeletKey master document: Puca schematics, design plan, and café racer seat mounting." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <style>
+    .md-page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 6.5rem 1.5rem 4rem;
+    }
+    .md-page .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .md-page h1 {
+      font-size: clamp(1.75rem, 4vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.35rem;
+    }
+    .md-page h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin: 2.25rem 0 0.85rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text);
+    }
+    .md-page h2:first-of-type { border-top: 0; }
+    .md-page h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.6rem;
+      color: var(--accent-hover);
+    }
+    .md-page p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 0.9rem;
+    }
+    .md-page ul {
+      margin: 0.5rem 0 1.1rem 1.25rem;
+      color: var(--text-secondary);
+    }
+    .md-page li {
+      margin-bottom: 0.45rem;
+      line-height: 1.6;
+    }
+    .md-page strong { color: var(--text); }
+    .md-page hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+    .md-page blockquote {
+      margin: 1rem 0 1.25rem;
+      padding: 0.85rem 1rem;
+      background: var(--surface);
+      border-left: 3px solid var(--brake-red);
+      border-radius: 0 10px 10px 0;
+      color: var(--text-secondary);
+    }
+    .md-page blockquote p { margin: 0.25rem 0; }
+    .md-page code {
+      font-size: 0.9em;
+      background: var(--surface-2);
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin: 1rem 0 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .md-page table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .md-page th, .md-page td {
+      padding: 0.55rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      color: var(--text-secondary);
+    }
+    .md-page th {
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 600;
+    }
+    .md-toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.15rem;
+      margin: 1.5rem 0 2rem;
+    }
+    .md-toc a {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+    }
+    .md-toc a:hover { color: var(--text); }
+    .md-toc ul { list-style: none; margin: 0.4rem 0 0; padding: 0; }
+    .md-toc li { margin: 0.35rem 0; }
+    .md-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <img
+        src="/assets/skeletkey-logo-key-nav.png"
+        srcset="/assets/skeletkey-logo-key-nav.png 2x, /assets/skeletkey-logo-key-nav@3x.png 3x"
+        alt=""
+        class="nav-logo-key"
+        width="42"
+        height="40"
+      />
+      <span class="nav-logo-text">Skelet<span>Key</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#bike">The Bike</a></li>
+      <li><a href="/#order" class="nav-cta">Order</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+  </nav>
+
+  <main class="md-page">
+    <p class="eyebrow">Internal · Master document</p>
+    <h1>Puca Schematics &amp; Design Plan</h1>
+    <p style="color:var(--text-muted);font-size:0.95rem;margin-bottom:0.5rem;">
+      SkeletKey engineering blueprint — structural, mechanical, electrical, and seat mounting.
+    </p>
+    <div class="md-toc">
+      <strong style="color:var(--text);font-size:0.9rem;">On this page</strong>
+      <ul>
+        <li><a href="#caf-racer-seat-mounting-two-up-caf-racer-seat-pan">Café Racer Seat Mounting</a></li>
+        <li><a href="#1-executive-system-architecture-framework">System Architecture</a></li>
+        <li><a href="#8-mechanical-fabrication-rear-dropout-geometry">Mechanical Fabrication &amp; Dropouts</a></li>
+        <li><a href="#9-side-view-component-rendering-actual-prototype-configuration">Side-View Configuration</a></li>
+      </ul>
+    </div>
+    <article class="md-body">
+<h1>High-Performance Folding Electric Motorcycle Prototype</h1>
+<h2 id="technical-build-integration-document-version-1-1">Technical Build &amp; Integration Document (Version 1.1)</h2>
+<p><strong>Project Code:</strong> SkeletKey Prototype</p>
+<p><strong>Author:</strong> Engineering Team / Co-Founder Core Specs Document</p>
+<hr />
+<h2 id="1-executive-system-architecture-framework">1. Executive System Architecture &amp; Framework</h2>
+<p>This comprehensive, pageless engineering blueprint consolidates the complete structural, mechanical, and electrical requirements for building the high-performance folding electric motorcycle prototype. The system leverages the lightweight properties of a modified <strong>V4 Max 6061-T6 Aluminum Folding Fat Tire Frame</strong> as a foundation to carry a heavy-duty, high-energy-density <strong>60.8V Nominal NMC battery module</strong> and a <strong>QS205 V3 (50H) Spoke Hub Motor</strong> (Bicycle/Moped axle, 13.5 kg / 29.7 lbs, 4,000–5,000W continuous / 12,000W peak). </p>
+<p>By pairing a featherweight structural frame with a massive power system, this architecture is engineered to reach speeds of <strong>up to 70 mph</strong> while providing an extended range of <strong>over 100 miles</strong> under precise cruising management.</p>
+<hr />
+<h2 id="2-structural-layout-hinge-protection-scheme">2. Structural Layout &amp; Hinge Protection Scheme</h2>
+<p>To prevent catastrophic failure of the central folding hinge under heavy mechanical loading, the 57 lb battery module bypasses the frame&#x27;s internal cavity. It relies instead on an isolated structural exoskeleton cradle clamped directly to the non-folding rear main triangle.</p>
+<h3>Visual Structural Layout Schema</h3>
+<blockquote>
+<p>🔹 <strong>FRONT ASSEMBLY</strong></p>
+<p><strong>Front Triple-Tree Fork &amp; Steering Column</strong></p>
+<p>⬇️ <em>(Connected via Heavy-Duty Gusseting)</em></p>
+<p><strong>Front Down-Tube</strong></p>
+<p></p>
+<p>🔸 <strong>CORE HINGE</strong></p>
+<p><strong>Central Latch Hinge System (Dual-Locking)</strong></p>
+<p></p>
+<p>🟥 <strong>POWER CRADLE</strong></p>
+<p><strong>Structural Exoskeleton Cradle</strong> <em>(Isolated from Hinge Latch)</em></p>
+<p>* <strong>Payload:</strong> Holds 60V 16S2P NMC Battery Pack (~55 lbs)</p>
+<p>* <strong>Hardware:</strong> Features Quick-Release Mechanical Guide Rails &amp; Cam-Latches</p>
+<p></p>
+<p>⚙️ <strong>REAR DRIVE</strong></p>
+<p><strong>Rear Swingarm / Drop-Outs</strong> <em>(170mm-190mm Fat Tire Spacing)</em></p>
+<p>* <strong>Anchors:</strong> Bolt-on Chromoly Steel Torque Arms (Dual-Sided) lock the Hub Motor Axle</p>
+<p>* <strong>Contact:</strong> 4.0&quot; Ultra-Wide Fat Tire</p>
+</blockquote>
+<p><strong>Mechanical Installation Specifications:</strong></p>
+<ul>
+<li><strong>Hinge Protection:</strong> Rotation forces are redirected around the latch assembly using 6061-T6 frame gussets.</li>
+<li><strong>Exoskeleton Tray:</strong> Uses dual over-center stainless steel draw latches for fast battery field swaps.</li>
+<li><strong>Vibration Dampening:</strong> 2mm neoprene buffer strips must line all clamping interfaces to prevent aluminum micro-fractures.</li>
+</ul>
+<hr />
+<h2 id="3-electrical-distribution-powertrain-wiring">3. Electrical Distribution &amp; Powertrain Wiring</h2>
+<p>The electrical distribution utilizes low-impedance pathways to accommodate high continuous currents. Power delivery from the modular battery pack routes cleanly to a high-phase controller before interfacing with the stator.</p>
+<h3>Visual Electrical Schematic Flow</h3>
+<blockquote>
+<p>🔋 <strong>MODULAR BATTERY PACK (Quick-Disconnect Interface)</strong></p>
+<p><em>Two 8.5 kWh NMC Pouch Cell Strings (16S) linked via Parallel Busbar</em></p>
+<p>⬇️</p>
+<p>🛡️ <strong>HIGH-DISCHARGE INTEGRATED BMS (150A+ Continuous)</strong> · Bluetooth app control · up to <strong>8,000 W</strong> charge</p>
+<p>⬇️</p>
+<p>🔌 <strong>ANDERSON SB175 / ANTI-SPARK QUICK-CONNECT</strong></p>
+<p>🚨 <strong>MAIN MANUAL DISCONNECT (Emergency Marine-Grade Breaker)</strong></p>
+<p>⬇️</p>
+<p>🧠 <strong>HIGH-PHASE 150A CONTROLLER (Waterproofed Bottom Mount)</strong></p>
+<p>⬇️ <em>(3-Phase Power + Hall Sensors)</em></p>
+<p>🛞 <strong>QS205 V3 (50H) SPOKE HUB MOTOR</strong> — 4,000–5,000W continuous / 12,000W peak · 13.5 kg (29.7 lbs) · Bicycle/Moped axle (Locked via Torque Arms)</p>
+</blockquote>
+<h3>Motor Hall Sensor to Controller JST Interconnect Mapping</h3>
+<div class="table-wrap"><table>
+<tr><th>Motor Side</th><th>Signal</th><th>Controller JST Connector</th></tr>
+<tr><td><strong>Red Wire</strong></td><td>➡️</td><td><strong>+5V Hall Power Output</strong></td></tr>
+<tr><td><strong>Black Wire</strong></td><td>➡️</td><td><strong>Negative/GND Return</strong></td></tr>
+<tr><td><strong>Yellow Wire</strong></td><td>➡️</td><td><strong>Hall Phase A (Green)\</strong>*</td></tr>
+<tr><td><strong>Green Wire</strong></td><td>➡️</td><td><strong>Hall Phase B (Yellow)\</strong>*</td></tr>
+<tr><td><strong>Blue Wire</strong></td><td>➡️</td><td><strong>Hall Phase C (Blue)</strong></td></tr>
+<tr><td><strong>White Wire</strong></td><td>➡️</td><td><strong>Temp Sensor Input (Ts)</strong></td></tr>
+</table></div>
+<p><em>\</em>Engineering Note: Swap Controller Green and Controller Yellow lines if initial startup reveals timing phase angle mismatches or backward wheel rotation during initial diagnostic spin tests.*</p>
+<hr />
+<h2 id="4-aerodynamics-100-mile-range-optimization">4. Aerodynamics &amp; 100-Mile Range Optimization</h2>
+<p>Sustaining a <strong>40 mph cruise speed over 100 miles</strong> requires keeping net energy consumption under <strong>85 Wh/mile</strong>. At 40 mph, aerodynamic drag constitutes roughly 75% of total power loss.</p>
+<ul>
+<li><strong>Aerodynamic Penalty:</strong> An unfaired fat-tire bicycle profile exhibits a poor drag coefficient (Cd approx 1.15).</li>
+<li><strong>Windscreen Modification:</strong> Installing a <strong>15-inch Krator Smoke Windscreen</strong> swept back at a 45° to 55° rake angle lowers the overall area drag coefficient by <strong>18% to 25%</strong>.</li>
+<li><strong>Range Verification:</strong> Without a windscreen, energy draw spans <strong>95–110 Wh/mile</strong> (limiting range to 77–89 miles). With the windscreen fairing optimized, efficiency yields <strong>78–83 Wh/mile</strong>, securing the 100-mile target from the 8.5 kWh pack. The QS205 V3 (50H) at only 13.5 kg further reduces unsprung weight, subtly improving stop-and-go efficiency.</li>
+</ul>
+<hr />
+<h2 id="5-16s2p-nmc-battery-cell-pack-assembly">5. 16S2P NMC Battery Cell Pack Assembly</h2>
+<p>The modular energy core leverages large format solid-state NMC pouch cells configured in 16 Series, 2 Parallel layout to form a nominal 60.8V pack.</p>
+<h3>Internal Detail: Single Cell Group Layer (2 Parallel)</h3>
+<blockquote>
+<p>⚡ Each of the 16 layers consists of 2 cells welded in parallel to maximize capacity.</p>
+<p></p>
+<p>🪫 <strong>NMC Cell A</strong></p>
+<p>🔗 <em>Parallel Bridge connects (+) Anode to (+), and (-) Cathode to (-)</em></p>
+<p>🪫 <strong>NMC Cell B</strong></p>
+<p>⬇️</p>
+<p>🗜️ <strong>Heavy-Duty Copper Busbar</strong></p>
+<p><em>(Connects to next group&#x27;s opposite polarity tab in series)</em></p>
+</blockquote>
+<p><strong>Mechanical Compression Requirements:</strong></p>
+<ul>
+<li><strong>Expansion Management:</strong> Cell expansion during high-C-rate discharge cycles is regulated using <strong>5mm medium-firm silicone foam sheets</strong> sandwiched between each layer.</li>
+<li><strong>Structural Walls:</strong> Outer boundaries are lined with <strong>1.5mm non-conductive FR4 Garolite sheets</strong> under structural spring-tension steel bands.</li>
+</ul>
+<hr />
+<h2 id="6-controller-app-configuration-thermal-dynamics">6. Controller App Configuration &amp; Thermal Dynamics</h2>
+<h3>Thermal Joule Heating Loss:</h3>
+<p>At a continuous current draw of <strong>150A</strong>, internal heat buildup inside the battery pack must be actively dissipated. Given an internal cell resistance of 1.2 mΩ:</p>
+<ul>
+<li>R(pair) = 1.2 mΩ / 2 = 0.6 mΩ</li>
+<li>R(pack) = 0.6 mΩ * 16 = 9.6 mΩ = 0.0096 Ω</li>
+<li>P(heat) = I^2 <em> R = (150 A)^2 </em> 0.0096 Ω = <strong>216 Watts</strong></li>
+</ul>
+<p>Without cooling, the system experiences a continuous temperature climb of <strong>0.65°C per minute</strong>. The aluminum enclosure pan must act as a direct heat-sink chassis.</p>
+<h3>Safe Programming Configuration Profile:</h3>
+<ul>
+<li><strong>Max Battery Current (DC Amps):</strong> Lock to 150A continuous.</li>
+<li><strong>Peak Boost Current Limit:</strong> Restrict to 300A max for under 3 seconds.</li>
+<li><strong>Low-Voltage Cutoff:</strong> 48.0V (3.0V per cell floor threshold to prevent cell inversion).</li>
+<li><strong>High-Voltage Cutoff:</strong> 67.5V (4.2V per cell ceiling to prevent over-charge plating).</li>
+<li><strong>Throttle Ramping Up-Time:</strong> Set to 0.3 seconds to smooth aggressive current inrush.</li>
+<li><strong>Motor Thermal Cutback Threshold:</strong> Enable at 130°C using the integrated KTY83 thermistor inputs.</li>
+</ul>
+<hr />
+<h2 id="7-cost-cutting-alternatives-physical-bom">7. Cost-Cutting Alternatives &amp; Physical BOM</h2>
+<p>To optimize production costs for the prototype rollout, the following alternatives have been sourced and integrated into the final Bill of Materials:</p>
+<ul>
+<li><strong>Powertrain:</strong> QS205 V3 (50H) Spoke Hub — 4,000–5,000W continuous / 12,000W peak, 13.5 kg (29.7 lbs), Bicycle/Moped axle. High power-to-weight with reduced unsprung mass.</li>
+<li><strong>Controller Substitution:</strong> Transitioning from the $280 Sabvoton SVMC72150 to a standardized 150A generic IP65 sine-wave controller saves $80.</li>
+<li><strong>Cell Chemistry Pivot:</strong> Opting for standard 21700 NMC cylindrical cells over NMC/SiC solid-state pouches slashes energy storage costs from $1,600 to $950, while maintaining the 60.8V nominal target.</li>
+<li><strong>Hardware Efficiency:</strong> Replacing the CNC Billet Tube Clamps ($80) with heavy-duty rubber-lined P-clamps achieves equivalent structural isolation for $25.</li>
+</ul>
+<h3>Updated Bill of Materials (BOM) &amp; Cost Tracking</h3>
+<div class="table-wrap"><table>
+<tr><th>Component Category</th><th>Item Description</th><th>Core Specification</th><th>Unit Qty</th><th>Est. Cost (USD)</th></tr>
+<tr><td><strong>Powertrain</strong></td><td>QS205 V3 (50H) Spoke Hub Motor</td><td>4–5 kW cont. / 12 kW peak · 13.5 kg · Bicycle/Moped axle</td><td>1</td><td>$600.00</td></tr>
+<tr><td><strong>Chassis Assembly</strong></td><td>V4 Max Aluminum Frame</td><td>6061-T6 Folding / Fat Tire Geometry Spacing</td><td>1</td><td>$480.00</td></tr>
+<tr><td><strong>Energy Storage</strong></td><td>NMC 21700 Cylindricals</td><td>3.8V Nominal Core</td><td>1 Pack</td><td>$950.00</td></tr>
+<tr><td><strong>Motor Management</strong></td><td>150A IP65 Controller</td><td>150A Continuous DC / IP65 Rated Sinewave</td><td>1</td><td>$200.00</td></tr>
+<tr><td><strong>Aerodynamics</strong></td><td>Krator 15&quot; Smoke Windscreen</td><td>Heavy-duty Polycarbonate / Quick bracket mount</td><td>1</td><td>$65.00</td></tr>
+<tr><td><strong>Enclosure Shielding</strong></td><td>5052-H32 Aluminum Stock</td><td>2.5mm Thickness / 4ft x 8ft Sheet Metal Plate</td><td>1</td><td>$120.00</td></tr>
+<tr><td><strong>Axle Reinforcement</strong></td><td>Custom 4130 Torque Arms</td><td>5mm Laser-Cut Chromoly / Dual-Sided Set</td><td>2</td><td>$90.00</td></tr>
+<tr><td><strong>Safety Logic</strong></td><td>150A High-Discharge BMS</td><td>16S Config / Bluetooth BMS App Control + UART Log</td><td>1</td><td>$115.00</td></tr>
+<tr><td><strong>Isolation Barrier</strong></td><td>FR4 Garolite Barrier Liners</td><td>1.5mm Dielectric Separator Sheeting Pack</td><td>1</td><td>$45.00</td></tr>
+<tr><td><strong>Shock Suppression</strong></td><td>Closed-Cell Silicone Sheets</td><td>5mm Thickness / Thermal Expansion Dampening</td><td>2</td><td>$35.00</td></tr>
+<tr><td><strong>Raw Power Port</strong></td><td>Anderson SB175 Quick-Disconnect</td><td>175A Rated Plug Module Dual-Pole Kit</td><td>2</td><td>$24.00</td></tr>
+<tr><td><strong>Data Signal Paths</strong></td><td>Amphenol AT 12-Pin Plug</td><td>IP67 Waterproof Circular Signal Connector Set</td><td>2</td><td>$18.00</td></tr>
+<tr><td><strong>Pressure Management</strong></td><td>Gore Automotive Vent Valve</td><td>M12 Breather Plug Screw-In Outgas Vent</td><td>1</td><td>$12.00</td></tr>
+<tr><td><strong>System Isolation</strong></td><td>Marine-Grade Circuit Breaker</td><td>150A Continuous Manual Disconnect Trip Lever</td><td>1</td><td>$45.00</td></tr>
+<tr><td><strong>Sealing System</strong></td><td>EPDM Rubber D-Profile Strips</td><td>1/4&quot; Width Water Isolation Adhesive Gasket</td><td>1</td><td>$15.00</td></tr>
+<tr><td><strong>Cradle Anchoring</strong></td><td>Heavy-Duty P-Clamps</td><td>Rubber-Lined Steel Mounting Collar</td><td>4</td><td>$25.00</td></tr>
+<tr><td><strong>_Total Projected Cost_</strong></td><td></td><td><em>(Reduced from $3,779.00)</em></td><td></td><td><strong>$2,839.00</strong></td></tr>
+</table></div>
+<hr />
+<h2 id="8-mechanical-fabrication-rear-dropout-geometry">8. Mechanical Fabrication &amp; Rear Dropout Geometry</h2>
+<p>To securely mesh the motor and frame, your co-founder must execute machining adjustments following these layout rules:</p>
+<ul>
+<li><strong>Over-Locknut Distance (OLD):</strong> Standardize frame swingarm spacing to <strong>170mm or 190mm</strong> to clear oversized fat rims and prevent chain line interference against tire walls.</li>
+<li><strong>Axle Seating:</strong> Structural slot entries must measure exactly <strong>10mm wide</strong> to hold the flat shoulders of the M16 axle. Depth must achieve a minimum <strong>16mm engagement depth</strong>.</li>
+<li><strong>Axle Isolation Principle:</strong> Never allow the steel axle flats to rest directly against bare aluminum 6061-T6 slots. Aluminum deforms easily under launching torque, stripping the axle paths. Install the custom 5mm 4130 steel torque arms externally to take 100% of the rotational force.</li>
+<li><strong>Brake Assembly Clearance:</strong> Weld the rear disc brake caliper bracket to match a strict <strong>15.5mm offset</strong> from the internal left dropout plate surface to align the rotor perfectly through hydraulic pad paths.</li>
+</ul>
+<hr />
+<h2 id="caf-racer-seat-mounting-two-up-caf-racer-seat-pan">Café Racer Seat Mounting (Two-Up / Café Racer Seat Pan)</h2>
+<p>Here’s a clear technical diagram of how a typical two-seater (two-up) café racer seat mounts to a custom motorcycle frame:</p>
+<p><strong>Key connection points typically used on custom café racers:</strong></p>
+<ul>
+<li><strong>Front of the seat pan</strong> – usually bolts or tabs that secure under the rear of the tank or to the upper frame rails.</li>
+</ul>
+<ul>
+<li><strong>Rear of the seat pan</strong> – bolts through rubber bushings into the rear subframe loops or seat stays (the most common load-bearing mounts).</li>
+</ul>
+<ul>
+<li><strong>Side brackets (optional)</strong> – additional supports that clamp or bolt to the frame tubes for extra rigidity on longer two-up seats.</li>
+</ul>
+<p>These mounts keep the seat solid while allowing a slight amount of isolation from vibration. Exact hardware varies by builder, but the principle (<strong>seat pan → rubber isolators → frame/subframe</strong>) is nearly universal on custom café racers.</p>
+<hr />
+<h2 id="9-side-view-component-rendering-actual-prototype-configuration">9. Side-View Component Rendering (Actual Prototype Configuration)</h2>
+<p>The layout below confirms the true structural alignment of the physical build, strictly adhering to the authentic exoskeleton dimensions, customized seating, and wind deflection upgrades. </p>
+<blockquote>
+<p>🧱 <strong>BRICK WALL</strong> <em>(Illuminated by Projector Headlight Beam)</em></p>
+<p>⬅️ 🔦 <strong>Projector Headlight</strong> <em>(Facing wall, 180-degree physical orientation)</em></p>
+<p>⬅️ 🛡️ <strong>15&quot; Smoke Windscreen</strong> <em>(Mounted at 45° rake)</em></p>
+<p>⬅️ 🛞 <strong>Front 4.0&quot; Fat Tire &amp; Triple-Tree Fork</strong></p>
+<p></p>
+<p>🧍‍♂️🧍‍♀️ <em>(One man and one woman standing in the workshop, observing the completed prototype stance)</em></p>
+<p></p>
+<p>⬅️ 💺 <strong>Custom Cafe Racer Seat</strong> <em>(Mounted over central hinge)</em></p>
+<p>⬅️ 🔋 <strong>Modular NMC Exoskeleton Battery</strong> <em>(Suspended via draw latches)</em></p>
+<p>⬅️ 🛞 <strong>Rear 4.0&quot; Fat Tire w/ QS205 V3 (50H) Spoke Hub Motor</strong> — 4–5 kW / 12 kW peak · 13.5 kg <em>(Locked via 4130 Torque Arms)</em></p>
+</blockquote>
+    </article>
+    <p class="md-note">
+      Unlisted internal page · not linked from the main marketing navigation ·
+      <a href="/" style="color:var(--text-secondary);">← skeletkey.com</a>
+    </p>
+  </main>
+
+  <script>
+    (function () {
+      var toggle = document.getElementById("navToggle");
+      var links = document.getElementById("navLinks");
+      if (toggle && links) {
+        toggle.addEventListener("click", function () {
+          links.classList.toggle("open");
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
