@@ -120,9 +120,88 @@
       color: var(--text-muted);
       margin-top: 2rem;
     }
+
+    .pw-gate {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6.5rem 1.5rem 3rem;
+    }
+    .pw-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem 1.5rem 1.5rem;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+    }
+    .pw-card h1 {
+      font-size: 1.35rem;
+      margin: 0 0 0.35rem;
+    }
+    .pw-card .sub {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+    .pw-card label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.35rem;
+    }
+    .pw-card input[type="password"] {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 0.85rem;
+    }
+    .pw-card input[type="password"]:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .pw-card button {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 0;
+      border-radius: 999px;
+      background: var(--brake-red);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .pw-card button:hover { background: var(--brake-red-hover); }
+    .pw-error {
+      color: #ff6b7a;
+      font-size: 0.85rem;
+      margin: 0 0 0.75rem;
+      min-height: 1.2em;
+    }
+    body.locked .md-page { display: none; }
+    body.unlocked .pw-gate { display: none; }
   </style>
 </head>
-<body>
+<body class="locked">
+
+  <div class="pw-gate" id="pwGate" hidden>
+    <form class="pw-card" id="pwForm" autocomplete="current-password">
+      <p class="eyebrow" style="font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.5rem;">Restricted</p>
+      <h1>Master document</h1>
+      <p class="sub">Enter the password to view the Puca schematics &amp; design plan.</p>
+      <div class="pw-error" id="pwError" aria-live="polite"></div>
+      <label for="pwInput">Password</label>
+      <input id="pwInput" type="password" name="password" required autofocus />
+      <button type="submit">Unlock</button>
+    </form>
+  </div>
   <nav class="nav">
     <a href="/" class="nav-logo">
       <img
@@ -356,5 +435,71 @@
       }
     })();
   </script>
+
+  <script>
+    (function () {
+      // SHA-256 of the page password (not the password itself)
+      var PASS_HASH = "6d5e0850876a50b0b2726cffa764f3fc9180f3f23f09e6d9d389a1e59faf1566";
+      var STORAGE_KEY = "sk_master_doc_unlocked_v1";
+
+      function hex(buf) {
+        return Array.from(new Uint8Array(buf)).map(function (b) {
+          return b.toString(16).padStart(2, "0");
+        }).join("");
+      }
+
+      function sha256(text) {
+        var data = new TextEncoder().encode(text);
+        return crypto.subtle.digest("SHA-256", data).then(hex);
+      }
+
+      function unlock() {
+        document.body.classList.remove("locked");
+        document.body.classList.add("unlocked");
+        var gate = document.getElementById("pwGate");
+        if (gate) gate.hidden = true;
+        try { sessionStorage.setItem(STORAGE_KEY, "1"); } catch (e) {}
+      }
+
+      function showGate() {
+        document.body.classList.add("locked");
+        document.body.classList.remove("unlocked");
+        var gate = document.getElementById("pwGate");
+        if (gate) gate.hidden = false;
+      }
+
+      // Already unlocked this session?
+      try {
+        if (sessionStorage.getItem(STORAGE_KEY) === "1") {
+          unlock();
+        } else {
+          showGate();
+        }
+      } catch (e) {
+        showGate();
+      }
+
+      var form = document.getElementById("pwForm");
+      if (!form) return;
+      form.addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        var input = document.getElementById("pwInput");
+        var err = document.getElementById("pwError");
+        var val = (input && input.value) || "";
+        sha256(val).then(function (h) {
+          if (h === PASS_HASH) {
+            if (err) err.textContent = "";
+            unlock();
+          } else {
+            if (err) err.textContent = "Incorrect password.";
+            if (input) { input.value = ""; input.focus(); }
+          }
+        }).catch(function () {
+          if (err) err.textContent = "Could not verify password in this browser.";
+        });
+      });
+    })();
+  </script>
+
 </body>
 </html>
