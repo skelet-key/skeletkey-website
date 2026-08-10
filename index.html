@@ -566,28 +566,68 @@
           }
 
           var RENDER = [];
+          var FIXED_GLOBAL = []; // always-visible worldwide stratified sample
           var isMobile = (function () {
             try {
               return window.matchMedia("(max-width: 900px), (pointer: coarse)").matches
                 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent || "");
             } catch (e) { return false; }
           })();
-          var VIEW_CAP = isMobile ? 280 : 450;
+          var VIEW_CAP = isMobile ? 320 : 520;
+          var GLOBAL_CAP = isMobile ? 700 : 1100;
 
           function isTesla(d) {
             return d && (d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || "")));
           }
 
-          // Fill the current camera viewport with real stations (fixed lat/lng — never invented)
+          // Stratified worldwide sample so Europe / Asia / Oceania always have pins, not only the US
+          function buildGlobalSample(pts, maxN) {
+            if (!pts || !pts.length) return [];
+            var cells = {};
+            var keys = [];
+            // ~6° x 6° grid worldwide
+            for (var i = 0; i < pts.length; i++) {
+              var p = pts[i];
+              var cx = Math.floor((p.lng + 180) / 6);
+              var cy = Math.floor((p.lat + 90) / 6);
+              var ck = cx + ":" + cy;
+              if (!cells[ck]) { cells[ck] = []; keys.push(ck); }
+              cells[ck].push(p);
+            }
+            // shuffle keys for even coverage
+            for (var s = keys.length - 1; s > 0; s--) {
+              var j = Math.floor(Math.random() * (s + 1));
+              var tmp = keys[s]; keys[s] = keys[j]; keys[j] = tmp;
+            }
+            var out = [];
+            var per = Math.max(1, Math.ceil(maxN / Math.max(1, keys.length)));
+            var idx = 0, guard = 0;
+            while (out.length < maxN && guard < 40) {
+              var progressed = false;
+              for (var k = 0; k < keys.length && out.length < maxN; k++) {
+                var list = cells[keys[k]];
+                if (idx < list.length) {
+                  out.push(list[idx]);
+                  progressed = true;
+                }
+              }
+              if (!progressed) break;
+              idx += 1;
+              guard += 1;
+            }
+            return out;
+          }
+
+          // Dense sample inside the current camera viewport (real stations only)
           function pickInView(pov) {
             if (!ALL.length) return [];
             var alt = Math.max(0.04, pov.altitude || 1);
             var lat0 = pov.lat, lng0 = pov.lng;
-            var cos = Math.max(0.25, Math.cos(lat0 * Math.PI / 180));
-            // Match visible globe window roughly
-            var band = Math.min(40, Math.max(0.8, alt * 22));
+            var cos = Math.max(0.2, Math.cos(lat0 * Math.PI / 180));
+            // Wider band so continent views (Europe / Asia) fill with pins
+            var band = Math.min(55, Math.max(2.5, alt * 28));
             var cap = VIEW_CAP;
-            var cells = isMobile ? 6 : 8;
+            var cells = isMobile ? 7 : 10;
             var cellSize = (band * 2) / cells;
             var buckets = {};
             var keys = [];
@@ -611,8 +651,8 @@
             var out = [];
             var seen = {};
             var per = Math.max(1, Math.ceil(cap / Math.max(1, keys.length)));
-            var idx = 0, added = true;
-            while (out.length < cap && added) {
+            var idx = 0, added = true, guard = 0;
+            while (out.length < cap && added && guard < 60) {
               added = false;
               for (var c = 0; c < keys.length && out.length < cap; c++) {
                 var list = buckets[keys[c]];
@@ -628,8 +668,25 @@
                 }
               }
               idx += per;
-              if (idx > 80) break;
+              guard += 1;
             }
+            return out;
+          }
+
+          function mergeUnique(a, b, maxN) {
+            var seen = {};
+            var out = [];
+            function add(list) {
+              for (var i = 0; i < list.length && out.length < maxN; i++) {
+                var p = list[i];
+                var id = p.lat.toFixed(4) + "," + p.lng.toFixed(4);
+                if (seen[id]) continue;
+                seen[id] = 1;
+                out.push(p);
+              }
+            }
+            add(a);
+            add(b);
             return out;
           }
 
@@ -637,10 +694,11 @@
             if (!globe || cleanedUp) return;
             var pov = globe.pointOfView() || {};
             var alt = Math.max(0.04, pov.altitude || 1);
-            var r = Math.max(0.022, Math.min(0.22, 0.1 * alt));
+            // Larger, always-visible pins at every zoom level
+            var r = Math.max(0.035, Math.min(0.32, 0.16 * alt));
             try {
               globe.pointRadius(r);
-              globe.pointAltitude(Math.min(0.012, 0.004 + alt * 0.001));
+              globe.pointAltitude(Math.min(0.02, 0.008 + alt * 0.002));
             } catch (e) {}
           }
 
@@ -670,13 +728,14 @@
             var key = pov.lat.toFixed(2) + "," + pov.lng.toFixed(2) + "," + pov.altitude.toFixed(2);
             if (!force && key === lastKey) return;
             lastKey = key;
-            RENDER = pickInView(pov);
+            // Always keep the worldwide sample, then densify the current viewport
+            var local = pickInView(pov);
+            RENDER = mergeUnique(FIXED_GLOBAL, local, GLOBAL_CAP + VIEW_CAP);
             globe.pointsData(RENDER);
             applyPointStyle();
-            // status only when popup is not open
             var s = document.getElementById("charge-globe-status");
             if (s && !s.classList.contains("is-hidden")) {
-              setStatus(RENDER.length + " chargers in view");
+              setStatus(RENDER.length.toLocaleString() + " chargers shown · worldwide network");
             }
           }
 
@@ -774,6 +833,7 @@
                     kw: p.kw || ""
                   });
                 }
+                FIXED_GLOBAL = buildGlobalSample(ALL, GLOBAL_CAP);
                 bindFixedPoints();
               })
               .catch(function (e) {
@@ -802,13 +862,13 @@
               .pointsData([])
               .pointLat("lat")
               .pointLng("lng")
-              .pointAltitude(0.01)
-              .pointRadius(0.12)
+              .pointAltitude(0.012)
+              .pointRadius(0.14)
               .pointColor(function (d) {
                 return (d && (d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || ""))))
-                  ? "#ea4335" : "#1a73e8";
+                  ? "#ea4335" : "#3b9eff";
               })
-              .pointsMerge(true)
+              .pointsMerge(false)
               .pointsTransitionDuration(0);
 
             // Mobile / Firefox performance: cap pixel ratio, prefer power-saving
