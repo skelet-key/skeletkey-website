@@ -1,13 +1,16 @@
+
+
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 # Preliminary Tooling Amortization Schedule
 **Project:** Folding Electric Motorcycle Scale-Up (10,000 Units/Year)
-**Component Focus:** Custom 6061-T6 Aluminum Extrusion Dies & Structural Stamping Tooling
+**Component Focus:** Custom carbon steel Aluminum Extrusion Dies & Structural Stamping Tooling
 
 ## 1. Executive Summary
 This amortization schedule outlines the financial mechanism to absorb **$300,000.00** of up-front non-recurring engineering (NRE) tooling costs directly into the per-unit Bill of Materials (BOM). By structuring a tooling amortization agreement with the Tier 1/Tier 2 manufacturer, initial CapEx is deferred and repaid on a piece-rate basis over the first contract volume milestones.
 
 ## 2. Tooling Amortization Matrix
 
-| Metric / Phase | Custom 6061-T6 Extrusion Dies | Structural Stamping & Hinge Tooling | Combined Total Structural Tooling |
+| Metric / Phase | Custom Frame tooling / fixture package | Structural Stamping & Hinge Tooling | Combined Total Structural Tooling |
 | :--- | :--- | :--- | :--- |
 | **Upfront Tooling Value (CapEx)** | $120,000.00 | $180,000.00 | **$300,000.00** |
 | **Amortization Period (Volume)** | 5,000 Units | 10,000 Units | - |

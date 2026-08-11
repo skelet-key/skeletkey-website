@@ -1,6 +1,6 @@
 # Request for Proposal (RFP): Global Freight Forwarding & Supply Chain Logistics
 **Project:** 10,000 Unit Annual Folding Electric Motorcycle Production Run
-**Material Allocation:** High-grade raw components, including structural 6061-T6 aluminum frame extrusions and 16S2P NMC powertrain packs.
+**Material Allocation:** High-grade raw components, including structural carbon steel frame extrusions and 16S2P NMC powertrain packs.
 
 ## 1. Objective & Scope of Work
 The purpose of this Request for Proposal (RFP) is to select a premier, asset-backed logistics provider and freight forwarder to manage our end-to-end inbound supply chain. The selected partner will orchestrate the international transit of pre-sourced components from global tier-2 manufacturers directly to our centralized Tier-1 contract manufacturing hub. 
@@ -10,7 +10,7 @@ The logistics infrastructure must reliably sustain a factory throughput cadence 
 ## 2. Inbound Freight Profiles & Volume Density
 The freight forwarding partner will manage standard shipping lanes with strict synchronization to prevent factory floor line stoppages. Freight profiles are categorized into two critical asset flows:
 
-*   **Chassis & Structural Metals:** Bulk ocean freight of pre-fabricated, extruded, and heat-treated **6061-T6 aluminum folding chassis components** and mechanical linkages. This requires heavy-freight handling, corrosion-resistant moisture barrier packaging, and container optimization (FCL - Full Container Load).
+*   **Chassis & Structural Metals:** Bulk ocean freight of pre-fabricated, extruded, and heat-treated **carbon steel folding chassis components** and mechanical linkages. This requires heavy-freight handling, corrosion-resistant moisture barrier packaging, and container optimization (FCL - Full Container Load).
 *   **Powertrain Electronics (Class 9 Hazardous Materials):** Global transit of custom **16S2P lithium-ion battery configurations** and integrated electronic controllers. **Mandatory Requirement:** The freight forwarder must possess certified hazardous materials handlers fully compliant with UN38.3, IMDG, and IATA Class 9 regulations for maritime and air transport.
 
 ## 3. Shipping Lanes & Port Staging Logistics
@@ -25,6 +25,8 @@ Bidding freight forwarders must explicitly verify their capacity to meet the fol
 *   **Demurrage & Detention Insulation:** A minimum of 14 days of free time at destination ports built directly into the base ocean freight container pricing.
 
 ---
+
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 
 ## 5. Cost Proposal Submission Matrix
 Please populate the following standardized cost-structure table for evaluation:

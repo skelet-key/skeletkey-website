@@ -1,3 +1,6 @@
+
+
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 # Warehouse Operations & Finished Vehicle Logistics Guide
 **Operational Target:** 40 Units Per Day Inbound Receipt, Unboxing, Quality Staging, and Outbound Fulfillment
 **Asset Optimization Focus:** Multi-Million Dollar Capital Protection without Personal Guarantees
@@ -6,7 +9,7 @@
 As finished vehicles exit the Tier-1 contract manufacturer's factory floor following successful Layer 3 dynamometer and environmental validation, they are packaged into heavy-duty corrugated distribution crates and funneled to the central fulfillment center.
 
 *   **Inbound Staging Area:** Establish a dedicated, high-visibility footprint capable of holding a minimum of 80 crated vehicles (a rolling 48-hour buffer).
-*   **Unboxing & Visual Inspection Bay:** Every vehicle crate must undergo immediate inspection for transit shock metrics. Staff must inspect the structural folding hinge pins and verify zero structural deformation of the **6061-T6 aluminum chassis geometries**.
+*   **Unboxing & Visual Inspection Bay:** Every vehicle crate must undergo immediate inspection for transit shock metrics. Staff must inspect the structural folding hinge pins and verify zero structural deformation of the **carbon steel chassis geometries**.
 *   **Powertrain Safety Check:** Technicians must visually check the modular tray enclosure seal for zero exterior scuffing and run a rapid wireless OBD diagnostic handshake to verify the **16S2P configuration firmware** is still reporting zero fault codes post-transit.
 
 ## 2. Inventory Architecture & Warehouse Layout
@@ -17,7 +20,7 @@ To sustain maximum velocity, the warehouse floor layout must follow an asset-lig
 ```
 
 *   **Zone A (Active Receiving & QA):** Houses unboxing tables, battery top-off trickle charge lines, and final detail wiping stations.
-*   **Zone B (High-Density Staging Racks):** Heavy-duty pallet racks storing crated vehicles stacked up to three levels high. Heavy structural frames built of **6061-T6 aluminum** allow the internal crate frameworks to bear load efficiently, optimizing vertical warehouse space utilization.
+*   **Zone B (High-Density Staging Racks):** Heavy-duty pallet racks storing crated vehicles stacked up to three levels high. Heavy structural frames built of **carbon steel** allow the internal crate frameworks to bear load efficiently, optimizing vertical warehouse space utilization.
 *   **Zone C (Class 9 HazMat Safety Enclosure):** A climate-controlled, fire-isolated subset of the facility dedicated to holding spare or replacement standalone 16S2P lithium-ion powertrain packs. Must include automated thermal imaging cameras and specialized aerosol fire-suppression systems.
 
 ## 3. Outbound Distribution & Fulfillment Velocity

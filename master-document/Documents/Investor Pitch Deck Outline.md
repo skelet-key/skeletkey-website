@@ -1,3 +1,6 @@
+
+
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 # INVESTOR PITCH DECK OUTLINE
 ## High-Yield Asset-Light E-Mobility Scale Strategy
 
@@ -12,8 +15,8 @@
 *   **Solution Highlight**: An agile, purely asset-light operational blueprint that transfers physical execution risk to proven automotive-grade contract partners.
 
 ### SLIDE 3: THE SPECIFICATION: STRENGTH BY DESIGN
-*   **Visual Title**: Engineering Reliability: 6061-T6 Structural Standardization.
-*   **Core Message**: Utilizing high-tensile, heat-treated **6061-T6 aluminum** across all load-bearing extrusion profiles ensures unmatched frame structural stiffness while maintaining a low weight profile.
+*   **Visual Title**: Engineering Reliability: carbon steel Structural Standardization.
+*   **Core Message**: Utilizing high-tensile, heat-treated **carbon steel** across all load-bearing extrusion profiles ensures unmatched frame structural stiffness while maintaining a low weight profile.
 *   **Defensibility**: All proprietary folding hinge geometries and casting molds are 100% brand-owned, protecting intellectual property while scaling rapidly.
 
 ### SLIDE 4: SCALED MANUFACTURING OPERATIONAL BLUEPRINT
@@ -27,7 +30,7 @@
 *   **Visual Title**: De-Risking the Production Line.
 *   **Core Message**: Eliminating fleet defect liabilities via automated, continuous verification loops.
 *   **The Guardrails**:
-    *   **Layer 1**: Non-destructive ultrasonic matrix weld scanning on all **6061-T6 aluminum** structural points.
+    *   **Layer 1**: Non-destructive ultrasonic matrix weld scanning on all **carbon steel** structural points.
     *   **Layer 2**: Automated high-voltage insulation checking and module isolation.
     *   **Layer 3**: Mandatory 10-minute automated dynamometer profiling and high-pressure environmental water enclosure sealing tests.
 
@@ -44,7 +47,7 @@
 ### SLIDE 7: CAPEX DEFERRAL & FINANCING INTEGRITY
 *   **Visual Title**: Non-Dilutive Capital Strategies & Asset-Backed Scaling.
 *   **Core Message**: Preserving founder equity and liquidity through smart amortization and structural financing guardrails.
-*   **Tooling Optimization**: The $300,000.00 initial CapEx tooling for custom **6061-T6 extrusion dies** and stamping molds is completely absorbed into early production unit margins ($42/unit fee).
+*   **Tooling Optimization**: The $300,000.00 initial CapEx tooling for custom **carbon steel extrusion dies** and stamping molds is completely absorbed into early production unit margins ($42/unit fee).
 *   **Risk Mitigation**: Commercial credit facilities and supply chain inventory lines are collateralized purely against raw material assets, cleanly **omitting personal guarantees** from the founding team.
 
 ### SLIDE 8: THE ASK & USE OF PROCEEDS

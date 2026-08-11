@@ -1,9 +1,11 @@
 # Financial Cash-Flow Pro Forma Framework
 **Target Annual Scale:** 10,000 Units
 **Vehicle MSRP:** $7,000.00
-**Material Allocation:** 6061-T6 Aluminum Structural Matrix & Core Powertrain
+**Material Allocation:** carbon steel Aluminum Structural Matrix & Core Powertrain
 
 ---
+
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 
 ## 1. Unit Economics Matrix
 
@@ -21,7 +23,7 @@
 ### Quarter 1: Tooling & Low-Rate Initial Production (LRIP)
 * Target Throughput: 1,000 Units
 * Sourcing Layout: Draw-down on non-personal guarantee inventory financing line to secure initial long-lead components.
-* Capital Focus: Setup of Non-Recurring Engineering (NRE) charges and 6061-T6 frame weld-jig verification.
+* Capital Focus: Setup of Non-Recurring Engineering (NRE) charges and carbon steel frame weld-jig verification.
 
 ### Quarter 2: Velocity Optimization
 * Target Throughput: 2,500 Units
@@ -37,4 +39,4 @@
 
 ## 3. Financial Guardrails & Capital Allocations
 * **Founder Protection Strategy:** All scaling lines must be structured against product inventory asset value, eliminating personal guarantees from the core team.
-* **Component Sourcing Reserve:** Allocation of $2,000,000 from initial gross profit pool to hedge against lead-time variances in raw 6061-T6 extruded tubing.
+* **Component Sourcing Reserve:** Allocation of $2,000,000 from initial gross profit pool to hedge against lead-time variances in raw carbon steel extruded tubing.

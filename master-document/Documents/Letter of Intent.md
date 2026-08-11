@@ -1,3 +1,6 @@
+
+
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 # Formal Letter of Intent (LOI) for Mobility Contract Manufacturing
 
 **Date:** [Insert Current Date]
@@ -21,8 +24,8 @@ The Company has engineered a premium folding vehicle platform optimized for urba
 ### 2. Primary Production & Material Specifications
 The definitive agreement shall be built upon the following standardized technical and throughput parameters:
 * **Production Run-Rate:** Execution of a Low-Rate Initial Production (LRIP) ramp phase leading to a steady-state velocity of **40 motorcycles per working day** (modeled at 2.5 units per hour over a 250-day active annual production calendar).
-* **Consignment Model:** The manufacturing program shall operate under a 100% consigned material flow structure. The Company shall directly source, finance, and deliver all components—including powertrain packs, wiring harnesses, and custom **6061-T6 aluminum folding frame assemblies**—directly to the Manufacturer's factory floor. The Manufacturer shall not apply part markups, handling surcharges, or material sourcing buffers outside of contracted labor and physical storage rates.
-* **Chassis Material Standardization:** The Manufacturer recognizes that all structural chassis elements are fabricated from extruded and heat-treated **6061-T6 aluminum**, demanding strict operational care to maintain mechanical temper profiles during final hardware fastening and hinge installation.
+* **Consignment Model:** The manufacturing program shall operate under a 100% consigned material flow structure. The Company shall directly source, finance, and deliver all components—including powertrain packs, wiring harnesses, and custom **carbon steel folding frame assemblies**—directly to the Manufacturer's factory floor. The Manufacturer shall not apply part markups, handling surcharges, or material sourcing buffers outside of contracted labor and physical storage rates.
+* **Chassis Material Standardization:** The Manufacturer recognizes that all structural chassis elements are fabricated from extruded and heat-treated **carbon steel**, demanding strict operational care to maintain mechanical temper profiles during final hardware fastening and hinge installation.
 
 ### 3. Financial Architecture & Cost Targets
 The economic parameters targeted by both parties for the definitive agreement include:
@@ -31,7 +34,7 @@ The economic parameters targeted by both parties for the definitive agreement in
 
 ### 4. Continuous Quality Assurance (QA) Firewall
 The Manufacturer agrees to integrate the Company's mandatory three-layer quality checking blueprint directly into the physical assembly line architecture:
-* **Layer 1 (Component Validation):** Strict inspection of structural frame alignments, validating that incoming **6061-T6 aluminum frame welds** comply with non-destructive acoustic and visual tolerances.
+* **Layer 1 (Component Validation):** Strict inspection of structural frame alignments, validating that incoming **carbon steel frame welds** comply with non-destructive acoustic and visual tolerances.
 * **Layer 2 (In-Line Powertrain Validation):** High-voltage insulation testing, dielectric separation mapping, and active electronic programming checks to safe-clip system current draw before final enclosure sealing.
 * **Layer 3 (End-of-Line Verification):** Mandatory 10-minute automated dynamometer track simulations for 100% of completed vehicles to verify torque curves, alongside automated high-pressure environmental water spray testing to guarantee a completely impervious seal.
 

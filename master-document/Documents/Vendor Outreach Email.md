@@ -1,3 +1,6 @@
+
+
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 # Tier-1 Contract Manufacturer Initial Outreach Email Template
 
 **Subject:** RFI / Production Capacity Inquiry: 10,000-Unit Annual Volume Consigned Mobility Assembly Program
@@ -19,14 +22,14 @@ Our organization has finalized the engineering and component sourcing architectu
 
 ### Primary Technical & Material Thresholds
 Our technical blueprints mandate strict adherence to automotive-grade quality standards, requiring an assembly partner with the expertise to execute and manage:
-1. **Structural Frame Marriage:** Integration of our custom, high-stiffness **6061-T6 aluminum folding frame** and precision hinge mechanisms.
+1. **Structural Frame Marriage:** Integration of our custom, high-stiffness **carbon steel folding frame** and precision hinge mechanisms.
 2. **Powertrain Integration:** Installation and sealing of our modular 16S2P NMC configuration battery pack, electronic speed controller, and wiring harnesses.
-3. **Rigid Quality Assurance Firewall:** Execution of a multi-stage validation testing regimen, including Layer 1 ultrasonic weld testing verification for the 6061-T6 components, Layer 2 high-voltage insulation tests, and Layer 3 final automated dynamometer physical track simulations and high-pressure environmental waterproofing seals.
+3. **Rigid Quality Assurance Firewall:** Execution of a multi-stage validation testing regimen, including Layer 1 ultrasonic weld testing verification for the carbon steel components, Layer 2 high-voltage insulation tests, and Layer 3 final automated dynamometer physical track simulations and high-pressure environmental waterproofing seals.
 
 ### Initial Documentation Request & Information Needed
 To assess operational alignment before executing a formal Non-Disclosure Agreement (NDA) and distributing our comprehensive Request for Proposal (RFP) packet, please provide brief confirmation on the following items:
 1. **Capacity Availability:** Does your facility possess the open line capacity and labor availability to absorb a steady throughput run-rate of 40 mobility units per day starting in [Insert Target Production Quarter, e.g., Q3 2027]?
-2. **Tooling Capabilities:** Do your teams have direct experience processing or managing the assembly of heat-treated **6061-T6 aluminum** structural frame systems and high-voltage battery enclosures?
+2. **Tooling Capabilities:** Do your teams have direct experience processing or managing the assembly of heat-treated **carbon steel** structural frame systems and high-voltage battery enclosures?
 3. **Quality Infrastructure:** Does your facility currently operate inline non-destructive testing (NDT) equipment or end-of-line dynamometer evaluation booths capable of handling light electric vehicles?
 
 We have a complete RFP, localized engineering prints, a detailed Bill of Materials (BOM) cost matrix, and a structured tooling amortization schedule ready for immediate distribution upon mutual NDA execution. 

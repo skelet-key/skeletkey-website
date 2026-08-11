@@ -1,3 +1,6 @@
+
+
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 # MASTER BUSINESS PLAN EXECUTIVE SUMMARY
 ## Project: Scalable Folding Electric Motorcycle
 ## Target Output: 10,000 Units / Year (Run Rate: 40 Units/Day)
@@ -7,12 +10,12 @@ This venture introduces a high-performance, asset-light urban mobility platform:
 
 *   **Manufacturing Model**: 100% Consigned Assembly Model. Components are procured at scale directly from component suppliers and fed straight into a tiered network of assembly partners, eliminating traditional 10%–15% manufacturer material markups.
 *   **Decoupled Fabrication**: Production is divided across specialized Tier 2 structural frame fabricators and electronic powertrain integrators, which route assemblies into a central Tier 1 hub for final marriage, vehicle flashing, and shipping.
-*   **Structural Standardization**: All chassis elements are standardized around heat-treated **6061-T6 aluminum** to ensure structural resilience across folding joints while utilizing highly predictable extrusion and stamping workflows.
+*   **Structural Standardization**: All chassis elements are standardized around heat-treated **carbon steel** to ensure structural resilience across folding joints while utilizing predictable cutting, bending, and welding workflows.
 
 ### 2. COMPREHENSIVE QUALITY ASSURANCE FIREWALL
 Achieving automotive-grade reliability at a throughput velocity of 40 units per day requires an active, multi-layered inline inspection ecosystem rather than reactive post-production checks.
 
-*   **Layer 1 (Incoming Quality Control)**: Automated Optical Inspection (AOI) and ultrasonic weld validation calibrated to the dense crystalline structure of **6061-T6 aluminum** frames to catch microscopic structural cracks at the source.
+*   **Layer 1 (Incoming Quality Control)**: Automated Optical Inspection (AOI) and ultrasonic weld validation calibrated to the structure of **carbon steel** frames to catch microscopic structural cracks at the source.
 *   **Layer 2 (In-Line Powertrain Validation)**: Automated dielectric isolation testing on high-voltage lines, alongside thermal chamber cycling for the custom 16S2P NMC lithium battery configuration.
 *   **Layer 3 (End-of-Line Verification)**: Every single vehicle undergoes a mandatory 10-minute automated dynamometer track simulation to log motor hall sensor feedback and electronic current clipping, followed by a high-pressure environmental water spray test.
 
@@ -28,6 +31,6 @@ The venture demonstrates institutional-grade unit economics with an exceptionall
 
 ### 4. TOOLING AMORTIZATION & FINANCING SECURITY
 *   **CapEx Deferral**: Upfront manufacturing tooling costs ($300,000.00 total) are amortized directly into the early per-unit BOM to preserve liquid operating capital.
-*   **6061-T6 Extrusion Dies**: $120,000.00 allocated across the first 5,000 units, translating to a temporary $24.00 per-unit surcharge that automatically drops off upon milestone completion.
+*   **Frame tooling / fixture package**: $120,000.00 allocated across the first 5,000 units, translating to a temporary $24.00 per-unit surcharge that automatically drops off upon milestone completion.
 *   **Stamping & Hinge Molds**: $180,000.00 allocated across the full 10,000-unit run at a predictable $18.00 per bike.
 *   **Corporate Financing Guardrails**: Inventory financing facilities and working capital lines are structured cleanly around the collateralized asset value of materials on the water or factory floor, completely **omitting personal guarantees** from the founders.

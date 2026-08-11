@@ -4,16 +4,18 @@
 
 ---
 
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
+
 ### 1. IMMEDIATE ENGINEERING & TOOLING ACTIONS (WEEKS 1–6)
-* [ ] **Action Item 1.1**: Deliver official 3D CAD step files of the 6061-T6 aluminum chassis profiles to the Tier 2 extrusion die specialist.
+* [ ] **Action Item 1.1**: Deliver official 3D CAD step files of the carbon steel chassis profiles to the Tier 2 extrusion die specialist.
   * *Owner*: Brand Lead Design Engineer
   * *Deliverable*: Signed-off engineering drawing package containing exact hinge mechanical tolerance bounds (+/- 0.05mm).
-* [ ] **Action Item 1.2**: Authorize 30% asset-backed down payment for the $120,000.00 custom 6061-T6 extrusion die manufacturing.
+* [ ] **Action Item 1.2**: Authorize 30% asset-backed down payment for the $120,000.00 custom carbon steel extrusion die manufacturing.
   * *Owner*: Brand Finance Director / Factory Procurement Manager
   * *Deliverable*: Wire confirmation and executed Tooling Amortization Agreement protecting 100% brand ownership.
 
 ### 2. QUALITY CONTROL & TESTING ALIGNMENT (WEEKS 7–10)
-* [ ] **Action Item 2.1**: Calibrate Layer 1 Automated Ultrasonic Testing (UT) gear to the specific acoustic wave profiles of heat-treated 6061-T6 matrices.
+* [ ] **Action Item 2.1**: Calibrate Layer 1 Automated Ultrasonic Testing (UT) gear to the specific acoustic wave profiles of heat-treated carbon steel matrices.
   * *Owner*: Factory Quality Assurance Director
   * *Deliverable*: UT calibration certificate and benchmark non-destructive testing threshold logs.
 * [ ] **Action Item 2.2**: Install independent automated dynamometer test bench and environmental water-spray booths at the end of the Tier 1 final assembly line.

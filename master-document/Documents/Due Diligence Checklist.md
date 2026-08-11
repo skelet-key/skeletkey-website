@@ -1,9 +1,12 @@
+
+
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 # Contract Manufacturer Due Diligence Checklist
 ## Facility Site Visit Protocol
 
-### 1. Structural & Metal Fabrication Audit (6061-T6 Frame Track)
-*   [ ] **Post-Weld Heat Treatment Equipment:** Verify the presence of operational aging ovens capable of restoring structural properties to the 6061-T6 aluminum chassis after welding.
-*   [ ] **Non-Destructive Testing (NDT):** Confirm the factory floor features active ultrasonic or X-ray inspection bays calibrated specifically for validating 6061-T6 alloy integrity.
+### 1. Structural & Metal Fabrication Audit (carbon steel Frame Track)
+*   [ ] **Post-Weld Heat Treatment Equipment:** Verify the presence of operational aging ovens capable of restoring structural properties to the carbon steel chassis after welding.
+*   [ ] **Non-Destructive Testing (NDT):** Confirm the factory floor features active ultrasonic or X-ray inspection bays calibrated specifically for validating carbon steel alloy integrity.
 *   [ ] **Tooling & Die Storage:** Inspect the environmental controls of the storage area where your custom $120,000.00 extrusion dies will be held to prevent corrosion.
 
 ### 2. Powertrain Assembly & High-Voltage Isolation

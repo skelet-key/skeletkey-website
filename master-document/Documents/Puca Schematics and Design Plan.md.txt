@@ -5,9 +5,11 @@
 
 ---
 
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
+
 ## 1. Executive System Architecture & Framework
 
-This comprehensive, pageless engineering blueprint consolidates the complete structural, mechanical, and electrical requirements for building the high-performance folding electric motorcycle prototype. The system leverages the lightweight properties of a modified **V4 Max 6061-T6 Aluminum Folding Fat Tire Frame** as a foundation to carry a heavy-duty, high-energy-density **60.8V Nominal NMC battery module** and a **QS205 V3 (50H) Spoke Hub Motor** (Bicycle/Moped axle, 13.5 kg / 29.7 lbs, 4,000–5,000W continuous / 12,000W peak). 
+This comprehensive, pageless engineering blueprint consolidates the complete structural, mechanical, and electrical requirements for building the high-performance folding electric motorcycle prototype. The system leverages the lightweight properties of a measured **9.2 lb carbon steel folding frame** as a foundation to carry a heavy-duty, high-energy-density **60.8V Nominal NMC battery module** and a **QS205 V3 (50H) Spoke Hub Motor** (Bicycle/Moped axle, **13.0 kg / 28.6 lbs**, 4,000–5,000W continuous / 12,000W peak). 
 
 By pairing a featherweight structural frame with a massive power system, this architecture is engineered to reach speeds of **up to 70 mph** while providing an extended range of **over 100 miles** under precise cruising management.
 
@@ -37,7 +39,7 @@ To prevent catastrophic failure of the central folding hinge under heavy mechani
 > * **Contact:** 4.0" Ultra-Wide Fat Tire
 
 **Mechanical Installation Specifications:**
-* **Hinge Protection:** Rotation forces are redirected around the latch assembly using 6061-T6 frame gussets.
+* **Hinge Protection:** Rotation forces are redirected around the latch assembly using frame gussets on the carbon steel structure.
 * **Exoskeleton Tray:** Uses dual over-center stainless steel draw latches for fast battery field swaps.
 * **Vibration Dampening:** 2mm neoprene buffer strips must line all clamping interfaces to prevent aluminum micro-fractures.
 
@@ -58,7 +60,7 @@ The electrical distribution utilizes low-impedance pathways to accommodate high 
 > ⬇️
 > 🧠 **HIGH-PHASE 150A CONTROLLER (Waterproofed Bottom Mount)**
 > ⬇️ *(3-Phase Power + Hall Sensors)*
-> 🛞 **QS205 V3 (50H) SPOKE HUB MOTOR** — 4,000–5,000W continuous / 12,000W peak · 13.5 kg (29.7 lbs) · Bicycle/Moped axle (Locked via Torque Arms)
+> 🛞 **QS205 V3 (50H) SPOKE HUB MOTOR** — 4,000–5,000W continuous / 12,000W peak · 13.0 kg (28.6 lbs) · Bicycle/Moped axle (Locked via Torque Arms)
 
 ### Motor Hall Sensor to Controller JST Interconnect Mapping
 
@@ -81,7 +83,7 @@ Sustaining a **40 mph cruise speed over 100 miles** requires keeping net energy 
 
 * **Aerodynamic Penalty:** An unfaired fat-tire bicycle profile exhibits a poor drag coefficient (Cd approx 1.15). 
 * **Windscreen Modification:** Installing a **15-inch Krator Smoke Windscreen** swept back at a 45° to 55° rake angle lowers the overall area drag coefficient by **18% to 25%**.
-* **Range Verification:** Without a windscreen, energy draw spans **95–110 Wh/mile** (limiting range to 77–89 miles). With the windscreen fairing optimized, efficiency yields **78–83 Wh/mile**, securing the 100-mile target from the 8.5 kWh pack. The QS205 V3 (50H) at only 13.5 kg further reduces unsprung weight, subtly improving stop-and-go efficiency.
+* **Range Verification:** Without a windscreen, energy draw spans **95–110 Wh/mile** (limiting range to 77–89 miles). With the windscreen fairing optimized, efficiency yields **78–83 Wh/mile**, securing the 100-mile target from the 8.5 kWh pack. The QS205 V3 (50H) at only 13.0 kg (28.6 lb) further reduces unsprung weight, subtly improving stop-and-go efficiency.
 
 ---
 
@@ -128,7 +130,7 @@ Without cooling, the system experiences a continuous temperature climb of **0.65
 ## 7. Cost-Cutting Alternatives & Physical BOM
 
 To optimize production costs for the prototype rollout, the following alternatives have been sourced and integrated into the final Bill of Materials:
-* **Powertrain:** QS205 V3 (50H) Spoke Hub — 4,000–5,000W continuous / 12,000W peak, 13.5 kg (29.7 lbs), Bicycle/Moped axle. High power-to-weight with reduced unsprung mass.
+* **Powertrain:** QS205 V3 (50H) Spoke Hub — 4,000–5,000W continuous / 12,000W peak, 13.0 kg (28.6 lbs), Bicycle/Moped axle. High power-to-weight with reduced unsprung mass.
 * **Controller Substitution:** Transitioning from the $280 Sabvoton SVMC72150 to a standardized 150A generic IP65 sine-wave controller saves $80.
 * **Cell Chemistry Pivot:** Opting for standard 21700 NMC cylindrical cells over NMC/SiC solid-state pouches slashes energy storage costs from $1,600 to $950, while maintaining the 60.8V nominal target.
 * **Hardware Efficiency:** Replacing the CNC Billet Tube Clamps ($80) with heavy-duty rubber-lined P-clamps achieves equivalent structural isolation for $25.
@@ -137,8 +139,8 @@ To optimize production costs for the prototype rollout, the following alternativ
 
 | Component Category | Item Description | Core Specification | Unit Qty | Est. Cost (USD) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Powertrain** | QS205 V3 (50H) Spoke Hub Motor | 4–5 kW cont. / 12 kW peak · 13.5 kg · Bicycle/Moped axle | 1 | $600.00 |
-| **Chassis Assembly** | V4 Max Aluminum Frame | 6061-T6 Folding / Fat Tire Geometry Spacing | 1 | $480.00 |
+| **Powertrain** | QS205 V3 (50H) Spoke Hub Motor | 4–5 kW cont. / 12 kW peak · 13.0 kg · Bicycle/Moped axle | 1 | $600.00 |
+| **Chassis Assembly** | Carbon steel folding frame (9.2 lb) | Folding / Fat Tire Geometry Spacing | 1 | $480.00 |
 | **Energy Storage** | NMC 21700 Cylindricals | 3.8V Nominal Core | 1 Pack | $950.00 |
 | **Motor Management** | 150A IP65 Controller | 150A Continuous DC / IP65 Rated Sinewave | 1 | $200.00 |
 | **Aerodynamics** | Krator 15" Smoke Windscreen | Heavy-duty Polycarbonate / Quick bracket mount | 1 | $65.00 |
@@ -163,7 +165,7 @@ To securely mesh the motor and frame, your co-founder must execute machining adj
 
 * **Over-Locknut Distance (OLD):** Standardize frame swingarm spacing to **170mm or 190mm** to clear oversized fat rims and prevent chain line interference against tire walls.
 * **Axle Seating:** Structural slot entries must measure exactly **10mm wide** to hold the flat shoulders of the M16 axle. Depth must achieve a minimum **16mm engagement depth**.
-* **Axle Isolation Principle:** Never allow the steel axle flats to rest directly against bare aluminum 6061-T6 slots. Aluminum deforms easily under launching torque, stripping the axle paths. Install the custom 5mm 4130 steel torque arms externally to take 100% of the rotational force.
+* **Axle Isolation Principle:** Never allow the steel axle flats to rest directly against bare frame dropout slots. Protect dropout faces under launching torque so axle paths are not damaged. Install the custom 5mm 4130 steel torque arms externally to take 100% of the rotational force.
 * **Brake Assembly Clearance:** Weld the rear disc brake caliper bracket to match a strict **15.5mm offset** from the internal left dropout plate surface to align the rotor perfectly through hydraulic pad paths.
 
 
@@ -279,4 +281,4 @@ The layout below confirms the true structural alignment of the physical build, s
 > 
 > ⬅️ 💺 **Custom Cafe Racer Seat** *(Mounted over central hinge)*
 > ⬅️ 🔋 **Modular NMC Exoskeleton Battery** *(Suspended via draw latches)*
-> ⬅️ 🛞 **Rear 4.0" Fat Tire w/ QS205 V3 (50H) Spoke Hub Motor** — 4–5 kW / 12 kW peak · 13.5 kg *(Locked via 4130 Torque Arms)*
+> ⬅️ 🛞 **Rear 4.0" Fat Tire w/ QS205 V3 (50H) Spoke Hub Motor** — 4–5 kW / 12 kW peak · 13.0 kg *(Locked via 4130 Torque Arms)*

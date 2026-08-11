@@ -5,17 +5,19 @@
 
 ---
 
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
+
 ## 1. Statement of Intent & Operational Model
 The purpose of this Request for Proposal (RFP) is to select a high-capability Tier 1 contract manufacturing partner to execute the final assembly, software integration, and quality assurance firewall for a premium folding motorcycle. 
 
-This program operates strictly under a **Consigned Assembly Model**. The sourcing entity provides all components, including prefabricated high-tolerance 6061-T6 aluminum structural components, directly to the assembly floor.
+This program operates strictly under a **Consigned Assembly Model**. The sourcing entity provides all components, including prefabricated high-tolerance carbon steel structural components, directly to the assembly floor.
 
 ---
 
 ## 2. Manufacturing & Component Scope
 
 ### Tier 2 Sub-Assembly Marriage
-* **Structural Elements:** Automated precision welding, alignment, and verification of the 6061-T6 aluminum folding frame mechanism.
+* **Structural Elements:** Automated precision welding, alignment, and verification of the carbon steel folding frame mechanism.
 * **Powertrain Integration:** Modular connection of the 16S2P NMC cell configurations, high-amp controller housing, and insulated wiring harnesses.
 
 ### Tier 1 Final Line Requirements
@@ -27,7 +29,7 @@ This program operates strictly under a **Consigned Assembly Model**. The sourcin
 ## 3. Strict Quality Assurance (QA) Parameters
 
 ### Layer 1: Incoming Material Control
-* Complete ultrasonic verification of incoming 6061-T6 weld penetration depth to eliminate fatigue risk.
+* Complete ultrasonic verification of incoming carbon steel weld penetration depth to eliminate fatigue risk.
 
 ### Layer 2: In-Line Powertrain Validation
 * Automated dielectric isolation verification on high-voltage connections before final vehicle closure.

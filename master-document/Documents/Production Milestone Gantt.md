@@ -5,8 +5,10 @@
 ```
 Phase / Activity                      W1-2  W3-4  W5-6  W7-8  W9-10 W11-12 W13-14 W15-52
 ---------------------------------------------------------------------------------------
+
+**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 PHASE 1: TOOLING & DIE CUTTING
-- 6061-T6 Extrusion Die Polishing     [XXX]
+- Frame fixture / tooling prep     [XXX]
 - Hinge Stamping Mold Fabrication           [XXX]
 - Tooling Sign-off & Press Calibration            [XXX]
 
@@ -28,7 +30,7 @@ PHASE 4: FULL-SCALE PRODUCTION RAMP
 ## Detailed Milestone Descriptions
 
 ### Phase 1: Tooling & Die Cutting (Weeks 1-6)
-* **Tooling Deferral Execution:** Track $120,000.00 upfront investment for custom 6061-T6 extrusion profiles.
+* **Tooling Deferral Execution:** Track $120,000.00 upfront investment for carbon steel folding frame tooling.
 * **Amortization Trigger:** Apply temporary $24.00 per-unit surcharge across the first 5,000 units.
 
 ### Phase 2: Pre-Production Verification (Weeks 7-10)
