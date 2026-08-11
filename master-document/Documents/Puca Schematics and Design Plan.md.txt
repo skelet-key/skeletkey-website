@@ -167,6 +167,81 @@ To securely mesh the motor and frame, your co-founder must execute machining adj
 * **Brake Assembly Clearance:** Weld the rear disc brake caliper bracket to match a strict **15.5mm offset** from the internal left dropout plate surface to align the rotor perfectly through hydraulic pad paths.
 
 
+
+---
+
+## Hub Motor Thermal Protection — Statorade (Grin / Ferrotec)
+
+**Source:** [Grin Tech — Statorade product info](https://ebikes.ca/product-info/grin-products/statorade.html)
+
+Statorade is a low-viscosity magnetically suspended motor cooling fluid jointly developed by **Grin Tech** and **Ferrotec**. It is the primary thermal intervention specified for the **QS205** direct-drive hub on Puca when sustained high power is required.
+
+### Purpose
+Cool **outrunner direct-drive hub motors** by transferring heat from the stator copper to the outer motor shell via fluid convection in the magnetic air gap — roughly **doubling average thermal conductivity** from windings to the environment.
+
+### How it works
+- Nanomagnetic particles in a stable low-viscosity synthetic oil concentrate in the magnetic air gap.
+- Rotor magnets hold the fluid in place so it does not splash or leak under normal RPM.
+- Heat moves from the stator to the shell, then to ambient air (pair with aluminum **Hubsinks** for an additional ~15–20% shell-to-air improvement).
+- Negligible rolling-drag impact when the correct volume is used.
+
+### Compatibility (critical)
+- **Compatible:** Outrunner direct-drive hubs (magnets on the outside) — including **QS205**, Crystalyte, MXUS, Grin All-Axle, 9C+, TDCM-class motors with adequate side-cover sealing.
+- **Not effective:** Geared hubs (shell not the heat path) and typical mid-drive inrunners.
+- Side covers must seal; Grin motors often ship with fill ports. Non-ported motors need a sealed injection method (port, disk hole, or fill with cover removed then resealed).
+
+### Fill volume (typical direct-drive hub)
+- Measurable improvement from **2–3 mL**
+- Full effect usually **5–8 mL** at modest RPM; **8–12 mL** at higher RPM
+- Add in small increments while watching no-load current — stop when drag rises without thermal benefit
+- Excess fluid only adds viscous drag
+
+### Performance claims (Grin testing)
+- Example: thermal conductivity from ~1.8 to ~4.3 W/°C with 6 mL in a TDCM test case; core temp from nearly 90°C to under 60°C under comparable load
+- Roughly **~40% higher sustained torque/power** before overheating in tested setups
+- Faster recovery after high-power bursts; especially helpful at low speed where airflow is weak
+- Fluid longevity on the order of **tens of thousands of km** with minimal loss when sealed correctly
+
+### Warnings
+- Do **not** substitute cheap eBay ferrofluids — they are not formulated for sustained motor heat and agitation.
+- Poor sealing → seepage at speed.
+- Overfill → drag without cooling gain.
+- Centripetal-force limits depend on motor diameter/RPM; stay within Grin guidance for the hub class.
+
+### Puca application note
+For the **QS205 V3 (50H)** spoke hub at 4–5 kW continuous / 12 kW peak on a **~60.8 V nominal** pack, Statorade + optional Hubsinks is the preferred passive cooling path so the motor can hold high phase current without immediate thermal cutback (controller KTY83 threshold remains **130°C**).
+
+---
+
+## QS205 3T Winding — 70 mph on a ~60 V Nominal Pack
+
+**Question:** Can a QS205 **3T** hit **70 mph** with a **60-volt** (nominal) battery?  
+**Answer:** **Yes, under ideal conditions** — the 3T’s higher KV speed profile can reach the target without a 72 V pack upgrade — but the system will be at its limits and must be configured carefully.
+
+### Speed math (3T)
+- Approximate **KV ≈ 16.3–17.7 RPM/V** for QS205 3T class windings.
+- A **16S** lithium pack is ~**67.2 V** full and ~**59–61 V** nominal under load.
+- **Unloaded RPM** at 67.2 V: about **67.2 × 17.7 ≈ 1,189 RPM**.
+- **Loaded RPM** (~15% drop for aero/road load): about **~1,010 RPM**.
+- On a **26″ bicycle-equivalent** or comparable **~19″ motorcycle** tire circumference, that maps to roughly **74–78 mph** at full charge and about **70 mph** at nominal voltage — **if** voltage and current hold.
+
+### Critical bottlenecks at 70 mph on 60 V
+1. **Amperage demand** — Fighting aero load at 70 mph on ~60 V requires high continuous power. Target hardware: battery + controller capable of roughly **150–200 A DC continuous** and **350 A+ phase** class capability (aligned with Puca’s high-phase 150 A controller path; verify phase rating for 3T builds).
+2. **Voltage sag** — Weak cells or a low-C BMS will sag (e.g. 60 V → ~52 V) and collapse top speed into the **50–60 mph** band. Use **high-discharge cells** (e.g. Molicel P42A / P45B class or equivalent) and a BMS/pack designed for the continuous current.
+3. **Rapid overheating** — High phase current at lower voltage dumps heat into the stator. A 3T held near 70 mph on 60 V will heat faster than a lower-KV wind on 72 V/84 V. **Statorade + Hubsinks** and the **130°C motor thermal cutback** are mandatory, not optional.
+
+### Build rules for a safe 60 V + 3T attempt
+- Confirm tire circumference used in the speed math matches the production fat-tire setup.
+- Hold bus voltage under load (cells, BMS, wiring, connectors).
+- Inject **Statorade** at the recommended volume; monitor no-load current after fill.
+- Enable motor temperature cutback via KTY83 (or equivalent) at **130°C**.
+- Prefer a controller with verified phase-current headroom for 3T at this power level.
+- Validate on a closed course before road use; sustained 70 mph is a thermal and legal edge case.
+
+### Relation to current Puca baseline
+Production messaging uses **QS205 V3 (50H)** with **70 mph** top speed on the **60.8 V / ~8.5 kWh** modular pack. If a **3T** wind is selected for a higher-KV speed profile, treat the above as the engineering gate checklist — same pack voltage family, stricter current and cooling discipline.
+
+
 ---
 
 ## Café Racer Seat Mounting (Two-Up / Café Racer Seat Pan)
