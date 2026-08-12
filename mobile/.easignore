@@ -1,0 +1,15 @@
+# Keep EAS uploads small
+node_modules/
+.expo/
+dist/
+web-build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+google-service-account.json
+.env
+.env.*
+npm-debug.*
+.DS_Store

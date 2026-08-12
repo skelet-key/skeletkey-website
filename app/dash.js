@@ -1,5 +1,6 @@
 (function () {
   var cfg = window.PUCA_CONFIG || {};
+  var bleCfg = cfg.ble || {};
   var STORAGE = {
     odo: "sk_puca_odo_mi",
     trip: "sk_puca_trip_mi",
@@ -23,7 +24,17 @@
     units: cfg.units || "mph",
     lastFixTs: 0,
     lastLat: null,
-    lastLng: null
+    lastLng: null,
+    bleConnected: false,
+    bleName: null
+  };
+
+  // BLE Nordic UART handles
+  var ble = {
+    device: null,
+    server: null,
+    rxChar: null, // write commands
+    txChar: null  // notifications
   };
 
   var els = {};
@@ -35,7 +46,8 @@
       "maxValue", "maxUnit", "avgValue", "avgUnit", "timeValue",
       "headingValue", "altValue", "rangeValue", "rangeBar", "socValue",
       "socBar", "odoValue", "odoUnit", "connDot", "connLabel", "ignLabel",
-      "ignHint", "gpsAcc", "btnIgnition", "btnUnits", "sourceValue"
+      "ignHint", "gpsAcc", "btnIgnition", "btnUnits", "sourceValue",
+      "btnBle", "bleLabel"
     ].forEach(function (id) {
       els[id] = $(id);
     });
@@ -47,7 +59,8 @@
       if (!isNaN(o) && o >= 0) state.odoMi = o;
       var t = parseFloat(localStorage.getItem(STORAGE.trip));
       if (!isNaN(t) && t >= 0) state.tripMi = t;
-      state.ignition = localStorage.getItem(STORAGE.ign) === "1";
+      // Do not auto-restore ignition ON — always start OFF for safety
+      state.ignition = false;
     } catch (e) {}
   }
 
@@ -58,7 +71,30 @@
     } catch (e) {}
   }
 
-  function setIgnition(on) {
+  function updateBleUi() {
+    if (els.btnBle) {
+      els.btnBle.textContent = state.bleConnected ? "Disconnect relay" : "Connect relay";
+    }
+    if (els.bleLabel) {
+      els.bleLabel.textContent = state.bleConnected
+        ? ("Relay · " + (state.bleName || "PucaIgn"))
+        : "Relay · offline";
+    }
+    if (els.ignHint) {
+      if (!state.bleConnected) {
+        els.ignHint.textContent = state.ignition
+          ? "IGN ON (UI only · connect relay for hardware)"
+          : "Connect relay, then turn ignition on";
+      } else {
+        els.ignHint.textContent = state.ignition
+          ? "Ignition on · relay closed · GPS active"
+          : "Ignition off · relay open";
+      }
+    }
+  }
+
+  function setIgnition(on, opts) {
+    opts = opts || {};
     state.ignition = !!on;
     var app = $("app");
     var btn = els.btnIgnition;
@@ -71,16 +107,135 @@
       btn.setAttribute("aria-pressed", state.ignition ? "true" : "false");
     }
     if (els.ignLabel) els.ignLabel.textContent = state.ignition ? "IGN ON" : "IGN OFF";
-    if (els.ignHint) {
-      els.ignHint.textContent = state.ignition
-        ? "Ignition on · GPS tracking active"
-        : "Turn ignition on to ride";
+    updateBleUi();
+
+    // Send to hardware unless this update came FROM the hardware
+    if (!opts.fromBle) {
+      bleSendIgnition(state.ignition);
     }
-    try { localStorage.setItem(STORAGE.ign, state.ignition ? "1" : "0"); } catch (e) {}
   }
 
   function toggleIgnition() {
     setIgnition(!state.ignition);
+  }
+
+  // ---- BLE ignition relay ----
+  function bleSupported() {
+    return !!(navigator.bluetooth && navigator.bluetooth.requestDevice);
+  }
+
+  function bleSend(text) {
+    if (!ble.rxChar || !state.bleConnected) return Promise.resolve(false);
+    var payload = text.endsWith("\n") ? text : text + "\n";
+    var encoder = new TextEncoder();
+    return ble.rxChar.writeValue(encoder.encode(payload))
+      .then(function () { return true; })
+      .catch(function (err) {
+        console.warn("BLE write failed", err);
+        return false;
+      });
+  }
+
+  function bleSendIgnition(on) {
+    return bleSend(on ? "IGN:1" : "IGN:0");
+  }
+
+  function onBleNotify(ev) {
+    try {
+      var raw = new TextDecoder().decode(ev.target.value);
+      var lines = raw.split(/\r?\n/);
+      lines.forEach(function (line) {
+        line = line.trim();
+        if (!line) return;
+        if (line === "IGN:1") setIgnition(true, { fromBle: true });
+        else if (line === "IGN:0") setIgnition(false, { fromBle: true });
+        // PONG / ERR ignored for now
+      });
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
+  function onBleDisconnected() {
+    state.bleConnected = false;
+    state.bleName = null;
+    ble.rxChar = null;
+    ble.txChar = null;
+    ble.server = null;
+    ble.device = null;
+    if (bleCfg.failSafeOffOnDisconnect !== false) {
+      setIgnition(false, { fromBle: true });
+    }
+    updateBleUi();
+  }
+
+  function connectBle() {
+    if (state.bleConnected) {
+      disconnectBle();
+      return;
+    }
+    if (!bleSupported()) {
+      alert("Web Bluetooth needs Chrome on Android (or Edge). iOS Safari does not support it.");
+      return;
+    }
+
+    var hints = bleCfg.deviceNameHints || ["PucaIgn", "SkeletKey"];
+    var filters = hints.map(function (n) { return { namePrefix: n }; });
+
+    navigator.bluetooth.requestDevice({
+      filters: filters,
+      optionalServices: bleCfg.optionalServices || [bleCfg.serviceUuid]
+    }).catch(function () {
+      // Fallback: accept all devices if name filter fails
+      return navigator.bluetooth.requestDevice({
+        acceptAllDevices: true,
+        optionalServices: bleCfg.optionalServices || [bleCfg.serviceUuid]
+      });
+    }).then(function (device) {
+      ble.device = device;
+      state.bleName = device.name || "PucaIgn";
+      device.addEventListener("gattserverdisconnected", onBleDisconnected);
+      return device.gatt.connect();
+    }).then(function (server) {
+      ble.server = server;
+      return server.getPrimaryService(bleCfg.serviceUuid || "6e400001-b5a3-f393-e0a9-e50e24dcca9e");
+    }).then(function (service) {
+      return Promise.all([
+        service.getCharacteristic(bleCfg.rxCharUuid || "6e400002-b5a3-f393-e0a9-e50e24dcca9e"),
+        service.getCharacteristic(bleCfg.txCharUuid || "6e400003-b5a3-f393-e0a9-e50e24dcca9e")
+      ]);
+    }).then(function (chars) {
+      ble.rxChar = chars[0];
+      ble.txChar = chars[1];
+      return ble.txChar.startNotifications();
+    }).then(function () {
+      ble.txChar.addEventListener("characteristicvaluechanged", onBleNotify);
+      state.bleConnected = true;
+      updateBleUi();
+      // Sync hardware to current UI state (usually OFF after connect)
+      return bleSendIgnition(state.ignition).then(function () {
+        return bleSend("STATUS?");
+      });
+    }).catch(function (err) {
+      console.warn(err);
+      onBleDisconnected();
+      var msg = (err && err.message) ? err.message : String(err);
+      if (msg.indexOf("cancel") < 0 && msg.indexOf("User cancelled") < 0) {
+        alert("Relay connect failed: " + msg);
+      }
+    });
+  }
+
+  function disconnectBle() {
+    try {
+      if (state.bleConnected) bleSend("IGN:0");
+    } catch (e) {}
+    try {
+      if (ble.device && ble.device.gatt && ble.device.gatt.connected) {
+        ble.device.gatt.disconnect();
+      }
+    } catch (e) {}
+    onBleDisconnected();
   }
 
   function unitSpeed(mph) {
@@ -130,7 +285,6 @@
   function render() {
     var maxScale = cfg.maxSpeedMph || 80;
     var displaySpeed = unitSpeed(state.speedMph);
-    var maxScaleDisplay = unitSpeed(maxScale);
 
     if (els.speedValue) els.speedValue.textContent = String(Math.round(displaySpeed));
     if (els.speedUnit) els.speedUnit.textContent = speedLabel();
@@ -170,29 +324,18 @@
     if (els.rangeValue) els.rangeValue.textContent = range >= 100 ? String(Math.round(range)) : range.toFixed(1);
     if (els.rangeBar) els.rangeBar.style.width = Math.min(100, (range / 120) * 100) + "%";
 
-    if (els.sourceValue) els.sourceValue.textContent = state.gpsOk ? "GPS" : "—";
+    if (els.sourceValue) {
+      var src = [];
+      if (state.gpsOk) src.push("GPS");
+      if (state.bleConnected) src.push("BLE relay");
+      els.sourceValue.textContent = src.length ? src.join(" + ") : "—";
+    }
   }
-
-  function haversineMi(lat1, lon1, lat2, lon2) {
-    var R = 3958.8;
-    var toRad = Math.PI / 180;
-    var dLat = (lat2 - lat1) * toRad;
-    var dLon = (lon2 - lon1) * toRad;
-    var a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * toRad) * Math.cos(lat2 * toRad) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    return 2 * R * Math.asin(Math.sqrt(a));
-  }
-
-  var watchId = null;
-  var tripClock = null;
 
   function onPosition(pos) {
     var c = pos.coords;
     var mph = (c.speed != null && !isNaN(c.speed)) ? c.speed * 2.236936 : 0;
     if (mph < 0) mph = 0;
-    // Filter tiny GPS noise when stationary
     if (mph < 0.8) mph = 0;
 
     var now = Date.now();
@@ -204,14 +347,11 @@
       if (mph > 0.8) state.movingMs += dt * 1000;
     }
 
-    // Distance from speed integration when ignition on
     if (state.ignition && mph > 0.8 && dt > 0 && dt < 5) {
       var dMi = mph * (dt / 3600);
       state.tripMi += dMi;
       state.odoMi += dMi;
       saveOdo();
-    } else if (state.ignition && state.lastLat != null && c.latitude != null && mph <= 0.8) {
-      // optional: no integration when stopped
     }
 
     state.speedMph = mph;
@@ -226,7 +366,6 @@
     setGpsStatus(true, c.accuracy);
     render();
 
-    // Maps marker
     if (window._pucaMapMarker && c.latitude != null) {
       var ll = { lat: c.latitude, lng: c.longitude };
       window._pucaMapMarker.setPosition(ll);
@@ -246,8 +385,7 @@
       if (els.connLabel) els.connLabel.textContent = "No GPS on this device";
       return;
     }
-    if (watchId != null) return;
-    watchId = navigator.geolocation.watchPosition(onPosition, onPositionError, {
+    navigator.geolocation.watchPosition(onPosition, onPositionError, {
       enableHighAccuracy: true,
       maximumAge: 500,
       timeout: 15000
@@ -268,7 +406,6 @@
     render();
   }
 
-  // ---- Google Maps ----
   window.initPucaMap = function () {
     var el = $("map");
     if (!el || !window.google) return;
@@ -306,7 +443,8 @@
   function boot() {
     cacheEls();
     loadPersisted();
-    setIgnition(state.ignition);
+    setIgnition(false);
+    updateBleUi();
     render();
     startGps();
 
@@ -314,9 +452,9 @@
     if ($("btnResetTrip")) $("btnResetTrip").addEventListener("click", resetTrip);
     if (els.btnUnits) els.btnUnits.addEventListener("click", toggleUnits);
     if ($("btnLocate")) $("btnLocate").addEventListener("click", locate);
+    if (els.btnBle) els.btnBle.addEventListener("click", connectBle);
 
-    // Keep trip clock updating time display while ignition on even between GPS ticks
-    tripClock = setInterval(function () {
+    setInterval(function () {
       if (state.ignition && state.gpsOk) render();
     }, 1000);
   }

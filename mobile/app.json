@@ -1,0 +1,72 @@
+{
+  "expo": {
+    "name": "SkeletKey Puca",
+    "slug": "skeletkey-puca",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "scheme": "skeletkey-puca",
+    "splash": {
+      "backgroundColor": "#0B0F19",
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.skeletkey.puca",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Puca uses GPS for speed, trip distance, heading, and map position.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Puca uses GPS while you ride for the speedometer and trip computer.",
+        "NSBluetoothAlwaysUsageDescription": "Puca connects to the SkeletKey ignition relay over Bluetooth.",
+        "NSBluetoothPeripheralUsageDescription": "Puca connects to the SkeletKey ignition relay over Bluetooth.",
+        "UIBackgroundModes": ["location"]
+      },
+      "config": {
+        "googleMapsApiKey": "AQ.Ab8RN6KgAnqdZ6K3jgtg4WJDTj5H3YIobjx0-iiiaPNOZo5i7g"
+      }
+    },
+    "android": {
+      "package": "com.skeletkey.puca",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#0B0F19",
+        "foregroundImage": "./assets/icon.png"
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "BLUETOOTH",
+        "BLUETOOTH_ADMIN",
+        "BLUETOOTH_CONNECT",
+        "BLUETOOTH_SCAN",
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_LOCATION"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AQ.Ab8RN6KgAnqdZ6K3jgtg4WJDTj5H3YIobjx0-iiiaPNOZo5i7g"
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow SkeletKey Puca to use your location for the speedometer and trip computer."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "REPLACE_AFTER_EAS_INIT"
+      }
+    },
+    "owner": "skelet-key"
+  }
+}
