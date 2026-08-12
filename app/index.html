@@ -127,38 +127,60 @@
     </p>
   </div>
 
-  <script src="config.js?v=20260812c"></script>
-  <script src="config.local.js" onerror="/* optional local key */"></script>
-  <script src="dash.js?v=20260812c"></script>
+  <script src="config.js?v=20260812d"></script>
+  <script src="config.local.js" onerror="/* optional — create from config.local.js.example */"></script>
+  <script src="dash.js?v=20260812d"></script>
   <script>
     (function () {
-      var key = (window.PUCA_CONFIG && window.PUCA_CONFIG.googleMapsApiKey) || "";
-      if (!key || key === "YOUR_GOOGLE_MAPS_API_KEY") {
+      function showMapsMessage(title, line1, line2) {
         var hint = document.getElementById("navHint");
-        if (hint) hint.textContent = "Add Google Maps API key in config.js";
+        if (hint) hint.textContent = title;
         var map = document.getElementById("map");
         if (map) {
           map.innerHTML =
-            '<div class="map-placeholder"><p>Maps</p><p class="muted">Set googleMapsApiKey in app/config.js</p><p class="muted">Or use GPS instruments alone</p></div>';
+            '<div class="map-placeholder"><p>' + title + '</p>' +
+            (line1 ? '<p class="muted">' + line1 + '</p>' : '') +
+            (line2 ? '<p class="muted">' + line2 + '</p>' : '') +
+            '</div>';
         }
+      }
+
+      // Priority: ?mapsKey= URL param → config.local.js → config.js
+      var key = "";
+      try {
+        var q = new URLSearchParams(window.location.search).get("mapsKey");
+        if (q) key = q.trim();
+      } catch (e) {}
+      if (!key && window.PUCA_CONFIG && window.PUCA_CONFIG.googleMapsApiKey) {
+        key = String(window.PUCA_CONFIG.googleMapsApiKey).trim();
+      }
+
+      if (!key || key === "YOUR_GOOGLE_MAPS_API_KEY") {
+        showMapsMessage(
+          "Maps needs an API key",
+          "Copy app/config.local.js.example → app/config.local.js",
+          "Paste a Maps JavaScript API key (starts with AIza…)"
+        );
         return;
       }
+
+      if (key.indexOf("AIza") !== 0 && key.indexOf("AQ.") === 0) {
+        console.warn("Puca Maps: key starts with AQ. — Maps JS keys usually start with AIza. This key may be rejected.");
+      }
+
       window.gm_authFailure = function () {
-        var hint = document.getElementById("navHint");
-        if (hint) hint.textContent = "Maps key rejected — enable Maps JavaScript API";
-        var map = document.getElementById("map");
-        if (map) {
-          map.innerHTML =
-            '<div class="map-placeholder"><p>Maps auth failed</p><p class="muted">Enable <b>Maps JavaScript API</b> for this key in Google Cloud</p><p class="muted">Keys usually start with AIza…</p></div>';
-        }
+        showMapsMessage(
+          "Maps auth failed",
+          "Enable <b>Maps JavaScript API</b> on this key in Google Cloud Console",
+          "Restrict key to https://skeletkey.com/* — valid keys start with AIza…"
+        );
       };
+
       var s = document.createElement("script");
       s.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(key) + "&callback=initPucaMap";
       s.async = true;
       s.defer = true;
-      s.onerror = function () {
-        window.gm_authFailure();
-      };
+      s.onerror = function () { window.gm_authFailure(); };
       document.head.appendChild(s);
     })();
   </script>

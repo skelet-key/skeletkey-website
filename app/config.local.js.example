@@ -1,3 +1,10 @@
-// Copy to config.local.js (gitignored) and paste your Maps key.
+// 1) Copy this file to: app/config.local.js
+// 2) Paste your Google Maps JavaScript API key below (starts with AIza...)
+// 3) config.local.js is gitignored — never commit it
+//
+// Create key: https://console.cloud.google.com/google/maps-apis
+// Enable: Maps JavaScript API
+// Application restriction: HTTP referrers → https://skeletkey.com/*
+
 window.PUCA_CONFIG = window.PUCA_CONFIG || {};
-window.PUCA_CONFIG.googleMapsApiKey = "YOUR_GOOGLE_MAPS_API_KEY";
+window.PUCA_CONFIG.googleMapsApiKey = "AIzaSy________________________";
