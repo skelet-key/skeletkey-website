@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0B0F19" />
+  <title>Puca Dash — SkeletKey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dash.css" />
+</head>
+<body>
+  <div id="app" class="dash">
+    <!-- Status bar -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">Skelet</span><span class="brand-accent">Key</span>
+        <span class="brand-sub">Puca Dash</span>
+      </div>
+      <div class="conn" id="connStatus">
+        <span class="dot" id="connDot"></span>
+        <span id="connLabel">Demo mode</span>
+      </div>
+      <div class="top-actions">
+        <button type="button" class="btn-ghost" id="btnBle" title="Connect BLE CAN bridge">Connect CAN</button>
+        <button type="button" class="btn-ghost" id="btnDemo" title="Toggle demo telemetry">Demo</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- Left: instruments -->
+      <section class="instruments" aria-label="Vehicle instruments">
+        <div class="speed-block">
+          <div class="speed-value" id="speedValue">0</div>
+          <div class="speed-unit">mph</div>
+          <div class="speed-ring" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+              <circle class="ring-bg" cx="60" cy="60" r="52" />
+              <circle class="ring-fg" id="speedRing" cx="60" cy="60" r="52" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <div class="metric-label">Range</div>
+            <div class="metric-value"><span id="rangeValue">105</span><span class="metric-unit"> mi</span></div>
+            <div class="bar"><div class="bar-fill range" id="rangeBar" style="width:84%"></div></div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Battery</div>
+            <div class="metric-value"><span id="socValue">84</span><span class="metric-unit">%</span></div>
+            <div class="bar"><div class="bar-fill soc" id="socBar" style="width:84%"></div></div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Pack</div>
+            <div class="metric-value"><span id="voltValue">60.8</span><span class="metric-unit"> V</span></div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Power</div>
+            <div class="metric-value"><span id="powerValue">0.0</span><span class="metric-unit"> kW</span></div>
+          </div>
+        </div>
+
+        <div class="footer-stats">
+          <div><span class="muted">Motor</span> <span id="motorTemp">—</span>°C</div>
+          <div><span class="muted">Controller</span> <span id="ctrlTemp">—</span>°C</div>
+          <div><span class="muted">Odo</span> <span id="odoValue">0.0</span> mi</div>
+        </div>
+      </section>
+
+      <!-- Right: Google Maps -->
+      <section class="map-pane" aria-label="Navigation">
+        <div id="map" class="map"></div>
+        <div class="map-overlay">
+          <button type="button" class="btn-map" id="btnLocate">My location</button>
+          <div class="nav-hint" id="navHint">Google Maps · navigation</div>
+        </div>
+      </section>
+    </main>
+
+    <p class="legal">
+      CAN data via BLE bridge when connected. Demo mode simulates telemetry.
+      Maps require a Google Maps JavaScript API key in <code>config.js</code>.
+    </p>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="can-protocol.js"></script>
+  <script src="dash.js"></script>
+  <script>
+    // Load Maps after config
+    (function () {
+      var key = (window.PUCA_CONFIG && window.PUCA_CONFIG.googleMapsApiKey) || "";
+      if (!key || key === "YOUR_GOOGLE_MAPS_API_KEY") {
+        document.getElementById("navHint").textContent = "Add Google Maps API key in config.js";
+        document.getElementById("map").innerHTML =
+          '<div class="map-placeholder"><p>Google Maps</p><p class="muted">Set <code>googleMapsApiKey</code> in app/config.js</p><p class="muted">Enable Maps JavaScript API in Google Cloud</p></div>';
+        return;
+      }
+      var s = document.createElement("script");
+      s.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(key) + "&callback=initPucaMap";
+      s.async = true;
+      s.defer = true;
+      document.head.appendChild(s);
+    })();
+  </script>
+</body>
+</html>

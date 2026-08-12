@@ -1,0 +1,287 @@
+:root {
+  --bg: #0B0F19;
+  --surface: #12161F;
+  --surface-2: #1A1F2B;
+  --border: #2A3142;
+  --text: #F8FAFC;
+  --muted: #A8B4C4;
+  --accent: #7A8494;
+  --red: #C41E3A;
+  --blue: #3b9eff;
+  --green: #3dd68c;
+  --font: "Inter", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  overflow: hidden;
+}
+
+.dash {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(11, 15, 25, 0.92);
+  backdrop-filter: blur(12px);
+  flex-shrink: 0;
+}
+
+.brand { font-weight: 700; font-size: 1rem; letter-spacing: -0.02em; }
+.brand-accent { color: var(--accent); }
+.brand-sub {
+  margin-left: 0.55rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.conn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-left: auto;
+}
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #f5a524;
+  box-shadow: 0 0 8px rgba(245, 165, 36, 0.6);
+}
+.dot.ok { background: var(--green); box-shadow: 0 0 8px rgba(61, 214, 140, 0.55); }
+.dot.err { background: var(--red); box-shadow: 0 0 8px rgba(196, 30, 58, 0.55); }
+
+.top-actions { display: flex; gap: 0.4rem; }
+.btn-ghost {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.btn-ghost:hover { border-color: var(--accent); }
+
+.main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.95fr) 1.25fr;
+  min-height: 0;
+}
+
+.instruments {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.1rem 0.75rem;
+  border-right: 1px solid var(--border);
+  background: linear-gradient(180deg, #0e1320 0%, var(--bg) 100%);
+  min-height: 0;
+  overflow: auto;
+}
+
+.speed-block {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0 0.5rem;
+}
+
+.speed-value {
+  font-size: clamp(4rem, 12vw, 6.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  z-index: 1;
+}
+.speed-unit {
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 0.15rem;
+  z-index: 1;
+}
+
+.speed-ring {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.9;
+}
+.speed-ring svg {
+  width: min(220px, 55vw);
+  height: min(220px, 55vw);
+  transform: rotate(-90deg);
+}
+.ring-bg {
+  fill: none;
+  stroke: var(--surface-2);
+  stroke-width: 6;
+}
+.ring-fg {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 327;
+  stroke-dashoffset: 327;
+  transition: stroke-dashoffset 0.15s linear;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.metric {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem 0.85rem;
+}
+.metric-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+.metric-value {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.metric-unit {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+  margin-left: 0.1rem;
+}
+
+.bar {
+  margin-top: 0.45rem;
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.bar-fill { height: 100%; border-radius: 99px; transition: width 0.25s ease; }
+.bar-fill.range { background: var(--blue); }
+.bar-fill.soc { background: var(--green); }
+
+.footer-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.25rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--text);
+}
+.muted { color: var(--muted); }
+
+.map-pane {
+  position: relative;
+  min-height: 0;
+  background: #0a0c12;
+}
+.map { width: 100%; height: 100%; }
+.map-placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 1.5rem;
+}
+.map-placeholder code {
+  font-size: 0.8rem;
+  color: var(--text);
+  background: var(--surface-2);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+.map-overlay {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 2;
+}
+.btn-map {
+  background: rgba(18, 22, 31, 0.92);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+.nav-hint {
+  font-size: 0.72rem;
+  color: var(--muted);
+  background: rgba(18, 22, 31, 0.85);
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+.legal {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  color: var(--muted);
+  padding: 0.35rem 0.9rem;
+  border-top: 1px solid var(--border);
+}
+.legal code { color: var(--text); }
+
+@media (max-width: 800px) and (orientation: portrait) {
+  .main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(42vh, 1fr);
+  }
+  .instruments { border-right: 0; border-bottom: 1px solid var(--border); }
+  .speed-value { font-size: 4.2rem; }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .speed-value { font-size: 3.6rem; }
+  .metrics { gap: 0.5rem; }
+  .metric { padding: 0.5rem 0.65rem; }
+  .metric-value { font-size: 1.25rem; }
+}
