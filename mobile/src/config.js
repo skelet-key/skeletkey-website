@@ -10,7 +10,7 @@ export const PUCA_CONFIG = {
   // Android: android/app/src/main/AndroidManifest.xml meta-data
   // iOS: AppDelegate / Info.plist
   // For Expo: set in app.json ios.config.googleMapsApiKey / android.config.googleMaps.apiKey after prebuild
-  googleMapsApiKey: 'AQ.Ab8RN6LPuyYoni3OMGSfqIJ1bu-OFSU-z5T0gtCayKfqVrrs6w',
+  googleMapsApiKey: 'AQ.Ab8RN6KgAnqdZ6K3jgtg4WJDTj5H3YIobjx0-iiiaPNOZo5i7g',
 
   packKwh: 8.5,
   whPerMile: 80,

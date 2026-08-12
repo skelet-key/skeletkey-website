@@ -24,7 +24,7 @@
         "UIBackgroundModes": ["location"]
       },
       "config": {
-        "googleMapsApiKey": "AQ.Ab8RN6LPuyYoni3OMGSfqIJ1bu-OFSU-z5T0gtCayKfqVrrs6w"
+        "googleMapsApiKey": "AQ.Ab8RN6KgAnqdZ6K3jgtg4WJDTj5H3YIobjx0-iiiaPNOZo5i7g"
       }
     },
     "android": {
@@ -47,7 +47,7 @@
       ],
       "config": {
         "googleMaps": {
-          "apiKey": "AQ.Ab8RN6LPuyYoni3OMGSfqIJ1bu-OFSU-z5T0gtCayKfqVrrs6w"
+          "apiKey": "AQ.Ab8RN6KgAnqdZ6K3jgtg4WJDTj5H3YIobjx0-iiiaPNOZo5i7g"
         }
       }
     },
