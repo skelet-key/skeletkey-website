@@ -26,6 +26,7 @@
         <span id="connLabel">GPS off</span>
       </div>
       <div class="top-actions">
+        <button type="button" class="btn-ghost" id="btnBle" title="Connect BLE ignition relay">Connect relay</button>
         <button type="button" class="btn-ghost" id="btnResetTrip" title="Reset trip">Reset trip</button>
         <button type="button" class="btn-ghost" id="btnUnits" title="Toggle mph / km/h">mph</button>
       </div>
@@ -40,8 +41,9 @@
             <span class="ign-label" id="ignLabel">IGN OFF</span>
           </button>
           <div class="ign-status">
-            <span class="ign-hint" id="ignHint">Turn ignition on to ride</span>
+            <span class="ign-hint" id="ignHint">Connect relay, then turn ignition on</span>
             <span class="gps-acc" id="gpsAcc">GPS · —</span>
+            <span class="gps-acc" id="bleLabel">Relay · offline</span>
           </div>
         </div>
 
@@ -119,7 +121,8 @@
     </main>
 
     <p class="legal">
-      SkeletKey Puca · GPS speed &amp; trip · Ignition is a software interlock for the dash (pair with FarDriver key/e-lock on the bike).
+      SkeletKey Puca · GPS speed &amp; trip · BLE ignition relay (ESP32 <code>PucaIgn</code>) closes the enable/contactor coil —
+      keep a physical key or e-stop in series with pack power. Chrome on Android for Web Bluetooth.
       Maps optional via API key in <code>config.js</code>.
     </p>
   </div>
