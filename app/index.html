@@ -127,11 +127,12 @@
     </p>
   </div>
 
-  <script src="config.js"></script>
-  <script src="dash.js"></script>
+  <script src="config.js?v=20260812"></script>
+  <script src="dash.js?v=20260812"></script>
   <script>
     (function () {
-      var key = (window.PUCA_CONFIG && window.PUCA_CONFIG.googleMapsApiKey) || "";
+      var FALLBACK_KEY = "AQ.Ab8RN6LPuyYoni3OMGSfqIJ1bu-OFSU-z5T0gtCayKfqVrrs6w";
+      var key = (window.PUCA_CONFIG && window.PUCA_CONFIG.googleMapsApiKey) || FALLBACK_KEY;
       if (!key || key === "YOUR_GOOGLE_MAPS_API_KEY") {
         var hint = document.getElementById("navHint");
         if (hint) hint.textContent = "Add Google Maps API key in config.js";
@@ -142,10 +143,22 @@
         }
         return;
       }
+      window.gm_authFailure = function () {
+        var hint = document.getElementById("navHint");
+        if (hint) hint.textContent = "Maps key rejected — enable Maps JavaScript API";
+        var map = document.getElementById("map");
+        if (map) {
+          map.innerHTML =
+            '<div class="map-placeholder"><p>Maps auth failed</p><p class="muted">Enable <b>Maps JavaScript API</b> for this key in Google Cloud</p><p class="muted">Keys usually start with AIza…</p></div>';
+        }
+      };
       var s = document.createElement("script");
       s.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(key) + "&callback=initPucaMap";
       s.async = true;
       s.defer = true;
+      s.onerror = function () {
+        window.gm_authFailure();
+      };
       document.head.appendChild(s);
     })();
   </script>
