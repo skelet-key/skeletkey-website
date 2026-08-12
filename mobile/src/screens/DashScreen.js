@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,8 +9,17 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import MapView, { Marker } from 'react-native-maps';
 import { usePucaRide } from '../hooks/usePucaRide';
+
+let MapView = null;
+let Marker = null;
+try {
+  const maps = require('react-native-maps');
+  MapView = maps.default || maps;
+  Marker = maps.Marker;
+} catch (_e) {
+  MapView = null;
+}
 
 function formatTime(ms) {
   const s = Math.floor(ms / 1000);
@@ -38,6 +47,34 @@ function Metric({ label, value, unit }) {
         {unit ? <Text style={styles.metricUnit}>{unit}</Text> : null}
       </Text>
     </View>
+  );
+}
+
+function MapPane({ coords }) {
+  const [failed, setFailed] = useState(false);
+  if (!MapView || failed || !coords) {
+    return (
+      <View style={styles.mapPlaceholder}>
+        <Text style={styles.hint}>
+          {!coords ? 'Waiting for GPS…' : 'Map unavailable'}
+        </Text>
+      </View>
+    );
+  }
+  return (
+    <MapView
+      style={styles.map}
+      initialRegion={{
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      }}
+      showsUserLocation
+      onError={() => setFailed(true)}
+    >
+      {Marker ? <Marker coordinate={coords} title="Puca" /> : null}
+    </MapView>
   );
 }
 
@@ -120,30 +157,11 @@ export default function DashScreen() {
         </View>
 
         <View style={styles.mapWrap}>
-          {r.coords ? (
-            <MapView
-              style={styles.map}
-              userInterfaceStyle="dark"
-              showsUserLocation
-              followsUserLocation
-              region={{
-                latitude: r.coords.latitude,
-                longitude: r.coords.longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-              }}
-            >
-              <Marker coordinate={r.coords} title="Puca" />
-            </MapView>
-          ) : (
-            <View style={styles.mapPlaceholder}>
-              <Text style={styles.hint}>Waiting for GPS…</Text>
-            </View>
-          )}
+          <MapPane coords={r.coords} />
         </View>
 
         <Text style={styles.legal}>
-          FarDriver ND72360 · ESP32 PucaIgn BLE relay · {Platform.OS}
+          FarDriver ND72360 · ESP32 PucaIgn · {Platform.OS}
         </Text>
       </ScrollView>
     </SafeAreaView>
