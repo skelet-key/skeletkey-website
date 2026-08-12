@@ -462,29 +462,115 @@
     }, { enableHighAccuracy: true, timeout: 8000 });
   }
 
-  function openNavigator() {
+  var routeLayer = null;
+  var destMarker = null;
+  var destLatLng = null;
+
+  function clearRoute() {
+    try {
+      if (routeLayer && window._pucaMap) window._pucaMap.removeLayer(routeLayer);
+      if (destMarker && window._pucaMap) window._pucaMap.removeLayer(destMarker);
+    } catch (e) {}
+    routeLayer = null;
+    destMarker = null;
+    destLatLng = null;
+    var nh = $("navHint");
+    if (nh) nh.textContent = "OpenStreetMap · live GPS";
+    var bc = $("btnClearRoute");
+    if (bc) bc.style.display = "none";
+  }
+
+  function formatKm(m) {
+    if (m >= 1000) return (m / 1609.344).toFixed(1) + " mi";
+    return Math.round(m * 3.28084) + " ft";
+  }
+
+  function formatEta(sec) {
+    var m = Math.round(sec / 60);
+    if (m < 60) return m + " min";
+    return Math.floor(m / 60) + "h " + (m % 60) + "m";
+  }
+
+  function drawRouteTo(destLat, destLng) {
     var lat = state.lastLat;
     var lng = state.lastLng;
     if (lat == null || lng == null) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (pos) {
-          state.lastLat = pos.coords.latitude;
-          state.lastLng = pos.coords.longitude;
-          openNavigator();
-        }, function () {
-          alert("Need a GPS fix before navigation");
-        }, { enableHighAccuracy: true, timeout: 8000 });
-      } else {
-        alert("Need a GPS fix before navigation");
-      }
+      alert("Need a GPS fix before navigation");
       return;
     }
-    // OpenStreetMap directions (destination can be set by user in OSM UI)
-    var url = "https://www.openstreetmap.org/directions?from=" +
-      encodeURIComponent(lat + "," + lng) +
-      "#map=15/" + lat + "/" + lng;
-    window.open(url, "_blank", "noopener,noreferrer");
+    destLatLng = [destLat, destLng];
+    var nh = $("navHint");
+    if (nh) nh.textContent = "Routing…";
+
+    var url = "https://router.project-osrm.org/route/v1/driving/" +
+      lng + "," + lat + ";" + destLng + "," + destLat +
+      "?overview=full&geometries=geojson&steps=true";
+
+    fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error("OSRM " + r.status);
+        return r.json();
+      })
+      .then(function (data) {
+        if (!data.routes || !data.routes.length) throw new Error("No route");
+        var route = data.routes[0];
+        var coords = route.geometry.coordinates.map(function (c) {
+          return [c[1], c[0]];
+        });
+
+        if (routeLayer && window._pucaMap) window._pucaMap.removeLayer(routeLayer);
+        if (destMarker && window._pucaMap) window._pucaMap.removeLayer(destMarker);
+
+        routeLayer = L.polyline(coords, {
+          color: "#3dd68c",
+          weight: 5,
+          opacity: 0.9
+        }).addTo(window._pucaMap);
+
+        destMarker = L.circleMarker(destLatLng, {
+          radius: 9,
+          color: "#ff6b7a",
+          fillColor: "#ff6b7a",
+          fillOpacity: 0.95,
+          weight: 2
+        }).addTo(window._pucaMap).bindPopup("Destination");
+
+        window._pucaMap.fitBounds(routeLayer.getBounds(), { padding: [40, 40] });
+        window._pucaMapFollow = false;
+
+        if (nh) {
+          nh.textContent = formatKm(route.distance) + " · " + formatEta(route.duration) + " · tap map to change dest";
+        }
+        var bc = $("btnClearRoute");
+        if (bc) bc.style.display = "";
+      })
+      .catch(function (err) {
+        console.warn(err);
+        if (nh) nh.textContent = "Routing failed · tap map to retry";
+        alert("Could not get a route. Check connection and try again.");
+      });
   }
+
+  function openNavigator() {
+    var nh = $("navHint");
+    if (!window._pucaMap) {
+      alert("Map not ready");
+      return;
+    }
+    if (state.lastLat == null) {
+      locate();
+      alert("Getting GPS fix — then tap the map to set a destination");
+      return;
+    }
+    window._pucaMapFollow = false;
+    if (nh) nh.textContent = "Tap the map to set destination";
+    // one-shot click for destination
+    window._pucaMap.once("click", function (e) {
+      drawRouteTo(e.latlng.lat, e.latlng.lng);
+    });
+  }
+
+  function boot
 
   function boot() {
     cacheEls();
@@ -499,6 +585,7 @@
     if (els.btnUnits) els.btnUnits.addEventListener("click", toggleUnits);
     if ($("btnLocate")) $("btnLocate").addEventListener("click", locate);
     if ($("btnNavigate")) $("btnNavigate").addEventListener("click", openNavigator);
+    if ($("btnClearRoute")) $("btnClearRoute").addEventListener("click", clearRoute);
     if (els.btnBle) els.btnBle.addEventListener("click", connectBle);
 
     setInterval(function () {

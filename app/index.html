@@ -117,7 +117,8 @@
         <div class="map-overlay">
           <button type="button" class="btn-map" id="btnLocate">My location</button>
           <button type="button" class="btn-map" id="btnNavigate">Navigate</button>
-          <div class="nav-hint" id="navHint">OpenStreetMap · Leaflet</div>
+          <button type="button" class="btn-map" id="btnClearRoute" style="display:none">Clear route</button>
+          <div class="nav-hint" id="navHint">OpenStreetMap · live GPS</div>
         </div>
       </section>
     </main>
@@ -129,9 +130,9 @@
     </p>
   </div>
 
-  <script src="config.js?v=20260812osm"></script>
+  <script src="config.js?v=20260812nav"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="dash.js?v=20260812osm"></script>
+  <script src="dash.js?v=20260812nav"></script>
   <script>
     // OSM + Leaflet — no Google key required
     document.addEventListener("DOMContentLoaded", function () {
