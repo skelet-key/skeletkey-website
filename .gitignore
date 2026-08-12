@@ -4,3 +4,6 @@ node_modules/
 *.log
 .env
 assets/maps-key.js
+
+app/config.local.js
+**/config.local.js
