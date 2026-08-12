@@ -570,8 +570,6 @@
     });
   }
 
-  function boot
-
   function boot() {
     cacheEls();
     loadPersisted();
