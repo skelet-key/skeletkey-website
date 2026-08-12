@@ -366,10 +366,10 @@
     setGpsStatus(true, c.accuracy);
     render();
 
-    if (window._pucaMapMarker && c.latitude != null) {
-      var ll = { lat: c.latitude, lng: c.longitude };
-      window._pucaMapMarker.setPosition(ll);
-      if (window._pucaMapFollow) window._pucaMap.setCenter(ll);
+    if (window._pucaMap && c.latitude != null) {
+      var ll = [c.latitude, c.longitude];
+      if (window._pucaMapMarker) window._pucaMapMarker.setLatLng(ll);
+      if (window._pucaMapFollow) window._pucaMap.setView(ll, window._pucaMap.getZoom(), { animate: false });
     }
   }
 
@@ -407,37 +407,83 @@
   }
 
   window.initPucaMap = function () {
-    var el = $("map");
-    if (!el || !window.google) return;
-    window._pucaMap = new google.maps.Map(el, {
-      center: { lat: 40.7128, lng: -74.006 },
-      zoom: 15,
-      disableDefaultUI: true,
-      zoomControl: true,
-      styles: [
-        { elementType: "geometry", stylers: [{ color: "#1a1f2b" }] },
-        { elementType: "labels.text.stroke", stylers: [{ color: "#0b0f19" }] },
-        { elementType: "labels.text.fill", stylers: [{ color: "#a8b4c4" }] },
-        { featureType: "road", elementType: "geometry", stylers: [{ color: "#2a3142" }] },
-        { featureType: "water", elementType: "geometry", stylers: [{ color: "#0e1628" }] },
-        { featureType: "poi", stylers: [{ visibility: "off" }] }
-      ]
-    });
-    window._pucaMapMarker = new google.maps.Marker({ map: window._pucaMap, title: "Puca" });
-    window._pucaMapFollow = true;
-    locate();
+    try {
+      var el = $("map");
+      if (!el || typeof L === "undefined") {
+        if (els.navHint || $("navHint")) {
+          var nh = $("navHint");
+          if (nh) nh.textContent = "Leaflet failed to load";
+        }
+        return;
+      }
+      if (window._pucaMap) return; // already init
+
+      window._pucaMap = L.map(el, {
+        zoomControl: true,
+        attributionControl: true
+      }).setView([40.7128, -74.006], 15);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap"
+      }).addTo(window._pucaMap);
+
+      window._pucaMapMarker = L.circleMarker([40.7128, -74.006], {
+        radius: 8,
+        color: "#3dd68c",
+        fillColor: "#3dd68c",
+        fillOpacity: 0.9,
+        weight: 2
+      }).addTo(window._pucaMap).bindPopup("Puca");
+
+      window._pucaMapFollow = true;
+      var nh = $("navHint");
+      if (nh) nh.textContent = "OpenStreetMap · live GPS";
+      locate();
+    } catch (err) {
+      console.warn("initPucaMap", err);
+      var nh2 = $("navHint");
+      if (nh2) nh2.textContent = "Map error · GPS still works";
+    }
   };
 
   function locate() {
     if (!navigator.geolocation) return;
     navigator.geolocation.getCurrentPosition(function (pos) {
-      var ll = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      var ll = [pos.coords.latitude, pos.coords.longitude];
       if (window._pucaMap) {
-        window._pucaMap.setCenter(ll);
-        window._pucaMap.setZoom(16);
-        if (window._pucaMapMarker) window._pucaMapMarker.setPosition(ll);
+        window._pucaMap.setView(ll, 16);
+        if (window._pucaMapMarker) window._pucaMapMarker.setLatLng(ll);
       }
-    }, function () {}, { enableHighAccuracy: true, timeout: 8000 });
+      state.lastLat = pos.coords.latitude;
+      state.lastLng = pos.coords.longitude;
+    }, function (err) {
+      console.warn("locate", err);
+    }, { enableHighAccuracy: true, timeout: 8000 });
+  }
+
+  function openNavigator() {
+    var lat = state.lastLat;
+    var lng = state.lastLng;
+    if (lat == null || lng == null) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (pos) {
+          state.lastLat = pos.coords.latitude;
+          state.lastLng = pos.coords.longitude;
+          openNavigator();
+        }, function () {
+          alert("Need a GPS fix before navigation");
+        }, { enableHighAccuracy: true, timeout: 8000 });
+      } else {
+        alert("Need a GPS fix before navigation");
+      }
+      return;
+    }
+    // OpenStreetMap directions (destination can be set by user in OSM UI)
+    var url = "https://www.openstreetmap.org/directions?from=" +
+      encodeURIComponent(lat + "," + lng) +
+      "#map=15/" + lat + "/" + lng;
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
   function boot() {
@@ -452,6 +498,7 @@
     if ($("btnResetTrip")) $("btnResetTrip").addEventListener("click", resetTrip);
     if (els.btnUnits) els.btnUnits.addEventListener("click", toggleUnits);
     if ($("btnLocate")) $("btnLocate").addEventListener("click", locate);
+    if ($("btnNavigate")) $("btnNavigate").addEventListener("click", openNavigator);
     if (els.btnBle) els.btnBle.addEventListener("click", connectBle);
 
     setInterval(function () {

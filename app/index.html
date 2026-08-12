@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="stylesheet" href="dash.css" />
 </head>
 <body>
@@ -115,7 +116,8 @@
         <div id="map" class="map"></div>
         <div class="map-overlay">
           <button type="button" class="btn-map" id="btnLocate">My location</button>
-          <div class="nav-hint" id="navHint">Maps · navigation</div>
+          <button type="button" class="btn-map" id="btnNavigate">Navigate</button>
+          <div class="nav-hint" id="navHint">OpenStreetMap · Leaflet</div>
         </div>
       </section>
     </main>
@@ -123,66 +125,23 @@
     <p class="legal">
       SkeletKey Puca · GPS speed &amp; trip · BLE ignition relay (ESP32 <code>PucaIgn</code>) closes the enable/contactor coil —
       keep a physical key or e-stop in series with pack power. Chrome on Android for Web Bluetooth.
-      Maps optional via API key in <code>config.js</code>.
+      Map: OpenStreetMap via Leaflet (no API key). Navigate opens OSM routing.
     </p>
   </div>
 
-  <script src="config.js?v=20260812d"></script>
-  <script src="config.local.js" onerror="/* optional — create from config.local.js.example */"></script>
-  <script src="dash.js?v=20260812d"></script>
+  <script src="config.js?v=20260812osm"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="dash.js?v=20260812osm"></script>
   <script>
-    (function () {
-      function showMapsMessage(title, line1, line2) {
-        var hint = document.getElementById("navHint");
-        if (hint) hint.textContent = title;
-        var map = document.getElementById("map");
-        if (map) {
-          map.innerHTML =
-            '<div class="map-placeholder"><p>' + title + '</p>' +
-            (line1 ? '<p class="muted">' + line1 + '</p>' : '') +
-            (line2 ? '<p class="muted">' + line2 + '</p>' : '') +
-            '</div>';
-        }
-      }
-
-      // Priority: ?mapsKey= URL param → config.local.js → config.js
-      var key = "";
-      try {
-        var q = new URLSearchParams(window.location.search).get("mapsKey");
-        if (q) key = q.trim();
-      } catch (e) {}
-      if (!key && window.PUCA_CONFIG && window.PUCA_CONFIG.googleMapsApiKey) {
-        key = String(window.PUCA_CONFIG.googleMapsApiKey).trim();
-      }
-
-      if (!key || key === "YOUR_GOOGLE_MAPS_API_KEY") {
-        showMapsMessage(
-          "Maps needs an API key",
-          "Copy app/config.local.js.example → app/config.local.js",
-          "Paste a Maps JavaScript API key (starts with AIza…)"
-        );
-        return;
-      }
-
-      if (key.indexOf("AIza") !== 0 && key.indexOf("AQ.") === 0) {
-        console.warn("Puca Maps: key starts with AQ. — Maps JS keys usually start with AIza. This key may be rejected.");
-      }
-
-      window.gm_authFailure = function () {
-        showMapsMessage(
-          "Maps auth failed",
-          "Enable <b>Maps JavaScript API</b> on this key in Google Cloud Console",
-          "Restrict key to https://skeletkey.com/* — valid keys start with AIza…"
-        );
-      };
-
-      var s = document.createElement("script");
-      s.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(key) + "&callback=initPucaMap";
-      s.async = true;
-      s.defer = true;
-      s.onerror = function () { window.gm_authFailure(); };
-      document.head.appendChild(s);
-    })();
+    // OSM + Leaflet — no Google key required
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof window.initPucaMap === "function") window.initPucaMap();
+    });
+    // Also run if dash.js already loaded
+    if (document.readyState !== "loading" && typeof window.initPucaMap === "function") {
+      window.initPucaMap();
+    }
   </script>
+
 </body>
 </html>
