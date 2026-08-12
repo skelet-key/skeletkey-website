@@ -28,6 +28,8 @@
     els.motorTemp = $("motorTemp");
     els.ctrlTemp = $("ctrlTemp");
     els.odo = $("odoValue");
+    els.gear = $("gearValue");
+    els.state = $("stateValue");
     els.connDot = $("connDot");
     els.connLabel = $("connLabel");
   }
@@ -36,26 +38,40 @@
     state.mode = mode;
     els.connDot.className = "dot " + (ok ? "ok" : mode === "demo" ? "" : "err");
     var labels = {
-      demo: "Demo mode",
-      ble: ok ? "CAN · BLE connected" : "BLE disconnected",
-      ws: ok ? "CAN · WebSocket" : "WebSocket offline"
+      demo: "Demo · Votol EM150",
+      ble: ok ? "Votol EM150 · BLE" : "BLE disconnected",
+      ws: ok ? "Votol EM150 · WebSocket" : "WebSocket offline"
     };
     els.connLabel.textContent = labels[mode] || mode;
   }
 
-  function applyTelemetry(partial) {
+    function applyTelemetry(partial) {
     if (!partial) return;
     Object.keys(partial).forEach(function (k) {
       if (partial[k] != null && partial[k] !== "") state[k] = partial[k];
     });
-    if (partial.soc != null && partial.range == null) {
-      var est = window.PucaCan.estimateRangeMiles(
-        state.soc,
-        cfg.packKwh || 8.5,
-        cfg.whPerMile || 80
+
+    // Votol EM150: speed from RPM × tire circumference
+    if (partial.rpm != null && (partial.speed == null || partial.speed === "")) {
+      state.speed = window.PucaCan.rpmToMph(
+        Number(partial.rpm),
+        cfg.tireCircumferenceMm || 1640
       );
-      if (est != null) state.range = est;
     }
+
+    // SOC from BMS if present; else estimate from 16S pack voltage
+    if (partial.soc == null && partial.voltage != null) {
+      var estSoc = window.PucaCan.socFromVoltage16s(Number(partial.voltage));
+      if (estSoc != null) state.soc = estSoc;
+    }
+
+    var estRange = window.PucaCan.estimateRangeMiles(
+      state.soc,
+      cfg.packKwh || 8.5,
+      cfg.whPerMile || 80
+    );
+    if (estRange != null && partial.range == null) state.range = estRange;
+
     render();
   }
 
@@ -85,6 +101,8 @@
     els.motorTemp.textContent = state.motorTemp == null ? "—" : String(Math.round(state.motorTemp));
     els.ctrlTemp.textContent = state.ctrlTemp == null ? "—" : String(Math.round(state.ctrlTemp));
     els.odo.textContent = (Number(state.odo) || 0).toFixed(1);
+    if (els.gear) els.gear.textContent = state.gear || "—";
+    if (els.state) els.state.textContent = state.state || "—";
   }
 
   // ---- Demo telemetry ----
@@ -109,6 +127,9 @@
         current: Math.max(0, current),
         motorTemp: 38 + speed * 0.25,
         ctrlTemp: 34 + speed * 0.12,
+        gear: speed < 5 ? "L" : speed < 35 ? "M" : speed < 55 ? "H" : "S",
+        state: speed < 1 ? "IDLE" : "RUN",
+        rpm: speed * 14.5,
         odo: (Number(state.odo) || 0) + speed / 3600 * 0.25
       });
     }, 250);
