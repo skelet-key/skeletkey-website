@@ -127,12 +127,12 @@
     </p>
   </div>
 
-  <script src="config.js?v=20260812b"></script>
-  <script src="dash.js?v=20260812b"></script>
+  <script src="config.js?v=20260812c"></script>
+  <script src="config.local.js" onerror="/* optional local key */"></script>
+  <script src="dash.js?v=20260812c"></script>
   <script>
     (function () {
-      var FALLBACK_KEY = "AQ.Ab8RN6KgAnqdZ6K3jgtg4WJDTj5H3YIobjx0-iiiaPNOZo5i7g";
-      var key = (window.PUCA_CONFIG && window.PUCA_CONFIG.googleMapsApiKey) || FALLBACK_KEY;
+      var key = (window.PUCA_CONFIG && window.PUCA_CONFIG.googleMapsApiKey) || "";
       if (!key || key === "YOUR_GOOGLE_MAPS_API_KEY") {
         var hint = document.getElementById("navHint");
         if (hint) hint.textContent = "Add Google Maps API key in config.js";
