@@ -4,7 +4,7 @@ window.PUCA_CONFIG = {
   controller: "FarDriver ND72360 BT",
 
   // Google Maps JavaScript API key (optional — maps pane)
-  googleMapsApiKey: "YOUR_GOOGLE_MAPS_API_KEY",
+  googleMapsApiKey: "AQ.Ab8RN6LPuyYoni3OMGSfqIJ1bu-OFSU-z5T0gtCayKfqVrrs6w",
 
   packKwh: 8.5,
   whPerMile: 80,
