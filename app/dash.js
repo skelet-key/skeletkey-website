@@ -495,8 +495,16 @@
     var lat = state.lastLat;
     var lng = state.lastLng;
     if (lat == null || lng == null) {
-      alert("Need a GPS fix before navigation");
-      return;
+      var o = getNavOrigin();
+      if (o) {
+        lat = o.lat;
+        lng = o.lng;
+        state.lastLat = lat;
+        state.lastLng = lng;
+      } else {
+        if (nh) nh.textContent = "Pan map / allow location, then Navigate";
+        return;
+      }
     }
     destLatLng = [destLat, destLng];
     var nh = $("navHint");
@@ -551,21 +559,48 @@
       });
   }
 
+  function getNavOrigin() {
+    if (state.lastLat != null && state.lastLng != null) {
+      return { lat: state.lastLat, lng: state.lastLng, source: "gps" };
+    }
+    try {
+      if (window._pucaMapMarker) {
+        var ll = window._pucaMapMarker.getLatLng();
+        if (ll) return { lat: ll.lat, lng: ll.lng, source: "marker" };
+      }
+    } catch (e) {}
+    try {
+      if (window._pucaMap) {
+        var c = window._pucaMap.getCenter();
+        if (c) return { lat: c.lat, lng: c.lng, source: "map" };
+      }
+    } catch (e2) {}
+    return null;
+  }
+
   function openNavigator() {
     var nh = $("navHint");
     if (!window._pucaMap) {
       alert("Map not ready");
       return;
     }
-    if (state.lastLat == null) {
-      locate();
-      alert("Getting GPS fix — then tap the map to set a destination");
-      return;
-    }
+    // Try to improve GPS in background; don't block navigation
+    if (state.lastLat == null) locate();
+
     window._pucaMapFollow = false;
     if (nh) nh.textContent = "Tap the map to set destination";
-    // one-shot click for destination
+
     window._pucaMap.once("click", function (e) {
+      var origin = getNavOrigin();
+      if (!origin) {
+        // Last resort: use click point as origin too (user can pan first)
+        origin = { lat: e.latlng.lat, lng: e.latlng.lng, source: "tap" };
+      }
+      // Stash origin into state so drawRouteTo can use it
+      if (state.lastLat == null) {
+        state.lastLat = origin.lat;
+        state.lastLng = origin.lng;
+      }
       drawRouteTo(e.latlng.lat, e.latlng.lng);
     });
   }
