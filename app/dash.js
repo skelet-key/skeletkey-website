@@ -1,233 +1,282 @@
 (function () {
   var cfg = window.PUCA_CONFIG || {};
+  var STORAGE = {
+    odo: "sk_puca_odo_mi",
+    trip: "sk_puca_trip_mi",
+    ign: "sk_puca_ignition"
+  };
+
   var state = {
-    speed: 0,
+    ignition: false,
+    speedMph: 0,
+    maxMph: 0,
+    tripMi: 0,
+    odoMi: 0,
+    tripMs: 0,
+    movingMs: 0,
+    heading: null,
+    altitudeFt: null,
+    gpsOk: false,
+    accuracyM: null,
     soc: 84,
-    voltage: 60.8,
-    current: 0,
-    motorTemp: null,
-    ctrlTemp: null,
     range: 105,
-    odo: 0,
-    mode: "demo", // demo | ble | ws
-    demo: true
+    units: cfg.units || "mph",
+    lastFixTs: 0,
+    lastLat: null,
+    lastLng: null
   };
 
   var els = {};
   function $(id) { return document.getElementById(id); }
 
   function cacheEls() {
-    els.speed = $("speedValue");
-    els.ring = $("speedRing");
-    els.range = $("rangeValue");
-    els.rangeBar = $("rangeBar");
-    els.soc = $("socValue");
-    els.socBar = $("socBar");
-    els.volt = $("voltValue");
-    els.power = $("powerValue");
-    els.motorTemp = $("motorTemp");
-    els.ctrlTemp = $("ctrlTemp");
-    els.odo = $("odoValue");
-    els.gear = $("gearValue");
-    els.state = $("stateValue");
-    els.connDot = $("connDot");
-    els.connLabel = $("connLabel");
-  }
-
-  function setConn(mode, ok) {
-    state.mode = mode;
-    els.connDot.className = "dot " + (ok ? "ok" : mode === "demo" ? "" : "err");
-    var labels = {
-      demo: "Demo · Votol EM150",
-      ble: ok ? "Votol EM150 · BLE" : "BLE disconnected",
-      ws: ok ? "Votol EM150 · WebSocket" : "WebSocket offline"
-    };
-    els.connLabel.textContent = labels[mode] || mode;
-  }
-
-    function applyTelemetry(partial) {
-    if (!partial) return;
-    Object.keys(partial).forEach(function (k) {
-      if (partial[k] != null && partial[k] !== "") state[k] = partial[k];
+    [
+      "speedValue", "speedUnit", "speedRing", "tripValue", "tripUnit",
+      "maxValue", "maxUnit", "avgValue", "avgUnit", "timeValue",
+      "headingValue", "altValue", "rangeValue", "rangeBar", "socValue",
+      "socBar", "odoValue", "odoUnit", "connDot", "connLabel", "ignLabel",
+      "ignHint", "gpsAcc", "btnIgnition", "btnUnits", "sourceValue"
+    ].forEach(function (id) {
+      els[id] = $(id);
     });
+  }
 
-    // Votol EM150: speed from RPM × tire circumference
-    if (partial.rpm != null && (partial.speed == null || partial.speed === "")) {
-      state.speed = window.PucaCan.rpmToMph(
-        Number(partial.rpm),
-        cfg.tireCircumferenceMm || 1640
-      );
+  function loadPersisted() {
+    try {
+      var o = parseFloat(localStorage.getItem(STORAGE.odo));
+      if (!isNaN(o) && o >= 0) state.odoMi = o;
+      var t = parseFloat(localStorage.getItem(STORAGE.trip));
+      if (!isNaN(t) && t >= 0) state.tripMi = t;
+      state.ignition = localStorage.getItem(STORAGE.ign) === "1";
+    } catch (e) {}
+  }
+
+  function saveOdo() {
+    try {
+      localStorage.setItem(STORAGE.odo, String(state.odoMi));
+      localStorage.setItem(STORAGE.trip, String(state.tripMi));
+    } catch (e) {}
+  }
+
+  function setIgnition(on) {
+    state.ignition = !!on;
+    var app = $("app");
+    var btn = els.btnIgnition;
+    if (app) {
+      app.classList.toggle("ignition-off", !state.ignition);
+      app.classList.toggle("ignition-on", state.ignition);
     }
-
-    // SOC from BMS if present; else estimate from 16S pack voltage
-    if (partial.soc == null && partial.voltage != null) {
-      var estSoc = window.PucaCan.socFromVoltage16s(Number(partial.voltage));
-      if (estSoc != null) state.soc = estSoc;
+    if (btn) {
+      btn.classList.toggle("on", state.ignition);
+      btn.setAttribute("aria-pressed", state.ignition ? "true" : "false");
     }
+    if (els.ignLabel) els.ignLabel.textContent = state.ignition ? "IGN ON" : "IGN OFF";
+    if (els.ignHint) {
+      els.ignHint.textContent = state.ignition
+        ? "Ignition on · GPS tracking active"
+        : "Turn ignition on to ride";
+    }
+    try { localStorage.setItem(STORAGE.ign, state.ignition ? "1" : "0"); } catch (e) {}
+  }
 
-    var estRange = window.PucaCan.estimateRangeMiles(
-      state.soc,
-      cfg.packKwh || 8.5,
-      cfg.whPerMile || 80
-    );
-    if (estRange != null && partial.range == null) state.range = estRange;
+  function toggleIgnition() {
+    setIgnition(!state.ignition);
+  }
 
-    render();
+  function unitSpeed(mph) {
+    return state.units === "kmh" ? mph * 1.60934 : mph;
+  }
+  function unitDist(mi) {
+    return state.units === "kmh" ? mi * 1.60934 : mi;
+  }
+  function speedLabel() { return state.units === "kmh" ? "km/h" : "mph"; }
+  function distLabel() { return state.units === "kmh" ? " km" : " mi"; }
+
+  function formatTime(ms) {
+    var s = Math.floor(ms / 1000);
+    var m = Math.floor(s / 60);
+    var h = Math.floor(m / 60);
+    s = s % 60;
+    m = m % 60;
+    if (h > 0) return h + ":" + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+    return m + ":" + String(s).padStart(2, "0");
+  }
+
+  function headingCardinal(deg) {
+    if (deg == null || isNaN(deg)) return "—";
+    var dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+    var i = Math.round(deg / 45) % 8;
+    return dirs[i] + " " + Math.round(deg) + "°";
+  }
+
+  function setGpsStatus(ok, accM) {
+    state.gpsOk = ok;
+    state.accuracyM = accM;
+    if (els.connDot) {
+      els.connDot.className = "dot " + (ok ? "ok" : "err");
+    }
+    if (els.connLabel) {
+      els.connLabel.textContent = ok ? "GPS locked" : "GPS searching…";
+    }
+    if (els.gpsAcc) {
+      if (ok && accM != null) {
+        els.gpsAcc.textContent = "GPS · ±" + Math.round(accM) + " m";
+      } else {
+        els.gpsAcc.textContent = "GPS · waiting for fix";
+      }
+    }
   }
 
   function render() {
-    var maxS = cfg.maxSpeedMph || 80;
-    var speed = Math.max(0, Number(state.speed) || 0);
-    els.speed.textContent = String(Math.round(speed));
-    // circumference ~ 2*pi*52 ≈ 326.73
-    var c = 326.73;
-    var pct = Math.min(1, speed / maxS);
-    els.ring.style.strokeDashoffset = String(c * (1 - pct));
+    var maxScale = cfg.maxSpeedMph || 80;
+    var displaySpeed = unitSpeed(state.speedMph);
+    var maxScaleDisplay = unitSpeed(maxScale);
 
-    var range = Math.max(0, Number(state.range) || 0);
-    els.range.textContent = range >= 100 ? String(Math.round(range)) : range.toFixed(1);
-    var rangePct = Math.min(100, (range / 120) * 100);
-    els.rangeBar.style.width = rangePct + "%";
+    if (els.speedValue) els.speedValue.textContent = String(Math.round(displaySpeed));
+    if (els.speedUnit) els.speedUnit.textContent = speedLabel();
+    if (els.btnUnits) els.btnUnits.textContent = speedLabel();
 
-    var soc = Math.max(0, Math.min(100, Number(state.soc) || 0));
-    els.soc.textContent = String(Math.round(soc));
-    els.socBar.style.width = soc + "%";
-    els.socBar.style.background = soc < 20 ? "var(--red)" : soc < 40 ? "#f5a524" : "var(--green)";
+    if (els.speedRing) {
+      var c = 326.73;
+      var pct = Math.min(1, state.speedMph / maxScale);
+      if (!state.ignition) pct = 0;
+      els.speedRing.style.strokeDashoffset = String(c * (1 - pct));
+    }
 
-    els.volt.textContent = (Number(state.voltage) || 0).toFixed(1);
-    var powerKw = ((Number(state.voltage) || 0) * (Number(state.current) || 0)) / 1000;
-    els.power.textContent = powerKw.toFixed(1);
+    if (els.tripValue) els.tripValue.textContent = unitDist(state.tripMi).toFixed(1);
+    if (els.tripUnit) els.tripUnit.textContent = distLabel();
+    if (els.maxValue) els.maxValue.textContent = String(Math.round(unitSpeed(state.maxMph)));
+    if (els.maxUnit) els.maxUnit.textContent = " " + speedLabel();
+    var avg = state.movingMs > 0 ? state.tripMi / (state.movingMs / 3600000) : 0;
+    if (els.avgValue) els.avgValue.textContent = String(Math.round(unitSpeed(avg)));
+    if (els.avgUnit) els.avgUnit.textContent = " " + speedLabel();
+    if (els.timeValue) els.timeValue.textContent = formatTime(state.tripMs);
 
-    els.motorTemp.textContent = state.motorTemp == null ? "—" : String(Math.round(state.motorTemp));
-    els.ctrlTemp.textContent = state.ctrlTemp == null ? "—" : String(Math.round(state.ctrlTemp));
-    els.odo.textContent = (Number(state.odo) || 0).toFixed(1);
-    if (els.gear) els.gear.textContent = state.gear || "—";
-    if (els.state) els.state.textContent = state.state || "—";
+    if (els.headingValue) els.headingValue.textContent = headingCardinal(state.heading);
+    if (els.altValue) {
+      els.altValue.textContent = state.altitudeFt == null ? "—" : String(Math.round(state.altitudeFt));
+    }
+
+    if (els.odoValue) els.odoValue.textContent = unitDist(state.odoMi).toFixed(1);
+    if (els.odoUnit) els.odoUnit.textContent = distLabel();
+
+    var soc = Math.max(0, Math.min(100, state.soc));
+    if (els.socValue) els.socValue.textContent = String(Math.round(soc));
+    if (els.socBar) {
+      els.socBar.style.width = soc + "%";
+      els.socBar.style.background = soc < 20 ? "var(--red)" : soc < 40 ? "#f5a524" : "var(--green)";
+    }
+    var range = Math.max(0, state.range);
+    if (els.rangeValue) els.rangeValue.textContent = range >= 100 ? String(Math.round(range)) : range.toFixed(1);
+    if (els.rangeBar) els.rangeBar.style.width = Math.min(100, (range / 120) * 100) + "%";
+
+    if (els.sourceValue) els.sourceValue.textContent = state.gpsOk ? "GPS" : "—";
   }
 
-  // ---- Demo telemetry ----
-  var demoTimer = null;
-  function startDemo() {
-    stopDemo();
-    state.demo = true;
-    setConn("demo", true);
-    var t0 = performance.now();
-    demoTimer = setInterval(function () {
-      var t = (performance.now() - t0) / 1000;
-      var speed = 35 + Math.sin(t * 0.35) * 28 + Math.sin(t * 1.1) * 4;
-      speed = Math.max(0, Math.min(72, speed));
-      var soc = 84 - (t * 0.01);
-      if (soc < 12) soc = 84;
-      var voltage = 58 + (soc / 100) * 8.5 - speed * 0.01;
-      var current = speed * 0.55 + Math.sin(t) * 8;
-      applyTelemetry({
-        speed: speed,
-        soc: soc,
-        voltage: voltage,
-        current: Math.max(0, current),
-        motorTemp: 38 + speed * 0.25,
-        ctrlTemp: 34 + speed * 0.12,
-        gear: speed < 5 ? "L" : speed < 35 ? "M" : speed < 55 ? "H" : "S",
-        state: speed < 1 ? "IDLE" : "RUN",
-        rpm: speed * 14.5,
-        odo: (Number(state.odo) || 0) + speed / 3600 * 0.25
-      });
-    }, 250);
-  }
-  function stopDemo() {
-    state.demo = false;
-    if (demoTimer) clearInterval(demoTimer);
-    demoTimer = null;
+  function haversineMi(lat1, lon1, lat2, lon2) {
+    var R = 3958.8;
+    var toRad = Math.PI / 180;
+    var dLat = (lat2 - lat1) * toRad;
+    var dLon = (lon2 - lon1) * toRad;
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * toRad) * Math.cos(lat2 * toRad) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return 2 * R * Math.asin(Math.sqrt(a));
   }
 
-  // ---- WebSocket CAN bridge ----
-  function connectWs() {
-    if (!cfg.wsUrl) return;
-    stopDemo();
-    try {
-      var ws = new WebSocket(cfg.wsUrl);
-      ws.binaryType = "arraybuffer";
-      setConn("ws", false);
-      ws.onopen = function () { setConn("ws", true); };
-      ws.onclose = function () { setConn("ws", false); };
-      ws.onerror = function () { setConn("ws", false); };
-      ws.onmessage = function (ev) {
-        applyTelemetry(window.PucaCan.parsePayload(ev.data));
-      };
-      window._pucaWs = ws;
-    } catch (e) {
-      console.warn(e);
-      setConn("ws", false);
+  var watchId = null;
+  var tripClock = null;
+
+  function onPosition(pos) {
+    var c = pos.coords;
+    var mph = (c.speed != null && !isNaN(c.speed)) ? c.speed * 2.236936 : 0;
+    if (mph < 0) mph = 0;
+    // Filter tiny GPS noise when stationary
+    if (mph < 0.8) mph = 0;
+
+    var now = Date.now();
+    var dt = state.lastFixTs ? (now - state.lastFixTs) / 1000 : 0;
+    state.lastFixTs = now;
+
+    if (state.ignition && dt > 0 && dt < 5) {
+      state.tripMs += dt * 1000;
+      if (mph > 0.8) state.movingMs += dt * 1000;
+    }
+
+    // Distance from speed integration when ignition on
+    if (state.ignition && mph > 0.8 && dt > 0 && dt < 5) {
+      var dMi = mph * (dt / 3600);
+      state.tripMi += dMi;
+      state.odoMi += dMi;
+      saveOdo();
+    } else if (state.ignition && state.lastLat != null && c.latitude != null && mph <= 0.8) {
+      // optional: no integration when stopped
+    }
+
+    state.speedMph = mph;
+    if (state.ignition && mph > state.maxMph) state.maxMph = mph;
+
+    if (c.heading != null && !isNaN(c.heading)) state.heading = c.heading;
+    if (c.altitude != null && !isNaN(c.altitude)) state.altitudeFt = c.altitude * 3.28084;
+
+    state.lastLat = c.latitude;
+    state.lastLng = c.longitude;
+
+    setGpsStatus(true, c.accuracy);
+    render();
+
+    // Maps marker
+    if (window._pucaMapMarker && c.latitude != null) {
+      var ll = { lat: c.latitude, lng: c.longitude };
+      window._pucaMapMarker.setPosition(ll);
+      if (window._pucaMapFollow) window._pucaMap.setCenter(ll);
     }
   }
 
-  // ---- Web Bluetooth CAN bridge ----
-  var bleChar = null;
-  function connectBle() {
-    if (!navigator.bluetooth) {
-      alert("Web Bluetooth is not available in this browser. Use Chrome on Android, or a WebSocket bridge.");
+  function onPositionError() {
+    setGpsStatus(false, null);
+    state.speedMph = 0;
+    render();
+  }
+
+  function startGps() {
+    if (!navigator.geolocation) {
+      setGpsStatus(false, null);
+      if (els.connLabel) els.connLabel.textContent = "No GPS on this device";
       return;
     }
-    stopDemo();
-    setConn("ble", false);
-    navigator.bluetooth.requestDevice({
-      acceptAllDevices: true,
-      optionalServices: (cfg.ble && cfg.ble.optionalServices) || []
-    }).then(function (device) {
-      return device.gatt.connect();
-    }).then(function (server) {
-      return server.getPrimaryServices();
-    }).then(function (services) {
-      // Prefer Nordic UART RX characteristic
-      var prefer = services.slice().sort(function (a, b) {
-        var as = a.uuid.indexOf("6e400001") >= 0 ? 0 : 1;
-        var bs = b.uuid.indexOf("6e400001") >= 0 ? 0 : 1;
-        return as - bs;
-      });
-      return prefer[0].getCharacteristics().then(function (chars) {
-        var notify = chars.filter(function (c) {
-          return c.properties.notify || c.properties.indicate;
-        })[0];
-        if (!notify) throw new Error("No notify characteristic on bridge");
-        bleChar = notify;
-        return notify.startNotifications();
-      });
-    }).then(function () {
-      setConn("ble", true);
-      bleChar.addEventListener("characteristicvaluechanged", function (ev) {
-        var value = ev.target.value;
-        var bytes = new Uint8Array(value.buffer);
-        // try text decode first
-        var text = "";
-        try { text = new TextDecoder().decode(bytes); } catch (e) {}
-        if (text && (text[0] === "{" || /[0-9A-Fa-f]{2}/.test(text))) {
-          applyTelemetry(window.PucaCan.parsePayload(text));
-        } else {
-          applyTelemetry(window.PucaCan.parsePayload(bytes.buffer));
-        }
-      });
-    }).catch(function (err) {
-      console.warn(err);
-      setConn("ble", false);
-      if (String(err).indexOf("User cancelled") < 0 && String(err).indexOf("cancel") < 0) {
-        alert("BLE connect failed: " + err.message);
-      }
+    if (watchId != null) return;
+    watchId = navigator.geolocation.watchPosition(onPosition, onPositionError, {
+      enableHighAccuracy: true,
+      maximumAge: 500,
+      timeout: 15000
     });
   }
 
+  function resetTrip() {
+    state.tripMi = 0;
+    state.tripMs = 0;
+    state.movingMs = 0;
+    state.maxMph = 0;
+    saveOdo();
+    render();
+  }
+
+  function toggleUnits() {
+    state.units = state.units === "mph" ? "kmh" : "mph";
+    render();
+  }
+
   // ---- Google Maps ----
-  var map, marker;
   window.initPucaMap = function () {
     var el = $("map");
     if (!el || !window.google) return;
-    map = new google.maps.Map(el, {
+    window._pucaMap = new google.maps.Map(el, {
       center: { lat: 40.7128, lng: -74.006 },
-      zoom: 14,
+      zoom: 15,
       disableDefaultUI: true,
       zoomControl: true,
-      mapTypeControl: false,
-      streetViewControl: false,
-      fullscreenControl: false,
       styles: [
         { elementType: "geometry", stylers: [{ color: "#1a1f2b" }] },
         { elementType: "labels.text.stroke", stylers: [{ color: "#0b0f19" }] },
@@ -237,7 +286,8 @@
         { featureType: "poi", stylers: [{ visibility: "off" }] }
       ]
     });
-    marker = new google.maps.Marker({ map: map, title: "Puca" });
+    window._pucaMapMarker = new google.maps.Marker({ map: window._pucaMap, title: "Puca" });
+    window._pucaMapFollow = true;
     locate();
   };
 
@@ -245,28 +295,30 @@
     if (!navigator.geolocation) return;
     navigator.geolocation.getCurrentPosition(function (pos) {
       var ll = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-      if (map) {
-        map.setCenter(ll);
-        map.setZoom(15);
-        if (marker) marker.setPosition(ll);
+      if (window._pucaMap) {
+        window._pucaMap.setCenter(ll);
+        window._pucaMap.setZoom(16);
+        if (window._pucaMapMarker) window._pucaMapMarker.setPosition(ll);
       }
     }, function () {}, { enableHighAccuracy: true, timeout: 8000 });
   }
 
   function boot() {
     cacheEls();
-    $("btnBle").addEventListener("click", connectBle);
-    $("btnDemo").addEventListener("click", function () {
-      if (state.demo) {
-        stopDemo();
-        setConn("demo", false);
-        els.connLabel.textContent = "Paused";
-      } else startDemo();
-    });
-    $("btnLocate").addEventListener("click", locate);
-    if (cfg.wsUrl) connectWs();
-    else startDemo();
+    loadPersisted();
+    setIgnition(state.ignition);
     render();
+    startGps();
+
+    if (els.btnIgnition) els.btnIgnition.addEventListener("click", toggleIgnition);
+    if ($("btnResetTrip")) $("btnResetTrip").addEventListener("click", resetTrip);
+    if (els.btnUnits) els.btnUnits.addEventListener("click", toggleUnits);
+    if ($("btnLocate")) $("btnLocate").addEventListener("click", locate);
+
+    // Keep trip clock updating time display while ignition on even between GPS ticks
+    tripClock = setInterval(function () {
+      if (state.ignition && state.gpsOk) render();
+    }, 1000);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
