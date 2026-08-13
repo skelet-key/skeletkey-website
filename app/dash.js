@@ -587,9 +587,11 @@
       if (window._pucaMap) return; // already init
 
       window._pucaMap = L.map(el, {
-        zoomControl: true,
+        zoomControl: false,
         attributionControl: true
       }).setView([40.7128, -74.006], 15);
+
+      L.control.zoom({ position: "topright" }).addTo(window._pucaMap);
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
