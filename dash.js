@@ -4,7 +4,10 @@
   var STORAGE = {
     odo: "sk_puca_odo_mi",
     trip: "sk_puca_trip_mi",
-    ign: "sk_puca_ignition"
+    ign: "sk_puca_ignition",
+    lastLat: "sk_puca_last_lat",
+    lastLng: "sk_puca_last_lng",
+    lastLocTs: "sk_puca_last_loc_ts"
   };
 
   var state = {
@@ -26,7 +29,9 @@
     lastLat: null,
     lastLng: null,
     bleConnected: false,
-    bleName: null
+    bleName: null,
+    locationSource: null, // gps | network | cache | ip | map
+    geoWatchId: null
   };
 
   // BLE Nordic UART handles
@@ -264,22 +269,88 @@
     return dirs[i] + " " + Math.round(deg) + "°";
   }
 
-  function setGpsStatus(ok, accM) {
+  function setGpsStatus(ok, accM, source) {
     state.gpsOk = ok;
     state.accuracyM = accM;
+    if (source) state.locationSource = source;
+    var src = state.locationSource || "gps";
+    var label = {
+      gps: "GPS",
+      network: "Network",
+      cache: "Cached",
+      ip: "IP approx",
+      map: "Map"
+    }[src] || "GPS";
+
     if (els.connDot) {
       els.connDot.className = "dot " + (ok ? "ok" : "err");
     }
     if (els.connLabel) {
-      els.connLabel.textContent = ok ? "GPS locked" : "GPS searching…";
+      if (ok) {
+        els.connLabel.textContent = src === "gps" ? "GPS locked" : (label + " · fix");
+      } else {
+        els.connLabel.textContent = "GPS searching…";
+      }
     }
     if (els.gpsAcc) {
       if (ok && accM != null) {
-        els.gpsAcc.textContent = "GPS · ±" + Math.round(accM) + " m";
+        els.gpsAcc.textContent = label + " · ±" + Math.round(accM) + " m";
+      } else if (ok) {
+        els.gpsAcc.textContent = label + " · ready";
       } else {
-        els.gpsAcc.textContent = "GPS · waiting for fix";
+        els.gpsAcc.textContent = "Location · waiting…";
       }
     }
+  }
+
+  function persistLastLocation(lat, lng) {
+    try {
+      localStorage.setItem(STORAGE.lastLat, String(lat));
+      localStorage.setItem(STORAGE.lastLng, String(lng));
+      localStorage.setItem(STORAGE.lastLocTs, String(Date.now()));
+    } catch (e) {}
+  }
+
+  function loadCachedLocation() {
+    try {
+      var lat = parseFloat(localStorage.getItem(STORAGE.lastLat));
+      var lng = parseFloat(localStorage.getItem(STORAGE.lastLng));
+      var ts = parseInt(localStorage.getItem(STORAGE.lastLocTs) || "0", 10);
+      if (isNaN(lat) || isNaN(lng)) return null;
+      // Cache valid for 24h
+      if (Date.now() - ts > 24 * 60 * 60 * 1000) return null;
+      return { lat: lat, lng: lng, ts: ts };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function applyLocation(lat, lng, accM, source) {
+    state.lastLat = lat;
+    state.lastLng = lng;
+    setGpsStatus(true, accM != null ? accM : (source === "ip" ? 5000 : 100), source);
+    if (source === "gps" || source === "network") persistLastLocation(lat, lng);
+    if (window._pucaMap && window._pucaMapMarker) {
+      var ll = [lat, lng];
+      window._pucaMapMarker.setLatLng(ll);
+      if (window._pucaMapFollow) {
+        window._pucaMap.setView(ll, Math.max(window._pucaMap.getZoom(), 14), { animate: true });
+      }
+    }
+  }
+
+  function ipGeolocate() {
+    // Free HTTPS IP geolocation — city-level only (~1–50 km)
+    return fetch("https://ipwho.is/", { signal: AbortSignal.timeout ? AbortSignal.timeout(6000) : undefined })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || data.success === false || data.latitude == null) throw new Error("IP geo failed");
+        return {
+          lat: Number(data.latitude),
+          lng: Number(data.longitude),
+          accuracy: 8000
+        };
+      });
   }
 
   function render() {
@@ -362,8 +433,11 @@
 
     state.lastLat = c.latitude;
     state.lastLng = c.longitude;
+    persistLastLocation(c.latitude, c.longitude);
 
-    setGpsStatus(true, c.accuracy);
+    // accuracy < 100m → treat as GPS; coarser → network
+    var src = (c.accuracy != null && c.accuracy <= 100) ? "gps" : "network";
+    setGpsStatus(true, c.accuracy, src);
     render();
 
     if (window._pucaMap && c.latitude != null) {
@@ -373,23 +447,101 @@
     }
   }
 
-  function onPositionError() {
-    setGpsStatus(false, null);
+  function onPositionError(err) {
     state.speedMph = 0;
+    var code = err && err.code;
+    // 1 PERMISSION_DENIED  2 POSITION_UNAVAILABLE  3 TIMEOUT
+    if (code === 1) {
+      setGpsStatus(false, null);
+      if (els.connLabel) els.connLabel.textContent = "Location denied";
+      if (els.gpsAcc) els.gpsAcc.textContent = "Allow location or use IP/map";
+      // Fall back to cache → IP
+      fallbackLocationChain();
+    } else if (code === 3) {
+      // Timeout — try low-accuracy single shot, then IP
+      if (els.gpsAcc) els.gpsAcc.textContent = "GPS timeout · trying network…";
+      tryLowAccuracyFix().then(function (ok) {
+        if (!ok) fallbackLocationChain();
+      });
+    } else {
+      setGpsStatus(false, null);
+      fallbackLocationChain();
+    }
     render();
   }
 
+  function tryLowAccuracyFix() {
+    return new Promise(function (resolve) {
+      if (!navigator.geolocation) {
+        resolve(false);
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          var c = pos.coords;
+          applyLocation(c.latitude, c.longitude, c.accuracy, "network");
+          render();
+          resolve(true);
+        },
+        function () { resolve(false); },
+        { enableHighAccuracy: false, maximumAge: 60000, timeout: 10000 }
+      );
+    });
+  }
+
+  function fallbackLocationChain() {
+    var cached = loadCachedLocation();
+    if (cached) {
+      applyLocation(cached.lat, cached.lng, 200, "cache");
+      render();
+    }
+    ipGeolocate()
+      .then(function (pos) {
+        // Don't overwrite a fresh GPS fix
+        if (state.locationSource === "gps") return;
+        applyLocation(pos.lat, pos.lng, pos.accuracy, "ip");
+        render();
+      })
+      .catch(function () {
+        if (!state.lastLat && els.gpsAcc) {
+          els.gpsAcc.textContent = "Tap My location or pan map";
+        }
+      });
+  }
+
   function startGps() {
+    // 1) Instant UX from cache
+    var cached = loadCachedLocation();
+    if (cached) {
+      applyLocation(cached.lat, cached.lng, 150, "cache");
+    }
+
     if (!navigator.geolocation) {
-      setGpsStatus(false, null);
-      if (els.connLabel) els.connLabel.textContent = "No GPS on this device";
+      if (els.connLabel) els.connLabel.textContent = "No geolocation API";
+      fallbackLocationChain();
       return;
     }
-    navigator.geolocation.watchPosition(onPosition, onPositionError, {
-      enableHighAccuracy: true,
-      maximumAge: 500,
-      timeout: 15000
-    });
+
+    // 2) High-accuracy watch for riding
+    try {
+      state.geoWatchId = navigator.geolocation.watchPosition(onPosition, onPositionError, {
+        enableHighAccuracy: true,
+        maximumAge: 1000,
+        timeout: 20000
+      });
+    } catch (e) {
+      console.warn(e);
+    }
+
+    // 3) Parallel: quick low-accuracy fix if still no live lock after 3s
+    setTimeout(function () {
+      if (state.locationSource === "gps") return;
+      tryLowAccuracyFix().then(function (ok) {
+        if (!ok && state.locationSource !== "gps" && state.locationSource !== "network") {
+          fallbackLocationChain();
+        }
+      });
+    }, 3000);
   }
 
   function resetTrip() {
@@ -448,42 +600,191 @@
   };
 
   function locate() {
-    if (!navigator.geolocation) return;
-    navigator.geolocation.getCurrentPosition(function (pos) {
-      var ll = [pos.coords.latitude, pos.coords.longitude];
-      if (window._pucaMap) {
-        window._pucaMap.setView(ll, 16);
-        if (window._pucaMapMarker) window._pucaMapMarker.setLatLng(ll);
-      }
-      state.lastLat = pos.coords.latitude;
-      state.lastLng = pos.coords.longitude;
-    }, function (err) {
-      console.warn("locate", err);
-    }, { enableHighAccuracy: true, timeout: 8000 });
+    window._pucaMapFollow = true;
+    var done = function (lat, lng, acc, src) {
+      applyLocation(lat, lng, acc, src);
+      if (window._pucaMap) window._pucaMap.setView([lat, lng], 16);
+      render();
+    };
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          var c = pos.coords;
+          var src = (c.accuracy != null && c.accuracy <= 100) ? "gps" : "network";
+          done(c.latitude, c.longitude, c.accuracy, src);
+        },
+        function (err) {
+          console.warn("locate", err);
+          // low accuracy retry
+          navigator.geolocation.getCurrentPosition(
+            function (pos) {
+              done(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy, "network");
+            },
+            function () {
+              ipGeolocate()
+                .then(function (p) { done(p.lat, p.lng, p.accuracy, "ip"); })
+                .catch(function () {
+                  var c = loadCachedLocation();
+                  if (c) done(c.lat, c.lng, 200, "cache");
+                  else if (els.gpsAcc) els.gpsAcc.textContent = "Location unavailable — pan map";
+                });
+            },
+            { enableHighAccuracy: false, maximumAge: 60000, timeout: 8000 }
+          );
+        },
+        { enableHighAccuracy: true, maximumAge: 0, timeout: 12000 }
+      );
+    } else {
+      ipGeolocate()
+        .then(function (p) { done(p.lat, p.lng, p.accuracy, "ip"); })
+        .catch(function () {
+          if (els.gpsAcc) els.gpsAcc.textContent = "Location unavailable — pan map";
+        });
+    }
   }
 
-  function openNavigator() {
+  var routeLayer = null;
+  var destMarker = null;
+  var destLatLng = null;
+
+  function clearRoute() {
+    try {
+      if (routeLayer && window._pucaMap) window._pucaMap.removeLayer(routeLayer);
+      if (destMarker && window._pucaMap) window._pucaMap.removeLayer(destMarker);
+    } catch (e) {}
+    routeLayer = null;
+    destMarker = null;
+    destLatLng = null;
+    var nh = $("navHint");
+    if (nh) nh.textContent = "OpenStreetMap · live GPS";
+    var bc = $("btnClearRoute");
+    if (bc) bc.style.display = "none";
+  }
+
+  function formatKm(m) {
+    if (m >= 1000) return (m / 1609.344).toFixed(1) + " mi";
+    return Math.round(m * 3.28084) + " ft";
+  }
+
+  function formatEta(sec) {
+    var m = Math.round(sec / 60);
+    if (m < 60) return m + " min";
+    return Math.floor(m / 60) + "h " + (m % 60) + "m";
+  }
+
+  function drawRouteTo(destLat, destLng) {
     var lat = state.lastLat;
     var lng = state.lastLng;
     if (lat == null || lng == null) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (pos) {
-          state.lastLat = pos.coords.latitude;
-          state.lastLng = pos.coords.longitude;
-          openNavigator();
-        }, function () {
-          alert("Need a GPS fix before navigation");
-        }, { enableHighAccuracy: true, timeout: 8000 });
+      var o = getNavOrigin();
+      if (o) {
+        lat = o.lat;
+        lng = o.lng;
+        state.lastLat = lat;
+        state.lastLng = lng;
       } else {
-        alert("Need a GPS fix before navigation");
+        if (nh) nh.textContent = "Pan map / allow location, then Navigate";
+        return;
       }
+    }
+    destLatLng = [destLat, destLng];
+    var nh = $("navHint");
+    if (nh) nh.textContent = "Routing…";
+
+    var url = "https://router.project-osrm.org/route/v1/driving/" +
+      lng + "," + lat + ";" + destLng + "," + destLat +
+      "?overview=full&geometries=geojson&steps=true";
+
+    fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error("OSRM " + r.status);
+        return r.json();
+      })
+      .then(function (data) {
+        if (!data.routes || !data.routes.length) throw new Error("No route");
+        var route = data.routes[0];
+        var coords = route.geometry.coordinates.map(function (c) {
+          return [c[1], c[0]];
+        });
+
+        if (routeLayer && window._pucaMap) window._pucaMap.removeLayer(routeLayer);
+        if (destMarker && window._pucaMap) window._pucaMap.removeLayer(destMarker);
+
+        routeLayer = L.polyline(coords, {
+          color: "#3dd68c",
+          weight: 5,
+          opacity: 0.9
+        }).addTo(window._pucaMap);
+
+        destMarker = L.circleMarker(destLatLng, {
+          radius: 9,
+          color: "#ff6b7a",
+          fillColor: "#ff6b7a",
+          fillOpacity: 0.95,
+          weight: 2
+        }).addTo(window._pucaMap).bindPopup("Destination");
+
+        window._pucaMap.fitBounds(routeLayer.getBounds(), { padding: [40, 40] });
+        window._pucaMapFollow = false;
+
+        if (nh) {
+          nh.textContent = formatKm(route.distance) + " · " + formatEta(route.duration) + " · tap map to change dest";
+        }
+        var bc = $("btnClearRoute");
+        if (bc) bc.style.display = "";
+      })
+      .catch(function (err) {
+        console.warn(err);
+        if (nh) nh.textContent = "Routing failed · tap map to retry";
+        alert("Could not get a route. Check connection and try again.");
+      });
+  }
+
+  function getNavOrigin() {
+    if (state.lastLat != null && state.lastLng != null) {
+      return { lat: state.lastLat, lng: state.lastLng, source: "gps" };
+    }
+    try {
+      if (window._pucaMapMarker) {
+        var ll = window._pucaMapMarker.getLatLng();
+        if (ll) return { lat: ll.lat, lng: ll.lng, source: "marker" };
+      }
+    } catch (e) {}
+    try {
+      if (window._pucaMap) {
+        var c = window._pucaMap.getCenter();
+        if (c) return { lat: c.lat, lng: c.lng, source: "map" };
+      }
+    } catch (e2) {}
+    return null;
+  }
+
+  function openNavigator() {
+    var nh = $("navHint");
+    if (!window._pucaMap) {
+      alert("Map not ready");
       return;
     }
-    // OpenStreetMap directions (destination can be set by user in OSM UI)
-    var url = "https://www.openstreetmap.org/directions?from=" +
-      encodeURIComponent(lat + "," + lng) +
-      "#map=15/" + lat + "/" + lng;
-    window.open(url, "_blank", "noopener,noreferrer");
+    // Try to improve GPS in background; don't block navigation
+    if (state.lastLat == null) locate();
+
+    window._pucaMapFollow = false;
+    if (nh) nh.textContent = "Tap the map to set destination";
+
+    window._pucaMap.once("click", function (e) {
+      var origin = getNavOrigin();
+      if (!origin) {
+        // Last resort: use click point as origin too (user can pan first)
+        origin = { lat: e.latlng.lat, lng: e.latlng.lng, source: "tap" };
+      }
+      // Stash origin into state so drawRouteTo can use it
+      if (state.lastLat == null) {
+        state.lastLat = origin.lat;
+        state.lastLng = origin.lng;
+      }
+      drawRouteTo(e.latlng.lat, e.latlng.lng);
+    });
   }
 
   function boot() {
@@ -499,6 +800,7 @@
     if (els.btnUnits) els.btnUnits.addEventListener("click", toggleUnits);
     if ($("btnLocate")) $("btnLocate").addEventListener("click", locate);
     if ($("btnNavigate")) $("btnNavigate").addEventListener("click", openNavigator);
+    if ($("btnClearRoute")) $("btnClearRoute").addEventListener("click", clearRoute);
     if (els.btnBle) els.btnBle.addEventListener("click", connectBle);
 
     setInterval(function () {
