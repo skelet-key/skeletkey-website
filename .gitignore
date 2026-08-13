@@ -7,3 +7,6 @@ assets/maps-key.js
 
 app/config.local.js
 **/config.local.js
+
+.wrangler/
+fix-navigate.ps1
