@@ -798,7 +798,7 @@
     if ($("btnResetTrip")) $("btnResetTrip").addEventListener("click", resetTrip);
     if (els.btnUnits) els.btnUnits.addEventListener("click", toggleUnits);
     if ($("btnLocate")) $("btnLocate").addEventListener("click", locate);
-    // Navigate bound by index.html inline override (prevents stale window.open)
+    // Navigate bound by index.html inline override (prevents stale /*disabled*/void)
     // if ($("btnNavigate")) $("btnNavigate").addEventListener("click", openNavigator);
     if ($("btnClearRoute")) $("btnClearRoute").addEventListener("click", clearRoute);
     if (els.btnBle) els.btnBle.addEventListener("click", connectBle);
