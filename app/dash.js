@@ -340,16 +340,22 @@
   }
 
   function ipGeolocate() {
-    // Free HTTPS IP geolocation — city-level only (~1–50 km)
-    return fetch("https://ipwho.is/", { signal: AbortSignal.timeout ? AbortSignal.timeout(6000) : undefined })
+    // Primary IP provider, then fallback provider — city-level (~1–50 km)
+    function parseWhois(data) {
+      if (!data || data.success === false || data.latitude == null) throw new Error("ipwho failed");
+      return { lat: Number(data.latitude), lng: Number(data.longitude), accuracy: 8000 };
+    }
+    function parseIpapi(data) {
+      if (!data || data.latitude == null || data.error) throw new Error("ipapi failed");
+      return { lat: Number(data.latitude), lng: Number(data.longitude), accuracy: 10000 };
+    }
+    return fetch("https://ipwho.is/")
       .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (!data || data.success === false || data.latitude == null) throw new Error("IP geo failed");
-        return {
-          lat: Number(data.latitude),
-          lng: Number(data.longitude),
-          accuracy: 8000
-        };
+      .then(parseWhois)
+      .catch(function () {
+        return fetch("https://ipapi.co/json/")
+          .then(function (r) { return r.json(); })
+          .then(parseIpapi);
       });
   }
 
@@ -510,38 +516,48 @@
   }
 
   function startGps() {
-    // 1) Instant UX from cache
+    // Primary: IP geolocation (no browser permission prompt)
+    if (els.connLabel) els.connLabel.textContent = "IP locating…";
+    if (els.gpsAcc) els.gpsAcc.textContent = "IP geolocation…";
+
     var cached = loadCachedLocation();
     if (cached) {
       applyLocation(cached.lat, cached.lng, 150, "cache");
+      render();
     }
 
-    if (!navigator.geolocation) {
-      if (els.connLabel) els.connLabel.textContent = "No geolocation API";
-      fallbackLocationChain();
-      return;
-    }
-
-    // 2) High-accuracy watch for riding
-    try {
-      state.geoWatchId = navigator.geolocation.watchPosition(onPosition, onPositionError, {
-        enableHighAccuracy: true,
-        maximumAge: 1000,
-        timeout: 20000
-      });
-    } catch (e) {
-      console.warn(e);
-    }
-
-    // 3) Parallel: quick low-accuracy fix if still no live lock after 3s
-    setTimeout(function () {
-      if (state.locationSource === "gps") return;
-      tryLowAccuracyFix().then(function (ok) {
-        if (!ok && state.locationSource !== "gps" && state.locationSource !== "network") {
-          fallbackLocationChain();
+    ipGeolocate()
+      .then(function (pos) {
+        applyLocation(pos.lat, pos.lng, pos.accuracy, "ip");
+        persistLastLocation(pos.lat, pos.lng);
+        render();
+        if (els.connLabel) els.connLabel.textContent = "IP · approx";
+        if (els.gpsAcc) els.gpsAcc.textContent = "IP · ±" + Math.round(pos.accuracy / 1000) + " km";
+      })
+      .catch(function (err) {
+        console.warn("IP geo", err);
+        if (!state.lastLat) {
+          setGpsStatus(false, null);
+          if (els.connLabel) els.connLabel.textContent = "IP failed";
+          if (els.gpsAcc) els.gpsAcc.textContent = "Pan map or try My location";
         }
       });
-    }, 3000);
+
+    // Optional: browser GPS only upgrades accuracy if user already granted
+    // Does not prompt aggressively — used for speed when available
+    if (navigator.geolocation && navigator.permissions) {
+      try {
+        navigator.permissions.query({ name: "geolocation" }).then(function (res) {
+          if (res.state === "granted") {
+            state.geoWatchId = navigator.geolocation.watchPosition(onPosition, onPositionError, {
+              enableHighAccuracy: true,
+              maximumAge: 1000,
+              timeout: 20000
+            });
+          }
+        }).catch(function () {});
+      } catch (e) {}
+    }
   }
 
   function resetTrip() {
@@ -601,47 +617,29 @@
 
   function locate() {
     window._pucaMapFollow = true;
-    var done = function (lat, lng, acc, src) {
-      applyLocation(lat, lng, acc, src);
-      if (window._pucaMap) window._pucaMap.setView([lat, lng], 16);
-      render();
-    };
+    if (els.gpsAcc) els.gpsAcc.textContent = "IP geolocation…";
+    if (els.connLabel) els.connLabel.textContent = "IP locating…";
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function (pos) {
-          var c = pos.coords;
-          var src = (c.accuracy != null && c.accuracy <= 100) ? "gps" : "network";
-          done(c.latitude, c.longitude, c.accuracy, src);
-        },
-        function (err) {
-          console.warn("locate", err);
-          // low accuracy retry
-          navigator.geolocation.getCurrentPosition(
-            function (pos) {
-              done(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy, "network");
-            },
-            function () {
-              ipGeolocate()
-                .then(function (p) { done(p.lat, p.lng, p.accuracy, "ip"); })
-                .catch(function () {
-                  var c = loadCachedLocation();
-                  if (c) done(c.lat, c.lng, 200, "cache");
-                  else if (els.gpsAcc) els.gpsAcc.textContent = "Location unavailable — pan map";
-                });
-            },
-            { enableHighAccuracy: false, maximumAge: 60000, timeout: 8000 }
-          );
-        },
-        { enableHighAccuracy: true, maximumAge: 0, timeout: 12000 }
-      );
-    } else {
-      ipGeolocate()
-        .then(function (p) { done(p.lat, p.lng, p.accuracy, "ip"); })
-        .catch(function () {
-          if (els.gpsAcc) els.gpsAcc.textContent = "Location unavailable — pan map";
-        });
-    }
+    ipGeolocate()
+      .then(function (pos) {
+        applyLocation(pos.lat, pos.lng, pos.accuracy, "ip");
+        persistLastLocation(pos.lat, pos.lng);
+        if (window._pucaMap) window._pucaMap.setView([pos.lat, pos.lng], 12);
+        render();
+        if (els.connLabel) els.connLabel.textContent = "IP · approx";
+        if (els.gpsAcc) els.gpsAcc.textContent = "IP · ±" + Math.round(pos.accuracy / 1000) + " km";
+      })
+      .catch(function (err) {
+        console.warn("locate IP", err);
+        var c = loadCachedLocation();
+        if (c) {
+          applyLocation(c.lat, c.lng, 200, "cache");
+          if (window._pucaMap) window._pucaMap.setView([c.lat, c.lng], 12);
+          render();
+        } else if (els.gpsAcc) {
+          els.gpsAcc.textContent = "IP failed — pan map to set origin";
+        }
+      });
   }
 
   var routeLayer = null;
@@ -788,6 +786,7 @@
   }
 
   function boot() {
+    window.state = state;
     cacheEls();
     loadPersisted();
     setIgnition(false);
@@ -799,7 +798,8 @@
     if ($("btnResetTrip")) $("btnResetTrip").addEventListener("click", resetTrip);
     if (els.btnUnits) els.btnUnits.addEventListener("click", toggleUnits);
     if ($("btnLocate")) $("btnLocate").addEventListener("click", locate);
-    if ($("btnNavigate")) $("btnNavigate").addEventListener("click", openNavigator);
+    // Navigate bound by index.html inline override (prevents stale window.open)
+    // if ($("btnNavigate")) $("btnNavigate").addEventListener("click", openNavigator);
     if ($("btnClearRoute")) $("btnClearRoute").addEventListener("click", clearRoute);
     if (els.btnBle) els.btnBle.addEventListener("click", connectBle);
 

@@ -130,18 +130,149 @@
     </p>
   </div>
 
-  <script src="config.js?v=20260812geo"></script>
+  <script src="config.js?v=ipgeo1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="dash.js?v=20260812geo"></script>
+  <script src="dash.js?v=ipgeo1"></script>
   <script>
-    // OSM + Leaflet — no Google key required
-    document.addEventListener("DOMContentLoaded", function () {
-      if (typeof window.initPucaMap === "function") window.initPucaMap();
-    });
-    // Also run if dash.js already loaded
-    if (document.readyState !== "loading" && typeof window.initPucaMap === "function") {
-      window.initPucaMap();
+  (function () {
+    // Hard override: in-app Navigate only (ignores any old window.open handlers)
+    function bindNavigate() {
+      var btn = document.getElementById("btnNavigate");
+      if (!btn) return;
+      var clone = btn.cloneNode(true);
+      btn.parentNode.replaceChild(clone, btn);
+      clone.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+        startInAppNav();
+      });
     }
+
+    function getOrigin() {
+      if (window.state && state.lastLat != null) {
+        return { lat: state.lastLat, lng: state.lastLng };
+      }
+      try {
+        if (window._pucaMapMarker) {
+          var ll = window._pucaMapMarker.getLatLng();
+          return { lat: ll.lat, lng: ll.lng };
+        }
+      } catch (e) {}
+      try {
+        if (window._pucaMap) {
+          var c = window._pucaMap.getCenter();
+          return { lat: c.lat, lng: c.lng };
+        }
+      } catch (e2) {}
+      return null;
+    }
+
+    function startInAppNav() {
+      var nh = document.getElementById("navHint");
+      if (!window._pucaMap || typeof L === "undefined") {
+        alert("Map not ready");
+        return;
+      }
+      window._pucaMapFollow = false;
+      if (nh) nh.textContent = "Tap the map to set destination";
+
+      window._pucaMap.once("click", function (e) {
+        var origin = getOrigin();
+        if (!origin) {
+          origin = { lat: e.latlng.lat, lng: e.latlng.lng };
+        }
+        if (window.state) {
+          if (state.lastLat == null) {
+            state.lastLat = origin.lat;
+            state.lastLng = origin.lng;
+          }
+        }
+        routeInApp(origin.lat, origin.lng, e.latlng.lat, e.latlng.lng);
+      });
+    }
+
+    function routeInApp(olat, olng, dlat, dlng) {
+      var nh = document.getElementById("navHint");
+      if (nh) nh.textContent = "Routing…";
+      var url = "https://router.project-osrm.org/route/v1/driving/" +
+        olng + "," + olat + ";" + dlng + "," + dlat +
+        "?overview=full&geometries=geojson";
+
+      fetch(url)
+        .then(function (r) {
+          if (!r.ok) throw new Error("OSRM " + r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          if (!data.routes || !data.routes.length) throw new Error("No route");
+          var route = data.routes[0];
+          var coords = route.geometry.coordinates.map(function (c) {
+            return [c[1], c[0]];
+          });
+
+          if (window._pucaRouteLayer) {
+            try { window._pucaMap.removeLayer(window._pucaRouteLayer); } catch (e) {}
+          }
+          if (window._pucaDestMarker) {
+            try { window._pucaMap.removeLayer(window._pucaDestMarker); } catch (e) {}
+          }
+
+          window._pucaRouteLayer = L.polyline(coords, {
+            color: "#3dd68c",
+            weight: 5,
+            opacity: 0.9
+          }).addTo(window._pucaMap);
+
+          window._pucaDestMarker = L.circleMarker([dlat, dlng], {
+            radius: 9,
+            color: "#ff6b7a",
+            fillColor: "#ff6b7a",
+            fillOpacity: 0.95,
+            weight: 2
+          }).addTo(window._pucaMap);
+
+          window._pucaMap.fitBounds(window._pucaRouteLayer.getBounds(), { padding: [40, 40] });
+
+          var mi = (route.distance / 1609.344).toFixed(1);
+          var mins = Math.round(route.duration / 60);
+          if (nh) nh.textContent = mi + " mi · " + mins + " min · in-app route";
+
+          var bc = document.getElementById("btnClearRoute");
+          if (bc) {
+            bc.style.display = "";
+            bc.onclick = function () {
+              try {
+                if (window._pucaRouteLayer) window._pucaMap.removeLayer(window._pucaRouteLayer);
+                if (window._pucaDestMarker) window._pucaMap.removeLayer(window._pucaDestMarker);
+              } catch (e) {}
+              window._pucaRouteLayer = null;
+              window._pucaDestMarker = null;
+              bc.style.display = "none";
+              if (nh) nh.textContent = "OpenStreetMap · live GPS";
+            };
+          }
+        })
+        .catch(function (err) {
+          console.warn(err);
+          if (nh) nh.textContent = "Routing failed — try again";
+        });
+    }
+
+    // Bind now and after short delay (dash.js may rebind)
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", function () {
+        bindNavigate();
+        setTimeout(bindNavigate, 500);
+      });
+    } else {
+      bindNavigate();
+      setTimeout(bindNavigate, 500);
+    }
+
+    if (typeof window.initPucaMap === "function") {
+      try { window.initPucaMap(); } catch (e) {}
+    }
+  })();
   </script>
 
 </body>
