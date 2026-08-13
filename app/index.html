@@ -113,6 +113,10 @@
       </section>
 
       <section class="map-pane" aria-label="Navigation">
+        <div class="map-search-wrap">
+          <input type="text" id="mapSearch" class="map-search" placeholder="Search destination…" autocomplete="off" enterkeyhint="search" />
+          <ul id="mapSearchResults" class="map-search-results" hidden></ul>
+        </div>
         <div id="map" class="map"></div>
         <div class="map-overlay">
           <button type="button" class="btn-map" id="btnLocate">My location</button>
@@ -130,9 +134,9 @@
     </p>
   </div>
 
-  <script src="config.js?v=nuk1"></script>
+  <script src="config.js?v=search1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="dash.js?v=nuk1"></script>
+  <script src="dash.js?v=search1"></script>
   <script>
   (function () {
     // Hard override: in-app Navigate only (ignores any old /*open blocked*/void handlers)
@@ -274,6 +278,205 @@
     }
   })();
   </script>
+
+
+<script>
+(function () {
+  var searchInput = null;
+  var resultsEl = null;
+  var debounceTimer = null;
+  var followWhileNav = false;
+
+  function $(id) { return document.getElementById(id); }
+
+  function getOrigin() {
+    if (window.state && state.lastLat != null) return { lat: state.lastLat, lng: state.lastLng };
+    try {
+      if (window._pucaMapMarker) {
+        var ll = window._pucaMapMarker.getLatLng();
+        return { lat: ll.lat, lng: ll.lng };
+      }
+    } catch (e) {}
+    try {
+      if (window._pucaMap) {
+        var c = window._pucaMap.getCenter();
+        return { lat: c.lat, lng: c.lng };
+      }
+    } catch (e2) {}
+    return null;
+  }
+
+  function routeTo(dlat, dlng, label) {
+    var origin = getOrigin();
+    var nh = $("navHint");
+    if (!window._pucaMap || typeof L === "undefined") {
+      alert("Map not ready");
+      return;
+    }
+    if (!origin) {
+      if (nh) nh.textContent = "Locating… try My location first";
+      return;
+    }
+    if (nh) nh.textContent = "Routing" + (label ? " to " + label : "") + "…";
+
+    var url = "https://router.project-osrm.org/route/v1/driving/" +
+      origin.lng + "," + origin.lat + ";" + dlng + "," + dlat +
+      "?overview=full&geometries=geojson";
+
+    fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data.routes || !data.routes[0]) throw new Error("no route");
+        var route = data.routes[0];
+        var coords = route.geometry.coordinates.map(function (c) { return [c[1], c[0]]; });
+
+        if (window._pucaRouteLayer) try { window._pucaMap.removeLayer(window._pucaRouteLayer); } catch (x) {}
+        if (window._pucaDestMarker) try { window._pucaMap.removeLayer(window._pucaDestMarker); } catch (x) {}
+
+        window._pucaRouteLayer = L.polyline(coords, { color: "#3dd68c", weight: 5, opacity: 0.9 }).addTo(window._pucaMap);
+        window._pucaDestMarker = L.circleMarker([dlat, dlng], {
+          radius: 9, color: "#ff6b7a", fillColor: "#ff6b7a", fillOpacity: 0.95, weight: 2
+        }).addTo(window._pucaMap).bindPopup(label || "Destination");
+
+        // Keep rider centered while traveling
+        followWhileNav = true;
+        window._pucaMapFollow = true;
+        window._pucaNavDest = { lat: dlat, lng: dlng, label: label || "" };
+
+        var mi = (route.distance / 1609.344).toFixed(1);
+        var mins = Math.round(route.duration / 60);
+        if (nh) nh.textContent = (label ? label + " · " : "") + mi + " mi · " + mins + " min · following you";
+
+        var bc = $("btnClearRoute");
+        if (bc) {
+          bc.style.display = "";
+          bc.onclick = function () {
+            followWhileNav = false;
+            window._pucaNavDest = null;
+            try {
+              if (window._pucaRouteLayer) window._pucaMap.removeLayer(window._pucaRouteLayer);
+              if (window._pucaDestMarker) window._pucaMap.removeLayer(window._pucaDestMarker);
+            } catch (e) {}
+            window._pucaRouteLayer = null;
+            window._pucaDestMarker = null;
+            bc.style.display = "none";
+            if (nh) nh.textContent = "OpenStreetMap · live GPS";
+            if (searchInput) searchInput.value = "";
+          };
+        }
+
+        // Fit once, then follow rider
+        window._pucaMap.fitBounds(window._pucaRouteLayer.getBounds(), { padding: [48, 48] });
+        setTimeout(function () {
+          if (window._pucaMapFollow && origin) {
+            window._pucaMap.setView([origin.lat, origin.lng], Math.max(window._pucaMap.getZoom(), 14));
+          }
+        }, 1200);
+      })
+      .catch(function (err) {
+        console.warn(err);
+        if (nh) nh.textContent = "Routing failed — try another place";
+      });
+  }
+
+  window.pucaRouteTo = routeTo;
+
+  function hideResults() {
+    if (resultsEl) {
+      resultsEl.innerHTML = "";
+      resultsEl.hidden = true;
+    }
+  }
+
+  function showResults(items) {
+    if (!resultsEl) return;
+    resultsEl.innerHTML = "";
+    if (!items.length) {
+      resultsEl.hidden = true;
+      return;
+    }
+    items.forEach(function (item) {
+      var li = document.createElement("li");
+      li.className = "map-search-item";
+      li.textContent = item.label;
+      li.tabIndex = 0;
+      li.addEventListener("click", function () {
+        if (searchInput) searchInput.value = item.label;
+        hideResults();
+        routeTo(item.lat, item.lng, item.name || item.label);
+      });
+      resultsEl.appendChild(li);
+    });
+    resultsEl.hidden = false;
+  }
+
+  function searchPhoton(q) {
+    if (!q || q.length < 2) {
+      hideResults();
+      return;
+    }
+    var origin = getOrigin();
+    var url = "https://photon.komoot.io/api/?q=" + encodeURIComponent(q) + "&limit=6&lang=en";
+    if (origin) {
+      url += "&lat=" + origin.lat + "&lon=" + origin.lng;
+    }
+    fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var features = (data && data.features) || [];
+        var items = features.map(function (f) {
+          var p = f.properties || {};
+          var c = f.geometry && f.geometry.coordinates;
+          var parts = [p.name, p.street, p.city || p.county, p.state, p.country].filter(Boolean);
+          // unique-ish label
+          var label = parts.filter(function (v, i, a) { return a.indexOf(v) === i; }).join(", ");
+          return {
+            lat: c[1],
+            lng: c[0],
+            name: p.name || label,
+            label: label || p.name || q
+          };
+        });
+        showResults(items);
+      })
+      .catch(function () {
+        hideResults();
+      });
+  }
+
+  function initSearch() {
+    searchInput = $("mapSearch");
+    resultsEl = $("mapSearchResults");
+    if (!searchInput) return;
+
+    searchInput.addEventListener("input", function () {
+      clearTimeout(debounceTimer);
+      var q = searchInput.value.trim();
+      debounceTimer = setTimeout(function () { searchPhoton(q); }, 280);
+    });
+
+    searchInput.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") hideResults();
+      if (e.key === "Enter") {
+        e.preventDefault();
+        var first = resultsEl && resultsEl.querySelector(".map-search-item");
+        if (first) first.click();
+        else searchPhoton(searchInput.value.trim());
+      }
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".map-search-wrap")) hideResults();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initSearch);
+  } else {
+    initSearch();
+  }
+})();
+</script>
 
 </body>
 </html>
