@@ -113,7 +113,7 @@
       </section>
 
       <section class="map-pane" aria-label="Navigation">
-        <div class="map-search-wrap">
+        <div class="map-search-wrap" style="position:absolute;top:12px;left:12px;z-index:10000;width:min(320px,calc(100% - 56px));">
           <input type="text" id="mapSearch" class="map-search" placeholder="Search destination…" autocomplete="off" enterkeyhint="search" />
           <ul id="mapSearchResults" class="map-search-results" hidden></ul>
         </div>
@@ -134,9 +134,9 @@
     </p>
   </div>
 
-  <script src="config.js?v=search1"></script>
+  <script src="config.js?v=fix20260813"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="dash.js?v=search1"></script>
+  <script src="dash.js?v=fix20260813"></script>
   <script>
   (function () {
     // Hard override: in-app Navigate only (ignores any old /*open blocked*/void handlers)
@@ -261,6 +261,8 @@
           if (nh) nh.textContent = "Routing failed — try again";
         });
     }
+
+    window.pucaInAppNav = startInAppNav;
 
     // Bind now and after short delay (dash.js may rebind)
     if (document.readyState === "loading") {
