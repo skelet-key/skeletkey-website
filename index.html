@@ -2,147 +2,1563 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="theme-color" content="#0B0F19" />
-  <meta name="description" content="SkeletKey Puca — GPS speedometer, trip computer, and ignition for the folding electric motorcycle." />
-  <title>SkeletKey Puca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkeletKey — First Folding, Electric & Modular Motorcycle</title>
+  <meta name="description" content="Puca by SkeletKey — 9.2 lb carbon steel folding frame, 28.6 lb hub motor, 57 lb lock-in modular battery, 350 Wh/kg semi-solid NMC+, 70 mph, 100+ miles real-world range at 45 mph. $6,999." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="dash.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://unpkg.com/globe.gl/dist/globe.gl.min.js"></script>
+  <style>
+    #charge-globe {
+      width: 100%;
+      height: 720px;
+      background: #02040a;
+    }
+    .charge-map-embed {
+      background: #02040a;
+      margin: 0 auto;
+    }
+    @media (min-width: 900px) {
+      #charge-globe {
+        height: 760px;
+      }
+    }
+    #charger-popup-root {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .charger-popup {
+      position: absolute;
+      z-index: 21;
+      pointer-events: auto;
+      min-width: 220px;
+      max-width: min(300px, calc(100% - 24px));
+      background: rgba(12, 14, 22, 0.96);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      padding: 14px 16px 12px;
+      color: #e8eaf0;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .charger-popup h4 {
+      margin: 0 28px 8px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .charger-popup .meta {
+      color: #b6bcd0;
+      margin: 2px 0;
+    }
+    .charger-popup .meta strong { color: #d5d9e8; }
+    .charger-popup a.gmaps {
+      display: inline-block;
+      margin-top: 10px;
+      color: #7eb6ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .charger-popup a.gmaps:hover { text-decoration: underline; }
+    .charger-popup .close-x {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background: transparent;
+      border: 0;
+      color: #9aa3b8;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .charger-popup .close-x:hover { color: #fff; }
+    #charge-globe-status.is-hidden { display: none !important; }
+  </style>
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/favicon-32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/assets/favicon-48.png" sizes="48x48" />
+  <link rel="apple-touch-icon" href="/assets/favicon-180.png" sizes="180x180" />
+  <link rel="shortcut icon" href="/assets/favicon.ico" />
 </head>
 <body>
-  <div id="app" class="dash ignition-off">
-    <header class="topbar">
-      <div class="brand">
-        <span class="brand-mark">Skelet</span><span class="brand-accent">Key</span>
-        <span class="brand-sub">Puca</span>
-      </div>
-      <div class="conn" id="connStatus">
-        <span class="dot" id="connDot"></span>
-        <span id="connLabel">GPS off</span>
-      </div>
-      <div class="top-actions">
-        <button type="button" class="btn-ghost" id="btnBle" title="Connect BLE ignition relay">Connect relay</button>
-        <button type="button" class="btn-ghost" id="btnResetTrip" title="Reset trip">Reset trip</button>
-        <button type="button" class="btn-ghost" id="btnUnits" title="Toggle mph / km/h">mph</button>
-      </div>
-    </header>
 
-    <main class="main">
-      <section class="instruments" aria-label="Speedometer and ignition">
-        <!-- Ignition -->
-        <div class="ignition-row">
-          <button type="button" class="ign-btn" id="btnIgnition" aria-pressed="false" title="Toggle ignition">
-            <span class="ign-key" aria-hidden="true">⏻</span>
-            <span class="ign-label" id="ignLabel">IGN OFF</span>
-          </button>
-          <div class="ign-status">
-            <span class="ign-hint" id="ignHint">Connect relay, then turn ignition on</span>
-            <span class="gps-acc" id="gpsAcc">GPS · —</span>
-            <span class="gps-acc" id="bleLabel">Relay · offline</span>
-          </div>
-        </div>
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <img
+        src="assets/skeletkey-logo-key-nav.png"
+        srcset="assets/skeletkey-logo-key-nav.png 2x, assets/skeletkey-logo-key-nav@3x.png 3x"
+        alt=""
+        class="nav-logo-key"
+        width="42"
+        height="40"
+      />
+      <span class="nav-logo-text">Skelet<span>Key</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#bike">The Bike</a></li>
+      <li><a href="#specs">Range & Specs</a></li>
+      <li><a href="#fold">Fold & Travel</a></li>
+      <li><a href="#battery">Battery</a></li>
+      <li><a href="#charge">Charge</a></li>
+      <li><a href="#display">Display</a></li>
+      <li><a href="#maintain">Maintain</a></li>
+      <li><a href="#story">Story</a></li>
+      <li><a href="#history">History</a></li>
+      <li><a href="#work">Work with us</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="/software/">Software</a></li>
+      <li><a href="/puca/">Music</a></li>
+      <li><a href="#order" class="nav-cta">Order</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+  </nav>
 
-        <!-- Primary speed (GPS Speedometer style) -->
-        <div class="speed-block">
-          <div class="speed-value" id="speedValue">0</div>
-          <div class="speed-unit" id="speedUnit">mph</div>
-          <div class="speed-ring" aria-hidden="true">
-            <svg viewBox="0 0 120 120">
-              <circle class="ring-bg" cx="60" cy="60" r="52" />
-              <circle class="ring-fg" id="speedRing" cx="60" cy="60" r="52" />
-            </svg>
-          </div>
-        </div>
-
-        <!-- Trip computer -->
-        <div class="metrics trip-grid">
-          <div class="metric">
-            <div class="metric-label">Trip</div>
-            <div class="metric-value"><span id="tripValue">0.0</span><span class="metric-unit" id="tripUnit"> mi</span></div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Max</div>
-            <div class="metric-value"><span id="maxValue">0</span><span class="metric-unit" id="maxUnit"> mph</span></div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Avg</div>
-            <div class="metric-value"><span id="avgValue">0</span><span class="metric-unit" id="avgUnit"> mph</span></div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Time</div>
-            <div class="metric-value"><span id="timeValue">0:00</span></div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Heading</div>
-            <div class="metric-value"><span id="headingValue">—</span></div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Alt</div>
-            <div class="metric-value"><span id="altValue">—</span><span class="metric-unit"> ft</span></div>
-          </div>
-        </div>
-
-        <!-- Battery / range (manual or future BMS) -->
-        <div class="metrics pack-row">
-          <div class="metric">
-            <div class="metric-label">Range est.</div>
-            <div class="metric-value"><span id="rangeValue">105</span><span class="metric-unit"> mi</span></div>
-            <div class="bar"><div class="bar-fill range" id="rangeBar" style="width:84%"></div></div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Battery</div>
-            <div class="metric-value"><span id="socValue">84</span><span class="metric-unit">%</span></div>
-            <div class="bar"><div class="bar-fill soc" id="socBar" style="width:84%"></div></div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Odo</div>
-            <div class="metric-value"><span id="odoValue">0.0</span><span class="metric-unit" id="odoUnit"> mi</span></div>
-          </div>
-        </div>
-
-        <div class="footer-stats">
-          <div><span class="muted">Controller</span> <span id="ctrlName">FarDriver ND72360</span></div>
-          <div><span class="muted">Source</span> <span id="sourceValue">GPS</span></div>
-        </div>
-      </section>
-
-      <section class="map-pane" aria-label="Navigation">
-        <div id="map" class="map"></div>
-        <div class="map-overlay">
-          <button type="button" class="btn-map" id="btnLocate">My location</button>
-          <button type="button" class="btn-map" id="btnNavigate">Navigate</button>
-          <button type="button" class="btn-map" id="btnClearRoute" style="display:none">Clear route</button>
-          <div class="nav-hint" id="navHint">OpenStreetMap · live GPS</div>
-        </div>
-      </section>
-    </main>
-
-    <p class="legal">
-      SkeletKey Puca · GPS speed &amp; trip · BLE ignition relay (ESP32 <code>PucaIgn</code>) closes the enable/contactor coil —
-      keep a physical key or e-stop in series with pack power. Chrome on Android for Web Bluetooth.
-      Map: OpenStreetMap via Leaflet (no API key). Navigate: tap map for in-app route (OSRM).
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-badge">Now Accepting Reservations</div>
+    <h1>Puca<br><span class="gold">The ultimate travel companion.</span></h1>
+    <p class="hero-sub">
+      <strong>9.2 lb</strong> carbon steel folding frame. <strong>28.6 lb</strong> hub motor. <strong>57 lb</strong> lock-in modular battery. <strong>70 mph</strong> top speed.
+      <strong>100+ miles</strong> of real-world range at 45 mph — powered by contracted <strong>350 Wh/kg</strong> semi-solid NMC+.
     </p>
-  </div>
+    <p class="hero-sub">
+      Store it in your apartment, car trunk, or train. Ship the frame as luggage. Send the ultra-dense battery separately.
+      Explore the world — and <strong>save thousands a year</strong> on gas commuting. <strong>$6,999.</strong>
+    </p>
+    <div class="hero-ctas">
+      <a href="#order" class="btn btn-primary">Reserve Yours</a>
+      <a href="#bike" class="btn btn-secondary">Explore Puca</a>
+    </div>
+  </header>
 
-  <script src="config.js?v=20260812geo"></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="dash.js?v=20260812geo"></script>
-  <script>
-    // OSM + Leaflet — no Google key required
-    document.addEventListener("DOMContentLoaded", function () {
-      if (typeof window.initPucaMap === "function") window.initPucaMap();
-    });
-    // Also run if dash.js already loaded
-    if (document.readyState !== "loading" && typeof window.initPucaMap === "function") {
-      window.initPucaMap();
-    }
-  </script>
+  <!-- THE BIKE -->
+  <section class="section" id="bike">
+    <div class="section-inner">
+      <div class="bike-grid">
+        <div class="bike-visual">
+          <picture>
+            <source srcset="assets/skeletkey-bike.webp" type="image/webp" />
+            <img src="assets/skeletkey-bike.jpg" alt="SkeletKey folding electric motorcycle — carbon steel folding frame with modular battery" class="bike-image" />
+          </picture>
+        </div>
+        <div class="bike-copy">
+          <div class="section-label">The Bike</div>
+          <h2>Puca — the ultimate travel companion.</h2>
+          <p>
+            <strong>Puca</strong> is built to move with you. A rigid <strong>carbon steel folding frame</strong> weighing only <strong>9.2 lb</strong> — with dropout geometry sized to the hub motor.
+          </p>
+          <p>
+            It pairs with a <strong>57 lb lock-in modular battery</strong> and a <strong>QS205 V3 (50H) spoke hub motor</strong> (4,000–5,000W continuous, <strong>12,000W peak</strong>, <strong>28.6 lb</strong> / 13.0 kg).
+          </p>
+          <p>
+            Folding frame: <strong>9.2 lb</strong> carbon steel. Hub motor: <strong>28.6 lb</strong>. Top speed <strong>70 mph</strong>. <strong>Over 100 miles of real-world range at 45 mph</strong>. Folds for apartments, trunks, and trains.
+          </p>
+          <p>
+            Store Puca in your <strong>apartment</strong>, your <strong>car trunk</strong>, or on a <strong>train</strong>. Check the frame as luggage and <strong>ship the ultra-energy-dense 57 lb battery separately</strong> when you explore the world. Commute without gas — and <strong>save thousands a year</strong>.
+          </p>
+          <p>
+            True 100-mile electrics start around <strong>$10,000</strong>; the closest competitors are still ~<strong>$3,000 more</strong> than Puca at <strong>$6,999</strong> — and they <strong>don’t fold</strong>, <strong>don’t lock in a modular pack</strong>, and <strong>can’t travel with you</strong>.
+          </p>
+          <div class="bike-stats">
+            <div class="stat">
+              <div class="stat-value">100+</div>
+              <div class="stat-label">Miles of range</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">~70</div>
+              <div class="stat-label">mph top speed</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">QS205 V3</div>
+              <div class="stat-label">4–5 kW / 12 kW peak</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">9.2 lb</div>
+              <div class="stat-label">Carbon steel folding frame</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">57 lb</div>
+              <div class="stat-label">Lock-in battery module</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">350</div>
+              <div class="stat-label">Wh/kg NMC+ cells</div>
+            </div>
+          </div>
+          <p class="weight-breakdown">
+            9.2 lb carbon steel folding frame · 28.6 lb hub motor · 57 lb modular lock-in pack · 350 Wh/kg semi-solid NMC+ under long-term supply contract
+          </p>
+          <a href="#order" class="btn btn-primary">Reserve Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- DIFFERENTIATORS -->
+  <section class="diff">
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="icon">⚡</div>
+        <h3>100+ Miles at 45 mph</h3>
+        <p><strong>Real-world range over 100 miles</strong> at 45 mph — and <strong>70 mph</strong> top speed — from a <strong>57 lb</strong> modular pack on a <strong>9.2 lb</strong> carbon steel folding frame. Long-range capability without the $10,000 price tag.</p>
+      </div>
+      <div class="diff-card">
+        <div class="icon">⧉</div>
+        <h3>9.2 lb Carbon Steel Folding Frame</h3>
+        <p>Production folding frame in <strong>carbon steel</strong> at only <strong>9.2 lb</strong> — with dropout geometry matched to the hub motor. Folds for elevators, apartments, trains, and trunks. Hub motor: <strong>28.6 lb</strong>.</p>
+      </div>
+      <div class="diff-card">
+        <div class="icon">🔋</div>
+        <h3>57 lb Lock-In Modular Battery</h3>
+        <p>Slide-in lock-in pack at only <strong>57 pounds</strong>. Secured long-term supply of <strong>semi-solid NMC+</strong> cells at <strong>350 Wh/kg</strong>. Swap in seconds, ship separately, travel lighter. Competitors don’t offer this.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECS & COMPARISON -->
+  <section class="section specs" id="specs">
+    <div class="section-inner">
+      <div class="section-label">Range & Specs</div>
+      <h2 class="section-title">The only sacrifice is 10 mph.</h2>
+      <p class="section-lead">
+        <strong>Puca</strong> matches the range of expensive non-folding competitors while undercutting them by thousands — with a <strong>9.2 lb carbon steel foldable frame</strong>, <strong>57 lb lock-in modular battery</strong>, contracted <strong>350 Wh/kg</strong> semi-solid NMC+, and real travel flexibility they simply do not have.
+      </p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="brand-header">Skelet<span>Key</span></th>
+            <th>Typical $10k Competitor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Real-world range</td>
+            <td class="highlight">100+ miles</td>
+            <td>~100 miles</td>
+          </tr>
+          <tr>
+            <td>Top speed</td>
+            <td class="highlight">~70 mph</td>
+            <td>~80 mph</td>
+          </tr>
+          <tr>
+            <td>Hub motor</td>
+            <td class="highlight">QS205 V3 (50H) · 4–5 kW / 12 kW peak · 13.0 kg</td>
+            <td>Varies</td>
+          </tr>
+          <tr>
+            <td>Folds for storage / travel</td>
+            <td class="highlight">Yes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Modular quick-swap battery</td>
+            <td class="highlight">Yes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td class="highlight">$6,999</td>
+            <td>$10,000+</td>
+          </tr>
+          <tr>
+            <td>Apartment / transit friendly</td>
+            <td class="highlight">Yes</td>
+            <td>No</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FOLD & TRAVEL -->
+  <section class="section" id="fold">
+    <div class="section-inner">
+      <div class="section-label">Fold & Travel</div>
+      <h2 class="section-title">Puca goes where other motorcycles can’t.</h2>
+      <p class="section-lead">
+        A <strong>9.2 lb</strong> carbon steel folding frame and <strong>28.6 lb</strong> hub motor that still <strong>fold</strong> with the bike — plus a <strong>57 lb</strong> lock-in pack you can remove and ship on its own.
+        Apartment, trunk, train, or checked luggage. <strong>No other long-range electric motorcycle offers this freedom.</strong>
+      </p>
+
+      <div class="fold-grid">
+        <div class="fold-card">
+          <h3>Apartment Living</h3>
+          <p><strong>Fold it and roll it into the elevator.</strong> Store the chassis inside; keep the 57 lb pack charged and ready. No garage required.</p>
+        </div>
+        <div class="fold-card">
+          <h3>Trains & Transit</h3>
+          <p>Carry the folded frame onboard. The <strong>modular lock-in battery travels separately</strong> when rules require — something fixed-pack bikes can’t do.</p>
+        </div>
+        <div class="fold-card">
+          <h3>Car Trunk & Luggage</h3>
+          <p>Fits in a trunk or checks as frame luggage. <strong>Ship the ultra-dense 57 lb battery separately</strong> and explore the world without a car.</p>
+        </div>
+        <div class="fold-card">
+          <h3>Commute Savings</h3>
+          <p>Skip gas. <strong>Save thousands a year</strong> on commuting while keeping highway-capable speed and 100+ mile real-world range at 45 mph.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BATTERY TECHNOLOGY -->
+  <section class="section battery-section" id="battery">
+    <div class="section-inner">
+      <div class="section-label">Battery Technology</div>
+      <h2 class="section-title">57 lb lock-in modular pack. 350 Wh/kg semi-solid NMC+.</h2>
+      <p class="section-lead">
+        The heart of Puca is a <strong>57-pound lock-in modular battery</strong> — not a fixed brick.
+        We have already secured a <strong>long-term supply contract for semi-solid NMC+ cells at 350 Wh/kg</strong>,
+        delivering exceptional energy density so the pack stays light enough to remove, ship, and swap.
+      </p>
+      <p class="section-lead">
+        That density still supports <strong>100+ miles of real-world range at 45 mph</strong> and <strong>8 kW CCS1-compatible fast charge</strong> — about <strong>20% → 80% in 30 minutes</strong>.
+      </p>
+
+      <div class="battery-grid">
+        <div class="battery-visual">
+          <picture>
+            <source srcset="assets/nmc-pouch-cells.webp" type="image/webp" />
+            <img src="assets/nmc-pouch-cells.jpg" alt="NMC pouch cells stacked next to an open modular battery pack module" class="bike-image" />
+          </picture>
+          <p class="battery-caption">Large-format NMC pouch cells and modular pack assembly — the energy core of SkeletKey</p>
+        </div>
+
+        <div class="battery-copy">
+          <h3>350 Wh/kg Semi-Solid NMC+ — Under Contract</h3>
+          <p>
+            Large-format <strong>semi-solid NMC+</strong> pouch cells at <strong>350 Wh/kg</strong> in a 16S2P layout deliver a nominal 60.8V pack with approximately <strong>8.5 kWh</strong> of usable energy.
+          </p>
+          <p>
+            A <strong>long-term supply contract</strong> is already in place for this chemistry — locking in the density that makes a true long-range pack possible at only <strong>57 pounds</strong>.
+          </p>
+          <p>
+            Integrated <strong>Bluetooth BMS app control</strong> reports cell health, state of charge, and faults live.
+          </p>
+
+          <h3>8 kW Fast Charge — CCS1 Worldwide</h3>
+          <p>
+            Charge at up to <strong>8,000 watts</strong> on the growing global <strong>CCS1</strong> fast-charge network — or use an <strong>ultra-compatible Tesla charger path with a CCS1 adapter</strong> where supported.
+          </p>
+          <p>
+            Typical session: roughly <strong>20% to 80% in about 30 minutes</strong> at 8 kW, so you’re back on the road without a long layover.
+          </p>
+          <p>
+            Pair with the Bluetooth BMS app to monitor charge rate, temperature, and limits in real time.
+          </p>
+
+          <h3>Isolated Exoskeleton Cradle</h3>
+          <p>
+            To protect the central folding hinge, the battery <strong>never sits inside the frame cavity</strong>. It rides in an isolated structural exoskeleton cradle on the non-folding rear triangle — between the seat and the rear carriage.
+          </p>
+
+          <h3>Modular Lock-In Mechanism — 57 lb</h3>
+          <p>
+            This is not a loosely seated tray. Two thin carbon steel aluminum guide rails form the cradle sides. The <strong>57 lb module slides in and locks</strong> until positive and negative contacts mate with quick-connect terminals.
+          </p>
+          <p>
+            Dual over-center cam latches secure it — <strong>mechanical retention and electrical connection in one motion</strong>. Rigid at 70 mph. Off in seconds when you fold, store, or ship the pack separately.
+          </p>
+
+          <h3>carbon steel Frame Contract</h3>
+          <p>
+            Parallel to the battery program, the production folding frame is <strong>carbon steel at 9.2 lb</strong>, with dropout geometry matched to the hub motor.
+          </p>
+          <p>
+            The measured frame weight is <strong>9.2 lb</strong>; the hub motor is <strong>28.6 lb</strong>. Geometry stays aligned with Puca’s ride and fold requirements.
+          </p>
+
+          <div class="battery-stats">
+            <div class="stat">
+              <div class="stat-value">350</div>
+              <div class="stat-label">Wh/kg NMC+</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">16S2P</div>
+              <div class="stat-label">Cell layout</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">~8.5 kWh</div>
+              <div class="stat-label">Pack energy</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">57 lb</div>
+              <div class="stat-label">Module weight</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">60.8V</div>
+              <div class="stat-label">Nominal voltage</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">8 kW</div>
+              <div class="stat-label">CCS1 charge</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">~30 min</div>
+              <div class="stat-label">20% → 80%</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">BT BMS</div>
+              <div class="stat-label">App control</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="battery-steps">
+        <div class="step-card">
+          <div class="step-num">1.</div>
+          <h4>Align</h4>
+          <p>Guide the pack between the two thin aluminum side rails under the seat.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2.</div>
+          <h4>Slide</h4>
+          <p>Push forward until the positive and negative contacts fully engage the quick-connect terminals.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3.</div>
+          <h4>Lock</h4>
+          <p>Close the dual over-center cam latches. The pack is now mechanically locked and electrically live.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4.</div>
+          <h4>Swap</h4>
+          <p>Release the latches and slide the pack out. Swap in a charged module in under 30 seconds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAST CHARGE NETWORK -->
+  <section class="section charge-section" id="charge">
+    <div class="section-inner">
+      <div class="section-label">Fast Charge</div>
+      <h2 class="section-title">CCS1 nationwide. Tesla with adapter. 20% → 80% in ~30 min.</h2>
+      <p class="section-lead">
+        Puca charges at up to <strong>8,000 watts</strong> on the growing <strong>CCS1</strong> DC fast-charge network —
+        and on <strong>Tesla Superchargers</strong> using a <strong>CCS1 adapter</strong> where supported.
+        Typical session: about <strong>20% to 80% in 30 minutes</strong>.
+      </p>
+      <p class="section-lead">
+        Want to charge at home? Install a <strong>CCS1 charger</strong> into your breaker box, or plug in a
+        <strong>62.9 volt AC to DC charging brick</strong> to charge overnight using your 120V or 240V household outlet.
+        You can charge anywhere that has a standard household plug.
+      </p>
+
+      <div class="charge-stations">
+        <figure class="charge-card">
+          <picture>
+            <source srcset="assets/charge-ccs-station.webp" type="image/webp" />
+            <img src="assets/charge-ccs-station.jpg" alt="Public CCS DC fast charging station pedestal" class="charge-img" />
+          </picture>
+          <figcaption>Typical CCS / DC fast pedestal at retail and highway sites.</figcaption>
+        </figure>
+        <figure class="charge-card">
+          <picture>
+            <source srcset="assets/charge-tesla-station.webp" type="image/webp" />
+            <img src="assets/charge-tesla-station.jpg" alt="Row of Tesla Supercharger stalls at dusk" class="charge-img" />
+          </picture>
+          <figcaption>Tesla Supercharger stalls — nationwide coverage expanding every year.</figcaption>
+        </figure>
+      </div>
+
+      <figure class="charge-map" id="charge-map-figure">
+        <div class="charge-map-embed" style="position: relative; width: 100%; max-width: 100%; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+          <div id="charge-globe"></div>
+          <div id="charger-popup-root"></div>
+          <div id="charge-globe-status" style="position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(0,0,0,0.65);color:#e8eaf0;font-size:12px;padding:6px 10px;border-radius:8px;max-width:min(280px,70%);pointer-events:none;">Scroll to load map…</div>
+        </div>
+        <figcaption>
+          <strong>Global network · Tesla Superchargers + CCS (≥3&nbsp;kW)</strong> —
+          Red = Tesla · Blue = CCS. Opens at your location; pan or use region buttons for the rest of the world.
+          Pins are real stations and fill the view as you move. Puca ships by plane anywhere customs allows.
+          <a href="https://earth.google.com/earth/d/1HquEW0rsENmxtCqQPBgAct_eN2KLSZlx" target="_blank" rel="noopener noreferrer">Curated layers in Google Earth</a>.
+        </figcaption>
+      </figure>
+      <script>
+        (function () {
+          var REGION_ALT = 0.28;
+          var ALL = [];
+          var globe = null;
+          var popupRoot = null;
+          var lastKey = "";
+          var refreshTimer = null;
+          var pollTimer = null;
+          var mapVisible = false;
+          var booted = false;
+          var dataLoaded = false;
+          var cleanedUp = false;
+          var io = null;
+          var target = null;
+          var globeEl = null;
+
+          // Named handlers so we can removeEventListener on cleanup
+          var onResize = null;
+          var onGlobeClick = null;
+          var onWheel = null;
+          var onPointerUp = null;
+          var onPointerMove = null;
+          var onControlsChange = null;
+          var onVisibility = null;
+          var onPageHide = null;
+
+          function setStatus(msg) {
+            var s = document.getElementById("charge-globe-status");
+            if (s) s.textContent = msg;
+          }
+
+          function closePopup() {
+            if (!popupRoot) popupRoot = document.getElementById("charger-popup-root");
+            if (popupRoot) popupRoot.innerHTML = "";
+            var s = document.getElementById("charge-globe-status");
+            if (s) s.classList.remove("is-hidden");
+          }
+
+          function showPopup(d, clientX, clientY) {
+            if (cleanedUp) return;
+            if (!popupRoot) popupRoot = document.getElementById("charger-popup-root");
+            if (!popupRoot || !d) return;
+            var isTesla = d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || ""));
+            var mapsUrl = "https://www.google.com/maps/search/?api=1&query=" +
+              encodeURIComponent(Number(d.lat).toFixed(6) + "," + Number(d.lng).toFixed(6));
+            var embed = document.querySelector(".charge-map-embed");
+            if (!embed) return;
+            var rect = embed.getBoundingClientRect();
+            var x = (clientX != null ? clientX - rect.left : 24) + 8;
+            var y = (clientY != null ? clientY - rect.top : 24) + 8;
+            if (x + 280 > rect.width) x = Math.max(8, rect.width - 290);
+            if (y + 160 > rect.height) y = Math.max(8, rect.height - 170);
+
+            var box = document.createElement("div");
+            box.className = "charger-popup";
+            box.style.left = x + "px";
+            box.style.top = y + "px";
+            box.innerHTML =
+              '<button type="button" class="close-x" aria-label="Close">&times;</button>' +
+              "<h4></h4>" +
+              '<div class="meta"><strong>Type:</strong> <span class="t-type"></span></div>' +
+              '<div class="meta"><strong>Network:</strong> <span class="t-net"></span></div>' +
+              '<div class="meta"><strong>Power:</strong> <span class="t-kw"></span></div>' +
+              '<a class="gmaps" target="_blank" rel="noopener noreferrer">Open in Google Maps ↗</a>';
+            box.querySelector("h4").textContent = d.name || "EV charger";
+            box.querySelector(".t-type").textContent = isTesla ? "Tesla Supercharger" : "CCS / Combo DC";
+            box.querySelector(".t-net").textContent = d.op || (isTesla ? "Tesla" : "CCS");
+            box.querySelector(".t-kw").textContent = d.kw || (isTesla ? "72 kW+" : "≥ 3 kW");
+            box.querySelector("a.gmaps").href = mapsUrl;
+            box.querySelector(".close-x").onclick = function (e) { e.stopPropagation(); closePopup(); };
+            box.onclick = function (e) { e.stopPropagation(); };
+            popupRoot.innerHTML = "";
+            popupRoot.appendChild(box);
+            var s = document.getElementById("charge-globe-status");
+            if (s) s.classList.add("is-hidden");
+          }
+
+          var RENDER = [];
+          var FIXED_GLOBAL = []; // always-visible worldwide stratified sample
+          var isMobile = (function () {
+            try {
+              return window.matchMedia("(max-width: 900px), (pointer: coarse)").matches
+                || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent || "");
+            } catch (e) { return false; }
+          })();
+          var VIEW_CAP = isMobile ? 320 : 520;
+          var GLOBAL_CAP = isMobile ? 700 : 1100;
+
+          function isTesla(d) {
+            return d && (d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || "")));
+          }
+
+          // Stratified worldwide sample so Europe / Asia / Oceania always have pins, not only the US
+          function buildGlobalSample(pts, maxN) {
+            if (!pts || !pts.length) return [];
+            var cells = {};
+            var keys = [];
+            // ~6° x 6° grid worldwide
+            for (var i = 0; i < pts.length; i++) {
+              var p = pts[i];
+              var cx = Math.floor((p.lng + 180) / 6);
+              var cy = Math.floor((p.lat + 90) / 6);
+              var ck = cx + ":" + cy;
+              if (!cells[ck]) { cells[ck] = []; keys.push(ck); }
+              cells[ck].push(p);
+            }
+            // shuffle keys for even coverage
+            for (var s = keys.length - 1; s > 0; s--) {
+              var j = Math.floor(Math.random() * (s + 1));
+              var tmp = keys[s]; keys[s] = keys[j]; keys[j] = tmp;
+            }
+            var out = [];
+            var per = Math.max(1, Math.ceil(maxN / Math.max(1, keys.length)));
+            var idx = 0, guard = 0;
+            while (out.length < maxN && guard < 40) {
+              var progressed = false;
+              for (var k = 0; k < keys.length && out.length < maxN; k++) {
+                var list = cells[keys[k]];
+                if (idx < list.length) {
+                  out.push(list[idx]);
+                  progressed = true;
+                }
+              }
+              if (!progressed) break;
+              idx += 1;
+              guard += 1;
+            }
+            return out;
+          }
+
+          // Dense sample inside the current camera viewport (real stations only)
+          function pickInView(pov) {
+            if (!ALL.length) return [];
+            var alt = Math.max(0.04, pov.altitude || 1);
+            var lat0 = pov.lat, lng0 = pov.lng;
+            var cos = Math.max(0.2, Math.cos(lat0 * Math.PI / 180));
+            // Wider band so continent views (Europe / Asia) fill with pins
+            var band = Math.min(55, Math.max(2.5, alt * 28));
+            var cap = VIEW_CAP;
+            var cells = isMobile ? 7 : 10;
+            var cellSize = (band * 2) / cells;
+            var buckets = {};
+            var keys = [];
+            for (var i = 0; i < ALL.length; i++) {
+              var p = ALL[i];
+              var dlat = p.lat - lat0;
+              var dlng = p.lng - lng0;
+              while (dlng > 180) dlng -= 360;
+              while (dlng < -180) dlng += 360;
+              var dlngA = dlng * cos;
+              if (Math.abs(dlat) > band || Math.abs(dlngA) > band) continue;
+              var cx = Math.min(cells - 1, Math.max(0, Math.floor((dlngA + band) / cellSize)));
+              var cy = Math.min(cells - 1, Math.max(0, Math.floor((dlat + band) / cellSize)));
+              var ck = cx + ":" + cy;
+              if (!buckets[ck]) { buckets[ck] = []; keys.push(ck); }
+              buckets[ck].push({ p: p, dist: dlat * dlat + dlngA * dlngA });
+            }
+            for (var k = 0; k < keys.length; k++) {
+              buckets[keys[k]].sort(function (a, b) { return a.dist - b.dist; });
+            }
+            var out = [];
+            var seen = {};
+            var per = Math.max(1, Math.ceil(cap / Math.max(1, keys.length)));
+            var idx = 0, added = true, guard = 0;
+            while (out.length < cap && added && guard < 60) {
+              added = false;
+              for (var c = 0; c < keys.length && out.length < cap; c++) {
+                var list = buckets[keys[c]];
+                if (idx >= list.length) continue;
+                var take = Math.min(per, list.length - idx);
+                for (var t = 0; t < take && out.length < cap; t++) {
+                  var pt = list[idx + t].p;
+                  var id = pt.lat.toFixed(4) + "," + pt.lng.toFixed(4);
+                  if (seen[id]) continue;
+                  seen[id] = 1;
+                  out.push(pt);
+                  added = true;
+                }
+              }
+              idx += per;
+              guard += 1;
+            }
+            return out;
+          }
+
+          function mergeUnique(a, b, maxN) {
+            var seen = {};
+            var out = [];
+            function add(list) {
+              for (var i = 0; i < list.length && out.length < maxN; i++) {
+                var p = list[i];
+                var id = p.lat.toFixed(4) + "," + p.lng.toFixed(4);
+                if (seen[id]) continue;
+                seen[id] = 1;
+                out.push(p);
+              }
+            }
+            add(a);
+            add(b);
+            return out;
+          }
+
+          function applyPointStyle() {
+            if (!globe || cleanedUp) return;
+            var pov = globe.pointOfView() || {};
+            var alt = Math.max(0.04, pov.altitude || 1);
+            // Larger, always-visible pins at every zoom level
+            var r = Math.max(0.035, Math.min(0.32, 0.16 * alt));
+            try {
+              globe.pointRadius(r);
+              globe.pointAltitude(Math.min(0.02, 0.008 + alt * 0.002));
+            } catch (e) {}
+          }
+
+          function nearestCharger(lat, lng, maxDeg) {
+            var pool = ALL.length ? ALL : RENDER;
+            if (!pool.length) return null;
+            maxDeg = maxDeg || 1.5;
+            var best = null, bestD = Infinity;
+            var cos = Math.max(0.2, Math.cos(lat * Math.PI / 180));
+            for (var i = 0; i < pool.length; i++) {
+              var p = pool[i];
+              var dlat = p.lat - lat;
+              var dlng = p.lng - lng;
+              while (dlng > 180) dlng -= 360;
+              while (dlng < -180) dlng += 360;
+              var d = dlat * dlat + (dlng * cos) * (dlng * cos);
+              if (d < bestD) { bestD = d; best = p; }
+            }
+            if (!best || bestD > maxDeg * maxDeg) return null;
+            return best;
+          }
+
+          function refreshView(force) {
+            if (!globe || !mapVisible || cleanedUp || !ALL.length) return;
+            var pov = globe.pointOfView();
+            if (!pov) return;
+            var key = pov.lat.toFixed(2) + "," + pov.lng.toFixed(2) + "," + pov.altitude.toFixed(2);
+            if (!force && key === lastKey) return;
+            lastKey = key;
+            // Always keep the worldwide sample, then densify the current viewport
+            var local = pickInView(pov);
+            RENDER = mergeUnique(FIXED_GLOBAL, local, GLOBAL_CAP + VIEW_CAP);
+            globe.pointsData(RENDER);
+            applyPointStyle();
+            var s = document.getElementById("charge-globe-status");
+            if (s && !s.classList.contains("is-hidden")) {
+              setStatus(RENDER.length.toLocaleString() + " chargers shown · worldwide network");
+            }
+          }
+
+          function scheduleRefresh() {
+            if (!mapVisible || cleanedUp) return;
+            clearTimeout(refreshTimer);
+            refreshTimer = setTimeout(function () { refreshView(true); }, 100);
+          }
+
+          function bindFixedPoints() {
+            refreshView(true);
+          }
+
+          function disposeGlobe() {
+            if (!globe) return;
+            try { globe.pointsData([]); } catch (e) {}
+            try {
+              // three-globe / globe.gl: release WebGL resources when possible
+              var renderer = typeof globe.renderer === "function" ? globe.renderer() : globe._renderer;
+              if (renderer) {
+                renderer.dispose && renderer.dispose();
+                var ctx = renderer.getContext && renderer.getContext();
+                var ext = ctx && ctx.getExtension && ctx.getExtension("WEBGL_lose_context");
+                if (ext) ext.loseContext();
+                if (renderer.domElement && renderer.domElement.parentNode) {
+                  renderer.domElement.parentNode.removeChild(renderer.domElement);
+                }
+              }
+              var scene = typeof globe.scene === "function" ? globe.scene() : globe._scene;
+              if (scene && scene.traverse) {
+                scene.traverse(function (obj) {
+                  if (obj.geometry && obj.geometry.dispose) obj.geometry.dispose();
+                  if (obj.material) {
+                    var mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+                    mats.forEach(function (m) {
+                      if (!m) return;
+                      if (m.map && m.map.dispose) m.map.dispose();
+                      if (m.dispose) m.dispose();
+                    });
+                  }
+                });
+              }
+              if (typeof globe._destructor === "function") globe._destructor();
+            } catch (e) {
+              console.warn("globe dispose", e);
+            }
+            globe = null;
+          }
+
+          function pauseMap() {
+            mapVisible = false;
+            clearInterval(pollTimer);
+            pollTimer = null;
+            clearTimeout(refreshTimer);
+            refreshTimer = null;
+            closePopup();
+            // Keep pointsData loaded so pins stay fixed on the globe (no pop-in on return)
+          }
+
+          function resumeMap() {
+            if (cleanedUp) return;
+            mapVisible = true;
+            if (!pollTimer) {
+              pollTimer = setInterval(function () { refreshView(false); }, 400);
+            }
+            bindFixedPoints();
+            if (globe && globeEl) {
+              try {
+                globe.width(globeEl.clientWidth);
+                globe.height(globeEl.clientHeight || 700);
+              } catch (e) {}
+            }
+          }
+
+          function loadData() {
+            if (dataLoaded || cleanedUp) return;
+            dataLoaded = true;
+            fetch("assets/chargers-us.json", { cache: "force-cache" })
+              .then(function (r) { return r.json(); })
+              .then(function (pts) {
+                if (cleanedUp) return;
+                ALL = [];
+                for (var i = 0; i < pts.length; i++) {
+                  var p = pts[i];
+                  if (!p) continue;
+                  var lat = Number(p.lat);
+                  var lng = Number(p.lng != null ? p.lng : p.lon);
+                  if (!isFinite(lat) || !isFinite(lng)) continue;
+                  ALL.push({
+                    lat: lat,
+                    lng: lng,
+                    name: p.name || "EV charger",
+                    op: p.op || "",
+                    type: p.type || "",
+                    kw: p.kw || ""
+                  });
+                }
+                FIXED_GLOBAL = buildGlobalSample(ALL, GLOBAL_CAP);
+                bindFixedPoints();
+              })
+              .catch(function (e) {
+                if (!cleanedUp) setStatus("Could not load chargers");
+                console.warn(e);
+              });
+          }
+
+          function boot() {
+            if (booted || cleanedUp) return;
+            booted = true;
+            globeEl = document.getElementById("charge-globe");
+            if (!globeEl || typeof Globe === "undefined") {
+              setStatus("3D library failed");
+              return;
+            }
+            popupRoot = document.getElementById("charger-popup-root");
+            setStatus("Loading map…");
+
+            globe = Globe()(globeEl)
+              .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg")
+              .backgroundColor("#02040a")
+              .showAtmosphere(true)
+              .atmosphereColor("#6aa0d8")
+              .atmosphereAltitude(0.15)
+              .pointsData([])
+              .pointLat("lat")
+              .pointLng("lng")
+              .pointAltitude(0.012)
+              .pointRadius(0.14)
+              .pointColor(function (d) {
+                return (d && (d.type === "tesla" || /tesla|supercharger/i.test((d.op || "") + (d.name || ""))))
+                  ? "#ea4335" : "#3b9eff";
+              })
+              .pointsMerge(false)
+              .pointsTransitionDuration(0);
+
+            // Mobile / Firefox performance: cap pixel ratio, prefer power-saving
+            try {
+              var rdr = typeof globe.renderer === "function" ? globe.renderer() : null;
+              if (rdr) {
+                rdr.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.5));
+                if (rdr.powerPreference !== undefined) rdr.powerPreference = "low-power";
+              }
+              if (isMobile) {
+                try { globe.showAtmosphere(false); } catch (e1) {}
+              }
+            } catch (e) {}
+
+            onResize = function () {
+              if (!mapVisible || !globe || !globeEl) return;
+              globe.width(globeEl.clientWidth);
+              globe.height(globeEl.clientHeight || 700);
+            };
+            onGlobeClick = function (e) {
+              if (e.target.closest && e.target.closest(".charger-popup")) return;
+              // If click isn't on popup, try to resolve nearest fixed charger under cursor via globe coords
+              closePopup();
+            };
+            onWheel = function () { scheduleRefresh(); };
+            onPointerUp = function () { scheduleRefresh(); };
+            onPointerMove = function () { scheduleRefresh(); };
+
+            window.addEventListener("resize", onResize);
+            globeEl.addEventListener("click", onGlobeClick);
+            globeEl.addEventListener("wheel", onWheel, { passive: true });
+            globeEl.addEventListener("pointerup", onPointerUp);
+            globeEl.addEventListener("pointermove", onPointerMove, { passive: true });
+
+            // Continuous refresh while OrbitControls animate (pan/zoom/rotate)
+            try {
+              var ctrl = typeof globe.controls === "function" ? globe.controls() : null;
+              if (ctrl && ctrl.addEventListener) {
+                onControlsChange = function () { scheduleRefresh(); };
+                ctrl.addEventListener("change", onControlsChange);
+              }
+            } catch (e) {}
+
+            // Click on globe → open nearest charger (positions are fixed forever)
+            try {
+              globe.onGlobeClick(function (coords, ev) {
+                if (!coords || cleanedUp) return;
+                var pov = globe.pointOfView() || {};
+                var alt = Math.max(0.05, pov.altitude || 2);
+                // Tighter pick radius when zoomed in
+                var maxDeg = alt > 1.2 ? 2.5 : (alt > 0.5 ? 1.2 : (alt > 0.2 ? 0.45 : 0.15));
+                var hit = nearestCharger(coords.lat, coords.lng, maxDeg);
+                if (hit) {
+                  var cx = ev && ev.clientX != null ? ev.clientX : null;
+                  var cy = ev && ev.clientY != null ? ev.clientY : null;
+                  showPopup(hit, cx, cy);
+                } else {
+                  closePopup();
+                }
+              });
+            } catch (e) {}
+
+            function goTo(lat, lng, alt) {
+              if (!globe) return;
+              globe.pointOfView({ lat: lat, lng: lng, altitude: alt }, 700);
+              setTimeout(function () { refreshView(true); }, 280);
+              setTimeout(function () { refreshView(true); }, 750);
+            }
+
+
+            function setRegion(lat, lng, label) {
+              goTo(lat, lng, REGION_ALT);
+              setStatus("~110 miles around " + label);
+            }
+
+            function locateByIP() {
+              return fetch("https://ipapi.co/json/", { cache: "no-store" })
+                .then(function (r) { return r.json(); })
+                .then(function (d) {
+                  if (cleanedUp) return null;
+                  if (d && typeof d.latitude === "number") {
+                    return { lat: d.latitude, lng: d.longitude, source: (d.city || "your area") + (d.country_name ? ", " + d.country_name : "") };
+                  }
+                  throw new Error("ip");
+                })
+                .catch(function () {
+                  if (cleanedUp) return null;
+                  return fetch("https://ipwho.is/").then(function (r) { return r.json(); }).then(function (d) {
+                    if (cleanedUp) return null;
+                    if (d && d.latitude != null) {
+                      return { lat: d.latitude, lng: d.longitude, source: (d.city || "your area") + (d.country ? ", " + d.country : "") };
+                    }
+                    throw new Error("ip2");
+                  });
+                });
+            }
+
+            // Go straight to the user — no world/Africa flash
+            setStatus("Finding your location…");
+            function zoomTo(lat, lng, label) {
+              if (cleanedUp) return;
+              setRegion(lat, lng, label || "you");
+            }
+            function fallbackWorld() {
+              // Only if location fails entirely
+              goTo(39, -98, 1.15);
+              setStatus("N. America · enable location for local chargers");
+            }
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(
+                function (pos) {
+                  zoomTo(pos.coords.latitude, pos.coords.longitude, "you");
+                },
+                function () {
+                  locateByIP().then(function (loc) {
+                    if (loc) zoomTo(loc.lat, loc.lng, loc.source);
+                    else fallbackWorld();
+                  }).catch(fallbackWorld);
+                },
+                { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
+              );
+            } else {
+              locateByIP().then(function (loc) {
+                if (loc) zoomTo(loc.lat, loc.lng, loc.source);
+                else fallbackWorld();
+              }).catch(fallbackWorld);
+            }
+
+            // World / region jump controls so the full global network is one click away
+            (function addMapControls() {
+              var embed = document.querySelector(".charge-map-embed");
+              if (!embed || document.getElementById("charge-globe-jumps")) return;
+              var bar = document.createElement("div");
+              bar.id = "charge-globe-jumps";
+              bar.style.cssText = "position:absolute;top:12px;left:12px;z-index:3;display:flex;flex-wrap:wrap;gap:6px;";
+              var places = [
+                { label: "World", lat: 15, lng: 10, alt: 2.2 },
+                { label: "N. America", lat: 39, lng: -98, alt: 1.15 },
+                { label: "Europe", lat: 50, lng: 10, alt: 0.95 },
+                { label: "Asia", lat: 30, lng: 105, alt: 1.2 },
+                { label: "Oceania", lat: -25, lng: 135, alt: 1.1 }
+              ];
+              places.forEach(function (pl) {
+                var b = document.createElement("button");
+                b.type = "button";
+                b.textContent = pl.label;
+                b.style.cssText = "background:rgba(0,0,0,0.7);color:#e8eaf0;border:1px solid rgba(255,255,255,0.18);border-radius:999px;padding:5px 10px;font-size:12px;cursor:pointer;backdrop-filter:blur(6px);";
+                b.addEventListener("click", function () {
+                  goTo(pl.lat, pl.lng, pl.alt);
+                  setStatus(pl.label + " · global CCS + Tesla network");
+                });
+                bar.appendChild(b);
+              });
+              var nearBtn = document.createElement("button");
+              nearBtn.type = "button";
+              nearBtn.textContent = "Near you";
+              nearBtn.style.cssText = "background:rgba(234,67,53,0.85);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:999px;padding:5px 10px;font-size:12px;cursor:pointer;";
+              nearBtn.addEventListener("click", function () {
+                setStatus("Locating…");
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(
+                    function (pos) {
+                      if (cleanedUp) return;
+                      setRegion(pos.coords.latitude, pos.coords.longitude, "you");
+                    },
+                    function () {
+                      locateByIP().then(function (loc) {
+                        if (loc) setRegion(loc.lat, loc.lng, loc.source);
+                        else setStatus("Could not locate");
+                      }).catch(function () { setStatus("Could not locate"); });
+                    },
+                    { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
+                  );
+                } else {
+                  locateByIP().then(function (loc) {
+                    if (loc) setRegion(loc.lat, loc.lng, loc.source);
+                    else setStatus("Could not locate");
+                  }).catch(function () { setStatus("Could not locate"); });
+                }
+              });
+              bar.appendChild(nearBtn);
+              embed.appendChild(bar);
+
+              // Zoom in / out — top-right and bottom-right of the globe
+              function zoomBy(factor) {
+                if (!globe || cleanedUp) return;
+                var pov = globe.pointOfView() || { lat: 20, lng: 0, altitude: 1.5 };
+                var alt = Math.max(0.05, Math.min(4.5, (pov.altitude || 1.5) * factor));
+                goTo(pov.lat, pov.lng, alt);
+              }
+              function makeZoomBar(id, positionCss) {
+                if (document.getElementById(id)) return;
+                var zoomBar = document.createElement("div");
+                zoomBar.id = id;
+                zoomBar.style.cssText = "position:absolute;" + positionCss + "z-index:3;display:flex;flex-direction:column;gap:6px;";
+                var btnStyle = "width:40px;height:40px;border-radius:12px;background:rgba(0,0,0,0.78);color:#e8eaf0;border:1px solid rgba(255,255,255,0.2);font-size:22px;line-height:1;cursor:pointer;backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:0;";
+                var zin = document.createElement("button");
+                zin.type = "button";
+                zin.setAttribute("aria-label", "Zoom in");
+                zin.title = "Zoom in";
+                zin.textContent = "+";
+                zin.style.cssText = btnStyle;
+                zin.addEventListener("click", function () { zoomBy(0.65); });
+                var zout = document.createElement("button");
+                zout.type = "button";
+                zout.setAttribute("aria-label", "Zoom out");
+                zout.title = "Zoom out";
+                zout.textContent = "−";
+                zout.style.cssText = btnStyle;
+                zout.addEventListener("click", function () { zoomBy(1.55); });
+                zoomBar.appendChild(zin);
+                zoomBar.appendChild(zout);
+                embed.appendChild(zoomBar);
+              }
+              makeZoomBar("charge-globe-zoom", "top:12px;right:12px;");
+              makeZoomBar("charge-globe-zoom-br", "bottom:52px;right:12px;");
+            })();
+
+            loadData();
+            resumeMap();
+          }
+
+          function whenGlobeReady(n) {
+            if (cleanedUp) return;
+            n = n || 0;
+            if (typeof Globe !== "undefined") return boot();
+            if (n > 80) return setStatus("3D library failed");
+            setTimeout(function () { whenGlobeReady(n + 1); }, 100);
+          }
+
+          function cleanup() {
+            if (cleanedUp) return;
+            cleanedUp = true;
+            pauseMap();
+
+            if (io) {
+              try {
+                if (target) io.unobserve(target);
+                io.disconnect();
+              } catch (e) {}
+              io = null;
+            }
+
+            if (onResize) window.removeEventListener("resize", onResize);
+            if (globeEl) {
+              if (onGlobeClick) globeEl.removeEventListener("click", onGlobeClick);
+              if (onWheel) globeEl.removeEventListener("wheel", onWheel);
+              if (onPointerUp) globeEl.removeEventListener("pointerup", onPointerUp);
+              if (onPointerMove) globeEl.removeEventListener("pointermove", onPointerMove);
+            }
+            try {
+              var ctrl = globe && typeof globe.controls === "function" ? globe.controls() : null;
+              if (ctrl && onControlsChange) ctrl.removeEventListener("change", onControlsChange);
+            } catch (e) {}
+            if (onVisibility) document.removeEventListener("visibilitychange", onVisibility);
+            if (onPageHide) {
+              window.removeEventListener("pagehide", onPageHide);
+              window.removeEventListener("beforeunload", onPageHide);
+            }
+
+            disposeGlobe();
+            ALL = [];
+            popupRoot = null;
+            globeEl = null;
+            booted = false;
+
+            if (typeof performance !== "undefined" && performance.memory) {
+              console.info("[SkeletKey map] cleanup complete · JS heap",
+                Math.round(performance.memory.usedJSHeapSize / 1048576) + " MB /",
+                Math.round(performance.memory.jsHeapSizeLimit / 1048576) + " MB");
+            } else {
+              console.info("[SkeletKey map] cleanup complete");
+            }
+          }
+
+          // --- IntersectionObserver ---
+          target = document.getElementById("charge-map-figure") || document.getElementById("charge-globe");
+          if (target && "IntersectionObserver" in window) {
+            io = new IntersectionObserver(
+              function (entries) {
+                if (cleanedUp) return;
+                entries.forEach(function (entry) {
+                  if (entry.isIntersecting && entry.intersectionRatio > 0.05) {
+                    if (!booted) whenGlobeReady(0);
+                    else resumeMap();
+                  } else if (booted) {
+                    pauseMap();
+                  }
+                });
+              },
+              { root: null, rootMargin: "120px 0px", threshold: [0, 0.05, 0.15] }
+            );
+            io.observe(target);
+          } else {
+            whenGlobeReady(0);
+          }
+
+          onPageHide = cleanup;
+          window.addEventListener("pagehide", onPageHide);
+          window.addEventListener("beforeunload", onPageHide);
+
+          onVisibility = function () {
+            if (cleanedUp) return;
+            if (document.visibilityState === "hidden") {
+              pauseMap();
+            } else if (document.visibilityState === "visible" && booted) {
+              if (target) {
+                var rect = target.getBoundingClientRect();
+                var vh = window.innerHeight || document.documentElement.clientHeight;
+                if (rect.bottom > 0 && rect.top < vh) resumeMap();
+              }
+            }
+          };
+          document.addEventListener("visibilitychange", onVisibility);
+
+          // Optional leak probe: window.__skeletMapMemory()
+          window.__skeletMapMemory = function () {
+            var info = {
+              booted: booted,
+              mapVisible: mapVisible,
+              cleanedUp: cleanedUp,
+              pointsLoaded: ALL.length,
+              hasGlobe: !!globe,
+              hasObserver: !!io
+            };
+            if (performance && performance.memory) {
+              info.usedMB = Math.round(performance.memory.usedJSHeapSize / 1048576);
+              info.totalMB = Math.round(performance.memory.totalJSHeapSize / 1048576);
+              info.limitMB = Math.round(performance.memory.jsHeapSizeLimit / 1048576);
+            }
+            console.table(info);
+            return info;
+          };
+        })();
+      </script>
+    </div>
+  </section>
+
+  <!-- SMART DISPLAY -->
+  <section class="section phone-section" id="display">
+    <div class="section-inner">
+      <div class="section-label">Smart Display</div>
+      <h2 class="section-title">Your smartphone is the dash.</h2>
+      <p class="section-lead">
+        <strong>No proprietary screen.</strong> Strong magnets hold your phone on the dash. Pair over Bluetooth, open the app, and ride with live speed, range, and system data — while Maps and music run in the background.
+      </p>
+
+      <div class="phone-visual">
+        <picture>
+          <source srcset="assets/phone-mount.webp" type="image/webp" />
+          <img src="assets/phone-mount.jpg" alt="Smartphone magnetically mounted on the SkeletKey dash showing speedometer, range, and Google Maps navigation" class="phone-mount-image" />
+        </picture>
+        <p class="phone-caption">Magnetic dash mount · live speed, range, and navigation on your phone</p>
+      </div>
+
+      <div class="phone-grid">
+        <div class="phone-card">
+          <h3>Magnetic mount</h3>
+          <p>Strong magnets and an included magnetic ring keep your phone locked through real-world riding. <strong>Attach and detach in one motion.</strong></p>
+        </div>
+        <div class="phone-card">
+          <h3>Bluetooth + app</h3>
+          <p>Pair once. The app becomes your <strong>speedometer, range meter, and live system readout</strong> — updating dynamically as you ride.</p>
+        </div>
+        <div class="phone-card">
+          <h3>Maps & music</h3>
+          <p>Open <strong>Google Maps</strong> in the background for navigation, or stream music while you ride. Your phone stays the interface you already know.</p>
+        </div>
+        <div class="phone-card">
+          <h3>Park & store</h3>
+          <p>Detach from the magnet, remove the battery, and store the <strong>9.2 lb carbon steel folding frame</strong> anywhere — elevator, closet, trunk, or train.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAINTAINABILITY -->
+  <section class="section maintain-section" id="maintain">
+    <div class="section-inner">
+      <div class="section-label">Maintainability</div>
+      <h2 class="section-title">Built to open, not to lock you out.</h2>
+      <p class="section-lead">
+        SkeletKey ships with <strong>complete documentation</strong> and an easy-to-read wiring chart covering turn signals, brake lights, throttle, ignition, cutoff switch, and headlamp — all accessible through the dashboard app on the phone that magnetically docks to the bike.
+      </p>
+
+      <div class="maintain-grid">
+        <div class="maintain-card">
+          <h3>Full documentation & wiring chart</h3>
+          <p>
+            Every electrical path is documented. Turn signals, brake lights, throttle, ignition, cutoff switch, and headlamp are mapped in a clear chart you can follow from the app or the printed guide — so diagnosis and upgrades don’t require guesswork.
+          </p>
+        </div>
+        <div class="maintain-card">
+          <h3>Wireless transmitter, cleaner fold</h3>
+          <p>
+            A <strong>reliable, waterproof wireless transmitter</strong> replaces the old tangle of multi-foot harnesses across the folding joint. Signals for controls and lighting cross the hinge without a thick cable bundle — keeping the chassis cleaner and the fold simpler.
+          </p>
+        </div>
+        <div class="maintain-card">
+          <h3>Numbered connectors, easy repair</h3>
+          <p>
+            Transmitter and receiver boards use a <strong>simple diagram of numbered connectors</strong>. Swap or modify a wirelessly communicated component by matching numbers — no tracing five-foot runs of wire through the frame.
+          </p>
+        </div>
+        <div class="maintain-card">
+          <h3>Reliable and latency-free</h3>
+          <p>
+            The wireless link is designed to be <strong>reliable and latency-free</strong> under real riding conditions. What used to be a messy harness becomes modular boards you can service, replace, or extend with confidence.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OWNERSHIP -->
+  <section class="section" id="ownership">
+    <div class="section-inner">
+      <div class="section-label">Ownership</div>
+      <h2 class="section-title">Built for the long run.</h2>
+      <p class="section-lead">
+        Modular architecture, asset-light manufacturing, and a focus on real-world usability mean SkeletKey is designed to stay useful and upgradeable for years.
+      </p>
+
+      <div class="ownership-grid">
+        <div class="own-card">
+          <h3>Modular Battery System</h3>
+          <p>Quick-release latches. <strong>Swap packs in the field</strong>, travel with a spare, or <strong>upgrade capacity later</strong> without replacing the entire vehicle.</p>
+        </div>
+        <div class="own-card">
+          <h3>carbon steel Structural Integrity</h3>
+          <p>Heat-treated aluminum delivers stiffness for <strong>stable high-speed riding</strong> while remaining light enough for <strong>true foldability</strong>.</p>
+        </div>
+        <div class="own-card">
+          <h3>Simple Ownership Model</h3>
+          <p>Direct sales, clear pricing, and <strong>no traditional dealer markup</strong>. MSRP of <strong>$6,999</strong>.</p>
+        </div>
+        <div class="own-card">
+          <h3>Warranty</h3>
+          <p><strong>Battery: 3.5 years. Controller: 3 years.</strong> Coverage on manufacturing defects so you can ride with confidence.</p>
+        </div>
+        <div class="own-card">
+          <h3>Service</h3>
+          <p><strong>Send us the failing part — we ship a replacement.</strong> Modular design means most components swap without specialized tools or a dealer visit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="section" id="story">
+    <div class="section-inner">
+      <div class="section-label">Story</div>
+      <h2 class="section-title">From Amsterdam folding bikes to a motorcycle that travels.</h2>
+      <div class="story-copy">
+        <p>
+          The idea for SkeletKey was conceived in Amsterdam, inspired by the city’s culture of folding e-bikes — machines that disappear into apartments, trains, and daily life. The question was simple: why shouldn’t a real electric motorcycle fold the same way?
+        </p>
+        <p>
+          While building the first prototypes and waiting on my Dutch wife’s K-1 visa to be approved, I traveled with the frame four times back and forth. The bike had to move as easily as we did.
+        </p>
+        <p>
+          We’re now happily married for over two years and living in New York City. SkeletKey is the machine that came out of that journey — a folding, modular, long-range electric motorcycle built for people who refuse to choose between performance and portability.
+        </p>
+        <p>
+          <a href="https://instagram.com/skeletkey" target="_blank" rel="noopener" class="story-ig">Follow the build on Instagram → @skeletkey</a>
+        </p>
+        <p>
+          See how I've transformed every company I've worked for by coaching up my team, motivating them, and raising the technical bar for other teams to follow our blueprint.
+        </p>
+        <p>
+          Zelis, newyorker.com, vogue.com, gq.com, wired.com, and over 70 international brands bring in over 100 millions of unique viewers a day due to the engine my teams built, the rich deployment pipeline, component library, style guide, and bridge building across a massive company.
+        </p>
+        <p>
+          Click the link below to see the breadth of my software, hardware, musical, and innovative skills and experience.
+        </p>
+        <p>
+          <a href="https://www.linkedin.com/in/nathan-mcdowell?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" target="_blank" rel="noopener" class="story-ig">LinkedIn → Nathan McDowell</a>
+        </p>
+        <p>
+          Listen to my debut album inspired by the process of building Puca, the first folding, modular, electric motorcycle.
+        </p>
+        <p>
+          <a href="/puca/" class="story-ig">Listen to Puca → Music</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORY / ITERATIONS -->
+  <section class="section history-section" id="history">
+    <div class="section-inner">
+      <div class="section-label">History</div>
+      <h2 class="section-title">Iterating until the fold was light enough to matter.</h2>
+      <p class="section-lead">
+        Before the production plan, we built and rebuilt. Each generation of the Puca prototype taught us what to keep — and what to strip away.
+      </p>
+
+      <div class="history-grid">
+        <div class="history-card">
+          <picture>
+            <source srcset="assets/iteration-1.webp" type="image/webp" />
+            <img src="assets/iteration-1.jpg" alt="Design iteration one — early black prototype by the fireplace" class="history-img" />
+          </picture>
+          <h3>Design iteration one</h3>
+          <p>First complete machines proved the folding concept and long-range battery could coexist — but weight and complexity were still too high for real apartment and travel use.</p>
+        </div>
+        <div class="history-card">
+          <picture>
+            <source srcset="assets/iteration-2.webp" type="image/webp" />
+            <img src="assets/iteration-2.jpg" alt="Design iteration two — white folding chassis with modular pack and windscreen" class="history-img" />
+          </picture>
+          <h3>Design iteration two</h3>
+          <p>Those lessons became SkeletKey — focused on foldability, modular power, and the lowest practical chassis weight so the bike fits elevators, trunks, and real city life.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK WITH US -->
+  <section class="section work-section" id="work">
+    <div class="section-inner">
+      <div class="section-label">Work with us</div>
+      <h2 class="section-title">Technical Co-Founder</h2>
+      <p class="section-lead">
+        SkeletKey is the first folding, electric, modular, affordable motorcycle — built to move between dense city gridlock and rural back roads.
+      </p>
+      <p class="section-lead">
+        We’re looking for a <strong>Technical Co-Founder</strong> to own hardware prototyping, mechanical fabrication, and EV systems as we take the machine from proven prototype to production.
+      </p>
+
+      <div class="work-card">
+        <h3>What you’ll lead</h3>
+        <ul>
+          <li><strong>Quick-detach battery enclosure</strong> — industrial-strength housing for the modular NMC+ pack that latches rigidly at speed, releases for fold and travel, and stays shock- and vibration-resistant on dual-terrain roads.</li>
+          <li><strong>Environmental ruggedization</strong> — waterproofing and thermal paths for the controller and high-power electronics (IP-minded sealing without killing heat dissipation).</li>
+          <li><strong>Structural integration</strong> — seat and mounting hardware that carries real load, survives potholes and dirt, and never blocks the fold.</li>
+          <li><strong>Rapid prototyping</strong> — 3D print, fabricate, field-test, iterate. Hands-on over paperwork.</li>
+        </ul>
+      </div>
+
+      <div class="work-card">
+        <h3>Who you are</h3>
+        <ul>
+          <li>Hardware hacker, industrial designer, or mechanical engineer who builds in the real world.</li>
+          <li>Comfortable with high-power hub motors (QS-class layouts), phase wiring, and high-amp controllers.</li>
+          <li>Experienced in enclosure design, structural fabrication, sealing (IP), or advanced additive manufacturing.</li>
+          <li>Excited about micro-mobility and shaping an early-stage vehicle — not just shipping tickets.</li>
+        </ul>
+      </div>
+
+      <div class="work-card work-cta-card">
+        <h3>This is a co-founder seat</h3>
+        <p>
+          Equity and ownership are part of the conversation from day one. If you’re ready to own the physical machine with us, apply below — select <strong>Apply for Co-Founder</strong> on the contact form and tell us what you’ve built.
+        </p>
+        <p class="work-links">
+          <a href="#order" class="btn btn-primary">Apply for Co-Founder</a>
+          <a href="https://www.linkedin.com/jobs/view/4444843577" class="btn btn-secondary" target="_blank" rel="noopener">View on LinkedIn</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq-section" id="faq">
+    <div class="section-inner">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Common questions.</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>1. Do I need a motorcycle license?</h3>
+          <p>Yes. SkeletKey is classified as a motorcycle — it just folds. Check your local licensing requirements for motorcycles in this power class.</p>
+        </div>
+        <div class="faq-item">
+          <h3>2. What waterproof rating does it have?</h3>
+          <p>IP65. The electrical systems and critical interfaces are designed to handle rain, road spray, and wet conditions.</p>
+        </div>
+        <div class="faq-item">
+          <h3>3. How do I pay?</h3>
+          <p>Reserve with $100. Then you have the option to pay half at order time and half before it ships.</p>
+        </div>
+        <div class="faq-item">
+          <h3>4. Where do you ship?</h3>
+          <p>Anywhere in the world, as long as customs allows it. Shipping price depends on the destination country.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER -->
+  <section class="order-section" id="order">
+    <div class="price-tag">$6,999</div>
+    <div class="price-note">Reservations open</div>
+    <h2>Ready when you are.</h2>
+    <p>
+      Join the first wave of SkeletKey owners. Reserve your place in the production queue and be among the first to ride a true folding, long-range electric motorcycle.
+    </p>
+
+    <form class="order-form" id="orderForm" action="https://formsubmit.co/nateclaudemcdowel@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="SkeletKey Reservation Request" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value="https://skeletkey.com/#order" />
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required placeholder="Your name" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="you@email.com" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Phone (optional)</label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" />
+        </div>
+        <div class="form-group">
+          <label for="interest">Interest</label>
+          <select id="interest" name="interest">
+            <option value="reservation">Reserve a production slot</option>
+            <option value="deposit">Ready to place a deposit</option>
+            <option value="cofounder">Apply for Co-Founder</option>
+            <option value="info">Just want more information</option>
+            <option value="fleet">Fleet / wholesale inquiry</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="message">Message (optional)</label>
+        <textarea id="message" name="message" rows="3" placeholder="Anything you'd like us to know..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">Submit Reservation Request</button>
+      <p class="form-note">Reserve with $100. Then pay half at order time and half before shipping. We’ll follow up within 24–48 hours.</p>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Skelet<span>Key</span></div>
+        <p class="footer-desc">
+          The first folding, electric, and modular motorcycle. Built for real range, real cities, and real travel.
+        </p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#bike">The Bike</a></li>
+          <li><a href="#specs">Specs</a></li>
+          <li><a href="#fold">Fold & Travel</a></li>
+          <li><a href="#battery">Battery</a></li>
+      <li><a href="#charge">Charge</a></li>
+          <li><a href="#display">Display</a></li>
+          <li><a href="#maintain">Maintain</a></li>
+          <li><a href="#order">Order</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#story">Story</a></li>
+          <li><a href="#history">History</a></li>
+          <li><a href="#work">Work with us</a></li>
+          <li><a href="/software/">Software</a></li>
+          <li><a href="/puca/">Music — Puca</a></li>
+          <li><a href="/private-ai-gateway/">Private AI Gateway</a></li>
+          <li><a href="https://instagram.com/skeletkey" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="mailto:nate@skeletkey.com">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#ownership">Warranty</a></li>
+          <li><a href="#ownership">Service</a></li>
+          <li><a href="mailto:nate@skeletkey.com">nate@skeletkey.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SkeletKey. All rights reserved.</span>
+      <span>skeletkey.com</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
