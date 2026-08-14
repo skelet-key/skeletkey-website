@@ -5,9 +5,10 @@ Official marketing site for **SkeletKey** — the first folding, electric, and m
 **Live domain:** [skeletkey.com](https://skeletkey.com)
 
 ## Stack
-- Pure HTML / CSS / JS (no framework)
-- Dark premium theme with champagne gold accents
-- Fully responsive
+
+* Pure HTML / CSS / JS (no framework)
+* Dark premium theme with champagne gold accents
+* Responsive design
 
 ## Local development
 
@@ -20,9 +21,10 @@ Then open http://localhost:8080
 ## Deploy
 
 Recommended free hosts that support custom domains:
-- **Cloudflare Pages** (unlimited bandwidth — recommended)
-- Netlify
-- GitHub Pages
+
+* **Cloudflare Pages** (unlimited bandwidth — recommended)
+* Netlify
+* GitHub Pages
 
 ## Structure
 
@@ -32,3 +34,4 @@ Recommended free hosts that support custom domains:
 ├── js/main.js
 └── assets/
 ```
+
