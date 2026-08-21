@@ -134,3 +134,27 @@ FarDriver stays **$199** until they quote 5k. Pack modeled at **$1,200** (8.5 kW
 Optional (not in kit): Statorade ~$8 bulk; hubsinks.
 
 Do **not** mix 6061 chassis-mill quotes into A1; 6061 is deck/rails only.
+
+---
+
+## 4. Coverage vs this chat (honest)
+
+**In the $3,139 vehicle kit** (matches Action Item Tracker): Kalosse folder @ $375 · ~60 lb / 8.5 kWh pack @ $1,200 · QS205 3T · FarDriver **$199** · HIMALO + ZS44 + stem + bars + 20×4.0 front wheel/tire/disc · rear tire, 6×44 rotor, left caliper, M16 torque arms, phase/Hall · 6061 deck/rails/legs/gussets, café seat + isolators, Grade 8, straps · slide ± / QS8, D4N interlock, cam lock, 200 A fuse + precharge · CCS1 inlet + Küster + EVCC + IMD + contactors + 6–8 kW DC–DC + 12 V aux · wireless signals / brake / headlamp · ESP32 BLE ignition + hall throttle + kill · magnetic mount · windscreen · crate.
+
+**In the kit, lumped (not a separate SKU):** star nut / top cap / spacers (in D2) · magnetic **ring** (in I6) · ESP32 jumpers (in I4) · pack QS8 ports (in B1).
+
+**Deliberately out of the vehicle kit**
+
+| Item | Why |
+|------|-----|
+| **Rear shock** | Kalosse listing is full-suspension **frame**; 9.2 lb is frame-only. Shock is a separate buy if the inbound unit has no damper. |
+| **Kickstand** | On the Blender model; not costed. |
+| **Statorade / hubsinks** | Optional thermal for 3T @ 60 V. |
+| **SN65HVD230 CAN** | Skipped — FarDriver BT, not Votol CAN. |
+| **Home CCS1 wall box / ~63 V AC–DC brick** | Rider accessory, not on-bike. |
+| **Tesla / CCS1 adapter, public-station map** | Infrastructure, not BOM. |
+| **Puca app / phone** | Software; rider’s phone is the dash. |
+| **Assembly labor** | $500/unit extra. |
+| Horn / mirrors / plate | Street-legal extras; not locked in chat. |
+
+If the inbound frame has **no** rear shock, add ~**$40–60** bulk and the kit is ~**$3,180–$3,200**. Confirm on unboxing.
