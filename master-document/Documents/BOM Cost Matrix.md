@@ -1,21 +1,25 @@
-
-
-**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 # Bill of Materials (BOM) Cost Tracking Matrix
-## Target Volume: 10,000 Units/Year | Base Allocation: $3,200.00 Target
+## Target volume: 10,000 units/year · $3,200 sourced-kit target
+## Updated: 2026-08-21
 
-### 1. High-Level Cost Breakdown Matrix
+All lines are **purchased parts** (or small outsourced fab lots). Frames are **sourced complete**.
 
-| Category / Component | Sourcing Model | Material Spec / Layout | Target Unit Cost ($) | Scaled Annual Allocation ($) |
-| :--- | :--- | :--- | :--- | :--- |
-| **Structural Frame Kit** | Consigned Sourcing | Extruded carbon steel Aluminum | $450.00 | $4,500,000.00 |
-| **Powertrain Pack** | Consigned Sourcing | 16S2P NMC Cell Configuration | $1,250.00 | $12,500,000.00 |
-| **Motor & Controller** | Turnkey / Direct | Peak Output Regulated / High-Amp | $650.00 | $6,500,000.00 |
-| **Suspension & Braking** | Turnkey / Direct | Integrated Regen / Hydraulic | $350.00 | $3,500,000.00 |
-| **Wiring & Electronics** | Consigned Sourcing | Shielded Harness / Sealed Connectors | $200.00 | $2,000,000.00 |
-| **Bodywork & Hardware** | Turnkey / Direct | Impact-Resistant ABS / Fasteners | $300.00 | $3,000,000.00 |
-| **Total Component BOM** | **Consigned Sourcing** | **Fully Scaled Components** | **$3,200.00** | **$32,000,000.00** |
+### 1. High-level
 
-### 2. Operational Variance Parameters
-* **Material Cost Thresholds:** Raw carbon steel pricing fluctuations exceeding ±5% must trigger an immediate renegotiation of the extruded profile supply agreements.
-* **Yield Rate Tracking:** Structural frame scrap rate at Tier 2 welding must be held below 1.5% to maintain the $450.00 sub-assembly target.
+| Category | Sourcing | Spec (current) | Target unit $ | Annual 10k $ |
+| :--- | :--- | :--- | ---: | ---: |
+| **Folding frame** | OEM sourced complete | Carbon steel folder · 9.2 lb measured · 190 mm dropout | 450 | 4,500,000 |
+| **Battery module** | Pack OEM | ~8.5 kWh · ~63 V · ~60 lb · NMC+ · BMS BT · dual QS8 | 1,250 | 12,500,000 |
+| **Motor & controller** | Direct | QS205 V3 50H 3T 28.6 lb + FarDriver ND72360 BT | 650 | 6,500,000 |
+| **Suspension, wheels, brakes** | Direct | 20×4.0 front, fork, discs, torque arms | 350 | 3,500,000 |
+| **Harness, CCS, dash path** | Direct / consigned | CCS1 stack, QS8, lights, phone mount | 200 | 2,000,000 |
+| **Deck, seat, hardware, crate** | Direct | 6061 deck + café seat + fasteners | 300 | 3,000,000 |
+| **Total sourced BOM** | | | **3,200** | **32,000,000** |
+
+Contract **assembly labor** is **not** in this table ($500/unit separate).
+
+### 2. Variance
+
+* Frame price is an **OEM buy**, not scrap yield on our weld line. Dual-source if one folder vendor misses rate or quality.
+* Pack is the long-lead / high-dollar line — 8 kW charge and ~60 lb mass are spec gates.
+* Do not mix **6061 chassis mill** quotes into the frame line; 6061 is deck/enclosure only.

@@ -1,39 +1,29 @@
-# Request for Proposal (RFP) Template
-**Project Name:** 10,000-Unit High-Velocity Folding Motorcycle Final Assembly Program
-**Issuance Date:** August 2026
-**Target Partner Category:** Tier 1 Mobility & Automotive-Grade Contract Manufacturers
+# Request for Proposal — Contract Assembly
+**Program:** Puca folding electric motorcycle · **10,000 units/year**  
+**Partner type:** Vehicle / e-mobility **assembler** (not a frame mill)  
+**Updated:** 2026-08-21
 
----
+## 1. Intent
 
-**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
+SkeletKey **sources** folding frames and all other parts. This RFP is for **final assembly, software flash, QA, and crating** under a **consigned kit** model.
 
-## 1. Statement of Intent & Operational Model
-The purpose of this Request for Proposal (RFP) is to select a high-capability Tier 1 contract manufacturing partner to execute the final assembly, software integration, and quality assurance firewall for a premium folding motorcycle. 
+You will **not** be asked to weld a proprietary chassis or run extrusion dies.
 
-This program operates strictly under a **Consigned Assembly Model**. The sourcing entity provides all components, including prefabricated high-tolerance carbon steel structural components, directly to the assembly floor.
+## 2. Scope
 
----
+* Receive complete sourced **carbon steel folding frames** (prototype class: **9.2 lb**, **190 mm** dropout).
+* Fit **QS205 V3 50H 3T**, **FarDriver ND72360**, modular **~60 lb / 8.5 kWh** pack, 6061 deck, café seat, controls, CCS path as specified.
+* Sustain **40 finished units/day** at rate (or propose dual-site split).
+* SkeletKey owns jigs and test fixtures.
 
-## 2. Manufacturing & Component Scope
+## 3. QA
 
-### Tier 2 Sub-Assembly Marriage
-* **Structural Elements:** Automated precision welding, alignment, and verification of the carbon steel folding frame mechanism.
-* **Powertrain Integration:** Modular connection of the 16S2P NMC cell configurations, high-amp controller housing, and insulated wiring harnesses.
+* **L1:** IQC incoming sourced frames and lots (dropout, headset, latch, pack hipot).
+* **L2:** HV insulation, pack lock/polarity, controller flash.
+* **L3:** Short dyno/roll + spray on electrical seals (IP65).
 
-### Tier 1 Final Line Requirements
-* **Throughput Velocity:** Capability to sustain a production cadence of 40 completed vehicles per active working day.
-* **Tooling Ownership:** Sourcing entity retains complete equity and title over all custom pick-and-place files, molding, and mechanical alignment fixtures.
+## 4. Commercial
 
----
-
-## 3. Strict Quality Assurance (QA) Parameters
-
-### Layer 1: Incoming Material Control
-* Complete ultrasonic verification of incoming carbon steel weld penetration depth to eliminate fatigue risk.
-
-### Layer 2: In-Line Powertrain Validation
-* Automated dielectric isolation verification on high-voltage connections before final vehicle closure.
-
-### Layer 3: Final Inspection Gate
-* Mandatory 10-minute automated dynamometer simulation checking motor hall sensors and regenerative brake feedback.
-* High-pressure environmental water spray box test to confirm absolute component waterproofing.
+* Target **$500/unit** labor + overhead + QA. **No parts markup.**
+* Optional ≤$15/unit handling bonus tied to FTT.
+* Payment on QA-passed crates; LC acceptable. No personal guarantees from founders.

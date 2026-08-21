@@ -9,7 +9,7 @@
 
 ## 1. Executive System Architecture & Framework
 
-This comprehensive, pageless engineering blueprint consolidates the complete structural, mechanical, and electrical requirements for building the high-performance folding electric motorcycle prototype. The system leverages the lightweight properties of a measured **9.2 lb carbon steel folding frame** as a foundation to carry a heavy-duty, high-energy-density **60.8V Nominal NMC battery module** and a **QS205 V3 (50H) Spoke Hub Motor** (Bicycle/Moped axle, **13.0 kg / 28.6 lbs**, 4,000–5,000W continuous / 12,000W peak). 
+This comprehensive, pageless engineering blueprint consolidates the complete structural, mechanical, and electrical requirements for building the high-performance folding electric motorcycle prototype. The production model is **source the folding frame and parts; contract assemblers to 10,000/year** — not a SkeletKey frame factory. The prototype uses a measured **9.2 lb carbon steel folding frame** to carry a high-energy-density **~63 V / ~8.5 kWh / ~60 lb NMC+ module** and a **QS205 V3 (50H) 3T Spoke Hub Motor** (20×4.0, **13.0 kg / 28.6 lbs**, 4,000–5,000W continuous / ~12,000W peak) with **FarDriver ND72360 BT**. 
 
 By pairing a featherweight structural frame with a massive power system, this architecture is engineered to reach speeds of **up to 70 mph** while providing an extended range of **over 100 miles** under precise cruising management.
 
@@ -17,7 +17,7 @@ By pairing a featherweight structural frame with a massive power system, this ar
 
 ## 2. Structural Layout & Hinge Protection Scheme
 
-To prevent catastrophic failure of the central folding hinge under heavy mechanical loading, the 57 lb battery module bypasses the frame's internal cavity. It relies instead on an isolated structural exoskeleton cradle clamped directly to the non-folding rear main triangle.
+To prevent catastrophic failure of the central folding hinge under heavy mechanical loading, the ~60 lb battery module bypasses the frame's internal cavity. It relies instead on an isolated structural exoskeleton cradle clamped directly to the non-folding rear main triangle.
 
 ### Visual Structural Layout Schema
 > 🔹 **FRONT ASSEMBLY**
@@ -30,11 +30,11 @@ To prevent catastrophic failure of the central folding hinge under heavy mechani
 > 
 > 🟥 **POWER CRADLE**
 > **Structural Exoskeleton Cradle** *(Isolated from Hinge Latch)*
-> * **Payload:** Holds 60V 16S2P NMC Battery Pack (~55 lbs)
-> * **Hardware:** Features Quick-Release Mechanical Guide Rails & Cam-Latches
+> * **Payload:** Holds ~63 V 8.5 kWh NMC+ pack (~60 lb)
+> * **Hardware:** Quick-release guide rails, ± slide contacts, cam-latches
 > 
 > ⚙️ **REAR DRIVE**
-> **Rear Swingarm / Drop-Outs** *(170mm-190mm Fat Tire Spacing)*
+> **Rear Swingarm / Drop-Outs** *(190 mm fat-tire spacing — locked)*
 > * **Anchors:** Bolt-on Chromoly Steel Torque Arms (Dual-Sided) lock the Hub Motor Axle
 > * **Contact:** 4.0" Ultra-Wide Fat Tire
 
@@ -58,7 +58,7 @@ The electrical distribution utilizes low-impedance pathways to accommodate high 
 > 🔌 **ANDERSON SB175 / ANTI-SPARK QUICK-CONNECT**
 > 🚨 **MAIN MANUAL DISCONNECT (Emergency Marine-Grade Breaker)**
 > ⬇️
-> 🧠 **HIGH-PHASE 150A CONTROLLER (Waterproofed Bottom Mount)**
+> 🧠 **FARDRIVER ND72360 BT (48–72 V, waterproofed)**
 > ⬇️ *(3-Phase Power + Hall Sensors)*
 > 🛞 **QS205 V3 (50H) SPOKE HUB MOTOR** — 4,000–5,000W continuous / 12,000W peak · 13.0 kg (28.6 lbs) · Bicycle/Moped axle (Locked via Torque Arms)
 

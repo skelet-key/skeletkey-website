@@ -1,28 +1,22 @@
-
-
-**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 # Engineering Change Notice (ECN)
-## Document ID: ECN-2026-001 | Status: DRAFT
+## Document ID: ECN-2026-002 | Status: ACTIVE
+## Updated: 2026-08-21
 
-### 1. General Information
-* **Product Name:** Folding Electric Motorcycle
-* **Originator:** Engineering & Operations Team
-* **Date:** August 1, 2026
-* **Change Type:** Material Optimization & Standardization
+### 1. General
+* **Product:** Puca folding electric motorcycle
+* **Change type:** Production model + hardware baseline
 
-### 2. Description of Change
-This notice formalizes the technical migration of all primary structural frame components from baseline aluminum to the precise heat-treated structural alloy specification (**carbon steel**). This structural upgrade guarantees required tensile strength thresholds for the folding hinge mechanisms and structural torque arms.
+### 2. Description
+**Withdraw** in-house / Tier-2 **frame fabrication, extrusion dies, and 6061-T6 chassis weld** as the scale plan.
 
-### 3. Affected Components & Systems
-* **Frame Sub-Assembly:** Main central tube, folding hinge bosses, rear swingarm mounts.
-* **Suspension Mounts:** Front fork bridge connections and rear shock linkage arms.
-* **Torque Arms:** Motor axle dropout interfaces.
+**Replace with:** SkeletKey **sources complete folding frames** (carbon steel prototype **9.2 lb**, **190 mm** dropout) and all other parts. **Contract assemblers** only, **10,000 units/year**.
 
-### 4. Technical & Quality Specification Adjustments
-* **Material Spec:** ASTM B221 / Aluminum carbon steel Extruded Profiles.
-* **Welding Parameters:** Post-weld heat treatment protocols or localized aging requirements must be verified by the Tier 2 fabricator to preserve -T6 temper mechanical properties.
-* **QA Validation:** Layer 1 ultrasonic wave reflection thresholds and X-ray non-destructive testing (NDT) criteria calibrated specifically to carbon steel acoustic velocities and structural density.
+Powertrain lock: **QS205 V3 50H 3T** (28.6 lb, HAVE), **FarDriver ND72360 BT** (HAVE), pack **~8.5 kWh / ~63 V / ~60 lb**, CCS1 inlet HAVE.
 
-### 5. Inventory & Disposition Strategy
-* **Pre-Existing Prototypes:** Scrap or mark for low-stress test-bench utilization only.
-* **Scaled Sourcing Production:** All long-lead raw material procurement orders must explicitly mandate certified carbon steel mill runs.
+### 3. Affected docs
+Production and Sourcing Model.md is canonical. Assembly / QA / Financial PDFs are archive. Use the new .md files.
+
+### 4. Disposition
+* Do not place mill-run extrusion die POs.
+* Frame POs = **finished folders** from OEM.
+* 6061 remains for **deck, rails, enclosure** only.

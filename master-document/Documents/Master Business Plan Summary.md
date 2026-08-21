@@ -1,36 +1,53 @@
-
-
-**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
 # MASTER BUSINESS PLAN EXECUTIVE SUMMARY
-## Project: Scalable Folding Electric Motorcycle
-## Target Output: 10,000 Units / Year (Run Rate: 40 Units/Day)
+## Project: Puca — folding electric motorcycle
+## Target output: 10,000 units / year (run rate ~40 units/day)
+## Model: Source frames & parts · contract assemblers only
+## MSRP: $6,999
+## Updated: 2026-08-21
 
-### 1. VENTURE ARCHITECTURE & STRATEGY
-This venture introduces a high-performance, asset-light urban mobility platform: a premium folding electric motorcycle designed for rapid scale. By maintaining strict design and brand ownership while fully decoupling physical fabrication from corporate operations, the business avoids capital-intensive manufacturing infrastructure.
+**Canonical production story:** [Production and Sourcing Model.md](Production%20and%20Sourcing%20Model.md)
 
-*   **Manufacturing Model**: 100% Consigned Assembly Model. Components are procured at scale directly from component suppliers and fed straight into a tiered network of assembly partners, eliminating traditional 10%–15% manufacturer material markups.
-*   **Decoupled Fabrication**: Production is divided across specialized Tier 2 structural frame fabricators and electronic powertrain integrators, which route assemblies into a central Tier 1 hub for final marriage, vehicle flashing, and shipping.
-*   **Structural Standardization**: All chassis elements are standardized around heat-treated **carbon steel** to ensure structural resilience across folding joints while utilizing predictable cutting, bending, and welding workflows.
+---
 
-### 2. COMPREHENSIVE QUALITY ASSURANCE FIREWALL
-Achieving automotive-grade reliability at a throughput velocity of 40 units per day requires an active, multi-layered inline inspection ecosystem rather than reactive post-production checks.
+### 1. VENTURE ARCHITECTURE
 
-*   **Layer 1 (Incoming Quality Control)**: Automated Optical Inspection (AOI) and ultrasonic weld validation calibrated to the structure of **carbon steel** frames to catch microscopic structural cracks at the source.
-*   **Layer 2 (In-Line Powertrain Validation)**: Automated dielectric isolation testing on high-voltage lines, alongside thermal chamber cycling for the custom 16S2P NMC lithium battery configuration.
-*   **Layer 3 (End-of-Line Verification)**: Every single vehicle undergoes a mandatory 10-minute automated dynamometer track simulation to log motor hall sensor feedback and electronic current clipping, followed by a high-pressure environmental water spray test.
+SkeletKey is an **asset-light** mobility brand. We own design, BOM, software, and supplier relationships. We **do not** build frames in our own factory.
 
-### 3. FINANCIAL PATTERNS & UNIT ECONOMICS
-The venture demonstrates institutional-grade unit economics with an exceptionally high margin profile that rapidly cushions engineering, logistics, and tooling overheads.
+* **Sourcing:** Folding chassis, hub motors, controllers, battery modules, CCS hardware, wheels, and controls are **purchased**. Prototype frame is a sourced **9.2 lb carbon steel** folder (**190 mm** dropout). Motor on hand: **QS205 V3 50H 3T, 28.6 lb**. Controller on hand: **FarDriver ND72360 BT**.
+* **Assembly:** Contract assemblers receive **consigned kits** and are paid for labor, line time, and QA — **not** a parts markup (target **~$500/unit**).
+* **Scale:** 10,000 finished motorcycles per year is an **assembly + logistics** rate, not a mill/weld-shop rate.
+* **Structure:** Folding **frame is sourced complete**. 6061 is used for **battery deck / slide rails / enclosure**, bolted to the steel frame.
 
-| Financial Metric | Value Per Unit | Annualized (10,000 Units) | % of MSRP |
+### 2. QUALITY FIREWALL (ASSEMBLER + IQC)
+
+* **Layer 1 — Incoming:** Inspect **sourced** frames (dropout width, headset, fold latch, cracks, mass) and all powertrain lots before they enter the line. We do not re-weld OEM frames as the production plan.
+* **Layer 2 — Line:** Dielectric / hipot on HV, BMS/FarDriver flash, slide-in pack lock and polarity check, CCS interlock (when fitted).
+* **Layer 3 — EOL:** Short dyno or roller test (speed/current/temp), lights/brakes/fold, water-spray on sealed joints. IP65 electrical target.
+
+### 3. UNIT ECONOMICS (10,000 UNITS)
+
+| Financial metric | Per unit | Annualized (10,000) | % of MSRP |
 | :--- | :--- | :--- | :--- |
-| **MSRP** | $7,000.00 | $70,000,000.00 | 100.00% |
-| **Bill of Materials (BOM)** | $3,200.00 | $32,000,000.00 | 45.71% |
-| **Outsourced Assembly & QA Labor** | $500.00 | $5,000,000.00 | 7.14% |
-| **Gross Margin** | **$3,300.00** | **$33,000,000.00** | **47.14%** |
+| **MSRP** | $6,999 | $69,990,000 | 100% |
+| **Sourced BOM** | $3,200 | $32,000,000 | 45.7% |
+| **Contract assembly & QA labor** | $500 | $5,000,000 | 7.1% |
+| **Gross margin** | **$3,299** | **$32,990,000** | **47.1%** |
 
-### 4. TOOLING AMORTIZATION & FINANCING SECURITY
-*   **CapEx Deferral**: Upfront manufacturing tooling costs ($300,000.00 total) are amortized directly into the early per-unit BOM to preserve liquid operating capital.
-*   **Frame tooling / fixture package**: $120,000.00 allocated across the first 5,000 units, translating to a temporary $24.00 per-unit surcharge that automatically drops off upon milestone completion.
-*   **Stamping & Hinge Molds**: $180,000.00 allocated across the full 10,000-unit run at a predictable $18.00 per bike.
-*   **Corporate Financing Guardrails**: Inventory financing facilities and working capital lines are structured cleanly around the collateralized asset value of materials on the water or factory floor, completely **omitting personal guarantees** from the founders.
+BOM is **bought parts**, not in-house extrusions.
+
+### 4. NRE / FIXTURES (NOT FRAME DIES)
+
+* CapEx is **assembly jigs, incoming gauges, hipot, short dyno, spray booth** — not $300k extrusion dies.
+* Order-of-magnitude **~$160k** NRE amortized over Year 1 volume (~$16/unit), then drops off.
+* Inventory lines collateralized on **parts and finished goods**, omitting personal guarantees.
+
+### 5. PRODUCT (LOCKED DIRECTION)
+
+| | |
+|--|--|
+| Name | Puca by SkeletKey |
+| Frame | Sourced carbon steel folder · 9.2 lb measured |
+| Motor | QS205 V3 (50H) 3T · 28.6 lb · 4–5 kW / ~12 kW peak · 70 mph class |
+| Pack | ~8.5 kWh · ~63 V · ~60 lb · semi-solid NMC+ · slide-in · dual QS8 |
+| Charge | CCS1 6–8 kW (inlet on hand) + home 120/240 V brick |
+| Ride UI | Phone dash (Puca app) + FarDriver tune app |

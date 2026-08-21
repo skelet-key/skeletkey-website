@@ -19,24 +19,24 @@ Dear [Insert BD Director Name],
 This Letter of Intent ("LOI") outlines the preliminary framework and core operational terms under which **[Insert Your Company Name]** ("Discloser" or "Company") intends to enter into a definitive Master Manufacturing Agreement ("MMA") with **[Insert Target Contract Manufacturer Name]** ("Manufacturer" or "CM") for the final assembly, integration, and quality validation of the Company's proprietary folding electric motorcycle platform.
 
 ### 1. Statement of Program Purpose
-The Company has engineered a premium folding vehicle platform optimized for urban mobility. Having successfully finalized component architectures and scaled raw material procurement networks, the Company requires an enterprise-grade Tier-1 assembly partner to scale manufacturing to a target baseline volume of **10,000 units within the first operational year**. 
+The Company has engineered a premium folding vehicle platform optimized for urban mobility. Having sourced frames and major parts, the Company requires a **contract assembler** (not a frame mill) to scale to **10,000 units in the first operational year**. 
 
 ### 2. Primary Production & Material Specifications
 The definitive agreement shall be built upon the following standardized technical and throughput parameters:
-* **Production Run-Rate:** Execution of a Low-Rate Initial Production (LRIP) ramp phase leading to a steady-state velocity of **40 motorcycles per working day** (modeled at 2.5 units per hour over a 250-day active annual production calendar).
-* **Consignment Model:** The manufacturing program shall operate under a 100% consigned material flow structure. The Company shall directly source, finance, and deliver all components—including powertrain packs, wiring harnesses, and custom **carbon steel folding frame assemblies**—directly to the Manufacturer's factory floor. The Manufacturer shall not apply part markups, handling surcharges, or material sourcing buffers outside of contracted labor and physical storage rates.
-* **Chassis Material Standardization:** The Manufacturer recognizes that all structural chassis elements are fabricated from extruded and heat-treated **carbon steel**, demanding strict operational care to maintain mechanical temper profiles during final hardware fastening and hinge installation.
+* **Production run-rate:** LRIP then **40 motorcycles per working day** (10,000/year on a 250-day calendar).
+* **Consignment:** The Company sources and delivers **complete folding frames** and all other parts to the Manufacturer. The Manufacturer **does not fabricate frames** and shall not apply parts markups beyond contracted labor and storage.
+* **Chassis:** Incoming **sourced carbon steel folding frames** (prototype class **9.2 lb**, **190 mm** dropout). IQC only — no production weld cell in this program.
 
 ### 3. Financial Architecture & Cost Targets
 The economic parameters targeted by both parties for the definitive agreement include:
-* **Per-Unit Assembly Allocation:** A targeted baseline rate of **$500.00 per completed unit** to cover direct factory assembly labor, line-utilization overhead, and in-line quality assurance tracking. This represents an annualized program labor value of **$5,000,000.00**.
-* **Upfront Tooling & Die Amortization:** The parties agree to explore a CapEx Deferral Framework to absorb necessary specialized fixtures and assembly molds into the per-unit Bill of Materials (BOM) cost layout, limiting initial upfront cash outlays. The Company shall retain 100% physical ownership and intellectual rights over all custom tooling, frame jigs, and stamping dies developed for this program.
+* **Per-unit assembly:** **$500.00** labor, line overhead, and in-line QA (**$5,000,000** at 10,000 units).
+* **Fixtures:** Assembly jigs and EOL test equipment (~$160k class), owned by the Company — **not** frame extrusion dies or hinge stamps.
 
 ### 4. Continuous Quality Assurance (QA) Firewall
 The Manufacturer agrees to integrate the Company's mandatory three-layer quality checking blueprint directly into the physical assembly line architecture:
-* **Layer 1 (Component Validation):** Strict inspection of structural frame alignments, validating that incoming **carbon steel frame welds** comply with non-destructive acoustic and visual tolerances.
-* **Layer 2 (In-Line Powertrain Validation):** High-voltage insulation testing, dielectric separation mapping, and active electronic programming checks to safe-clip system current draw before final enclosure sealing.
-* **Layer 3 (End-of-Line Verification):** Mandatory 10-minute automated dynamometer track simulations for 100% of completed vehicles to verify torque curves, alongside automated high-pressure environmental water spray testing to guarantee a completely impervious seal.
+* **Layer 1:** IQC of **sourced** frames (dropout, headset, latch, visual) and lots.
+* **Layer 2:** HV insulation, pack lock/polarity, controller flash.
+* **Layer 3:** Short dyno/roll test and spray on electrical seals (IP65 target).
 
 ### 5. Definitive Agreement Conditions & Service Level Agreements (SLAs)
 The final Master Manufacturing Agreement shall include industry-standard performance protections, including:

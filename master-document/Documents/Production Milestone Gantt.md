@@ -1,44 +1,39 @@
-# Production Milestone Gantt Chart Framework
-**Target Delivery:** 10,000 Units in Year 1  
-**Run-Rate Baseline:** 40 Motorcycles Per Day  
+# Production Milestone Gantt
+**Target:** 10,000 assembled units in Year 1 · ~40/day at rate  
+**Model:** Source frames & parts · contract assemblers (see Production and Sourcing Model.md)  
+**Updated:** 2026-08-21
 
 ```
-Phase / Activity                      W1-2  W3-4  W5-6  W7-8  W9-10 W11-12 W13-14 W15-52
----------------------------------------------------------------------------------------
+Phase / Activity                         W1-4   W5-8   W9-12  W13-16  W17-52
+---------------------------------------------------------------------------
+PHASE 0: PROTOTYPE KIT (NOW)
+- Frame inbound / measure                     [XX]
+- Motor + FarDriver already HAVE
+- Deck / pack / CCS stack spec                [XXXX]
 
-**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
-PHASE 1: TOOLING & DIE CUTTING
-- Frame fixture / tooling prep     [XXX]
-- Hinge Stamping Mold Fabrication           [XXX]
-- Tooling Sign-off & Press Calibration            [XXX]
+PHASE 1: SOURCE & FIXTURES (not frame dies)
+- Dual-source frame OEM quotes                [XXX]
+- Assembly jigs, IQC gauges                   [XXXX]
+- EOL roller / hipot / spray                  [XXXX]
 
-PHASE 2: PRE-PRODUCTION VERIFICATION
-- Pilot Batch Component Ingest                    [XXX]
-- Low-Rate Initial Prod (LRIP)                          [XXX]
-- QA Firewall Test Bay Calibration                      [XXX]
+PHASE 2: LRIP
+- First assembler kit (pilot 50–200)                 [XXXX]
+- Freeze BOM from measured frame                     [XX]
 
-PHASE 3: REGULATORY CERTIFICATION
-- DOT Vehicle Field Certification                             [XXX]
-- UN38.3 Lithium Battery Safety Testing                       [XXX]
-- Official Fleet Clearance Sign-off                                 [XXX]
+PHASE 3: CERT / PACK
+- UN38.3 pack + motorcycle classification                  [XXXX]
+- CCS1 stack bring-up on inlet already HAVE                [XXXX]
 
-PHASE 4: FULL-SCALE PRODUCTION RAMP
-- Initial Ramp (10-20 Units/Day)                                          [XXX]
-- Run-Rate Target (40 Units/Day)                                                [XXXXX]
+PHASE 4: RATE
+- Assembler ramp 10 → 40 units/day                               [XXXXXXXX]
 ```
 
-## Detailed Milestone Descriptions
+### Phase notes
 
-### Phase 1: Tooling & Die Cutting (Weeks 1-6)
-* **Tooling Deferral Execution:** Track $120,000.00 upfront investment for carbon steel folding frame tooling.
-* **Amortization Trigger:** Apply temporary $24.00 per-unit surcharge across the first 5,000 units.
+**Phase 0** is the real bike on the bench: sourced **9.2 lb** carbon steel folder, **QS205 3T 28.6 lb HAVE**, **FarDriver ND72360 HAVE**.
 
-### Phase 2: Pre-Production Verification (Weeks 7-10)
-* **Fixture Testing:** Assembly line stress-testing utilizing initial consigned components.
-* **Calibration:** Baseline configuration for automated optical and insulation testing machinery.
+**Phase 1** buys **assembly and test fixtures**, not extrusion dies.
 
-### Phase 3: Regulatory & Certification Window (Weeks 11-14)
-* **Compliance Lock:** Unlocking volume manufacturing by passing official regional transportation testing.
+**Phase 2** proves a contract assembler can build from **our kit**.
 
-### Phase 4: Full-Scale Production Ramp (Weeks 15-52)
-* **Throughput Optimization:** Shifting assembly cadence up to full operational speed (2.5 units per hour).
+**Phase 4** is 10,000/year — assembler capacity, not a SkeletKey weld cell.

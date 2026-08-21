@@ -1,42 +1,30 @@
-# Financial Cash-Flow Pro Forma Framework
-**Target Annual Scale:** 10,000 Units
-**Vehicle MSRP:** $7,000.00
-**Material Allocation:** carbon steel Aluminum Structural Matrix & Core Powertrain
+# Cash-Flow Pro Forma Framework
+**Scale:** 10,000 units · **MSRP $6,999** · sourced BOM + contract assembly
+**Updated:** 2026-08-21
 
----
+## 1. Unit economics
 
-**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
+| Line item | Per unit ($) | Annualized ($) | % revenue |
+| :--- | ---: | ---: | ---: |
+| **Gross revenue (MSRP)** | **6,999** | **69,990,000** | **100%** |
+| Sourced BOM (frames & parts) | 3,200 | 32,000,000 | 45.7% |
+| Contract assembly & QA | 500 | 5,000,000 | 7.1% |
+| **Gross margin** | **3,299** | **32,990,000** | **47.1%** |
 
-## 1. Unit Economics Matrix
+## 2. Quarterly staging
 
-| Line Item | Per Unit ($) | Annualized Total ($) | % of Revenue |
-| :--- | :--- | :--- | :--- |
-| **Gross Revenue (MSRP)** | **7,000.00** | **70,000,000.00** | **100.00%** |
-| Bill of Materials (BOM) | 3,200.00 | 32,000,000.00 | 45.71% |
-| Outsourced Assembly & QA | 500.00 | 5,000,000.00 | 7.14% |
-| **Gross Margin Pool** | **3,300.00** | **33,000,000.00** | **47.14%** |
+### Q1 — kits & LRIP
+* ~1,000 units. Draw inventory line for **frames, packs, motors** (no die shop).
+* NRE: assembly jigs + test (~$160k — see tooling schedule).
 
----
+### Q2 — assembler velocity
+* ~2,500 units. Stabilize toward 20/day, then 40/day.
 
-## 2. Quarterly Cash Flow Staging
+### Q3–Q4 — rate
+* Remaining ~6,500. 40 motorcycles/day assembler output.
 
-### Quarter 1: Tooling & Low-Rate Initial Production (LRIP)
-* Target Throughput: 1,000 Units
-* Sourcing Layout: Draw-down on non-personal guarantee inventory financing line to secure initial long-lead components.
-* Capital Focus: Setup of Non-Recurring Engineering (NRE) charges and carbon steel frame weld-jig verification.
+## 3. Guardrails
 
-### Quarter 2: Velocity Optimization
-* Target Throughput: 2,500 Units
-* Operational Cadence: Stabilizing line flow to 20 units per day across initial shifts.
-* Cash Allocation: Reinvesting direct margin pool to establish component buffers.
-
-### Quarter 3 & Quarter 4: Peak Steady-State Velocity
-* Target Throughput: 6,500 Units (Combined)
-* Operational Cadence: Achieving strict run-rate of 40 motorcycles per day (2.5 units per hour).
-* Working Capital: Fully optimized rotation of component line credits.
-
----
-
-## 3. Financial Guardrails & Capital Allocations
-* **Founder Protection Strategy:** All scaling lines must be structured against product inventory asset value, eliminating personal guarantees from the core team.
-* **Component Sourcing Reserve:** Allocation of $2,000,000 from initial gross profit pool to hedge against lead-time variances in raw carbon steel extruded tubing.
+* Collateral = **parts and finished goods**, not a mill.
+* Dual-source **frames and packs** (long lead).
+* No personal guarantees.

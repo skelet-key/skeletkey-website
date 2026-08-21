@@ -1,27 +1,23 @@
+# Assembler Kickoff Meeting Agenda
+**Project:** 10,000-unit Puca assembly ramp  
+**Model:** We source frames & parts. You assemble, test, crate.  
+**Updated:** 2026-08-21
 
+## 1. Velocity (00:00–00:15)
+* **10,000 units/year** · **~40/day** at rate (250-day year).
+* **100% consigned kits** — SkeletKey delivers frames, motors, packs, controls. Assembler does **not** buy or fabricate the chassis.
 
-**Measured hardware (current build):** Folding frame = **9.2 lb carbon steel**. Hub motor = **28.6 lb** (QS205 class). Update all mass and material claims from these measured values.
-# Factory Kickoff Meeting Agenda
-**Project:** 10,000 Unit Folding Motorcycle Production Ramp  
-**Objective:** Operational Alignment, Engineering Standards, and QA Integration  
+## 2. Hardware on the table (00:15–00:35)
+* **Frame:** sourced carbon steel folder · **9.2 lb** measured · **190 mm** dropout · IQC only (no production weld cell).
+* **Motor HAVE:** QS205 V3 50H 3T · **28.6 lb**.
+* **Controller HAVE:** FarDriver ND72360 BT.
+* **Pack:** ~8.5 kWh · ~63 V · ~60 lb · slide-in · dual QS8.
+* **Deck:** 6061 bolted to steel — never weld Al to frame.
 
-## 1. Meeting Overview & Execution Velocity (00:00 - 00:15)
-* **Production Target:** 10,000 units annualized over a 250-day calendar year.
-* **Daily Throughput Cadence:** 40 motorcycles finished per working day.
-* **Line Cadence:** 2.5 units finished per hour operating across two concurrent shifts.
-* **Material Model:** 100% Consigned Material framework. All pre-sourced components delivered to factory inventory.
+## 3. QA firewall (00:35–00:55)
+* L1 IQC sourced frame/lots · L2 hipot/lock/flash · L3 short roll + spray (IP65).
 
-## 2. Engineering & Material Specifications (00:15 - 00:35)
-* **Chassis Material:** Mandatory standardization around heat-treated carbon steel.
-* **Welding Parameters:** Review of automated Tier 2 structural welding tolerances.
-* **Post-Weld Treatment:** Verification of post-weld aging oven timelines to preserve T6 temper.
-* **Hinge Alignment:** Tolerance matching for the structural chassis folding mechanisms.
-
-## 3. Three-Layer Quality Assurance Firewall (00:35 - 00:55)
-* **Layer 1 (Incoming Control):** Ultrasonic wave reflection thresholds calibrated for carbon steel weld matrices.
-* **Layer 2 (In-Line Powertrain):** Automated high-voltage insulation tests for the 16S2P NMC power pack configuration.
-* **Layer 3 (End-of-Line):** 10-minute automated dynamometer track simulation and high-pressure water spray booth tests.
-
-## 4. Logistics, Tooling, & Action Items (00:55 - 01:00)
-* **Die Allocation:** Delivery timeline for the $120,000.00 carbon steel extrusion dies.
-* **Material Sync:** Coordination protocols between parts delivery and assembly floor staging.
+## 4. Actions (00:55–01:00)
+* No extrusion-die timeline — **withdrawn**.
+* Confirm jig list (~$160k NRE, SkeletKey-owned).
+* Pilot kit quantity and first serials.

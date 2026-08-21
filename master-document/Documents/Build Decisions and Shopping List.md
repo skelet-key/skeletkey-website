@@ -5,6 +5,12 @@
 
 ---
 
+## 0. PRODUCTION MODEL (LOCKED)
+
+SkeletKey **sources frames and parts** and uses **contract assemblers** for **10,000 units/year**. We do not operate a frame factory or buy extrusion dies as the scale plan. Canonical write-up: **Production and Sourcing Model.md**.
+
+---
+
 ## 1. LOCKED DECISIONS
 
 | Area | Decision |
@@ -14,7 +20,7 @@
 | **Controller** | **FarDriver ND72360 with Bluetooth** (not Votol EM150 CAN) |
 | **Dash / phone UI** | **SkeletKey Puca app** at `/app/` — GPS speedometer (GPS Speedometer Premium–style) + **software ignition** + trip computer + optional Maps |
 | **Companion apps** | FarDriver official app for tuning; Puca app for ride instruments |
-| **Battery** | Modular semi-solid **NMC+**, **57 lb**, ~**19″ × 6″ × 5″**, ~**8.5 kWh**, Bluetooth BMS, up to **8 kW** charge |
+| **Battery** | Modular semi-solid **NMC+**, **~60 lb**, ~**19–20″ × 6.5″ × 4.5–5″**, ~**8.5 kWh**, ~**63 V**, Bluetooth BMS, **6–8 kW** charge / **8 kW** discharge, dual **QS8** |
 | **Seat** | **No seatpost seat** — rear **battery deck** + **café-racer solo seat on top** |
 | **Rack** | Custom **6061 aluminum** deck bolted to steel stay tabs (not light tourist rack) |
 | **CAN / ESP32 bridge** | **Not required** for FarDriver path (optional later) |
@@ -39,7 +45,7 @@
 - GPS-based speed, trip, max, avg, time, heading, altitude
 - **Ignition ON/OFF** software interlock (use with bike key/e-lock)
 - Odometer persisted in browser storage
-- Optional Google Maps pane (`config.js` API key)
+- In-app **OpenStreetMap** navigation (no Google Maps API required)
 - mph / km/h toggle
 
 ---
@@ -51,7 +57,7 @@
            |
   [seat rails + rubber isolators]
            |
-  [57 lb pack 19″ × 6″ × 5″]
+  [~60 lb pack 19–20″ × 6.5″ × 4.5–5″]
            |
   [6061 deck ~20″ × 8″]
            |
