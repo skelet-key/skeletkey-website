@@ -1,9 +1,9 @@
 # Bill of Materials (BOM) Cost Tracking Matrix
-## Target volume: **5,000 units/year** · sourced-kit target **$2,995** (bulk)
-## Frame: **$375** · MSRP $6,999
+## Target volume: **5,000 units/year** · sourced-kit target **$3,139**
+## Frame: **$375** · Pack: **$1,200** · FarDriver: **$199** (price paid for one) · MSRP $6,999
 ## Updated: 2026-08-21
 
-Prices below are **5,000-unit bulk** (OEM / FOB China or equivalent lots), **not** Amazon 1-off. Prototype carts will run higher. Frames are **sourced complete**. Contract **assembly labor ($500/unit) is not in this kit**.
+Prices are **5,000-unit lots** except where a real 1-off is known. **FarDriver ND72360 BT = $199** (actual unit paid — no invented volume cut until they quote). **Pack = $1,200** (realistic 8.5 kWh / ~60 lb NMC+ with enclosure/BMS). Frame **$375**. Assembly labor **$500 is not in this kit**.
 
 ---
 
@@ -12,9 +12,9 @@ Prices below are **5,000-unit bulk** (OEM / FOB China or equivalent lots), **not
 | Category | Spec | Unit $ | Annual 5k $ |
 | :--- | :--- | ---: | ---: |
 | Folding frame | Kalosse carbon steel folder · 9.2 lb · 190 mm | **375** | 1,875,000 |
-| Battery module | ~8.5 kWh · ~63 V · ~60 lb · NMC+ · BT BMS · dual QS8 | 990 | 4,950,000 |
+| Battery module | ~8.5 kWh · ~63 V · ~60 lb · NMC+ · BT BMS · dual QS8 | **1,200** | 6,000,000 |
 | Hub motor | QS205 V3 50H 3T · 20×4.0 · 28.6 lb | 285 | 1,425,000 |
-| Controller | FarDriver ND72360 BT | 265 | 1,325,000 |
+| Controller | FarDriver ND72360 BT (**$199** 1-off, used as lot price) | **199** | 995,000 |
 | Front end | HIMALO 135 mm fork, ZS44, stem, 20×4.0 wheel, tire, disc | 175 | 875,000 |
 | Rear hub install | Tire, 6×44 rotor, left caliper, M16 torque arms, phase/Hall | 80 | 400,000 |
 | Deck / seat / hardware | 6061 deck+rails+legs, café pan, Grade 8, straps | 120 | 600,000 |
@@ -22,9 +22,9 @@ Prices below are **5,000-unit bulk** (OEM / FOB China or equivalent lots), **not
 | CCS1 stack | Inlet+Küster, EVCC, IMD, contactors, 6–8 kW DC–DC, 12 V aux | 530 | 2,650,000 |
 | Controls / wireless / dash | Signals, brake lamp, headlamp, BLE ignition, throttle, mount, screen | 75 | 375,000 |
 | Crate / pack-out | Export crate, foam, labels | 30 | 150,000 |
-| **Total sourced BOM** | | **2,995** | **14,975,000** |
+| **Total sourced BOM** | | **3,139** | **15,695,000** |
 
-Kit vs MSRP: **42.8%**. Gross after $500 assembly: **$3,504 / 50.1%**.
+Kit vs MSRP: **44.8%**. Gross after $500 assembly: **$3,360 / 48.0%**.
 
 ---
 
@@ -38,13 +38,13 @@ Kit vs MSRP: **42.8%**. Gross after $500 assembly: **$3,504 / 50.1%**.
 ### B. Energy
 | # | Part | Bulk $ |
 |---|------|--------:|
-| B1 | Semi-solid NMC+ module ~8.5 kWh / ~63 V / ~60 lb, enclosure, Bluetooth BMS, two QS8 | 990 |
+| B1 | Semi-solid NMC+ module ~8.5 kWh / ~63 V / ~60 lb, enclosure, Bluetooth BMS, two QS8 | **1,200** |
 
 ### C. Powertrain
 | # | Part | Bulk $ |
 |---|------|--------:|
 | C1 | QS205 V3 (50H) 3T 20×4.0 190 mm | 285 |
-| C2 | FarDriver ND72360 BT | 265 |
+| C2 | FarDriver ND72360 BT — **$199 paid for one**; lot price held at $199 until a volume quote | **199** |
 
 ### D. Front end (HIMALO through 44 mm)
 | # | Part | Bulk $ |
@@ -116,7 +116,7 @@ Kit vs MSRP: **42.8%**. Gross after $500 assembly: **$3,504 / 50.1%**.
 |---|------|--------:|
 | J1 | Export crate, foam, UN labels as required | 30 |
 
-**Grand total $2,995.**
+**Grand total $3,139.**
 
 ---
 
@@ -125,11 +125,11 @@ Kit vs MSRP: **42.8%**. Gross after $500 assembly: **$3,504 / 50.1%**.
 | Metric | Per unit | Annual (5,000) | % MSRP |
 |--------|----------|----------------|--------|
 | MSRP | $6,999 | $34,995,000 | 100% |
-| **Sourced BOM (this sheet)** | **$2,995** | **$14,975,000** | **42.8%** |
+| **Sourced BOM (this sheet)** | **$3,139** | **$15,695,000** | **44.8%** |
 | Contract assembly & QA | $500 | $2,500,000 | 7.1% |
-| **Gross margin** | **$3,504** | **$17,520,000** | **50.1%** |
+| **Gross margin** | **$3,360** | **$16,800,000** | **48.0%** |
 
-Prototype / Amazon 1-off will miss these numbers. Dual-source frames if one listing cannot hold **$375** at 5k. Pack is the swing line — hold **≤$990** at 8.5 kWh / ~60 lb.
+FarDriver stays **$199** until they quote 5k. Pack modeled at **$1,200** (8.5 kWh / ~60 lb) — that is the swing line. Dual-source frames if one listing cannot hold **$375** at 5k.
 
 Optional (not in kit): Statorade ~$8 bulk; hubsinks.
 
