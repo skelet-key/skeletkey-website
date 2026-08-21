@@ -3,7 +3,7 @@
 ## Classification: Internal · Shareable with cofounder
 ## Updated: 2026-08-21
 
-Status key: **HAVE** = on hand · **IN TRANSIT** = ordered / shipping · **NEED** = still to buy or fabricate
+Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED** = still to buy or fabricate
 
 **Production model:** SkeletKey **sources frames and all major parts** and uses **contract assemblers** to reach **10,000 units/year**. This checklist is the prototype kit, then the scale BOM. See **Production and Sourcing Model.md**.
 
@@ -17,16 +17,18 @@ Status key: **HAVE** = on hand · **IN TRANSIT** = ordered / shipping · **NEED*
 | 2 | **Controller** | **FarDriver ND72360 with Bluetooth** · received | https://econiccycles.com/products/fardriver-sinewave-controller-nd72360-w-bluetooth?variant=46851442835698 |
 | 3 | **CCS1 vehicle inlet** | **EV-T1GBIE12-1ACDC80A200A2-DM** (DESAYSV class) · **80 A 250 V AC / 200 A 850 V DC** · cables & pinouts included | On hand; see CCS1 architecture doc |
 | 4 | **CCS lock / actuator** | **KÜSTER 03S · 0188793** + signal harness | On hand with inlet assembly |
+| 5 | **Front fork** | **HIMALO** 20×4.0 · **135 mm** · 1-1/8″ straight · lockout (chosen / ordered) | https://www.amazon.com/HIMALO-Suspension-Travel-Straight-Lockout/dp/B0D6G83TFY |
 
 ---
 
-## 2. IN TRANSIT
+## 2. IN TRANSIT / ON THE WAY
 
 | # | Item | Specs / notes | Source |
 |---|------|----------------|--------|
-| 1 | **Folding frame** | Full-suspension folding frame · **190 mm rear dropout** for hub motor · ETA next few days | https://www.aliexpress.us/item/3256808448955861.html |
+| 1 | **Folding frame** | Full-suspension **carbon steel** · **9.2 lb** · **190 mm rear dropout** · **44 mm** headset class · front **~135 mm** assumed · stay tabs for deck | https://www.aliexpress.us/item/3256808448955861.html |
+| 2 | **Battery pack** | **ON THE WAY** · **19–20″ × ~6.5″ × 4.5–5″** · **~60 lb** with enclosure/BMS/cables · **~8.5 kWh** · **~63 V** · 8 kW discharge · 6–8 kW charge · Bluetooth BMS · **two QS8** (bottom + side) · semi-solid NMC+ | Pack OEM inbound |
 
-*On arrival: verify measured frame mass, head-tube ID (expect **44 mm** headset class), front dropout width, steerer interface, and stay/tab geometry for battery deck.*
+*On frame arrival: verify dropout, headset ID, mass, tabs. Pack is inbound — bike-side rails/contacts still NEED (see Action Item Tracker §7).*
 
 ---
 
@@ -47,7 +49,7 @@ Status key: **HAVE** = on hand · **IN TRANSIT** = ordered / shipping · **NEED*
 
 ---
 
-## 4. NEED — Battery module (locked target)
+## 4. ON THE WAY — Battery module (pack inbound; bike-side still NEED)
 
 ### 4.1 Pack specification (production target)
 
@@ -125,9 +127,9 @@ Full wiring map: **CCS1 Public Charging Architecture.md**
 
 | Status | Count (line items) |
 |--------|---------------------|
-| **HAVE** | 4 major assemblies (motor, controller, CCS inlet, Küster lock) |
-| **IN TRANSIT** | 1 (folding frame) |
-| **NEED** | Powertrain install, full battery enclosure + slide contacts, full CCS1 electronics stack, deck/seat, front end |
+| **HAVE** | Motor, FarDriver, CCS inlet, Küster lock, HIMALO fork (chosen) |
+| **ON THE WAY** | Folding frame (AliExpress) + **~60 lb pack** |
+| **NEED** | Headset/stem/front wheel, rear torque/disc, **load-bearing rack + supports**, café seat, **wireless signals/brake/ignition**, pack slide contacts, CCS electronics |
 
 ---
 
@@ -135,7 +137,8 @@ Full wiring map: **CCS1 Public Charging Architecture.md**
 
 | Doc | Use |
 |-----|-----|
-| **Build Decisions and Shopping List.md** | Locked design choices + vendor links |
+| **Action Item Tracker.md** | Categorized buy list with links |
+| **Build Decisions and Shopping List.md** | Locked architecture |
 | **CCS1 Public Charging Architecture.md** | Detailed CCS1 wiring & safety |
 | **Technical Fact Sheet.md** | Spec summary for partners |
 | **Puca Schematics and Design Plan.md.txt** | Engineering blueprint |
