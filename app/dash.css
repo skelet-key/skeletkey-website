@@ -327,6 +327,19 @@ html, body {
   .brand-sub { display: none; }
 }
 
+/* Site embeds (master-document + homepage): always landscape, no inner scroll */
+html.puca-embed .legal { display: none; }
+html.puca-embed .instruments { overflow: hidden; }
+html.puca-embed .main {
+  grid-template-columns: minmax(260px, 0.9fr) 1.3fr !important;
+  grid-template-rows: 1fr !important;
+}
+html.puca-embed .instruments {
+  border-right: 1px solid var(--border) !important;
+  border-bottom: 0 !important;
+}
+html.puca-embed .speed-value { font-size: clamp(2.6rem, 7vw, 4.4rem); }
+
 
 /* Leaflet OSM map */
 #map.leaflet-container,
