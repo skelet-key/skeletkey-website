@@ -8,11 +8,11 @@
 | Metric | Per unit | Annualized |
 |--------|----------|------------|
 | MSRP | **$6,999** | $34,995,000 |
-| Sourced BOM | $3,200 | $16,000,000 |
+| Sourced BOM | $2,995 | $14,975,000 |
 | Contract assembly & QA | $500 | $2,500,000 |
-| Gross margin | **$3,299 (47%)** | **$16,495,000** |
+| Gross margin | **$3,504 (50%)** | **$17,520,000** |
 
-We **buy** frames and parts. The $3,200 is a **purchased kit**, not mill scrap and weld yield on a SkeletKey chassis line.
+We **buy** frames and parts in **5,000-unit lots**. The **$2,995** kit (frame **$375**) is bulk OEM, not mill scrap and weld yield on a SkeletKey chassis line.
 
 ### 2. Where margin is spent
 

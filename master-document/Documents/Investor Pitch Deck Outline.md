@@ -27,8 +27,8 @@
 * EOL roll test + spray on seals (IP65).
 
 ### SLIDE 6: UNIT ECONOMICS
-* MSRP $6,999 · BOM $3,200 · assembly $500 · gross **~$3,299 (47%)**.
-* 5,000 units → ~$35M revenue · ~$16.5M gross.
+* MSRP $6,999 · bulk BOM **$2,995** (frame **$375**) · assembly $500 · gross **~$3,504 (50%)**.
+* 5,000 units → ~$35M revenue · **~$17.5M** gross.
 
 ### SLIDE 7: CAPITAL USE
 * Inventory of **kits** (frames, packs, motors) — not $300k extrusion dies.
