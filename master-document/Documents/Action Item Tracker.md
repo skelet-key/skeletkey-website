@@ -23,7 +23,7 @@ Canonical production model: source frames & parts; contract assemblers to 10,000
 ## 1. ON THE WAY
 
 ### Folding frame
-- [ ] Receive and measure: https://www.aliexpress.us/item/3256808448955861.html
+- [ ] Receive and measure: https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa
 - **What it is:** Full-suspension **carbon steel** folding chassis, **9.2 lb**, **190 mm rear dropout** (QS205), **44 mm** headset class, assume **135 mm** front dropout, stay/tab geometry for the battery deck.
 - On arrival check: rear 190 mm, front 135 mm, head-tube ID 44 mm, fold latch play, blue stay tabs, mass, tire clearance for 20×4.0 at full sag.
 
@@ -117,15 +117,29 @@ Goal: no 5 ft loom through the hinge. Waterproof TX/RX, numbered connectors, lat
 
 ## 7. NEED — HV / pack interface on the bike
 
-Pack is **ON THE WAY**. Bike-side still NEED:
+**What this is for.** The ~60 lb / ~8.5 kWh / ~63 V module is a **removable high-voltage battery**, not a welded-in car pack. The **bike-side HV interface** is how that pack becomes the motorcycle’s power source when you slide it in, and how it becomes **dead metal** when you pull it out for apartments, trunks, trains, or air shipping.
 
-| Action | Notes / buy |
-|--------|-------------|
-| [ ] Blind-mate **+ / −** contacts **≥150 A cont.** (200 A+ better) | Silver/nickel copper, wipe action |
-| [ ] **Fully seated** interlock (microswitch / pilot) | Controller enable only when locked |
-| [ ] Cam / over-center **lock** | Tool-free for travel |
-| [ ] **Main fuse / precharge** for 8 kW class | Sized to pack and FarDriver |
-| [ ] QS8 caps / leads to FarDriver | Match pack bottom + side QS8 |
+It has to do four jobs at once:
+
+1. **Carry traction current** (~8 kW discharge into the FarDriver / QS205). At ~63 V that is on the order of **~130 A** continuous, with peaks higher — so the ± path is a **high-current contact**, not a barrel jack.
+2. **Make and break power by sliding.** Guide rails + **blind-mate + and −** so full insertion completes the circuit; removal opens it. Wipe action cleans the faces. Polarity is keyed so you cannot reverse-mate.
+3. **Refuse to live until it is locked.** A **pilot / microswitch “fully seated”** interlock tells the BMS/controller the pack is home. No enable, no FarDriver, no dash IGN if the latch is open — so a half-in pack cannot arc or drop at 70 mph.
+4. **Feed the rest of the bike without a 5-foot hinge loom.** Pack **QS8** ports (bottom + side, incoming on the module) land on short deck leads to the FarDriver. CCS1 charge still goes **inlet → DC–DC → BMS charge port**, never station HV onto the cells through this slide interface.
+
+**Why it is separate from CCS1.** CCS1 is **public DC in** (200–500+ V) stepped down to ~63 V. The slide interface is **pack ↔ motorcycle** at pack voltage. Different connectors, different safety.
+
+Pack is **ON THE WAY**. What you still **buy/fab on the frame/deck**:
+
+| Action | What it does | Notes / buy |
+|--------|----------------|-------------|
+| [ ] Blind-mate **+ / −** contacts **≥150 A cont.** (200 A+ better) | Traction + and − make up on full insertion | Silver/nickel copper, spring/wipe; dielectric so only intended faces touch |
+| [ ] Slide rails / lead-in chamfer | Aligns the 19–20″ pack between thin 6061 plates | Fab with the rear deck |
+| [ ] **Fully seated** interlock (microswitch / pilot) | HV enable only when locked | Series with ignition / BMS output |
+| [ ] Cam / over-center **lock** | Stops the 60 lb pack from walking out under braking | Tool-free for travel; optional strap |
+| [ ] **Main fuse / precharge** for 8 kW class | Limits fault current; soft-starts controller caps | Sized to pack and FarDriver |
+| [ ] QS8 caps / leads to FarDriver | Bottom and/or side QS8 on the inbound pack | Short, left-side path clear of disc |
+
+Until this interface exists, the inbound pack can sit on the deck with **straps only** — do **not** ride high-power with flying QS8 leads as the production design.
 
 ---
 
@@ -149,7 +163,13 @@ Never land station DC on cells: inlet → fuses → contactors → DC–DC → B
 
 ## 9. Scale (not prototype cart)
 
-- [ ] Dual-source folding-frame OEM (190 mm dropout) for 10k/year.
+**Frame OEM identified (source 1):** same folding chassis as the prototype inbound unit.
+
+https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa
+
+Must hold **190 mm** rear dropout (QS205), folding latch, stay tabs for the ~60 lb deck. This is a **purchased complete frame**, not a SkeletKey weld shop.
+
+- [ ] **Dual-source** a second folding-frame OEM (same **190 mm** dropout) so 10,000/year is not one AliExpress listing.
 - [ ] Assembler RFP / LOI / NDA (cofounder).
 - [ ] Assembly jig + EOL NRE (~$160k class) — **not** extrusion dies.
 - [ ] UN38.3 + motorcycle classification.

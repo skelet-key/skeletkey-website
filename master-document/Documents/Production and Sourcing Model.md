@@ -51,7 +51,7 @@ See **Parts Inventory Checklist.md** and **Build Decisions and Shopping List.md*
 ## 4. SCALE PATH TO 10,000 / YEAR
 
 1. Freeze BOM and incoming inspection criteria on the **sourced frame** (dropout, headset, fold latch, stay tabs).
-2. Dual-source frames if a single OEM cannot hold rate or quality.
+2. **Dual-source frames** so a single listing cannot stall 10,000/year. **Source 1 (identified):** https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa — complete folding chassis, **190 mm** dropout. Still need a second OEM at the same dropout.
 3. Award **one or two assemblers** a consigned-kit contract: we ship parts, they output crated bikes.
 4. Assembler capacity: 40 units/day peak = 10,000/year. LRIP first (pilot 50–200), then ramp.
 5. SkeletKey keeps: drawings, serials, app, BMS limits, CCS stack spec, warranty.
