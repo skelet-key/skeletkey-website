@@ -51,7 +51,11 @@ See **Parts Inventory Checklist.md** and **Build Decisions and Shopping List.md*
 ## 4. SCALE PATH TO 10,000 / YEAR
 
 1. Freeze BOM and incoming inspection criteria on the **sourced frame** (dropout, headset, fold latch, stay tabs).
-2. **Dual-source frames** so a single listing cannot stall 10,000/year. **Source 1 (identified):** https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa — complete folding chassis, **190 mm** dropout. Still need a second OEM at the same dropout.
+2. **Dual-source frames** so a single listing cannot stall 10,000/year.
+   - **Source 1:** https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa — Kalosse carbon steel **foldable** 20×4.0, **190 mm** dropout (inbound prototype).
+   - **Source 2:** https://www.aliexpress.com/item/1005012630592144.html — second Kalosse foldable 20×4.0 / **190 mm** storefront. Measure vs source 1 before volume.
+   - **Factory RFQ:** Jinhua Epower (Kalosse on Alibaba) https://www.alibaba.com/product-detail/KALOSSE-Electric-Mountain-Cyclocross-Snow-Bike_1601687149121.html — quote the **folding steel** drawing; their stock 190 mm SKU is often aluminum non-fold.
+   - **Backup OEM:** Hebei Xiaotianhang (folding-bike factory) https://hbxiaotianhang.en.alibaba.com/
 3. Award **one or two assemblers** a consigned-kit contract: we ship parts, they output crated bikes.
 4. Assembler capacity: 40 units/day peak = 10,000/year. LRIP first (pilot 50–200), then ramp.
 5. SkeletKey keeps: drawings, serials, app, BMS limits, CCS stack spec, warranty.

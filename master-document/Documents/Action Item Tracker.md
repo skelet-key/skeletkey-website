@@ -163,13 +163,30 @@ Never land station DC on cells: inlet → fuses → contactors → DC–DC → B
 
 ## 9. Scale (not prototype cart)
 
-**Frame OEM identified (source 1):** same folding chassis as the prototype inbound unit.
+**Frame OEM source 1 (inbound prototype + small lots):** Kalosse **carbon steel, foldable, 20×4.0**, 190 mm rear dropout.
 
 https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa
 
-Must hold **190 mm** rear dropout (QS205), folding latch, stay tabs for the ~60 lb deck. This is a **purchased complete frame**, not a SkeletKey weld shop.
+**Frame OEM source 2 (dual-source — added 2026-08-21):** same Kalosse foldable 20×4.0 chassis from a **second AliExpress listing** (different product ID / storefront — not the same cart as source 1):
 
-- [ ] **Dual-source** a second folding-frame OEM (same **190 mm** dropout) so 10,000/year is not one AliExpress listing.
+https://www.aliexpress.com/item/1005012630592144.html
+
+Title/class: Kalosse hidden-battery / beach e-bike frame, **190 mm** rear, foldable 20×4.0 family. **Do not PO 10k until** this unit is measured against source 1: rear **190 mm**, front ~**135 mm**, **44 mm** head tube, fold latch, stay-tab layout, mass ~**9.2 lb** carbon steel.
+
+**Factory RFQ (volume, not a different geometry):** Kalosse-brand factory on Alibaba — **Jinhua Epower Technology Co., Ltd.** Catalog 20×4.0 / 190 mm frames are often **aluminum and non-fold**. Send them the **source-1 drawing** (fold + carbon steel + 190 mm) and quote MOQ for 10k/year:
+
+https://www.alibaba.com/product-detail/KALOSSE-Electric-Mountain-Cyclocross-Snow-Bike_1601687149121.html
+
+**Backup folding OEM** (can copy the Kalosse fold if Jinhua will not): Hebei Xiaotianhang Bicycle — Alibaba #1 folding-bike OEM.
+
+https://hbxiaotianhang.en.alibaba.com/
+
+Must-match for any source 2 / factory: **190 mm** dropout · **20×4.0** · **folding hinge** · **44 mm** HT · steel ~9 lb · stay tabs for the ~60 lb deck.
+
+- [x] Source 1 identified (AliExpress Kalosse foldable).
+- [x] Source 2 identified (second AliExpress Kalosse listing + factory RFQ path).
+- [ ] Buy **one** source-2 frame and CMM/tape against the inbound source-1 unit before assembler rate.
+- [ ] RFQ Jinhua Epower + Xiaotianhang for 10k/year of the **folding steel** drawing (not their rigid aluminum 190 mm).
 - [ ] Assembler RFP / LOI / NDA (cofounder).
 - [ ] Assembly jig + EOL NRE (~$160k class) — **not** extrusion dies.
 - [ ] UN38.3 + motorcycle classification.

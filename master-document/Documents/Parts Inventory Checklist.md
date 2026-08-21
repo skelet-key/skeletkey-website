@@ -26,6 +26,7 @@ Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED*
 | # | Item | Specs / notes | Source |
 |---|------|----------------|--------|
 | 1 | **Folding frame** | Full-suspension **carbon steel** · **9.2 lb** · **190 mm rear dropout** · **44 mm** headset class · front **~135 mm** assumed · stay tabs for deck · **source 1 for 10k/year** | https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa |
+| 1b | **Folding frame source 2** | Dual-source: same Kalosse foldable 20×4.0 / 190 mm family, **different listing**. Tape against source 1 before volume. Factory RFQ: Jinhua Epower (confirm fold + steel). Backup OEM: Hebei Xiaotianhang. | https://www.aliexpress.com/item/1005012630592144.html · https://www.alibaba.com/product-detail/KALOSSE-Electric-Mountain-Cyclocross-Snow-Bike_1601687149121.html · https://hbxiaotianhang.en.alibaba.com/ |
 | 2 | **Battery pack** | **ON THE WAY** · **19–20″ × ~6.5″ × 4.5–5″** · **~60 lb** with enclosure/BMS/cables · **~8.5 kWh** · **~63 V** · 8 kW discharge · 6–8 kW charge · Bluetooth BMS · **two QS8** (bottom + side) · semi-solid NMC+ | Pack OEM inbound |
 
 *On frame arrival: verify dropout, headset ID, mass, tabs. Pack is inbound — bike-side rails/contacts still NEED (see Action Item Tracker §7).*
