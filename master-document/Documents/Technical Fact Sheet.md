@@ -31,4 +31,4 @@ SkeletKey **sources** the folding frame and powertrain. This sheet is for **inco
 
 ### 4. RATE
 
-Assemblers, not a SkeletKey factory, deliver **10,000 units/year** from consigned kits. See **Production and Sourcing Model.md**.
+Assemblers, not a SkeletKey factory, deliver **5,000 units/year** from consigned kits. See **Production and Sourcing Model.md**.

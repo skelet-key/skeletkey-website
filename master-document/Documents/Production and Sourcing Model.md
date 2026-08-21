@@ -3,7 +3,7 @@
 ## Classification: Canonical · Supersedes factory / die / Tier-2 weld language in older PDFs
 ## Updated: 2026-08-21
 
-**SkeletKey does not run a frame factory.** We **source** folding frames and all other parts from vendors. We **contract assemblers** to kit, marry, test, and crate finished Puca motorcycles to a **10,000 units/year** run rate (~40 units/day on a 250-day calendar).
+**SkeletKey does not run a frame factory.** We **source** folding frames and all other parts from vendors. We **contract assemblers** to kit, marry, test, and crate finished Puca motorcycles to a **5,000 units/year** run rate (~20 units/day on a 250-day calendar).
 
 ---
 
@@ -26,7 +26,7 @@
 
 - Matches how the prototype is actually being built: buy the folding frame, buy the QS205, buy the FarDriver, buy the pack, assemble.
 - Avoids $120k–$300k **extrusion dies and hinge stamps** as a condition of scale.
-- 10,000/year is an **assembly throughput** problem, not a mill/weld-shop problem.
+- 5,000/year is an **assembly throughput** problem, not a mill/weld-shop problem.
 - Gross-margin math stays: sourced BOM + **~$500/unit** assembler labor & QA.
 
 ---
@@ -48,16 +48,16 @@ See **Parts Inventory Checklist.md** and **Build Decisions and Shopping List.md*
 
 ---
 
-## 4. SCALE PATH TO 10,000 / YEAR
+## 4. SCALE PATH TO 5,000 / YEAR
 
 1. Freeze BOM and incoming inspection criteria on the **sourced frame** (dropout, headset, fold latch, stay tabs).
-2. **Dual-source frames** so a single listing cannot stall 10,000/year.
+2. **Dual-source frames** so a single listing cannot stall 5,000/year.
    - **Source 1:** https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa — Kalosse carbon steel **foldable** 20×4.0, **190 mm** dropout (inbound prototype).
    - **Source 2:** https://www.aliexpress.com/item/1005012630592144.html — second Kalosse foldable 20×4.0 / **190 mm** storefront. Measure vs source 1 before volume.
    - **Factory RFQ:** Jinhua Epower (Kalosse on Alibaba) https://www.alibaba.com/product-detail/KALOSSE-Electric-Mountain-Cyclocross-Snow-Bike_1601687149121.html — quote the **folding steel** drawing; their stock 190 mm SKU is often aluminum non-fold.
    - **Backup OEM:** Hebei Xiaotianhang (folding-bike factory) https://hbxiaotianhang.en.alibaba.com/
 3. Award **one or two assemblers** a consigned-kit contract: we ship parts, they output crated bikes.
-4. Assembler capacity: 40 units/day peak = 10,000/year. LRIP first (pilot 50–200), then ramp.
+4. Assembler capacity: 20 units/day peak = 5,000/year. LRIP first (pilot 50–200), then ramp.
 5. SkeletKey keeps: drawings, serials, app, BMS limits, CCS stack spec, warranty.
 
 ---

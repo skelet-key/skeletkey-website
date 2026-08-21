@@ -5,11 +5,11 @@
 
 ### 1. Architecture
 
-To deliver **10,000** folding electric motorcycles in a year, SkeletKey uses **sourced components + contract assembly**.
+To deliver **5,000** folding electric motorcycles in a year, SkeletKey uses **sourced components + contract assembly**.
 
 - SkeletKey buys **complete folding frames** (carbon steel prototype: **9.2 lb**, **190 mm** dropout) and all major parts.
 - Assemblers **do not fabricate the chassis**. They kit, assemble, test, and crate.
-- Cadence at rate: **~40 units/day** (250-day year) ≈ 2.5 units/hour on a two-shift line *or* split across two assembler sites.
+- Cadence at rate: **~20 units/day** (250-day year) ≈ 1.25 units/hour on a two-shift line *or* split across two assembler sites.
 
 ### 2. Material flow (consigned)
 

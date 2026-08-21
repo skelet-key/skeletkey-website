@@ -1,5 +1,5 @@
 # Assembly fixture & test NRE schedule
-**Project:** Puca 10,000 units/year  
+**Project:** Puca 5,000 units/year  
 **This is not a frame-die program.** SkeletKey sources folding frames complete.  
 **Updated:** 2026-08-21
 
@@ -9,11 +9,11 @@
 | :--- | :--- | ---: | :--- |
 | Assembly jigs | Dropout, fold, deck, pack slide | $40,000 | First 5,000 units |
 | Incoming gauges | Frame/headset/pack IQC | $20,000 | First 5,000 units |
-| EOL test | Hipot, short roller/dyno, spray | $80,000 | 10,000 units |
-| Spare / programming | FarDriver jigs, pack BT fixtures | $20,000 | 10,000 units |
+| EOL test | Hipot, short roller/dyno, spray | $80,000 | 5,000 units |
+| Spare / programming | FarDriver jigs, pack BT fixtures | $20,000 | 5,000 units |
 | **Total** | | **$160,000** | |
 
-Per-unit surcharge at 10,000 units ≈ **$16**. After Year 1, fixtures are paid.
+Per-unit surcharge at 5,000 units ≈ **$32**. After Year 1, fixtures are paid.
 
 ### 2. Explicitly withdrawn
 

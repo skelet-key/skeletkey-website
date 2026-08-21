@@ -1,5 +1,5 @@
 # Supplier Negotiation Playbook
-## Program: 10,000-unit Puca — sourced parts, contract assembly
+## Program: 5,000-unit Puca — sourced parts, contract assembly
 ## Updated: 2026-08-21
 
 ### 1. Assembler wants a parts markup

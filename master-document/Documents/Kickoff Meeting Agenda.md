@@ -1,10 +1,10 @@
 # Assembler Kickoff Meeting Agenda
-**Project:** 10,000-unit Puca assembly ramp  
+**Project:** 5,000-unit Puca assembly ramp  
 **Model:** We source frames & parts. You assemble, test, crate.  
 **Updated:** 2026-08-21
 
 ## 1. Velocity (00:00–00:15)
-* **10,000 units/year** · **~40/day** at rate (250-day year).
+* **5,000 units/year** · **~20/day** at rate (250-day year).
 * **100% consigned kits** — SkeletKey delivers frames, motors, packs, controls. Assembler does **not** buy or fabricate the chassis.
 
 ## 2. Hardware on the table (00:15–00:35)

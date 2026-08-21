@@ -12,24 +12,24 @@
 
 **Attn:** [Insert BD Director Name or Executive Contact]  
 
-**RE: Non-Binding Letter of Intent – 10,000-Unit Annual Volume Folding Motorcycle Consigned Assembly Program**
+**RE: Non-Binding Letter of Intent – 5,000-Unit Annual Volume Folding Motorcycle Consigned Assembly Program**
 
 Dear [Insert BD Director Name],
 
 This Letter of Intent ("LOI") outlines the preliminary framework and core operational terms under which **[Insert Your Company Name]** ("Discloser" or "Company") intends to enter into a definitive Master Manufacturing Agreement ("MMA") with **[Insert Target Contract Manufacturer Name]** ("Manufacturer" or "CM") for the final assembly, integration, and quality validation of the Company's proprietary folding electric motorcycle platform.
 
 ### 1. Statement of Program Purpose
-The Company has engineered a premium folding vehicle platform optimized for urban mobility. Having sourced frames and major parts, the Company requires a **contract assembler** (not a frame mill) to scale to **10,000 units in the first operational year**. 
+The Company has engineered a premium folding vehicle platform optimized for urban mobility. Having sourced frames and major parts, the Company requires a **contract assembler** (not a frame mill) to scale to **5,000 units in the first operational year**. 
 
 ### 2. Primary Production & Material Specifications
 The definitive agreement shall be built upon the following standardized technical and throughput parameters:
-* **Production run-rate:** LRIP then **40 motorcycles per working day** (10,000/year on a 250-day calendar).
+* **Production run-rate:** LRIP then **20 motorcycles per working day** (5,000/year on a 250-day calendar).
 * **Consignment:** The Company sources and delivers **complete folding frames** and all other parts to the Manufacturer. The Manufacturer **does not fabricate frames** and shall not apply parts markups beyond contracted labor and storage.
 * **Chassis:** Incoming **sourced carbon steel folding frames** (prototype class **9.2 lb**, **190 mm** dropout). IQC only — no production weld cell in this program.
 
 ### 3. Financial Architecture & Cost Targets
 The economic parameters targeted by both parties for the definitive agreement include:
-* **Per-unit assembly:** **$500.00** labor, line overhead, and in-line QA (**$5,000,000** at 10,000 units).
+* **Per-unit assembly:** **$500.00** labor, line overhead, and in-line QA (**$2,500,000** at 5,000 units).
 * **Fixtures:** Assembly jigs and EOL test equipment (~$160k class), owned by the Company — **not** frame extrusion dies or hinge stamps.
 
 ### 4. Continuous Quality Assurance (QA) Firewall

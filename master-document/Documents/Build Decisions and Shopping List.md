@@ -7,7 +7,7 @@
 
 ## 0. PRODUCTION MODEL (LOCKED)
 
-SkeletKey **sources frames and parts** and uses **contract assemblers** for **10,000 units/year**. We do not operate a frame factory or buy extrusion dies as the scale plan. Canonical write-up: **Production and Sourcing Model.md**.
+SkeletKey **sources frames and parts** and uses **contract assemblers** for **5,000 units/year**. We do not operate a frame factory or buy extrusion dies as the scale plan. Canonical write-up: **Production and Sourcing Model.md**.
 
 ---
 

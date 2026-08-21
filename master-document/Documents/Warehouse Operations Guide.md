@@ -1,5 +1,5 @@
 # Warehouse Operations & Finished Vehicle Logistics Guide
-**Target:** Support **10,000** assembled units/year (~200 bikes/week outbound)
+**Target:** Support **5,000** assembled units/year (~100 bikes/week outbound)
 **Updated:** 2026-08-21
 
 Finished Puca units arrive from **contract assemblers** (consigned kits we already paid for as parts). The warehouse is **fulfillment + spare packs**, not a frame factory.
@@ -7,7 +7,7 @@ Finished Puca units arrive from **contract assemblers** (consigned kits we alrea
 ## 1. Receiving
 
 * Inbound: crated complete bikes from the assembler after Layer 3 EOL.
-* Buffer: ~80 crates (about two days at 40/day).
+* Buffer: ~40 crates (about two days at 20/day).
 * Inspect: transit damage, fold latch, sourced **carbon steel** frame, pack enclosure, wireless BMS / FarDriver handshake.
 
 ## 2. Layout

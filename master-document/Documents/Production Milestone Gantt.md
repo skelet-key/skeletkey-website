@@ -1,5 +1,5 @@
 # Production Milestone Gantt
-**Target:** 10,000 assembled units in Year 1 · ~40/day at rate  
+**Target:** 5,000 assembled units in Year 1 · ~20/day at rate  
 **Model:** Source frames & parts · contract assemblers (see Production and Sourcing Model.md)  
 **Updated:** 2026-08-21
 
@@ -25,7 +25,7 @@ PHASE 3: CERT / PACK
 - CCS1 stack bring-up on inlet already HAVE                [XXXX]
 
 PHASE 4: RATE
-- Assembler ramp 10 → 40 units/day                               [XXXXXXXX]
+- Assembler ramp 10 → 20 units/day                               [XXXXXXXX]
 ```
 
 ### Phase notes
@@ -36,4 +36,4 @@ PHASE 4: RATE
 
 **Phase 2** proves a contract assembler can build from **our kit**.
 
-**Phase 4** is 10,000/year — assembler capacity, not a SkeletKey weld cell.
+**Phase 4** is 5,000/year — assembler capacity, not a SkeletKey weld cell.

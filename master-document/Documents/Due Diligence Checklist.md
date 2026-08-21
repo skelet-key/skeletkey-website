@@ -19,5 +19,5 @@
 
 ### 4. Commercial
 * [ ] Accepts **consigned kits**, no parts markup.
-* [ ] Capacity path to **40 units/day**.
+* [ ] Capacity path to **20 units/day**.
 * [ ] No personal guarantees on the MMA.

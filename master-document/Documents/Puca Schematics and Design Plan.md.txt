@@ -9,7 +9,7 @@
 
 ## 1. Executive System Architecture & Framework
 
-This comprehensive, pageless engineering blueprint consolidates the complete structural, mechanical, and electrical requirements for building the high-performance folding electric motorcycle prototype. The production model is **source the folding frame and parts; contract assemblers to 10,000/year** — not a SkeletKey frame factory. The prototype uses a measured **9.2 lb carbon steel folding frame** to carry a high-energy-density **~63 V / ~8.5 kWh / ~60 lb NMC+ module** and a **QS205 V3 (50H) 3T Spoke Hub Motor** (20×4.0, **13.0 kg / 28.6 lbs**, 4,000–5,000W continuous / ~12,000W peak) with **FarDriver ND72360 BT**. 
+This comprehensive, pageless engineering blueprint consolidates the complete structural, mechanical, and electrical requirements for building the high-performance folding electric motorcycle prototype. The production model is **source the folding frame and parts; contract assemblers to 5,000/year** — not a SkeletKey frame factory. The prototype uses a measured **9.2 lb carbon steel folding frame** to carry a high-energy-density **~63 V / ~8.5 kWh / ~60 lb NMC+ module** and a **QS205 V3 (50H) 3T Spoke Hub Motor** (20×4.0, **13.0 kg / 28.6 lbs**, 4,000–5,000W continuous / ~12,000W peak) with **FarDriver ND72360 BT**. 
 
 By pairing a featherweight structural frame with a massive power system, this architecture is engineered to reach speeds of **up to 70 mph** while providing an extended range of **over 100 miles** under precise cruising management.
 

@@ -1,5 +1,5 @@
 # INVESTOR PITCH DECK OUTLINE
-## Puca by SkeletKey — sourced parts, contract assembly, 10,000/year
+## Puca by SkeletKey — sourced parts, contract assembly, 5,000/year
 ## Updated: 2026-08-21
 
 ### SLIDE 1: THE VEHICLE
@@ -13,7 +13,7 @@
 
 ### SLIDE 3: HOW WE BUILD (THIS IS THE BUSINESS)
 * **We source frames and parts.** We **do not** mill or robot-weld a SkeletKey chassis plant.
-* **Contract assemblers** kit our consigned BOM to **10,000 units/year** (~40/day).
+* **Contract assemblers** kit our consigned BOM to **5,000 units/year** (~20/day).
 * Labor target **$500/unit**. No 10–15% factory parts markup.
 
 ### SLIDE 4: HARDWARE THAT ALREADY EXISTS
@@ -28,7 +28,7 @@
 
 ### SLIDE 6: UNIT ECONOMICS
 * MSRP $6,999 · BOM $3,200 · assembly $500 · gross **~$3,299 (47%)**.
-* 10,000 units → ~$70M revenue · ~$33M gross.
+* 5,000 units → ~$35M revenue · ~$16.5M gross.
 
 ### SLIDE 7: CAPITAL USE
 * Inventory of **kits** (frames, packs, motors) — not $300k extrusion dies.

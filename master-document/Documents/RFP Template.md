@@ -1,5 +1,5 @@
 # Request for Proposal — Contract Assembly
-**Program:** Puca folding electric motorcycle · **10,000 units/year**  
+**Program:** Puca folding electric motorcycle · **5,000 units/year**  
 **Partner type:** Vehicle / e-mobility **assembler** (not a frame mill)  
 **Updated:** 2026-08-21
 
