@@ -1112,8 +1112,8 @@ p strong,
 /* Phone mount + live dash */
 .phone-split {
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.25fr);
-  gap: 1.35rem;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
   align-items: stretch;
   margin: 2rem 0 2.25rem;
 }
@@ -1133,9 +1133,8 @@ p strong,
 .phone-mount-image {
   display: block;
   width: 100%;
-  flex: 1;
-  min-height: 0;
-  aspect-ratio: 3/2;
+  height: auto;
+  max-height: 420px;
   object-fit: contain;
   background: #0a0a0f;
 }
@@ -1162,14 +1161,15 @@ p strong,
 .phone-app-bezel {
   position: relative;
   width: 100%;
-  aspect-ratio: 2.17 / 1;
+  aspect-ratio: 16 / 9;
+  min-height: 540px;
+  max-height: min(680px, 78vh);
   background: linear-gradient(160deg, #5a5e66 0%, #2a2d33 38%, #14161a 100%);
-  border-radius: 1.6rem;
-  padding: 0.4rem 0.5rem 0.4rem 0.62rem;
+  border-radius: 1.85rem;
+  padding: 0.5rem 0.58rem 0.5rem 0.72rem;
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.12) inset,
     0 16px 40px rgba(0,0,0,0.45);
-  flex: 1;
 }
 
 .phone-app-bezel::before,
@@ -1213,12 +1213,12 @@ p strong,
   background: #0B0F19;
 }
 
-@media (max-width: 960px) {
-  .phone-split {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 720px) {
   .phone-app-bezel {
+    min-height: 420px;
     max-height: none;
+    aspect-ratio: 16 / 10;
+    border-radius: 1.35rem;
   }
 }
 
