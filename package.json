@@ -1,0 +1,8 @@
+{
+  "name": "skeletkey-website",
+  "private": true,
+  "description": "Static SkeletKey site. Cloudflare Pages has no compile step.",
+  "scripts": {
+    "build": "node -e \"console.log('static site; nothing to compile')\""
+  }
+}
