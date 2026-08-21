@@ -63,10 +63,21 @@
     .doc-desc { margin: 0.35rem 0 0; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.5; }
 
     .diagram-card {
-      margin: 1.5rem 0 2rem; background: #fff; border: 1px solid var(--border);
-      border-radius: 12px; overflow: hidden;
+      margin: 1.5rem 0 2rem;
+      background: #0B0F19;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      width: 100%;
     }
-    .diagram-card video { display: block; width: 100%; height: auto; background: #000; }
+    .diagram-card video {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1280 / 658;
+      object-fit: contain;
+      background: #000;
+    }
     .app-embed-wrap { margin: 0 0 2rem; }
     .app-embed-wrap h2 { font-size: 1.15rem; margin: 0 0 0.5rem; }
     .app-embed-wrap .app-copy { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin: 0 0 0.85rem; }
@@ -230,6 +241,7 @@
     </p>
 
     <div id="docIndex">
+    <div class="app-phone-stage">
     <figure class="diagram-card">
       <video
         controls
@@ -240,6 +252,7 @@
       ></video>
       <figcaption>3D Blender model — labeled parts walkthrough (lossy 1280p)</figcaption>
     </figure>
+    </div>
 
     <div class="app-embed-wrap">
       <h2>Puca dash — ignition, mph, range, in-app nav</h2>
