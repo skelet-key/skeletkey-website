@@ -433,8 +433,19 @@ a {
   color: var(--text-secondary);
 }
 
+.compare-table td:nth-child(2),
 .compare-table .highlight {
-  color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.compare-table td:nth-child(3) {
+  color: var(--text-muted);
+}
+
+.compare-table tr.mph-row td:nth-child(2),
+.compare-table tr.mph-row td:nth-child(3) {
+  color: #fff;
   font-weight: 600;
 }
 
