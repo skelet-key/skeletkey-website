@@ -83,7 +83,7 @@ Assembly and test — not frame dies:
 | Short dyno / roll test | Motor + controller + brake | EOL |
 | Spray / IP check | Electrical seals | EOL |
 
-See **Tooling Amortization Schedule.md** (rewritten for this model).
+NRE is assembly jigs + EOL test (~$160k class), amortized in Year 1 — not frame dies.
 
 ---
 
