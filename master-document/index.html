@@ -66,7 +66,7 @@
       margin: 1.5rem 0 2rem; background: #fff; border: 1px solid var(--border);
       border-radius: 12px; overflow: hidden;
     }
-    .diagram-card img { display: block; width: 100%; height: auto; }
+    .diagram-card video { display: block; width: 100%; height: auto; background: #000; }
     .diagram-card figcaption {
       padding: 0.65rem 1rem 0.85rem; font-size: 0.85rem; color: var(--text-muted);
       background: var(--surface); border-top: 1px solid var(--border);
@@ -165,6 +165,16 @@
     </p>
 
     <div id="docIndex">
+    <figure class="diagram-card">
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        src="assets/puca-3d-model.mp4"
+        title="Puca 3D Blender model with labeled parts"
+      ></video>
+      <figcaption>3D Blender model — labeled parts walkthrough (lossy 1280p)</figcaption>
+    </figure>
     <h2 style="font-size:1.15rem;margin:0 0 0.75rem;">Documents library</h2>
     <ul class="doc-list">
         <li class="doc-item">
