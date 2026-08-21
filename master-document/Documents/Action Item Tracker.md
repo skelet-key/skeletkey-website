@@ -130,14 +130,16 @@ It has to do four jobs at once:
 
 Pack is **ON THE WAY**. What you still **buy/fab on the frame/deck**:
 
-| Action | What it does | Notes / buy |
-|--------|----------------|-------------|
-| [ ] Blind-mate **+ / −** contacts **≥150 A cont.** (200 A+ better) | Traction + and − make up on full insertion | Silver/nickel copper, spring/wipe; dielectric so only intended faces touch |
-| [ ] Slide rails / lead-in chamfer | Aligns the 19–20″ pack between thin 6061 plates | Fab with the rear deck |
-| [ ] **Fully seated** interlock (microswitch / pilot) | HV enable only when locked | Series with ignition / BMS output |
-| [ ] Cam / over-center **lock** | Stops the 60 lb pack from walking out under braking | Tool-free for travel; optional strap |
-| [ ] **Main fuse / precharge** for 8 kW class | Limits fault current; soft-starts controller caps | Sized to pack and FarDriver |
-| [ ] QS8 caps / leads to FarDriver | Bottom and/or side QS8 on the inbound pack | Short, left-side path clear of disc |
+**Prototype path:** pack already has **two QS8** (bottom + side) — land short QS8 leads + a mechanical lock. **Production path:** true **blind-mate ±** in the rails so insertion *is* the connection.
+
+| Action | What it does | Buy |
+|--------|----------------|-----|
+| [ ] Blind-mate **+ / −** contacts **≥150 A cont.** (200 A+ better) | Traction + and − make up on full insertion. Silver/nickel copper, spring/wipe; dielectric so only intended faces touch. | **Dock (prototype):** Anderson **SB175** (175 A) https://www.amazon.com/GZSH-Anderson-Connectors-Disconnect-Waterproof/dp/B0G79TWHNF · **SB350** (350 A) https://www.amazon.com/s?k=anderson+SB350 · spec https://www.andersonpower.com/product-lines/sb-connector-series/ · **Production drawer:** Amphenol Floating Mate https://amphenol-industrial.com/products/floating-mate-connector-series/ · JAE DW 100–500 A https://www.jae.com/en/connectors/series/detail/id=64181&type_code=T1120 · 200 A ESS hybrid https://www.alibaba.com/product-detail/Stacked-Energy-Storage-Connector-Stackable_1601290947223.html |
+| [ ] Slide rails / lead-in chamfer | Aligns the 19–20″ pack between thin **6061** plates | Cut plate: https://sendcutsend.com · https://www.onlinemetals.com · https://www.metalsupermarkets.com · UHMW wear strips: https://www.mcmaster.com/uhmw/ |
+| [ ] **Fully seated** interlock (microswitch / pilot) | HV enable only when locked. Series with ignition / BMS output. | Omron **D4N** IP67: https://www.amazon.com/D4N-1120-170095-OMRON-Limit-Switch/dp/B00IP1SEHC · DigiKey https://www.digikey.com/en/products/detail/omron-automation-and-safety/D4N-4D26/4077434 · family https://automation.omron.com/en/us/products/family/D4N · cheaper roller NC: https://www.amazon.com/s?k=IP67+roller+limit+switch+NC |
+| [ ] Cam / over-center **lock** | Stops the 60 lb pack from walking out under braking. Tool-free; optional strap. | Southco TL https://southco.com/en_us_int/latches/draw-latches/fixed-grip-draw-latches/tl-over-center-series-latches · Zoro A1-11-902-20 https://www.zoro.com/southco-over-center-draw-latch-heavy-duty-size-without-keeper-steel-zinc-plate-bright-chromate-a1-11-902-20/i/G715615473/ · Amazon HD https://www.amazon.com/s?k=over+center+draw+latch+heavy+duty · McMaster https://www.mcmaster.com/products/latches/draw-latches/ · strap: https://www.amazon.com/s?k=1+inch+cam+buckle+strap |
+| [ ] **Main fuse / precharge** for 8 kW class | Limits fault current; soft-starts FarDriver caps. ~63 V × ~130 A ≈ 8 kW. | **Fuse:** ANL/MEGA **200 A** holder https://www.amazon.com/clp/B06WRVM461 · https://www.amazon.com/s?k=ANL+fuse+200A+holder · **Resistor:** 50–100 Ω, 50 W+ https://www.amazon.com/s?k=50W+50+ohm+wirewound+resistor · **Contactor:** Gigavac GV200 https://www.mouser.com/new/sensata/gigavac-gv200-dc-contactors/ · precharge calc https://www.sensata.com/calculator/precharge |
+| [ ] **QS8** caps / leads to FarDriver | Bottom and/or side QS8 on the inbound pack. Short, left-side path, clear of disc. | QS8-S anti-spark 8 mm https://www.aliexpress.com/item/1005010610028026.html · https://www.aliexpress.com/w/wholesale-qs8-connector.html · https://www.amazon.com/s?k=QS8+anti+spark+connector · 6 AWG silicone https://www.amazon.com/s?k=6+AWG+silicone+wire+battery |
 
 Until this interface exists, the inbound pack can sit on the deck with **straps only** — do **not** ride high-power with flying QS8 leads as the production design.
 
