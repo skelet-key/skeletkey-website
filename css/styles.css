@@ -1118,7 +1118,9 @@ p strong,
 }
 
 .phone-visual {
-  margin: 0;
+  width: min(1080px, calc(100vw - 2rem));
+  margin-left: 50%;
+  transform: translateX(-50%);
   background: #0a0a0f;
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -1130,8 +1132,9 @@ p strong,
   display: block;
   width: 100%;
   height: auto;
-  max-height: 420px;
-  object-fit: contain;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
   background: #0a0a0f;
 }
 
