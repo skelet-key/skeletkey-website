@@ -91,7 +91,7 @@ See **Tooling Amortization Schedule.md** (rewritten for this model).
 
 Treat these **PDFs** as archive copies. Use the Markdown with the same title (or this document) as source of truth:
 
-- Assembly Strategy.pdf → **Assembly Strategy.md**
+- Use **Assembly Strategy.md** (PDF duplicate removed).
 - QA Strategy.pdf → **QA Strategy.md**
 - Financial Reality Check.pdf → **Financial Reality Check.md**
 

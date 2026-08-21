@@ -1,6 +1,5 @@
 # ASSEMBLY STRATEGY
 ## Document Reference: AS-2026-V2
-## Supersedes: Assembly Strategy.pdf (6061-T6 in-house frame fab language withdrawn)
 ## Updated: 2026-08-21
 
 ### 1. Architecture
