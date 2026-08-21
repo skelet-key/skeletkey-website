@@ -260,11 +260,7 @@ Here’s a clear technical diagram of how a typical two-seater (two-up) café ra
 
 These mounts keep the seat solid while allowing a slight amount of isolation from vibration. Exact hardware varies by builder, but the principle (**seat pan → rubber isolators → frame/subframe**) is nearly universal on custom café racers.
 
-![Two-seater café racer seat mounting system — side-view cutaway and exploded view](Cafe%20Racer%20Seat%20Mounting%20Diagram.jpg)
-
-**Diagram:** Two-Seater Café Racer Seat Mounting System (side-view cutaway & exploded view) — front mount under tank/upper rail, rear mount through rubber isolators into subframe/seat stays, optional side brackets, seat pan → rubber isolators → frame/subframe.
-
-
+See **Seating Installation.md** for Puca deck-over-pack details.
 
 ---
 

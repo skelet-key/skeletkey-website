@@ -7,15 +7,7 @@ Puca does **not** use a seatpost. The café-racer seat sits **above the ~60 lb s
 
 ---
 
-## 1. Diagram (moved off the master index)
-
-![Two-seater café racer seat mounting system — side-view cutaway and exploded view](Cafe%20Racer%20Seat%20Mounting%20Diagram.jpg)
-
-**Two-seater café racer seat mounting system — side-view cutaway & exploded view.**
-
----
-
-## 2. What the diagram shows
+## 1. Mounting principle
 
 ### Side-view cutaway (mounted on frame)
 
