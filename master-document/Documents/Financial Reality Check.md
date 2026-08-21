@@ -8,12 +8,12 @@
 | Metric | Per unit | Annualized |
 |--------|----------|------------|
 | MSRP | **$6,999** | $34,995,000 |
-| Sourced BOM | $2,889 | $14,445,000 |
+| Sourced BOM | $2,942 | $14,710,000 |
 | Contract assembly & QA | $500 | $2,500,000 |
-| **All-in COGS** | **$3,389** | **$16,945,000** |
-| Gross margin | **$3,610 (52%)** | **$18,050,000** |
+| **All-in COGS** | **$3,442** | **$17,210,000** |
+| Gross margin | **$3,557 (51%)** | **$17,785,000** |
 
-We **buy** frames and parts in **5,000-unit lots**. All-in is **$3,389** (parts **$2,889** + assembly **$500**). Frame **$375 includes rear shock**. Pack **$1,200**. FarDriver factory lot **$150** (paid $199 for one).
+We **buy** frames and parts in **5,000-unit lots**. All-in is **$3,442** (parts **$2,942** + assembly **$500**). Frame **$375 includes rear shock**. Pack **$1,200**. FarDriver factory **$150**. Kickstand **$15**, overnight brick **$20**, Statorade **$18**.
 
 ### 2. Where margin is spent
 

@@ -7,10 +7,10 @@
 | Line item | Per unit ($) | Annualized ($) | % revenue |
 | :--- | ---: | ---: | ---: |
 | **Gross revenue (MSRP)** | **6,999** | **34,995,000** | **100%** |
-| Sourced BOM (frames & parts, bulk) | 2,889 | 14,445,000 | 41.3% |
+| Sourced BOM (frames & parts, bulk) | 2,942 | 14,710,000 | 42.0% |
 | Contract assembly & QA | 500 | 2,500,000 | 7.1% |
-| **All-in COGS** | **3,389** | **16,945,000** | **48.4%** |
-| **Gross margin** | **3,610** | **18,050,000** | **51.6%** |
+| **All-in COGS** | **3,442** | **17,210,000** | **49.2%** |
+| **Gross margin** | **3,557** | **17,785,000** | **50.8%** |
 
 ## 2. Quarterly staging
 

@@ -1,5 +1,5 @@
 # Bill of Materials (BOM) Cost Tracking Matrix
-## Target: **5,000 / year** · parts **$2,889** · assembly **$500** · **all-in $3,389**
+## Target: **5,000 / year** · parts **$2,942** · assembly **$500** · **all-in $3,442**
 ## Frame **$375** (rear shock included) · Pack **$1,200** · FarDriver **$150** (factory lot) · MSRP $6,999
 ## Updated: 2026-08-21
 
@@ -13,11 +13,11 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 
 | Line | Per unit | Annual 5k | % MSRP |
 |------|----------|-----------|--------|
-| Sourced parts (below) | **$2,889** | $14,445,000 | 41.3% |
+| Sourced parts (below) | **$2,942** | $14,710,000 | 42.0% |
 | Contract assembly & QA | **$500** | $2,500,000 | 7.1% |
-| **All-in COGS** | **$3,389** | **$16,945,000** | **48.4%** |
+| **All-in COGS** | **$3,442** | **$17,210,000** | **49.2%** |
 | MSRP | $6,999 | $34,995,000 | 100% |
-| **Gross margin** | **$3,610** | **$18,050,000** | **51.6%** |
+| **Gross margin** | **$3,557** | **$17,785,000** | **50.8%** |
 
 ---
 
@@ -36,9 +36,12 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 | CCS1 stack | Inlet+Küster, EVCC, IMD, contactors, 6–8 kW DC–DC, 12 V | 430 | 2,150,000 |
 | Controls / wireless / dash | Signals, brake, headlamp, BLE IGN, throttle, mount, screen | 64 | 320,000 |
 | Crate / pack-out | Export crate, foam, labels | 25 | 125,000 |
-| **Parts subtotal** | | **2,889** | **14,445,000** |
+| Kickstand | Folding-frame side stand | 15 | 75,000 |
+| Home overnight brick | ~63 V AC–DC, 120/240 V household (not CCS) | 20 | 100,000 |
+| Statorade | Grin ferrofluid ~10 mL fill, OEM lot | 18 | 90,000 |
+| **Parts subtotal** | | **2,942** | **14,710,000** |
 | **Assembly** | Consigned-kit labor + in-line QA | **500** | **2,500,000** |
-| **All-in** | | **3,389** | **16,945,000** |
+| **All-in** | | **3,442** | **17,210,000** |
 
 ---
 
@@ -48,6 +51,7 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 | # | Part | Lot $ |
 |---|------|------:|
 | A1 | Kalosse folder, 9.2 lb, 190 mm, 44 mm HT, **rear shock in the frame kit** | **375** |
+| A2 | Kickstand (side stand, folding-frame compatible) | **15** |
 
 ### B. Energy
 | # | Part | Lot $ |
@@ -59,6 +63,7 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 |---|------|------:|
 | C1 | QS205 V3 50H 3T 20×4.0 190 mm (Alibaba ~$339 1-set → 5k) | 255 |
 | C2 | FarDriver ND72360 BT — factory **$138–$158**; 5k modeled **$150** (1-off paid $199) | **150** |
+| C3 | **Statorade** ~10 mL QS205 fill — Grin OEM lot (10 mL retail ~$35; 100 mL $230 ≈ $23/fill; 5k OEM **$18**) | **18** |
 
 ### D. Front end
 | # | Part | Lot $ |
@@ -111,7 +116,8 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 | H6 | Isolated DC–DC HV → ~63 V, 6–8 kW | 200 |
 | H7 | 12 V aux DC–DC | 12 |
 | H8 | HV cable, PE | 13 |
-| | **CCS** | **430** |
+| H9 | **Home overnight brick** ~63 V AC–DC, 120/240 V household (trickle / overnight — **not** 8 kW CCS) | **20** |
+| | **CCS + home brick** | **450** |
 
 ### I. Controls
 | # | Part | Lot $ |
@@ -130,12 +136,12 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 |---|------|------:|
 | J1 | Export crate | 25 |
 
-**Parts $2,889 + assembly $500 = all-in $3,389.**
+**Parts $2,942 + assembly $500 = all-in $3,442.**
 
 ---
 
 ## 4. Still out of this number
 
-Kickstand · Statorade/hubsinks · SN65HVD230 · home CCS1 / 63 V brick · Tesla adapter · phone/app · horn/mirrors/plate.
+SN65HVD230 · CCS **wall box** (H9 is the cheap overnight brick only) · Tesla adapter · phone/app · horn/mirrors/plate · hubsinks.
 
-Rear shock is **in A1**. Dual-source frames if $375 does not hold at 5k. Pack is the swing line at **$1,200**.
+Kickstand **$15**, home brick **$20**, Statorade **$18** are **in**. Rear shock is **in A1**. Pack stays **$1,200**.
