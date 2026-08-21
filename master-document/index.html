@@ -72,7 +72,64 @@
       background: var(--surface); border-top: 1px solid var(--border);
     }
     .md-note { font-size: 0.85rem; color: var(--text-muted); margin-top: 2rem; }
+
+    .doc-back {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      margin: 0 0 1.25rem; padding: 0.4rem 0.85rem;
+      border: 1px solid var(--border); border-radius: 999px;
+      background: var(--surface); color: var(--text-secondary);
+      font-size: 0.85rem; font-weight: 600; cursor: pointer;
+    }
+    .doc-back:hover { color: #fff; border-color: var(--text-muted); }
+    .doc-toolbar {
+      display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+      gap: 0.75rem; margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border); padding-bottom: 0.85rem;
+    }
+    .doc-toolbar h2 { margin: 0; font-size: 1.35rem; letter-spacing: -0.02em; }
+    .doc-toolbar a { font-size: 0.85rem; color: var(--text-muted); }
+    .doc-toolbar a:hover { color: #fff; }
+    .doc-status { color: var(--text-muted); font-size: 0.95rem; }
+    .md-body { color: var(--text-secondary); line-height: 1.7; font-size: 1.02rem; }
+    .md-body h1, .md-body h2, .md-body h3, .md-body h4 {
+      color: var(--text); letter-spacing: -0.02em; line-height: 1.25; margin: 1.6rem 0 0.55rem;
+    }
+    .md-body h1 { font-size: 1.7rem; }
+    .md-body h2 { font-size: 1.3rem; }
+    .md-body h3 { font-size: 1.12rem; }
+    .md-body p { margin: 0 0 0.9rem; }
+    .md-body a { color: #ff6b7a; }
+    .md-body a:hover { color: #fff; }
+    .md-body ul, .md-body ol { margin: 0 0 1rem 1.2rem; }
+    .md-body li { margin: 0.25rem 0; }
+    .md-body blockquote {
+      margin: 0 0 1rem; padding: 0.15rem 0 0.15rem 1rem;
+      border-left: 3px solid var(--brake-red); color: var(--text-muted);
+    }
+    .md-body hr { border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+    .md-body code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em; background: var(--surface-2); padding: 0.12em 0.4em; border-radius: 5px;
+    }
+    .md-body pre {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1rem 1.1rem; overflow-x: auto; margin: 0 0 1.15rem;
+    }
+    .md-body pre code { background: none; padding: 0; font-size: 0.82rem; }
+    .md-body table {
+      width: 100%; border-collapse: collapse; margin: 0 0 1.2rem; font-size: 0.92rem;
+    }
+    .md-body .table-wrap { overflow-x: auto; margin: 0 0 1.2rem; }
+    .md-body th, .md-body td {
+      border: 1px solid var(--border); padding: 0.5rem 0.7rem; text-align: left; vertical-align: top;
+    }
+    .md-body th { background: var(--surface); color: var(--text); font-weight: 600; }
+    .md-body img { max-width: 100%; height: auto; border-radius: 10px; margin: 0.5rem 0 1rem; }
+    .md-body iframe.doc-embed {
+      width: 100%; min-height: 75vh; border: 1px solid var(--border); border-radius: 12px; background: #fff;
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
 </head>
 <body class="locked">
   <div class="pw-gate" id="pwGate" hidden>
@@ -103,10 +160,11 @@
     <p class="eyebrow">Internal · Master package</p>
     <h1>SkeletKey Master Document</h1>
     <p class="lead">
-      Portable master package index. Open the PDF index or any document from the library below.
+      Portable master package index. Markdown opens rendered on this page. PDFs and images open in-page too.
       Includes Puca schematics, build decisions &amp; shopping list, café racer seat mounting, business, logistics, and production docs.
     </p>
 
+    <div id="docIndex">
     <figure class="diagram-card">
       <img src="assets/cafe-racer-seat-mounting.jpg" alt="Two-seater café racer seat mounting system — side-view cutaway and exploded view" />
       <figcaption>Two-seater café racer seat mounting system — side-view cutaway &amp; exploded view (included in package)</figcaption>
@@ -115,131 +173,141 @@
     <h2 style="font-size:1.15rem;margin:0 0 0.75rem;">Documents library</h2>
     <ul class="doc-list">
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Action%20Item%20Tracker.md" target="_blank" rel="noopener">Action Item Tracker.md</a>
+          <a class="doc-name" href="Documents/Action%20Item%20Tracker.md">Action Item Tracker.md</a>
           <span class="doc-meta">2.4 KB · md</span>
           <p class="doc-desc">Action item tracker for the program.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Assembly%20Strategy.pdf" target="_blank" rel="noopener">Assembly Strategy.pdf</a>
+          <a class="doc-name" href="Documents/Assembly%20Strategy.pdf">Assembly Strategy.pdf</a>
           <span class="doc-meta">3.3 KB · pdf</span>
           <p class="doc-desc">Assembly approach and production strategy.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/BOM%20Cost%20Matrix.md" target="_blank" rel="noopener">BOM Cost Matrix.md</a>
+          <a class="doc-name" href="Documents/BOM%20Cost%20Matrix.md">BOM Cost Matrix.md</a>
           <span class="doc-meta">1.4 KB · md</span>
           <p class="doc-desc">Bill of materials and cost matrix.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Build%20Decisions%20and%20Shopping%20List.md" target="_blank" rel="noopener">Build Decisions and Shopping List.md</a>
+          <a class="doc-name" href="Documents/Build%20Decisions%20and%20Shopping%20List.md">Build Decisions and Shopping List.md</a>
           <span class="doc-meta">md</span>
           <p class="doc-desc">Locked hardware decisions (FarDriver, QS205 3T, 57 lb pack, aluminum deck + café seat), clearance rules, aluminum cut list, and remaining parts with purchase links.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Cafe%20Racer%20Seat%20Mounting%20Diagram.jpg" target="_blank" rel="noopener">Cafe Racer Seat Mounting Diagram.jpg</a>
+          <a class="doc-name" href="Documents/Cafe%20Racer%20Seat%20Mounting%20Diagram.jpg">Cafe Racer Seat Mounting Diagram.jpg</a>
           <span class="doc-meta">251.5 KB · jpg</span>
           <p class="doc-desc">Side-view cutaway and exploded view of two-seater café racer seat mounting system.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Carrier%20Scorecard%20and%20Safety%20Outline.pdf" target="_blank" rel="noopener">Carrier Scorecard and Safety Outline.pdf</a>
+          <a class="doc-name" href="Documents/Carrier%20Scorecard%20and%20Safety%20Outline.pdf">Carrier Scorecard and Safety Outline.pdf</a>
           <span class="doc-meta">5.2 KB · pdf</span>
           <p class="doc-desc">Carrier scorecard and safety outline.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Cash%20Flow%20Pro%20Forma.md" target="_blank" rel="noopener">Cash Flow Pro Forma.md</a>
+          <a class="doc-name" href="Documents/Cash%20Flow%20Pro%20Forma.md">Cash Flow Pro Forma.md</a>
           <span class="doc-meta">1.8 KB · md</span>
           <p class="doc-desc">Cash flow pro forma.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Due%20Diligence%20Checklist.md" target="_blank" rel="noopener">Due Diligence Checklist.md</a>
+          <a class="doc-name" href="Documents/Due%20Diligence%20Checklist.md">Due Diligence Checklist.md</a>
           <span class="doc-meta">1.6 KB · md</span>
           <p class="doc-desc">Due diligence checklist.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Engineering%20Change%20Notice.md" target="_blank" rel="noopener">Engineering Change Notice.md</a>
+          <a class="doc-name" href="Documents/Engineering%20Change%20Notice.md">Engineering Change Notice.md</a>
           <span class="doc-meta">1.6 KB · md</span>
           <p class="doc-desc">Engineering change notice process.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Financial%20Reality%20Check.pdf" target="_blank" rel="noopener">Financial Reality Check.pdf</a>
+          <a class="doc-name" href="Documents/Financial%20Reality%20Check.pdf">Financial Reality Check.pdf</a>
           <span class="doc-meta">3.2 KB · pdf</span>
           <p class="doc-desc">Financial reality check and constraints.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Freight%20Forwarder%20RFP.md" target="_blank" rel="noopener">Freight Forwarder RFP.md</a>
+          <a class="doc-name" href="Documents/Freight%20Forwarder%20RFP.md">Freight Forwarder RFP.md</a>
           <span class="doc-meta">3.6 KB · md</span>
           <p class="doc-desc">Freight forwarder RFP.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Investor%20Pitch%20Deck%20Outline.md" target="_blank" rel="noopener">Investor Pitch Deck Outline.md</a>
+          <a class="doc-name" href="Documents/Investor%20Pitch%20Deck%20Outline.md">Investor Pitch Deck Outline.md</a>
           <span class="doc-meta">4.1 KB · md</span>
           <p class="doc-desc">Investor pitch deck outline.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Kickoff%20Meeting%20Agenda.md" target="_blank" rel="noopener">Kickoff Meeting Agenda.md</a>
+          <a class="doc-name" href="Documents/Kickoff%20Meeting%20Agenda.md">Kickoff Meeting Agenda.md</a>
           <span class="doc-meta">1.6 KB · md</span>
           <p class="doc-desc">Kickoff meeting agenda.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Letter%20of%20Intent.md" target="_blank" rel="noopener">Letter of Intent.md</a>
+          <a class="doc-name" href="Documents/Letter%20of%20Intent.md">Letter of Intent.md</a>
           <span class="doc-meta">6.2 KB · md</span>
           <p class="doc-desc">Letter of intent template.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Master%20Business%20Plan%20Summary.md" target="_blank" rel="noopener">Master Business Plan Summary.md</a>
+          <a class="doc-name" href="Documents/Master%20Business%20Plan%20Summary.md">Master Business Plan Summary.md</a>
           <span class="doc-meta">3.5 KB · md</span>
           <p class="doc-desc">High-level business plan summary for the program.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Master%20Logistics%20Operations%20Index.pdf" target="_blank" rel="noopener">Master Logistics Operations Index.pdf</a>
+          <a class="doc-name" href="Documents/Master%20Logistics%20Operations%20Index.pdf">Master Logistics Operations Index.pdf</a>
           <span class="doc-meta">2.4 KB · pdf</span>
           <p class="doc-desc">Master logistics operations index.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Production%20Milestone%20Gantt.md" target="_blank" rel="noopener">Production Milestone Gantt.md</a>
+          <a class="doc-name" href="Documents/Production%20Milestone%20Gantt.md">Production Milestone Gantt.md</a>
           <span class="doc-meta">2.0 KB · md</span>
           <p class="doc-desc">Production milestone Gantt outline.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Puca%20Schematics%20and%20Design%20Plan.md.txt" target="_blank" rel="noopener">Puca Schematics and Design Plan.md.txt</a>
+          <a class="doc-name" href="Documents/Puca%20Schematics%20and%20Design%20Plan.md.txt">Puca Schematics and Design Plan.md.txt</a>
           <span class="doc-meta">13.0 KB · txt</span>
           <p class="doc-desc">Engineering blueprint: structure, powertrain, QS205 thermal (Statorade), 3T/60V/70 mph analysis, battery, café racer seat mounting, and prototype layout.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/QA%20Strategy.pdf" target="_blank" rel="noopener">QA Strategy.pdf</a>
+          <a class="doc-name" href="Documents/QA%20Strategy.pdf">QA Strategy.pdf</a>
           <span class="doc-meta">3.2 KB · pdf</span>
           <p class="doc-desc">Quality assurance strategy.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/RFP%20Template.md" target="_blank" rel="noopener">RFP Template.md</a>
+          <a class="doc-name" href="Documents/RFP%20Template.md">RFP Template.md</a>
           <span class="doc-meta">2.0 KB · md</span>
           <p class="doc-desc">Request for proposal template.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Supplier%20Negotiation%20Playbook.md" target="_blank" rel="noopener">Supplier Negotiation Playbook.md</a>
+          <a class="doc-name" href="Documents/Supplier%20Negotiation%20Playbook.md">Supplier Negotiation Playbook.md</a>
           <span class="doc-meta">1.6 KB · md</span>
           <p class="doc-desc">Supplier negotiation playbook.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Technical%20Fact%20Sheet.md" target="_blank" rel="noopener">Technical Fact Sheet.md</a>
+          <a class="doc-name" href="Documents/Technical%20Fact%20Sheet.md">Technical Fact Sheet.md</a>
           <span class="doc-meta">2.6 KB · md</span>
           <p class="doc-desc">Core product and technical specifications for Puca.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Tooling%20Amortization%20Schedule.md" target="_blank" rel="noopener">Tooling Amortization Schedule.md</a>
+          <a class="doc-name" href="Documents/Tooling%20Amortization%20Schedule.md">Tooling Amortization Schedule.md</a>
           <span class="doc-meta">2.5 KB · md</span>
           <p class="doc-desc">Tooling amortization schedule.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Vendor%20Outreach%20Email.md" target="_blank" rel="noopener">Vendor Outreach Email.md</a>
+          <a class="doc-name" href="Documents/Vendor%20Outreach%20Email.md">Vendor Outreach Email.md</a>
           <span class="doc-meta">4.0 KB · md</span>
           <p class="doc-desc">Vendor outreach email template.</p>
         </li>
         <li class="doc-item">
-          <a class="doc-name" href="Documents/Warehouse%20Operations%20Guide.md" target="_blank" rel="noopener">Warehouse Operations Guide.md</a>
+          <a class="doc-name" href="Documents/Warehouse%20Operations%20Guide.md">Warehouse Operations Guide.md</a>
           <span class="doc-meta">3.5 KB · md</span>
           <p class="doc-desc">Warehouse operations guide.</p>
         </li>
     </ul>
+    </div>
+
+    <section id="docViewer" class="doc-viewer" hidden>
+      <button type="button" id="docBack" class="doc-back">← Documents library</button>
+      <div class="doc-toolbar">
+        <h2 id="docTitle">Document</h2>
+        <a id="docRaw" href="#" target="_blank" rel="noopener">Open original</a>
+      </div>
+      <article id="docBody" class="md-body"></article>
+    </section>
 
     <p class="md-note">
       Unlisted · password protected · matches the portable package (PDF index + Documents folder) ·
@@ -251,6 +319,12 @@
     (function () {
       var PASS_HASH = "560180651be608a1e879d7af9c33f67d41cc7ee50d4dc4cbd97a852462bbfea8";
       var STORAGE_KEY = "sk_master_doc_unlocked_v1";
+      var indexEl = document.getElementById("docIndex");
+      var viewerEl = document.getElementById("docViewer");
+      var titleEl = document.getElementById("docTitle");
+      var bodyEl = document.getElementById("docBody");
+      var rawEl = document.getElementById("docRaw");
+
       function hex(buf) {
         return Array.from(new Uint8Array(buf)).map(function (b) {
           return b.toString(16).padStart(2, "0");
@@ -259,12 +333,148 @@
       function sha256(text) {
         return crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)).then(hex);
       }
+      function isUnlocked() {
+        return document.body.classList.contains("unlocked");
+      }
+      function showIndex() {
+        if (indexEl) indexEl.hidden = false;
+        if (viewerEl) viewerEl.hidden = true;
+      }
+      function showViewer() {
+        if (indexEl) indexEl.hidden = true;
+        if (viewerEl) viewerEl.hidden = false;
+        window.scrollTo(0, 0);
+      }
+      function fileName(path) {
+        try { return decodeURIComponent(path.split("/").pop() || path); }
+        catch (e) { return path; }
+      }
+      function extOf(path) {
+        var n = (path.split("?")[0] || "").toLowerCase();
+        if (/\.md\.txt$/.test(n) || n.endsWith(".md") || n.endsWith(".txt")) return "md";
+        if (n.endsWith(".pdf")) return "pdf";
+        if (/\.(jpg|jpeg|png|webp|gif)$/.test(n)) return "img";
+        return "other";
+      }
+      function resolveDocUrl(href) {
+        return new URL(href, window.location.href).href;
+      }
+      function isDocHref(href) {
+        if (!href) return false;
+        try {
+          var u = new URL(href, window.location.href);
+          if (u.origin !== window.location.origin) return false;
+        } catch (e) { return false; }
+        return /Documents\//i.test(href) || /\/master-document\/(Documents|assets)\//i.test(href);
+      }
+      function setHash(path) {
+        var rel = path.replace(/^.*\/master-document\//, "");
+        var next = "#doc=" + encodeURIComponent(rel);
+        if (window.location.hash !== next) {
+          history.pushState({ doc: rel }, "", next);
+        }
+      }
+      function clearHash() {
+        if ((window.location.hash || "").indexOf("#doc=") === 0) {
+          history.pushState({}, "", window.location.pathname + window.location.search);
+        }
+      }
+      function currentHashDoc() {
+        var h = window.location.hash || "";
+        if (h.indexOf("#doc=") !== 0) return "";
+        try { return decodeURIComponent(h.slice(5)); }
+        catch (e) { return ""; }
+      }
+      function renderMarkdown(md, baseUrl) {
+        var html;
+        if (window.marked) {
+          if (marked.setOptions) marked.setOptions({ gfm: true, breaks: true });
+          html = (marked.parse || marked)(md);
+        } else {
+          html = "<pre>" + md.replace(/[&<>]/g, function (c) {
+            return ({ "&": "&", "<": "<", ">": ">" })[c];
+          }) + "</pre>";
+        }
+        bodyEl.innerHTML = html;
+        Array.prototype.forEach.call(bodyEl.querySelectorAll("table"), function (table) {
+          if (table.parentNode && table.parentNode.classList && table.parentNode.classList.contains("table-wrap")) return;
+          var wrap = document.createElement("div");
+          wrap.className = "table-wrap";
+          table.parentNode.insertBefore(wrap, table);
+          wrap.appendChild(table);
+        });
+        Array.prototype.forEach.call(bodyEl.querySelectorAll("img"), function (img) {
+          var src = img.getAttribute("src") || "";
+          if (src && !/^(https?:|data:|\/)/i.test(src)) img.src = new URL(src, baseUrl).href;
+        });
+        Array.prototype.forEach.call(bodyEl.querySelectorAll("a"), function (a) {
+          var href = a.getAttribute("href") || "";
+          if (href && !/^(https?:|mailto:|#|\/)/i.test(href)) a.href = new URL(href, baseUrl).href;
+        });
+      }
+      function openDoc(href) {
+        if (!isUnlocked()) return;
+        var url = resolveDocUrl(href);
+        var path = new URL(url).pathname;
+        var kind = extOf(path);
+        titleEl.textContent = fileName(path);
+        rawEl.href = url;
+        bodyEl.innerHTML = "<p class=\"doc-status\">Loading…</p>";
+        showViewer();
+        setHash(path);
+
+        if (kind === "pdf") {
+          var frame = document.createElement("iframe");
+          frame.className = "doc-embed";
+          frame.title = "PDF";
+          frame.src = url;
+          bodyEl.innerHTML = "";
+          bodyEl.appendChild(frame);
+          return;
+        }
+        if (kind === "img") {
+          bodyEl.innerHTML = "";
+          var img = document.createElement("img");
+          img.src = url;
+          img.alt = fileName(path);
+          bodyEl.appendChild(img);
+          return;
+        }
+        fetch(url, { credentials: "same-origin" }).then(function (res) {
+          if (!res.ok) throw new Error("Could not load document");
+          return res.text();
+        }).then(function (text) {
+          renderMarkdown(text, url);
+        }).catch(function (err) {
+          bodyEl.textContent = "";
+          var p = document.createElement("p");
+          p.className = "doc-status";
+          p.appendChild(document.createTextNode((err.message || "Could not load document") + ". "));
+          var a = document.createElement("a");
+          a.href = url; a.target = "_blank"; a.rel = "noopener";
+          a.textContent = "Open original";
+          p.appendChild(a);
+          bodyEl.appendChild(p);
+        });
+      }
+      function closeDoc() {
+        showIndex();
+        clearHash();
+      }
+      function maybeOpenFromHash() {
+        if (!isUnlocked()) return;
+        var doc = currentHashDoc();
+        if (doc) openDoc(doc);
+        else showIndex();
+      }
+
       function unlock() {
         document.body.classList.remove("locked");
         document.body.classList.add("unlocked");
         var gate = document.getElementById("pwGate");
         if (gate) gate.hidden = true;
         try { sessionStorage.setItem(STORAGE_KEY, "1"); } catch (e) {}
+        maybeOpenFromHash();
       }
       function showGate() {
         document.body.classList.add("locked");
@@ -276,6 +486,7 @@
         if (sessionStorage.getItem(STORAGE_KEY) === "1") unlock();
         else showGate();
       } catch (e) { showGate(); }
+
       var form = document.getElementById("pwForm");
       if (form) {
         form.addEventListener("submit", function (ev) {
@@ -291,6 +502,22 @@
           });
         });
       }
+
+      document.addEventListener("click", function (ev) {
+        var a = ev.target && ev.target.closest ? ev.target.closest("a.doc-name") : null;
+        if (!a) return;
+        var href = a.getAttribute("href");
+        if (!isDocHref(href)) return;
+        ev.preventDefault();
+        if (!isUnlocked()) return;
+        openDoc(href);
+      });
+
+      var back = document.getElementById("docBack");
+      if (back) back.addEventListener("click", function () { closeDoc(); });
+      window.addEventListener("popstate", maybeOpenFromHash);
+      window.addEventListener("hashchange", maybeOpenFromHash);
+
       var toggle = document.getElementById("navToggle");
       var links = document.getElementById("navLinks");
       if (toggle && links) toggle.addEventListener("click", function () { links.classList.toggle("open"); });
