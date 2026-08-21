@@ -29,9 +29,10 @@ SkeletKey is an **asset-light** mobility brand. We own design, BOM, software, an
 | Financial metric | Per unit | Annualized (5,000) | % of MSRP |
 | :--- | :--- | :--- | :--- |
 | **MSRP** | $6,999 | $34,995,000 | 100% |
-| **Sourced BOM** | $3,139 | $15,695,000 | 44.8% |
+| **Sourced BOM** | $2,889 | $14,445,000 | 41.3% |
 | **Contract assembly & QA labor** | $500 | $2,500,000 | 7.1% |
-| **Gross margin** | **$3,360** | **$16,800,000** | **48.0%** |
+| **All-in COGS** | **$3,389** | **$16,945,000** | **48.4%** |
+| **Gross margin** | **$3,610** | **$18,050,000** | **51.6%** |
 
 BOM is **bought parts**, not in-house extrusions.
 

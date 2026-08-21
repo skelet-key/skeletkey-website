@@ -27,8 +27,8 @@
 * EOL roll test + spray on seals (IP65).
 
 ### SLIDE 6: UNIT ECONOMICS
-* MSRP $6,999 · BOM **$3,139** (frame **$375**, pack **$1,200**, FarDriver **$199**) · assembly $500 · gross **~$3,360 (48%)**.
-* 5,000 units → ~$35M revenue · **~$16.8M** gross.
+* MSRP $6,999 · parts **$2,889** + assembly **$500** = all-in **$3,389** · gross **~$3,610 (52%)**. Frame **$375** (shock in) · pack **$1,200** · FarDriver factory **$150**.
+* 5,000 units → ~$35M revenue · **~$18.1M** gross.
 
 ### SLIDE 7: CAPITAL USE
 * Inventory of **kits** (frames, packs, motors) — not $300k extrusion dies.
