@@ -153,7 +153,21 @@ Fail-safe: RF loss → all RX channels **OFF** (no runaway lamp, no stuck igniti
 Primary: **Mangood 8CH wireless relay, DC 12–36 V, 10 A, 6 modes (incl. momentary), numbered quick-connect terminals.** Power both boards from the **12 V DC–DC**, never the 63 V pack.
 
 - Buy: [amazon.com/dp/B0G2XJ6XKF](https://www.amazon.com/dp/B0G2XJ6XKF) (~$45)
-- 4-channel fallback (if 8CH is out of stock): [Mangood 4CH 12–36 V](https://www.amazon.com/Mangood-4-Channel-Wireless-Switch-12V-36V/dp/B0FDL913NP) — buy **two kits** and use 1–4 + 5–8
+- **Cheaper waterproof alternatives** (same job — numbered 1–8, 12 V lamps + orange lock):
+
+| Kit | Water | CH | ~$ | Buy |
+|-----|-------|----|----|-----|
+| **WOODGUILIN 4CH IP65** 12 V, 328 ft, sealed for car/moto lamps — **buy two kits** = 8 channels | **IP65 housing** | 4×2 | cheaper than Mangood | https://www.amazon.com/WOODGUILIN-Wireless-Switch-Waterproof-Control/dp/B0DGFQMDB7 |
+| **ZHOFONET IP65 1CH** 12–72 V, 40 A, sealed — use for ignition / headlamp / kill (high current) | **IP65** | 1 | ~$15–25 | https://www.amazon.com/ZHOFONET-Control-Wireless-Waterproof-Switches/dp/B0BYD3F9BC · https://www.amazon.com/ZHOFONET-Waterproof-Control-Wireless-Switches/dp/B09SPD7R65 |
+| **Tevacohn IP67 1CH** 8–80 V, 30 A, fully sealed | **IP67** | 1 | ~$20 | https://www.amazon.com/s?k=Tevacohn+IP67+Waterproof+DC8-80V+30A+433mhz |
+| **GUIRUIMOON 8CH mini** 5/12/24 V, 3 A, 164 ft — put in an IP67 box | box it | 8 | **$30** | https://www.amazon.com/GUIRUIMOON-Miniature-Wireless-Transmitter-Receiver/dp/B0DF59M58Q |
+| **Serounder 8CH** 12 V 433 MHz — box it | box it | 8 | ~$20 | https://www.amazon.com/Serounder-Wireless-Control-Channel-Receiver/dp/B07WR79B8T |
+| **AliExpress 8CH 12 V 433 MHz** TX+RX | box it | 8 | **~$16** | https://www.aliexpress.com/item/1005009138593798.html · https://www.aliexpress.com/i/1005012263750108.html · https://www.aliexpress.com/i/1005012065518530.html |
+| IP67 project boxes (if the board is bare) | **IP67** | — | few $ | https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
+
+Best cheap waterproof path: **two WOODGUILIN IP65 4CH kits** (channels 1–4 + 5–8) so the receivers are already sealed — no extra box. Use a **ZHOFONET / Tevacohn IP65–67 1CH** on FarDriver **orange** if you want a sealed high-amp ignition relay.
+
+- 4-channel fallback (Mangood, if 8CH is out of stock): [Mangood 4CH 12–36 V](https://www.amazon.com/Mangood-4-Channel-Wireless-Switch-12V-36V/dp/B0FDL913NP)
 - Alternate 8CH 433 MHz receiver: [Serounder 8CH 12 V 433 MHz](https://www.amazon.com/Serounder-Wireless-Control-Channel-Receiver/dp/B07WR79B8T)
 
 The Mangood “transmitter” is an 8-button fob. For bar switches: open the fob and **solder each handlebar switch in parallel with buttons 1–8** (EV1527 pads), or pair a bare **433 MHz 8-input encoder board** to the same receiver. Keep the same **1–8** numbers on the GX16 pigtails.

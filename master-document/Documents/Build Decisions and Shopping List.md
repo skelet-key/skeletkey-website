@@ -107,6 +107,7 @@ Waterproof **TX at the bars / RX at the rear**, numbered 1–8. Separate analog 
 | Item | Compatible because | Buy |
 |------|--------------------|-----|
 | **Mangood 8CH 12–36 V TX + RX** (numbered 1–8) | Turns, brake lamp, headlamp, ignition (FarDriver **orange**), cutoff, horn | https://www.amazon.com/dp/B0G2XJ6XKF |
+| **Cheaper IP65 alts** | Two× WOODGUILIN 4CH sealed, or GUIRUIMOON / AliExpress 8CH + IP67 box | https://www.amazon.com/WOODGUILIN-Wireless-Switch-Waterproof-Control/dp/B0DGFQMDB7 · https://www.amazon.com/GUIRUIMOON-Miniature-Wireless-Transmitter-Receiver/dp/B0DF59M58Q · https://www.aliexpress.com/item/1005009138593798.html |
 | **Falcon PEV wireless throttle** (hall TX + RX) | RX → FarDriver throttle red / black / green. Fail-to-zero on RF loss. | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
 | Numbered **GX16** pigtails + IP67 boxes | Same pin numbers on both boards | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
 | Battery level | FarDriver BT + pack Bluetooth BMS — **not** a 433 MHz channel | FarDriver app · BMS app · https://skeletkey.com/app/ |
