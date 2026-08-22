@@ -1159,6 +1159,14 @@ p strong,
   padding: 1.5rem 1.4rem;
 }
 
+.maintain-icon {
+  width: 2.85rem;
+  height: 2.85rem;
+  margin-bottom: 0.85rem;
+  display: block;
+  overflow: visible;
+}
+
 .maintain-card h3 {
   font-size: 1.1rem;
   font-weight: 600;
