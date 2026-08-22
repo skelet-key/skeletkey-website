@@ -103,28 +103,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Commute savings wizard
+  // Commute savings calculator (USA, gallons)
   (function initSavings() {
     const form = document.getElementById("savingsForm");
-    const wizard = document.getElementById("savingsWizard");
-    if (!form || !wizard) return;
-
-    const steps = Array.from(form.querySelectorAll(".wiz-step"));
-    const pills = Array.from(wizard.querySelectorAll(".wizard-progress li"));
-    const backBtn = document.getElementById("savBack");
-    const nextBtn = document.getElementById("savNext");
-    const fields = [
-      document.getElementById("savMpg"),
-      document.getElementById("savMiles"),
-      document.getElementById("savGas"),
-      document.getElementById("savKwh"),
-    ];
-    const LAST = steps.length - 1; // results
-    let step = 0;
+    if (!form) return;
+    const mpgEl = document.getElementById("savMpg");
+    const milesEl = document.getElementById("savMiles");
+    const gasEl = document.getElementById("savGas");
+    const kwhEl = document.getElementById("savKwh");
+    const results = document.getElementById("savingsResults");
 
     const PUCA_KWH_PER_MI = 8.5 / 100;
     const MSRP = 6999;
-    const DAYS_YEAR = 365;
 
     function money(n) {
       const abs = Math.abs(n);
@@ -147,22 +137,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return (y === 1 ? "1 year" : y + " years") + ", " + (m === 1 ? "1 month" : m + " months");
     }
 
-    function valid(i) {
-      const el = fields[i];
-      if (!el) return true;
-      const n = parseFloat(el.value);
-      const min = parseFloat(el.min);
-      const max = parseFloat(el.max);
-      return n > 0 && n >= min && n <= max;
-    }
-
     function calc() {
-      if (!fields.every((_, i) => valid(i))) return;
-      const mpg = parseFloat(fields[0].value);
-      const milesDay = parseFloat(fields[1].value);
-      const gas = parseFloat(fields[2].value);
-      const kwh = parseFloat(fields[3].value);
-      const milesYear = milesDay * DAYS_YEAR;
+      const mpg = parseFloat(mpgEl.value);
+      const weeklyMiles = parseFloat(milesEl.value);
+      const gas = parseFloat(gasEl.value);
+      const kwh = parseFloat(kwhEl.value);
+      if (!(mpg > 0 && weeklyMiles > 0 && gas > 0 && kwh > 0)) return;
+
+      const milesYear = weeklyMiles * 52;
       const saveYear = (milesYear / mpg) * gas - milesYear * PUCA_KWH_PER_MI * kwh;
       document.getElementById("savWeek").textContent = money(saveYear / 52);
       document.getElementById("savMonth").textContent = money(saveYear / 12);
@@ -171,76 +153,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const note = document.getElementById("savPaybackNote");
       if (saveYear <= 0) {
         pb.textContent = "N/A";
-        if (note) note.textContent = "This commute costs more on Puca than gas at those rates.";
+        if (note) note.textContent = "This mileage costs more on Puca than gas at those rates.";
       } else {
         pb.textContent = paybackCopy(MSRP / saveYear);
         if (note) {
           note.textContent =
-            "At $6,999 MSRP from commute fuel savings alone — charging at home, 7 days a week.";
+            "At $6,999 MSRP from fuel savings alone — charging at home in the U.S.";
         }
       }
+      results.hidden = false;
+      results.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
-    function render() {
-      steps.forEach((el, i) => el.classList.toggle("is-active", i === step));
-      pills.forEach((el, i) => {
-        el.classList.toggle("is-active", i === step);
-        el.classList.toggle("is-done", i < step);
-      });
-      backBtn.disabled = step === 0;
-      if (step === LAST) {
-        nextBtn.textContent = "Start over";
-        calc();
-      } else if (step === LAST - 1) {
-        nextBtn.textContent = "See savings";
-      } else {
-        nextBtn.textContent = "Continue";
-      }
-      const input = steps[step].querySelector("input");
-      if (input) setTimeout(() => input.focus(), 30);
-    }
-
-    function go(n) {
-      step = Math.max(0, Math.min(LAST, n));
-      render();
-    }
-
-    function next() {
-      if (step === LAST) {
-        fields[0].value = "";
-        fields[1].value = "";
-        fields[2].value = "4.11";
-        fields[3].value = "0.1844";
-        go(0);
-        return;
-      }
-      if (step < 4 && !valid(step)) {
-        fields[step].focus();
-        fields[step].closest(".wiz-field").style.borderColor = "var(--accent)";
-        return;
-      }
-      go(step + 1);
-    }
-
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
-      next();
+      calc();
     });
-    backBtn.addEventListener("click", () => go(step - 1));
-    pills.forEach((el) => {
-      el.addEventListener("click", () => {
-        const target = parseInt(el.getAttribute("data-goto"), 10);
-        if (target < step || (target === step + 1 && valid(step)) || target <= step) {
-          if (target > step) {
-            for (let i = 0; i < target; i++) {
-              if (i < 4 && !valid(i)) return;
-            }
-          }
-          go(target);
-        }
-      });
-    });
-
-    render();
   })();
 });
