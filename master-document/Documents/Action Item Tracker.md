@@ -156,30 +156,35 @@ Fail-safe: RF loss → all RX channels **OFF** (no runaway lamp, no stuck igniti
 - **Receiver (rear):** 8 **relay outputs**, same numbers 1–8 → lamps + FarDriver orange.
 - Power both from the **12 V DC–DC**. RF loss → all outputs OFF.
 
-**1. Digital pair — 8DI transmitter + 8-relay receiver (no fob)**
+**1. Digital pair — 8DI transmitter + 8-relay receiver (enclosed, no fob)**
 
-Order **both** halves. Listings sell “A Transmitter” and “B Receiver” as separate sizes.
+Order **both** halves. These are plastic-shell boards (115×90×40 mm TX / 145×90×40 mm RX), not keyfobs.
 
-| Kit | What it is | Buy |
-|-----|------------|-----|
-| **8CH 433 MHz LoRa I/O** (primary) | TX = 8 digital inputs; RX = 8× 10 A relays; point-to-point, feedback LED | **AliExpress pair:** https://www.aliexpress.com/item/1005005402005835.html · https://www.aliexpress.com/item/1005007074526359.html · https://www.aliexpress.com/item/1005012419576735.html (pick **433M Transmitter** *and* **433M Receiver**) · search https://www.aliexpress.com/w/wholesale-8CH-433MHz-Lora-Remote-I-O.html |
-| **ENDYAK / same module on Amazon** | Same 8CH LoRa I/O. Buy **Size: A Transmitter** *and* **Size: B Receiver** | TX+RX kit: https://www.amazon.com/Transceiver-Remote-Controller-Feedback-Wireless/dp/B0DPQ9LXNR · Receiver-only listing (also pick Transmitter size): https://www.amazon.com/ENDYAK-8-Channel-Feedback-Wireless-Suitable/dp/B0CQLSZFMK · TX half: https://www.amazon.com/Long-Transmitter-Automation-Bidirectional-Controller/dp/B0CXCQZQ2G · eBay pair: https://www.ebay.com/itm/366037496594 |
-| **4CH LoRa I/O** (cheaper, buy two pairs = 8) | Same idea, 4 inputs / 4 relays each | https://www.aliexpress.com/item/1005005219805622.html |
-| **Phoenix Contact Wireless MUX** (production) | 16 digital + 2 analog, true cable replacement, fail-safe | https://www.phoenixcontact.com/en-us/products/multiplexer-ilb-bt-adio-mux-2702875 |
+| Kit | Enclosed | ~$ | Buy |
+|-----|----------|----|-----|
+| **eletechsup RTTXA08 + RTRXB08 with shell** (primary, cheapest enclosed pair) | Yes — factory case | **$50 pair** | Factory: https://eletechsup.com/products/8ch-433m-dc-12v-lora-bidirectional-remote-io-controller-led-feedback-indicator-npn-in-relay-out-swicth-module-board (SKU RTTXA08+RTRXB08+TB450×2) · AliExpress ~$15/board: https://www.aliexpress.com/item/1005006919833785.html · https://www.aliexpress.com/item/1005007074526359.html · https://www.aliexpress.com/item/1005005402005835.html |
+| **RFSIA08 + RFSOB08 with shell** (same maker) | Yes | ~$27–50 | https://eletechsup.com/products/rfsia08-rfsob08-with-feedback-switch-433m-868m-915m-lora-transceiver-quantity-io-wireless-remote-transmission-industrial-motor-remote-controller |
+| Amazon same module | Pick **A Transmitter** *and* **B Receiver** | ~$55–70 | https://www.amazon.com/Transceiver-Remote-Controller-Feedback-Wireless/dp/B0DPQ9LXNR · https://www.amazon.com/ENDYAK-8-Channel-Feedback-Wireless-Suitable/dp/B0CQLSZFMK |
+| **4CH LoRa I/O ×2** (cheaper split) | Usually shelled | ~$25×2 | https://www.aliexpress.com/item/1005005219805622.html |
 
-Wire handlebar switches as **dry contacts** across TX inputs 1–8 (common GND). Number the RX relays the same. Momentary channels (turns, brake, kill) follow the switch; latch ignition and headlamp in the module’s mode jumpers.
+TX inputs are **NPN / dry contact**. Handlebar switches close 1–8 to GND. RX relays 1–8: turns, brake+high-brake, headlamp, FarDriver **orange**, kill, horn. DIP: momentary for turns/brake/kill, latch for ignition/headlamp.
 
-Do **not** buy Mangood / WOODGUILIN / GUIRUIMOON / ZHOFONET / Serounder — those are a **keyfob + one receiver**, not a transmitter board.
+**This board is digital only. It cannot carry hall throttle.**
 
-**2. Analog pair — throttle only (FarDriver hall)**
+**2. RF throttle that actually works (0–5 V analog — separate pair, same 12 V / 433 M family)**
 
-A digital relay cannot PWM 0–5 V. Buy a **hall-in / hall-out wireless throttle**.
+A relay channel will not PWM 0.8–4.2 V. FarDriver throttle is **red +5 / black GND / green signal**. Buy a **0–5 V analog TX/RX** and park it in the same IP boxes as the 8CH pair.
 
-- Primary (purpose-built e-bike/e-scooter TX + RX, RX plugs into the controller throttle 3-pin): [Falcon PEV wireless throttle](https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike) (~SGD 59 / ~$44). Receiver goes on FarDriver **red / black / green**. Confirm fail-to-zero on signal loss before first ride.
-- Industrial analog (0–5 V in / 0–5 V out, point-to-point, if you want a DIN-rail box instead of a scooter TX): [SignalFire Wireless I/O](https://www.signal-fire.com/product/wireless-io-module/) · [Applied Wireless analog TX/RX](https://appliedwireless.com/analog-sensor-transmitters-receivers/)
-- Amazon search if the above is backordered: [0-5V analog wireless transmitter receiver pair](https://www.amazon.com/s?k=0-5V+analog+wireless+transmitter+receiver+pair)
+| Kit | Why it works with the fold radio | Buy |
+|-----|----------------------------------|-----|
+| **0–5 V / 0–10 V analog wireless pair** (TX hall in → RX 0–5 V out) | Same 433 M point-to-point idea; analog in/out, not relays | https://www.aliexpress.com/item/1005006843832014.html (1–8 ch analog 0–10 V / 4–20 mA) · search https://www.aliexpress.com/w/wholesale-0-5V-analog-wireless-transmitter-receiver.html |
+| **Lensen 2-ch 0–5 V analog I/O** (enclosed industrial) | 0–5 V AI on TX, 0–5 V AO on RX, 433 MHz, boxed | https://www.wirelesscontrolmodule.com/sale-12084005-2-channels-wireless-i-o-module-0-5v-analog-input-output-433mhz-rs485-interface.html · https://www.lensen-tech.com/Product/AnalogIOmodule/ |
+| **Falcon PEV wireless hall throttle** | Purpose-built e-bike TX+RX; RX plugs into FarDriver 3-pin; fail-to-zero | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
+| **Phoenix Contact Wireless MUX** | One enclosed pair does **16 digital + 2 analog** — lights and throttle on the same radio | https://www.phoenixcontact.com/en-us/products/multiplexer-ilb-bt-adio-mux-2702875 |
 
-**Do not** put the hall throttle on a Mangood relay channel.
+**Latency:** LoRa digital I/O is fine for lamps/ignition. Throttle at 70 mph needs fast analog. Prefer the **Falcon PEV** or a dedicated **0–5 V analog pair** over stuffing throttle onto LoRa digital channels. Analog RX must drop **below 0.8 V** (or open) on RF loss so FarDriver throws a throttle error.
+
+- Industrial analog (DIN-rail): [SignalFire Wireless I/O](https://www.signal-fire.com/product/wireless-io-module/) · [Applied Wireless analog TX/RX](https://appliedwireless.com/analog-sensor-transmitters-receivers/)
 
 **3. Battery level — not a fold-radio channel**
 
@@ -202,7 +207,7 @@ No 433 MHz analog tap on the 63 V pack. Don’t run HV sense across the fold.
 
 | Action | What it is | Buy |
 |--------|------------|-----|
-| [ ] **8CH LoRa I/O TX + RX** (A transmitter *and* B receiver) | Digital 1–8, no fob | https://www.amazon.com/Transceiver-Remote-Controller-Feedback-Wireless/dp/B0DPQ9LXNR · https://www.aliexpress.com/item/1005005402005835.html |
+| [ ] **RTTXA08 + RTRXB08 with shell** (both boards) | Enclosed digital 1–8 | https://eletechsup.com/products/8ch-433m-dc-12v-lora-bidirectional-remote-io-controller-led-feedback-indicator-npn-in-relay-out-swicth-module-board |
 | [ ] **Falcon PEV wireless throttle** (or analog 0–5 V pair) | Hall throttle | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
 | [ ] **IP67 boxes** for TX (stem) and RX (rear deck) | Keep boards dry | https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
 | [ ] Numbered **GX16 / JST** pigtails (same 1–8 on both ends) | Swap a switch or lamp by number | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=JST+SM+numbered+pigtail |

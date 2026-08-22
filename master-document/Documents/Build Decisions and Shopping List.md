@@ -106,8 +106,8 @@ Waterproof **TX at the bars / RX at the rear**, numbered 1–8. Separate analog 
 
 | Item | Compatible because | Buy |
 |------|--------------------|-----|
-| **8CH LoRa I/O TX + RX** (no fob) | TX: 8 dry-contact inputs at the bars. RX: 8 relays at FarDriver/lamps. Order **A Transmitter** *and* **B Receiver**. | https://www.amazon.com/Transceiver-Remote-Controller-Feedback-Wireless/dp/B0DPQ9LXNR · https://www.aliexpress.com/item/1005005402005835.html · https://www.aliexpress.com/item/1005007074526359.html |
-| 4CH LoRa I/O ×2 | Same, cheaper split | https://www.aliexpress.com/item/1005005219805622.html |
+| **eletechsup RTTXA08 + RTRXB08 with shell** | Enclosed 8DI TX + 8-relay RX. ~$50 pair. Not a fob. | https://eletechsup.com/products/8ch-433m-dc-12v-lora-bidirectional-remote-io-controller-led-feedback-indicator-npn-in-relay-out-swicth-module-board · https://www.aliexpress.com/item/1005006919833785.html |
+| **0–5 V analog RF pair** (throttle) | Hall in → 0–5 V out at FarDriver. Digital 8CH cannot do this. | https://www.aliexpress.com/item/1005006843832014.html · https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
 | **Falcon PEV wireless throttle** (hall TX + RX) | RX → FarDriver throttle red / black / green. Fail-to-zero on RF loss. | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
 | Numbered **GX16** pigtails + IP67 boxes | Same pin numbers on both boards | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
 | Battery level | FarDriver BT + pack Bluetooth BMS — **not** a 433 MHz channel | FarDriver app · BMS app · https://skeletkey.com/app/ |

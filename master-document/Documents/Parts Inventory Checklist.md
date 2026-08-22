@@ -54,8 +54,8 @@ Controller **HAVE**. Buy the waterproof transmitter/receiver pair. Full pin map:
 
 | # | Item | Compatible with ND72360 because | Buy |
 |---|------|--------------------------------|-----|
-| 1 | **8CH LoRa I/O TX + RX** (order **A Transmitter** *and* **B Receiver**) | 8 dry-contact inputs at the bars, 8 relays at the rear. Not a keyfob. | https://www.amazon.com/Transceiver-Remote-Controller-Feedback-Wireless/dp/B0DPQ9LXNR · https://www.aliexpress.com/item/1005005402005835.html · https://www.aliexpress.com/item/1005007074526359.html |
-| 1b | 4CH LoRa I/O ×2 if 8CH is out | Same idea, 4+4 | https://www.aliexpress.com/item/1005005219805622.html |
+| 1 | **eletechsup RTTXA08 + RTRXB08 with shell** | Enclosed 8DI TX + 8-relay RX. Order **both**. Not a keyfob. | https://eletechsup.com/products/8ch-433m-dc-12v-lora-bidirectional-remote-io-controller-led-feedback-indicator-npn-in-relay-out-swicth-module-board · https://www.aliexpress.com/item/1005006919833785.html |
+| 1b | 4CH LoRa I/O ×2 if cheaper | Same idea, 4+4, shelled | https://www.aliexpress.com/item/1005005219805622.html |
 | 2 | **Falcon PEV wireless throttle** (hall TX + RX) | RX plugs into FarDriver throttle 3-pin (red +5 / black GND / green signal). Not a digital relay. | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
 | 3 | Numbered **GX16 8-pin** pigtails + IP67 boxes | Same pin numbers on TX and RX | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
 | 4 | Battery level | **Not a fold-radio channel.** FarDriver BT (V/A/temp) + pack Bluetooth BMS (SOC). | FarDriver app · BMS vendor app · Puca `/app/` |
