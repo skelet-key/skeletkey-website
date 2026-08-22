@@ -254,6 +254,15 @@ a {
   color: var(--accent);
 }
 
+.diff-card svg.icon {
+  width: 2.85rem;
+  height: 2.85rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  overflow: visible;
+}
+
 .diff-card h3 {
   font-size: 1.15rem;
   font-weight: 600;
