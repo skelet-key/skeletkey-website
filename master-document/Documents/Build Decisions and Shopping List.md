@@ -100,31 +100,17 @@ SkeletKey **sources frames and parts** and uses **contract assemblers** for **5,
 | **P-clamps (rubber-lined)** | https://www.aliexpress.com/w/wholesale-rubber-lined-P-clamp.html · https://www.mcmaster.com/ |
 | **Grade 8 bolts / nylocks** | https://www.fastenal.com/ · https://www.amazon.com/s?k=Grade+8+hex+bolt+assortment+M6+M8 |
 
-### Controls, lights, range & temperature (FarDriver ND72360)
+### Controls (FarDriver ND72360 fold radio)
 
-Throttle / ignition / brake cutoff stay **wired** into FarDriver. Lighting is **wireless** so the fold is clean. Range and temps come from FarDriver BT + pack BMS — not extra gauges unless you want them.
+Waterproof **TX at the bars / RX at the rear**, numbered 1–8. Analog pair for throttle. Pin map: **Action Item Tracker.md §6**.
 
 | Item | Compatible because | Buy |
 |------|--------------------|-----|
 | **8CH waterproof TX + RX pair** (numbered 1–8) | Wire replacement across the fold | https://www.amazon.com/clp/B0G2XJ6XKF · https://www.amazon.com/s?k=8+channel+433MHz+wireless+relay+transmitter+receiver+12V+momentary |
 | **0–5 V analog wireless TX/RX** (throttle) | Hall throttle in / FarDriver throttle out | https://www.signal-fire.com/product/wireless-io-module/ · https://appliedwireless.com/analog-sensor-transmitters-receivers/ |
-| **Throttle + key + voltmeter + 3-speed kit** prewired for FarDriver | 0–5 V hall, ignition, 3-speed | https://www.hotpaxx.com/product-page/throttlekeymeter3spdfardriver · https://www.electricvelocitypnw.com/product/throttle-key-voltmeter-3spd-wired-for-fardriver-controller · https://thewattsshop.com/products/controller-essentials-prewired-fd-bundle-inc-surron-style-throttle-w-choice-of-grips-key-voltmeter-3-speed |
-| Waterproof **hall thumb throttle** 0–5 V | Feeds analog TX | https://www.amazon.com/Tsinghwang-Waterproof-Connector-Accessories-Accelerator/dp/B0CVVL4PL1 |
-| **Ignition key** 48–72 V | TX #5; RX coil in series with FarDriver orange | https://www.amazon.com/s?k=electric+bike+ignition+key+switch+48v+72v |
-| **E-brake cutoff levers** | TX #3 | https://www.amazon.com/WIROJ-Waterproof-Electronic-Accessories-Connector/dp/B0D1TWZDFY |
-| **12 V LED lamps** | Loads on RX #1–4 | https://www.amazon.com/s?k=motorcycle+LED+turn+signal+12V+IP65 |
-| **DC–DC 48–72 V → 12 V** ≥10 A | Powers TX/RX + lamps | https://www.amazon.com/Pro-Chaser-Regulator-Scooters-Bicycles/dp/B07GPZWG1S |
-| **DC–DC 48–72 V → 12 V** ≥10 A | 63 V pack → lamps + high-brake | https://www.amazon.com/Pro-Chaser-Regulator-Scooters-Bicycles/dp/B07GPZWG1S |
-| **FarDriver app** | Voltage, current, **temps** | https://www.far-driver.com/the-controller-app-for-android/ |
-| Pack **Bluetooth BMS app** | **Range / SOC / cell temp** | Inbound with 8.5 kWh pack |
-| Motor temp | QS205 **KTY83/122 already fitted** | Spare: https://www.amazon.com/s?k=KTY83+122+motor+temperature+sensor |
-| Fold **IP67 6-pin jumper** | Throttle + key + brake across the hinge | https://www.amazon.com/s?k=IP67+circular+connector+6+pin+cable |
-| FarDriver **control harness** (if needed) | Aftermarket plugs | https://econiccycles.com/products/fardriver-sinewave-controller-replacement-wire-harness-small |
-| Hall throttle (generic) | 0–5 V class | https://www.amazon.com/s?k=waterproof+hall+thumb+throttle+0-5V+72V |
+| Numbered **GX16** pigtails + IP67 boxes | Same pin numbers on both boards | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
 | Main fuse / contactor | Pack continuous current | See Action Item Tracker §7 |
 | Phase / Hall extensions | Waterproof, left-side, clear of disc | https://www.amazon.com/s?k=QS+hub+motor+phase+hall+extension+waterproof |
-
-**Do not wireless the throttle.** Lights and optional ignition-enable relay can be RF. Full pin map: **Action Item Tracker.md §6**.
 
 ### Optional
 | Item | Link / note |

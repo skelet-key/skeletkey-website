@@ -118,24 +118,7 @@ Phone dash: https://www.skeletkey.com/app/ · FarDriver tune app: https://www.fa
 
 **Skip:** ESP32 + SN65HVD230 CAN. That was the Votol path. https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO
 
-### 6.1 Plug-and-play FarDriver bar kit (buy one of these)
-
-| Action | Notes | Buy |
-|--------|--------|-----|
-| [ ] **Throttle + key + voltmeter + 3-speed, prewired for FarDriver** | 0–5 V hall throttle, ignition key, 12–84 V meter, 3-speed. Best “it just plugs in” option for ND72360. | **Hot Paxx:** https://www.hotpaxx.com/product-page/throttlekeymeter3spdfardriver · **Electric Velocity:** https://www.electricvelocitypnw.com/product/throttle-key-voltmeter-3spd-wired-for-fardriver-controller · **The Watts Shop** Sur-Ron-style bundle: https://thewattsshop.com/products/controller-essentials-prewired-fd-bundle-inc-surron-style-throttle-w-choice-of-grips-key-voltmeter-3-speed |
-| [ ] Spare **FarDriver control harness** (if your loom is the “open lug” style) | Lets aftermarket throttle / 3-speed / key / meter plug in. | https://econiccycles.com/products/fardriver-sinewave-controller-replacement-wire-harness-small |
-
-### 6.2 If you buy pieces instead of a kit
-
-| Action | FarDriver pin / spec | Buy |
-|--------|----------------------|-----|
-| [ ] **Waterproof hall thumb throttle 0–5 V** | 12–72 V supply, SM waterproof, 22.2 mm bar | https://www.amazon.com/Tsinghwang-Waterproof-Connector-Accessories-Accelerator/dp/B0CVVL4PL1 · https://www.amazon.com/Honses-Electric-Scooter-Throttle-Bike/dp/B09P61CXQB · search https://www.amazon.com/s?k=waterproof+hall+thumb+throttle+0-5V+72V |
-| [ ] **Ignition key switch** 2-wire, rated for **pack voltage** (~63 V, 48–72 V class) | Series with FarDriver **orange** ignition. Not a 12 V car key unless you use a relay. | https://www.amazon.com/s?k=electric+bike+ignition+key+switch+48v+72v · https://www.amazon.com/s?k=ebike+key+lock+power+switch+waterproof |
-| [ ] **Kill / cutoff** in series with ignition (physical, not app-only) | Marine/moto kill or 48–72 V breaker | https://www.amazon.com/s?k=motorcycle+kill+switch+waterproof · https://www.amazon.com/s?k=48v+72v+battery+circuit+breaker |
-| [ ] **E-brake cutoff levers** (pair) | 2-pin waterproof; land on FarDriver **brake** input (high-brake 12 V after DC–DC, or low-brake if configured) | https://www.amazon.com/WIROJ-Waterproof-Electronic-Accessories-Connector/dp/B0D1TWZDFY · https://www.amazon.com/s?k=ebike+brake+lever+power+cutoff+waterproof+2+pin |
-| [ ] **3-speed switch** (optional) | FarDriver 3-speed plug | https://www.amazon.com/s?k=ebike+3+speed+switch+waterproof |
-
-### 6.3 Waterproof transmitter + receiver (the fold radio)
+### 6.1 Waterproof transmitter + receiver (the fold radio)
 
 This is the **wire-replacement pair**: one **TX** at the bars (switch inputs), one **RX** at the rear (numbered outputs to lamps + FarDriver). Number the connectors **1–8** and keep the same diagram on both boards — that is how you repair or swap a lamp without tracing a 5 ft loom.
 
@@ -160,29 +143,8 @@ Set RX channels to **momentary** (follow the switch) for turn / brake / kill. Ig
 | [ ] **0–5 V analog wireless TX/RX pair** (throttle only) | Hall in at the bar → 0–5 V out at the FarDriver throttle plug. A digital relay cannot do throttle. | **SignalFire Wireless I/O** (0–5 V analog + digital, point-to-point): https://www.signal-fire.com/product/wireless-io-module/ · **Phoenix Contact RAD-ISM-900:** https://www.phoenixcontact.com/en-pc/products/wireless-module-rad-ism-900-data-bd-plus-2902277 · **Applied Wireless** analog TX/RX: https://appliedwireless.com/analog-sensor-transmitters-receivers/ · search https://www.amazon.com/s?k=0-5V+analog+wireless+transmitter+receiver+pair |
 | [ ] **IP67 boxes** for TX (stem) and RX (rear deck) | Keep boards dry; strain-relieve numbered pigtails | https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
 | [ ] Numbered **GX16 / JST pigtails** (same 1–8 on both ends) | Swap a switch or lamp by number | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=JST+SM+numbered+pigtail |
-| [ ] **12 V LED lamps** on RX #1–4 | Loads only — not radios | Turns: https://www.amazon.com/s?k=motorcycle+LED+turn+signal+12V+IP65 · Tail: https://www.amazon.com/s?k=motorcycle+LED+tail+brake+light+12V · Headlamp: https://www.amazon.com/s?k=motorcycle+LED+headlight+12V+waterproof |
-| [ ] **48–72 V → 12 V DC–DC** ≥10 A | Feeds TX/RX + lamps + FarDriver high-brake | **Pro Chaser:** https://www.amazon.com/Pro-Chaser-Regulator-Scooters-Bicycles/dp/B07GPZWG1S |
 
 **Do not** put the hall throttle on a digital relay channel.
-
-### 6.4 Range and temperature (FarDriver + pack BMS)
-
-Nothing extra for motor temp if the QS205 KTY83/122 pigtail is intact — plug it into the FarDriver temp input.
-
-| Action | What you see | Buy / app |
-|--------|----------------|-----------|
-| [ ] **FarDriver app** (BT module already on the ND72360) | Pack voltage, battery/phase current, **controller temp**, **motor temp**, speed, errors, tune | Android APK: https://www.far-driver.com/the-controller-app-for-android/ · iOS App Store: search **FarDriver** · install notes: https://support.arctic-leopard-usa.com/kb/article/8-how-to-install-the-fardriver-app-for-ios-and-android/ |
-| [ ] **Bluetooth BMS app** (ships with the inbound 8.5 kWh pack) | **SOC, remaining Ah, cell temps, charge/discharge A** → this is **range** | Use the OEM app that matches the BMS (Daly / ANT / JK / SmartBMS). Generic: https://play.google.com/store/apps/details?id=com.ble.vanomize12 |
-| [ ] **Puca dash** | GPS speed, trip, software IGN, maps | https://www.skeletkey.com/app/ |
-| [ ] Spare **KTY83/122** only if the hub pigtail is damaged | FarDriver motor-temp input | https://www.amazon.com/s?k=KTY83+122+motor+temperature+sensor · QS default is already KTY83/122 |
-| [ ] Confirm FarDriver **temp-sensor type** in app = KTY83 (not NTC) | Wrong type = bogus temps / limp mode | Set in FarDriver app after auto-learn |
-
-### 6.5 Fold fallback
-
-| Action | Notes | Buy |
-|--------|--------|-----|
-| [ ] Spare **IP67 6-pin jumper** | If analog throttle radio is late, jump throttle + brake sense across the hinge only | https://www.amazon.com/s?k=IP67+circular+connector+6+pin+cable |
-| [ ] Magnetic phone mount + ring | Stem below bars | Already on the site |
 
 ---
 
