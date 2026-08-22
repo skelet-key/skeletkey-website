@@ -103,18 +103,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Commute savings calculator
+  // Commute savings wizard
   (function initSavings() {
-    const mpgEl = document.getElementById("savMpg");
-    const milesEl = document.getElementById("savMiles");
-    const gasEl = document.getElementById("savGas");
-    const kwhEl = document.getElementById("savKwh");
-    const results = document.getElementById("savingsResults");
-    const prompt = document.getElementById("savingsPrompt");
     const form = document.getElementById("savingsForm");
-    if (!mpgEl || !milesEl || !results) return;
+    const wizard = document.getElementById("savingsWizard");
+    if (!form || !wizard) return;
 
-    const PUCA_KWH_PER_MI = 8.5 / 100; // 8.5 kWh pack, 100 mi @ 45 mph
+    const steps = Array.from(form.querySelectorAll(".wiz-step"));
+    const pills = Array.from(wizard.querySelectorAll(".wizard-progress li"));
+    const backBtn = document.getElementById("savBack");
+    const nextBtn = document.getElementById("savNext");
+    const fields = [
+      document.getElementById("savMpg"),
+      document.getElementById("savMiles"),
+      document.getElementById("savGas"),
+      document.getElementById("savKwh"),
+    ];
+    const LAST = steps.length - 1; // results
+    let step = 0;
+
+    const PUCA_KWH_PER_MI = 8.5 / 100;
     const MSRP = 6999;
     const DAYS_YEAR = 365;
 
@@ -139,30 +147,25 @@ document.addEventListener("DOMContentLoaded", () => {
       return (y === 1 ? "1 year" : y + " years") + ", " + (m === 1 ? "1 month" : m + " months");
     }
 
+    function valid(i) {
+      const el = fields[i];
+      if (!el) return true;
+      const n = parseFloat(el.value);
+      const min = parseFloat(el.min);
+      const max = parseFloat(el.max);
+      return n > 0 && n >= min && n <= max;
+    }
+
     function calc() {
-      const mpg = parseFloat(mpgEl.value);
-      const milesDay = parseFloat(milesEl.value);
-      const gas = parseFloat(gasEl.value);
-      const kwh = parseFloat(kwhEl.value);
-      const ready =
-        mpg > 0 && milesDay > 0 && gas > 0 && kwh > 0;
-
-      if (!ready) {
-        results.hidden = true;
-        if (prompt) prompt.hidden = false;
-        return;
-      }
-
+      if (!fields.every((_, i) => valid(i))) return;
+      const mpg = parseFloat(fields[0].value);
+      const milesDay = parseFloat(fields[1].value);
+      const gas = parseFloat(fields[2].value);
+      const kwh = parseFloat(fields[3].value);
       const milesYear = milesDay * DAYS_YEAR;
-      const gasCostYear = (milesYear / mpg) * gas;
-      const pucaCostYear = milesYear * PUCA_KWH_PER_MI * kwh;
-      const saveYear = gasCostYear - pucaCostYear;
-      const saveWeek = saveYear / 52;
-      const saveMonth = saveYear / 12;
-      const years = saveYear > 0 ? MSRP / saveYear : Infinity;
-
-      document.getElementById("savWeek").textContent = money(saveWeek);
-      document.getElementById("savMonth").textContent = money(saveMonth);
+      const saveYear = (milesYear / mpg) * gas - milesYear * PUCA_KWH_PER_MI * kwh;
+      document.getElementById("savWeek").textContent = money(saveYear / 52);
+      document.getElementById("savMonth").textContent = money(saveYear / 12);
       document.getElementById("savYear").textContent = money(saveYear);
       const pb = document.getElementById("savPayback");
       const note = document.getElementById("savPaybackNote");
@@ -170,25 +173,74 @@ document.addEventListener("DOMContentLoaded", () => {
         pb.textContent = "N/A";
         if (note) note.textContent = "This commute costs more on Puca than gas at those rates.";
       } else {
-        pb.textContent = paybackCopy(years);
+        pb.textContent = paybackCopy(MSRP / saveYear);
         if (note) {
           note.textContent =
             "At $6,999 MSRP from commute fuel savings alone — charging at home, 7 days a week.";
         }
       }
-      results.hidden = false;
-      if (prompt) prompt.hidden = true;
     }
 
-    [mpgEl, milesEl, gasEl, kwhEl].forEach((el) => {
-      el.addEventListener("input", calc);
-      el.addEventListener("change", calc);
-    });
-    if (form) {
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        calc();
+    function render() {
+      steps.forEach((el, i) => el.classList.toggle("is-active", i === step));
+      pills.forEach((el, i) => {
+        el.classList.toggle("is-active", i === step);
+        el.classList.toggle("is-done", i < step);
       });
+      backBtn.disabled = step === 0;
+      if (step === LAST) {
+        nextBtn.textContent = "Start over";
+        calc();
+      } else if (step === LAST - 1) {
+        nextBtn.textContent = "See savings";
+      } else {
+        nextBtn.textContent = "Continue";
+      }
+      const input = steps[step].querySelector("input");
+      if (input) setTimeout(() => input.focus(), 30);
     }
+
+    function go(n) {
+      step = Math.max(0, Math.min(LAST, n));
+      render();
+    }
+
+    function next() {
+      if (step === LAST) {
+        fields[0].value = "";
+        fields[1].value = "";
+        fields[2].value = "4.11";
+        fields[3].value = "0.1844";
+        go(0);
+        return;
+      }
+      if (step < 4 && !valid(step)) {
+        fields[step].focus();
+        fields[step].closest(".wiz-field").style.borderColor = "var(--accent)";
+        return;
+      }
+      go(step + 1);
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      next();
+    });
+    backBtn.addEventListener("click", () => go(step - 1));
+    pills.forEach((el) => {
+      el.addEventListener("click", () => {
+        const target = parseInt(el.getAttribute("data-goto"), 10);
+        if (target < step || (target === step + 1 && valid(step)) || target <= step) {
+          if (target > step) {
+            for (let i = 0; i < target; i++) {
+              if (i < 4 && !valid(i)) return;
+            }
+          }
+          go(target);
+        }
+      });
+    });
+
+    render();
   })();
 });

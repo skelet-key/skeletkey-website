@@ -378,59 +378,99 @@
       <div class="section-label">Commute Savings</div>
       <h2 class="section-title">See how fast Puca pays for itself.</h2>
       <p class="section-lead">
-        Enter your gas car’s MPG and daily round-trip commute (including weekends).
-        We use today’s U.S. regular gas price and home electricity so you can see weekly, monthly, and yearly savings — then the payback on a <strong>$6,999</strong> Puca charged at home.
+        Four short steps. We use today’s U.S. gas and home-electricity rates — then show weekly, monthly, and yearly savings, and how long until a <strong>$6,999</strong> Puca pays for itself.
       </p>
 
-      <form class="savings-form" id="savingsForm" action="#" method="get">
-        <div class="savings-fields">
-          <label>
-            Your car’s MPG
-            <input id="savMpg" name="mpg" type="number" min="5" max="80" step="0.1" inputmode="decimal" placeholder="e.g. 28" required />
-          </label>
-          <label>
-            Daily commute, round-trip (miles)
-            <input id="savMiles" name="miles" type="number" min="1" max="400" step="0.1" inputmode="decimal" placeholder="e.g. 40" required />
-          </label>
-          <label>
-            Gas price ($ / gallon)
-            <input id="savGas" name="gas" type="number" min="1" max="12" step="0.01" inputmode="decimal" value="4.11" />
-            <span class="field-hint">U.S. regular average ~$4.11 (AAA / EIA, Aug 2026). Edit yours.</span>
-          </label>
-          <label>
-            Home electricity ($ / kWh)
-            <input id="savKwh" name="kwh" type="number" min="0.05" max="0.8" step="0.001" inputmode="decimal" value="0.1844" />
-            <span class="field-hint">U.S. residential average 18.44¢/kWh (EIA, Aug 2026). Edit yours.</span>
-          </label>
-        </div>
-        <p class="savings-assumptions">
-          Puca energy use is modeled at <strong>0.085 kWh/mi</strong> (8.5 kWh pack ÷ 100 miles at 45 mph). Commute is <strong>7 days a week</strong>, 365 days a year. Charging at home — not CCS1.
-        </p>
-      </form>
+      <div class="wizard" id="savingsWizard">
+        <ol class="wizard-progress" aria-label="Calculator steps">
+          <li class="is-active" data-goto="0"><span>1</span> MPG</li>
+          <li data-goto="1"><span>2</span> Commute</li>
+          <li data-goto="2"><span>3</span> Gas</li>
+          <li data-goto="3"><span>4</span> Power</li>
+          <li data-goto="4"><span>5</span> Results</li>
+        </ol>
 
-      <div class="savings-results" id="savingsResults" hidden>
-        <div class="sav-card">
-          <div class="sav-label">Every week</div>
-          <div class="sav-value" id="savWeek">—</div>
-          <p class="sav-note">vs. your gas car, charging Puca at home</p>
-        </div>
-        <div class="sav-card">
-          <div class="sav-label">Every month</div>
-          <div class="sav-value" id="savMonth">—</div>
-          <p class="sav-note">Average month (365 ÷ 12)</p>
-        </div>
-        <div class="sav-card">
-          <div class="sav-label">Every year</div>
-          <div class="sav-value" id="savYear">—</div>
-          <p class="sav-note">365 days of that commute</p>
-        </div>
-        <div class="sav-card sav-card-payback">
-          <div class="sav-label">Puca pays for itself in</div>
-          <div class="sav-value" id="savPayback">—</div>
-          <p class="sav-note" id="savPaybackNote">At $6,999 MSRP from commute fuel savings alone</p>
-        </div>
+        <form class="wizard-panel" id="savingsForm" action="#" method="get">
+          <div class="wiz-step is-active" data-step="0">
+            <p class="wiz-kicker">Step 1 of 4</p>
+            <h3 class="wiz-title">What’s your gas car’s MPG?</h3>
+            <p class="wiz-hint">Highway or combined is fine — use the number on the window sticker or your trip computer.</p>
+            <label class="wiz-field">
+              <span class="visually-hidden">Miles per gallon</span>
+              <input id="savMpg" name="mpg" type="number" min="5" max="80" step="0.1" inputmode="decimal" placeholder="28" required />
+              <span class="wiz-suffix">MPG</span>
+            </label>
+          </div>
+
+          <div class="wiz-step" data-step="1">
+            <p class="wiz-kicker">Step 2 of 4</p>
+            <h3 class="wiz-title">Daily commute, there and back?</h3>
+            <p class="wiz-hint">Round-trip miles, including weekends. We’ll count 365 days a year.</p>
+            <label class="wiz-field">
+              <span class="visually-hidden">Daily round-trip miles</span>
+              <input id="savMiles" name="miles" type="number" min="1" max="400" step="0.1" inputmode="decimal" placeholder="40" required />
+              <span class="wiz-suffix">miles / day</span>
+            </label>
+          </div>
+
+          <div class="wiz-step" data-step="2">
+            <p class="wiz-kicker">Step 3 of 4</p>
+            <h3 class="wiz-title">What do you pay for gas?</h3>
+            <p class="wiz-hint">Pre-filled with the U.S. regular average ~$4.11/gal (AAA / EIA, Aug 2026). Edit if your station is different.</p>
+            <label class="wiz-field">
+              <span class="wiz-prefix">$</span>
+              <input id="savGas" name="gas" type="number" min="1" max="12" step="0.01" inputmode="decimal" value="4.11" />
+              <span class="wiz-suffix">/ gallon</span>
+            </label>
+          </div>
+
+          <div class="wiz-step" data-step="3">
+            <p class="wiz-kicker">Step 4 of 4</p>
+            <h3 class="wiz-title">Home electricity rate?</h3>
+            <p class="wiz-hint">Pre-filled with the U.S. residential average 18.44¢/kWh (EIA, Aug 2026). Check your utility bill if you know it.</p>
+            <label class="wiz-field">
+              <span class="wiz-prefix">$</span>
+              <input id="savKwh" name="kwh" type="number" min="0.05" max="0.8" step="0.001" inputmode="decimal" value="0.1844" />
+              <span class="wiz-suffix">/ kWh</span>
+            </label>
+          </div>
+
+          <div class="wiz-step" data-step="4">
+            <p class="wiz-kicker">Your commute vs. Puca</p>
+            <h3 class="wiz-title">Here’s what you’d save charging at home.</h3>
+            <div class="savings-results" id="savingsResults">
+              <div class="sav-card">
+                <div class="sav-label">Every week</div>
+                <div class="sav-value" id="savWeek">—</div>
+                <p class="sav-note">vs. your gas car</p>
+              </div>
+              <div class="sav-card">
+                <div class="sav-label">Every month</div>
+                <div class="sav-value" id="savMonth">—</div>
+                <p class="sav-note">Average month (365 ÷ 12)</p>
+              </div>
+              <div class="sav-card">
+                <div class="sav-label">Every year</div>
+                <div class="sav-value" id="savYear">—</div>
+                <p class="sav-note">365 days of that commute</p>
+              </div>
+              <div class="sav-card sav-card-payback">
+                <div class="sav-label">Puca pays for itself in</div>
+                <div class="sav-value" id="savPayback">—</div>
+                <p class="sav-note" id="savPaybackNote">At $6,999 MSRP from commute fuel savings alone</p>
+              </div>
+            </div>
+            <p class="savings-assumptions">
+              Modeled at <strong>0.085 kWh/mi</strong> (8.5 kWh pack ÷ 100 miles at 45 mph). Seven days a week, charging at home — not CCS1.
+            </p>
+          </div>
+
+          <div class="wiz-nav">
+            <button type="button" class="wiz-back" id="savBack">Back</button>
+            <button type="submit" class="wiz-next" id="savNext">Continue</button>
+          </div>
+        </form>
       </div>
-      <p class="savings-prompt" id="savingsPrompt">Enter MPG and daily miles to see your savings.</p>
     </div>
   </section>
 
@@ -1787,6 +1827,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=sav1"></script>
+  <script src="js/main.js?v=sav2"></script>
 </body>
 </html>
