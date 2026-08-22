@@ -48,7 +48,7 @@ BOM is **bought parts**, not in-house extrusions.
 |--|--|
 | Name | Puca by SkeletKey |
 | Frame | Sourced carbon steel folder · 9.2 lb measured |
-| Motor | QS205 V3 (50H) 3T · 28.6 lb · 4–5 kW / ~12 kW peak · 70 mph class |
+| Motor | QS205 V3 50 3T · 28.6 lb · 5 kW / 12 kW peak · 70 mph class |
 | Pack | ~8.5 kWh · 63 V nominal · ~60 lb · semi-solid NMC+ · slide-in · dual QS8 |
 | Charge | CCS1 6–8 kW (inlet on hand) + home 120/240 V brick |
 | Ride UI | Phone dash (Puca app) + FarDriver tune app |
