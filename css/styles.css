@@ -252,14 +252,14 @@ a {
   font-size: 1.75rem;
   margin-bottom: 1rem;
   color: var(--accent);
+  line-height: 1;
 }
 
-.diff-card svg.icon {
-  width: 2.85rem;
-  height: 2.85rem;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
+.diff-card .icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  display: inline-block;
+  vertical-align: middle;
   overflow: visible;
 }
 
