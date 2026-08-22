@@ -481,11 +481,11 @@ a {
 }
 
 .fold-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  color: var(--accent);
+  width: 2.85rem;
+  height: 2.85rem;
   margin-bottom: 0.85rem;
   display: block;
+  overflow: visible;
 }
 
 .fold-card h3 {
