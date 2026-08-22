@@ -350,6 +350,12 @@ a {
   display: block;
 }
 
+.bike-card:last-child .bike-image {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center 45%;
+}
+
 .bike-copy h2 {
   font-size: 1.9rem;
   font-weight: 700;
