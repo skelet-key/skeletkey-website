@@ -105,14 +105,25 @@ Datasheet: https://www.far-driver.com/nd72360/
 
 **How this bike is wired (do not mix this up):**
 
+FarDriver **does not** speak turn-signal or brake-lamp protocol. Those are 12 V lamps. The controller only cares about **throttle analog, ignition (orange lock), high-brake, and Bluetooth telemetry**. Everything else is a fold-radio job so the hinge stays empty.
+
 | Signal | Path | Why |
 |--------|------|-----|
-| **Turn L/R, brake lamp, headlamp, ignition enable, cutoff** | Bar **TX board** → RF → rear **RX board** numbered relays | Replaces the 5 ft hinge loom |
-| **Throttle** (0–5 V hall) | **Analog wireless TX/RX pair** *or* thin wired jumper | FarDriver needs 0–5 V; RF relay cannot PWM a hall throttle |
-| **Brake cutoff (motor inhibit)** | Same brake switch → RX ch.3 **and** FarDriver high-brake 12 V | Lamp + cut drive |
-| **Motor temp** | QS205 **KTY83/122** (in the hub) → FarDriver temp plug | Local at the motor, no fold |
-| **Range / SOC / cell temp** | Pack Bluetooth BMS | No extra radio |
-| **Controller V / A / temps** | FarDriver Bluetooth | Already on ND72360 |
+| **Turn L/R, brake lamp, headlamp, ignition enable, cutoff, horn** | Bar **TX board** → 433 MHz / FHSS → rear **RX board** numbered relays | Replaces the 5 ft hinge loom |
+| **Throttle** (hall ~0.8–4.2 V) | **Dedicated analog wireless TX/RX** (not a digital relay) | FarDriver 3-pin throttle: red +5 V, black GND, green signal |
+| **Brake cutoff (motor inhibit)** | Same brake switch → RX ch.3 **and** FarDriver **high-brake** | Lamp + cut drive |
+| **Ignition / de-ignition** | RX ch.5 relay on FarDriver **orange lock** + Puca app BLE IGN | Two-key: radio enable AND phone IGN |
+| **Battery level / SOC / cell temp** | Pack **Bluetooth BMS** + FarDriver BT (V / A / MOSFET °C) | No extra radio. Puca dash shows GPS range; FarDriver / BMS apps show pack |
+| **Motor temp** | QS205 **KTY83/122** → FarDriver temp plug | Local at the hub, no fold |
+
+**FarDriver ND72360 pins this radio actually hits:**
+
+| FarDriver wire | Function | From the fold radio |
+|----------------|----------|---------------------|
+| Orange (electric lock) | Ignition — pack+ through this wire turns the controller on | RX **ch.5** NO contact |
+| Throttle red / black / green | +5 V / GND / 0.8–4.2 V hall | Analog RX only (never a relay) |
+| High-brake (typically 12 V) | Motor inhibit when brakes applied | RX **ch.3** paralleled with brake lamp |
+| Bluetooth module (included) | Live V, A, W, temps, errors | Phone — not the 433 MHz pair |
 
 **Skip:** ESP32 + SN65HVD230 CAN. That was the Votol path. https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO
 
@@ -122,27 +133,69 @@ This is the **wire-replacement pair**: one **TX** at the bars (switch inputs), o
 
 **Numbered connector map:**
 
-| # | TX input (bars) | RX output (rear / FarDriver) |
-|---|-----------------|------------------------------|
-| 1 | Left turn switch | Left turn lamps |
-| 2 | Right turn switch | Right turn lamps |
-| 3 | Brake switch | Brake / tail lamp **and** FarDriver **high-brake 12 V** |
-| 4 | Headlamp switch | Headlamp |
-| 5 | Ignition key | Relay in series with FarDriver **orange** |
-| 6 | Kill / cutoff | Opens enable / contactor coil |
-| 7 | Horn (optional) | Horn |
-| 8 | Spare / 3-speed | FarDriver 3-speed or spare |
+| # | TX input (bars) | RX output (rear / FarDriver) | RX mode |
+|---|-----------------|------------------------------|---------|
+| 1 | Left turn switch | Left turn lamps | Momentary |
+| 2 | Right turn switch | Right turn lamps | Momentary |
+| 3 | Brake switch | Brake / tail lamp **and** FarDriver **high-brake** | Momentary |
+| 4 | Headlamp switch | Headlamp | Latch |
+| 5 | Ignition key / IGN enable | Relay in series with FarDriver **orange** | Latch |
+| 6 | Kill / cutoff | Opens enable / contactor coil (de-ignition) | Momentary (NC path) |
+| 7 | Horn (optional) | Horn | Momentary |
+| 8 | Spare / 3-speed | FarDriver 3-speed or spare | Latch |
 
-Set RX channels to **momentary** (follow the switch) for turn / brake / kill. Ignition may **latch**. Fail-safe: RF loss → all RX channels **OFF**.
+Fail-safe: RF loss → all RX channels **OFF** (no runaway lamp, no stuck ignition). Throttle analog RX must fall **below 0.8 V** (or open) on RF loss so FarDriver throws a throttle error and cuts the motor.
+
+#### Buy this week (prototype)
+
+**1. Digital pair — turns, brake lamp, headlamp, ignition, cutoff**
+
+Primary: **Mangood 8CH wireless relay, DC 12–36 V, 10 A, 6 modes (incl. momentary), numbered quick-connect terminals.** Power both boards from the **12 V DC–DC**, never the 63 V pack.
+
+- Buy: [amazon.com/dp/B0G2XJ6XKF](https://www.amazon.com/dp/B0G2XJ6XKF) (~$45)
+- 4-channel fallback (if 8CH is out of stock): [Mangood 4CH 12–36 V](https://www.amazon.com/Mangood-4-Channel-Wireless-Switch-12V-36V/dp/B0FDL913NP) — buy **two kits** and use 1–4 + 5–8
+- Alternate 8CH 433 MHz receiver: [Serounder 8CH 12 V 433 MHz](https://www.amazon.com/Serounder-Wireless-Control-Channel-Receiver/dp/B07WR79B8T)
+
+The Mangood “transmitter” is an 8-button fob. For bar switches: open the fob and **solder each handlebar switch in parallel with buttons 1–8** (EV1527 pads), or pair a bare **433 MHz 8-input encoder board** to the same receiver. Keep the same **1–8** numbers on the GX16 pigtails.
+
+**2. Analog pair — throttle only (FarDriver hall)**
+
+A digital relay cannot PWM 0–5 V. Buy a **hall-in / hall-out wireless throttle**.
+
+- Primary (purpose-built e-bike/e-scooter TX + RX, RX plugs into the controller throttle 3-pin): [Falcon PEV wireless throttle](https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike) (~SGD 59 / ~$44). Receiver goes on FarDriver **red / black / green**. Confirm fail-to-zero on signal loss before first ride.
+- Industrial analog (0–5 V in / 0–5 V out, point-to-point, if you want a DIN-rail box instead of a scooter TX): [SignalFire Wireless I/O](https://www.signal-fire.com/product/wireless-io-module/) · [Applied Wireless analog TX/RX](https://appliedwireless.com/analog-sensor-transmitters-receivers/)
+- Amazon search if the above is backordered: [0-5V analog wireless transmitter receiver pair](https://www.amazon.com/s?k=0-5V+analog+wireless+transmitter+receiver+pair)
+
+**Do not** put the hall throttle on a Mangood relay channel.
+
+**3. Battery level — not a fold-radio channel**
+
+SOC, pack volts, and cell temp already have radios:
+
+| Source | What you see | App |
+|--------|--------------|-----|
+| FarDriver Bluetooth (module in the ND72360 box) | Pack V, line A, W, MOSFET / motor temp, faults | FarDriver / GDriver app |
+| Pack Bluetooth BMS | SOC %, cell V, charge/discharge A | BMS vendor app |
+| Puca dash (`/app/`) | GPS speed, trip, software IGN, estimated range | skeletkey.com/app |
+
+No 433 MHz analog tap on the 63 V pack. Don’t run HV sense across the fold.
+
+**4. Ignition and de-ignition (two interlocks)**
+
+1. **Hardware:** RX **ch.5** closes FarDriver **orange** to ignition+. RX **ch.6** (kill) opens that path. RF loss = OFF.
+2. **Software:** Puca app BLE IGN relay (already in `/app/`). Bike is live only when **orange is closed AND app IGN is ON**.
+
+**5. Housings and numbered pigtails**
 
 | Action | What it is | Buy |
 |--------|------------|-----|
-| [ ] **8-channel TX + RX pair**, 12–36 V, numbered terminals, **momentary** mode | Digital wire replacement for turns, brake lamp, headlamp, ignition, cutoff. Power both boards from 12 V DC–DC, not the 63 V pack. | **Mangood 8CH 12–36 V:** https://www.amazon.com/clp/B0G2XJ6XKF · **Mangood 4CH:** https://www.amazon.com/Mangood-4-Channel-Wireless-Switch-12V-36V/dp/B0FDL913NP · 8CH 12 V 433 MHz: https://www.amazon.com/s?k=8+channel+433MHz+wireless+relay+transmitter+receiver+12V+momentary · AliExpress 8CH: https://www.aliexpress.com/i/1005012065518530.html |
-| [ ] **0–5 V analog wireless TX/RX pair** (throttle only) | Hall in at the bar → 0–5 V out at the FarDriver throttle plug. A digital relay cannot do throttle. | **SignalFire Wireless I/O** (0–5 V analog + digital, point-to-point): https://www.signal-fire.com/product/wireless-io-module/ · **Phoenix Contact RAD-ISM-900:** https://www.phoenixcontact.com/en-pc/products/wireless-module-rad-ism-900-data-bd-plus-2902277 · **Applied Wireless** analog TX/RX: https://appliedwireless.com/analog-sensor-transmitters-receivers/ · search https://www.amazon.com/s?k=0-5V+analog+wireless+transmitter+receiver+pair |
-| [ ] **IP67 boxes** for TX (stem) and RX (rear deck) | Keep boards dry; strain-relieve numbered pigtails | https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
-| [ ] Numbered **GX16 / JST pigtails** (same 1–8 on both ends) | Swap a switch or lamp by number | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=JST+SM+numbered+pigtail |
+| [ ] **Mangood 8CH 12–36 V TX+RX** | Digital 1–8 | https://www.amazon.com/dp/B0G2XJ6XKF |
+| [ ] **Falcon PEV wireless throttle** (or analog 0–5 V pair) | Hall throttle | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
+| [ ] **IP67 boxes** for TX (stem) and RX (rear deck) | Keep boards dry | https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
+| [ ] Numbered **GX16 / JST** pigtails (same 1–8 on both ends) | Swap a switch or lamp by number | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=JST+SM+numbered+pigtail |
+| [ ] 12 V DC–DC (from ~63 V pack) | Power TX, RX, lamps, orange lock — not the 63 V bus | Already on the CCS / 12 V accessory list |
 
-**Do not** put the hall throttle on a digital relay channel.
+**Production upgrade (optional, one box does digital + analog):** Phoenix Contact **ILB BT ADIO MUX** (16 digital + 2 analog, bidirectional, fail-safe, replaces a 40-wire loom). Pair: [2702875](https://www.phoenixcontact.com/en-us/products/multiplexer-ilb-bt-adio-mux-2702875) / [2884208 Omni](https://www.phoenixcontact.com/en-us/products/multiplexer-ilb-bt-adio-mux-omni-2884208). ~$1.8k — overkill for the $6,999 bike, right if we ever need SIL-style I/O.
 
 ---
 

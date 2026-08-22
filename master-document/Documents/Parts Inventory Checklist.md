@@ -54,9 +54,10 @@ Controller **HAVE**. Buy the waterproof transmitter/receiver pair. Full pin map:
 
 | # | Item | Compatible with ND72360 because | Buy |
 |---|------|--------------------------------|-----|
-| 1 | **Waterproof 8CH TX + RX pair** (numbered 1–8) | Wire replacement across the fold: turns, brake lamp, headlamp, ignition, cutoff. Momentary. | https://www.amazon.com/clp/B0G2XJ6XKF · https://www.amazon.com/Mangood-4-Channel-Wireless-Switch-12V-36V/dp/B0FDL913NP · https://www.amazon.com/s?k=8+channel+433MHz+wireless+relay+transmitter+receiver+12V+momentary |
-| 2 | **0–5 V analog wireless TX/RX** (throttle) | Hall 0–5 V in / 0–5 V out at FarDriver. Not a digital relay. | https://www.signal-fire.com/product/wireless-io-module/ · https://www.phoenixcontact.com/en-pc/products/wireless-module-rad-ism-900-data-bd-plus-2902277 · https://appliedwireless.com/analog-sensor-transmitters-receivers/ |
+| 1 | **Mangood 8CH TX + RX**, DC 12–36 V, numbered 1–8 | Turns, brake lamp, headlamp, ignition (orange lock), cutoff. Momentary/latch per channel. | https://www.amazon.com/dp/B0G2XJ6XKF |
+| 2 | **Falcon PEV wireless throttle** (hall TX + RX) | RX plugs into FarDriver throttle 3-pin (red +5 / black GND / green signal). Not a digital relay. | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
 | 3 | Numbered **GX16 8-pin** pigtails + IP67 boxes | Same pin numbers on TX and RX | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
+| 4 | Battery level | **Not a fold-radio channel.** FarDriver BT (V/A/temp) + pack Bluetooth BMS (SOC). | FarDriver app · BMS vendor app · Puca `/app/` |
 
 ---
 

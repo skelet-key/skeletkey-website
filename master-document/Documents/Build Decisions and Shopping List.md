@@ -102,13 +102,14 @@ SkeletKey **sources frames and parts** and uses **contract assemblers** for **5,
 
 ### Controls (FarDriver ND72360 fold radio)
 
-Waterproof **TX at the bars / RX at the rear**, numbered 1–8. Analog pair for throttle. Pin map: **Action Item Tracker.md §6**.
+Waterproof **TX at the bars / RX at the rear**, numbered 1–8. Separate analog radio for throttle. Battery SOC is Bluetooth, not RF. Pin map: **Action Item Tracker.md §6**.
 
 | Item | Compatible because | Buy |
 |------|--------------------|-----|
-| **8CH waterproof TX + RX pair** (numbered 1–8) | Wire replacement across the fold | https://www.amazon.com/clp/B0G2XJ6XKF · https://www.amazon.com/s?k=8+channel+433MHz+wireless+relay+transmitter+receiver+12V+momentary |
-| **0–5 V analog wireless TX/RX** (throttle) | Hall throttle in / FarDriver throttle out | https://www.signal-fire.com/product/wireless-io-module/ · https://appliedwireless.com/analog-sensor-transmitters-receivers/ |
+| **Mangood 8CH 12–36 V TX + RX** (numbered 1–8) | Turns, brake lamp, headlamp, ignition (FarDriver **orange**), cutoff, horn | https://www.amazon.com/dp/B0G2XJ6XKF |
+| **Falcon PEV wireless throttle** (hall TX + RX) | RX → FarDriver throttle red / black / green. Fail-to-zero on RF loss. | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
 | Numbered **GX16** pigtails + IP67 boxes | Same pin numbers on both boards | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
+| Battery level | FarDriver BT + pack Bluetooth BMS — **not** a 433 MHz channel | FarDriver app · BMS app · https://skeletkey.com/app/ |
 | Main fuse / contactor | Pack continuous current | See Action Item Tracker §7 |
 | Phase / Hall extensions | Waterproof, left-side, clear of disc | https://www.amazon.com/s?k=QS+hub+motor+phase+hall+extension+waterproof |
 
