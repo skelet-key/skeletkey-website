@@ -1,7 +1,7 @@
 # PARTS INVENTORY CHECKLIST
 ## Document Reference: PIC-2026-V1
 ## Classification: Internal · Shareable with cofounder
-## Updated: 2026-08-21
+## Updated: 2026-08-22
 
 Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED** = still to buy or fabricate
 
@@ -43,10 +43,34 @@ Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED*
 | 4 | Front wheel **20×4.0** | Match fork dropout (confirm **135 mm** QR when frame arrives) | NEED |
 | 5 | Front fork + stem + headset | 1-1/8″ straight steerer · **ZS44** class if 44 mm head tube | NEED |
 | 6 | Front brake | Lightweight disc preferred | NEED |
-| 7 | Handlebars / grips / controls | FarDriver-compatible hall throttle | NEED |
+| 7 | Handlebars / grips / **FarDriver hall throttle** | 0–5 V hall; see §3.1 | NEED |
 | 8 | Phase / Hall extensions | Waterproof; clear of left disc | NEED |
 | 9 | Main pack fuse / precharge as required | Sized for **8 kW** class discharge | NEED |
 | 10 | Statorade (optional thermal) | Sustained high speed on 3T @ ~63 V | NEED optional |
+| 11 | **Ignition key + kill** | Pack-voltage key on FarDriver orange; physical kill in series | NEED |
+| 12 | **E-brake cutoff levers** | 2-pin; FarDriver high-brake 12 V | NEED |
+| 13 | **Wireless turn / brake / headlamp** | RF kits so the fold has no lighting loom | NEED |
+| 14 | **48–72 V → 12 V DC–DC** | Lamps + high-brake from ~63 V pack | NEED |
+
+### 3.1 NEED — FarDriver ND72360 compatible controls (detail)
+
+Controller **HAVE**. These are the matching bar, light, range, and temp parts. Full links: **Action Item Tracker.md §6**.
+
+| # | Item | Compatible with ND72360 because | Buy |
+|---|------|--------------------------------|-----|
+| 1 | Prewired **throttle + key + voltmeter + 3-speed** | 0–5 V hall, ignition, 3-speed plugs FarDriver expects | https://www.hotpaxx.com/product-page/throttlekeymeter3spdfardriver · https://www.electricvelocitypnw.com/product/throttle-key-voltmeter-3spd-wired-for-fardriver-controller · https://thewattsshop.com/products/controller-essentials-prewired-fd-bundle-inc-surron-style-throttle-w-choice-of-grips-key-voltmeter-3-speed |
+| 2 | Waterproof **hall thumb throttle** (if not buying the kit) | 0–5 V, 12–72 V | https://www.amazon.com/Tsinghwang-Waterproof-Connector-Accessories-Accelerator/dp/B0CVVL4PL1 |
+| 3 | **Ignition key** 48–72 V | FarDriver orange is pack voltage, not 12 V logic | https://www.amazon.com/s?k=electric+bike+ignition+key+switch+48v+72v |
+| 4 | **E-brake levers** with cutoff | High-brake 12 V input on FarDriver | https://www.amazon.com/WIROJ-Waterproof-Electronic-Accessories-Connector/dp/B0D1TWZDFY |
+| 5 | **Wireless turn signals** IP65 | Independent of FarDriver; remote on bars | https://www.amazon.com/Antfire-Rechargeable-Wireless-Waterproof-Mountain/dp/B09BQMKNF4 · https://www.amazon.com/dp/B07QWK4GFQ |
+| 6 | **Wireless brake / tail lamp** | RF; no loom through fold | https://www.amazon.com/s?k=motorcycle+wireless+brake+light+12V |
+| 7 | **Headlamp** 12 V LED | From DC–DC below | https://www.amazon.com/s?k=motorcycle+LED+headlight+12V+waterproof |
+| 8 | **DC–DC 48–72 V → 12 V ≥10 A** | 63 V pack → lamps + high-brake | https://www.amazon.com/Pro-Chaser-Regulator-Scooters-Bicycles/dp/B07GPZWG1S |
+| 9 | **FarDriver app** (BT already on controller) | Voltage, current, **motor/controller temp** | https://www.far-driver.com/the-controller-app-for-android/ |
+| 10 | **Bluetooth BMS app** (with inbound pack) | **Range / SOC / cell temperature** | Pack OEM app |
+| 11 | Motor temp sensor | QS205 **KTY83/122 already in hub** — plug into FarDriver temp | Spare only: https://www.amazon.com/s?k=KTY83+122+motor+temperature+sensor |
+| 12 | Waterproof 5–6 pin **fold jumper** | Throttle + ignition + brake stay **wired**; lights stay wireless | https://www.amazon.com/s?k=IP67+circular+connector+6+pin+cable |
+| 13 | Optional FarDriver **control harness** | Aftermarket plugs | https://econiccycles.com/products/fardriver-sinewave-controller-replacement-wire-harness-small |
 
 ---
 
@@ -130,7 +154,7 @@ Full wiring map: **CCS1 Public Charging Architecture.md**
 |--------|---------------------|
 | **HAVE** | Motor, FarDriver, CCS inlet, Küster lock, HIMALO fork (chosen) |
 | **ON THE WAY** | Folding frame (AliExpress) + **~60 lb pack** |
-| **NEED** | Headset/stem/front wheel, rear torque/disc, **load-bearing rack + supports**, café seat, **wireless signals/brake/ignition**, pack slide contacts, CCS electronics |
+| **NEED** | Headset/stem/front wheel, rear torque/disc, **load-bearing rack + supports**, café seat, **FarDriver throttle/key/e-brake**, **wireless signals/brake/headlamp**, **12 V DC–DC**, pack slide contacts, CCS electronics |
 
 ---
 

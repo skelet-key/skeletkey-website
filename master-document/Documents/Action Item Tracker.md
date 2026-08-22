@@ -1,6 +1,6 @@
 # Action Item Tracker
 ## Puca prototype kit — categorized by feature
-## Updated: 2026-08-21
+## Updated: 2026-08-22
 
 Status: **HAVE** · **ON THE WAY** · **NEED** (buy / fab)
 
@@ -97,21 +97,77 @@ Cut list (locked): deck 20×8×⅛; optional side walls 20×3×⅛; seat rails 1
 
 ---
 
-## 6. NEED — Wireless lighting, brake, ignition (clean folding chassis)
+## 6. NEED — FarDriver controls, wireless lights, range & temperature
 
-Goal: no 5 ft loom through the hinge. Waterproof TX/RX, numbered connectors, latency-free. Phone dash is [https://www.skeletkey.com/app/](https://www.skeletkey.com/app/).
+**Controller on hand:** FarDriver **ND72360 BT** (48–72 V, ~190 A battery / ~360 A phase).  
+Product: https://econiccycles.com/products/fardriver-sinewave-controller-nd72360-w-bluetooth?variant=46851442835698  
+Datasheet: https://www.far-driver.com/nd72360/
 
-| Action | Buy |
-|--------|-----|
-| [ ] **Wireless turn-signal kit** (bar remote + front/rear lamps, IP65+) | https://www.amazon.com/s?k=wireless+motorcycle+turn+signal+kit+waterproof |
-| [ ] **Wireless / remote brake-light trigger** (or lamp that reads the brake switch over the same radio) | https://www.amazon.com/s?k=motorcycle+wireless+brake+light |
-| [ ] **Headlamp** + wireless or short local loom at the tree | 12 V motorcycle projector / LED |
-| [ ] **BLE ignition relay** — ESP32 closes enable/contactor coil; **physical key/e-stop in series** | Dev board: https://www.amazon.com/ESP-WROOM-32-Development-Microcontroller-Integrated-Compatible/dp/B08D5ZD528 · https://www.microcenter.com/product/613822/ESP32-WROOM-32D_Module · relay: https://www.amazon.com/s?k=ESP32+5V+relay+module · jumpers: https://www.microcenter.com/product/454418/adafruit-industries-40-pin-ribbon-female-to-female-jumper-wires |
-| [ ] **Cutoff / kill** in series with pack, not app-only | Marine breaker / contactor |
-| [ ] **Hall throttle** FarDriver-compatible 0–5 V | https://www.amazon.com/s?k=hall+throttle+ebike+waterproof |
-| [ ] **Magnetic phone mount** + ring (dash) | Clamp on black stem below bars; Puca app is the display |
+**How this bike is wired (do not mix this up):**
 
-**Skip:** ESP32 + SN65HVD230 CAN unless we leave FarDriver. https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO
+| Signal | Path | Why |
+|--------|------|-----|
+| **Throttle** (0–5 V hall) | **Wired** bar → FarDriver throttle plug | Analog safety; do **not** put throttle on RF |
+| **Ignition / e-lock** | Key on FarDriver **orange** (pack voltage). Optional BLE relay in **series** with the key | FarDriver expects a real key path |
+| **Brake cutoff** | E-brake levers → FarDriver **high-brake 12 V** (or low-brake if you set it in the app) | Cuts drive / can arm regen |
+| **Motor temp** | QS205 **KTY83/122** (already in the hub) → FarDriver temp plug | Live in FarDriver app |
+| **Controller temp / pack voltage / amps** | FarDriver Bluetooth | FarDriver app + Puca dash |
+| **Battery range, SOC, cell temp** | Pack **Bluetooth BMS** (inbound with the 8.5 kWh module) | BMS app; Puca shows range from SOC + GPS |
+| **Turn signals, tail / brake lamp, headlamp** | **Wireless** bar remote + 12 V lamps (or USB-rechargeable lamp kits) | No 5 ft loom through the fold for lighting |
+
+Phone dash: https://www.skeletkey.com/app/ · FarDriver tune app: https://www.far-driver.com/the-controller-app-for-android/ (iOS: App Store “FarDriver”).
+
+**Skip:** ESP32 + SN65HVD230 CAN. That was the Votol path. https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO
+
+### 6.1 Plug-and-play FarDriver bar kit (buy one of these)
+
+| Action | Notes | Buy |
+|--------|--------|-----|
+| [ ] **Throttle + key + voltmeter + 3-speed, prewired for FarDriver** | 0–5 V hall throttle, ignition key, 12–84 V meter, 3-speed. Best “it just plugs in” option for ND72360. | **Hot Paxx:** https://www.hotpaxx.com/product-page/throttlekeymeter3spdfardriver · **Electric Velocity:** https://www.electricvelocitypnw.com/product/throttle-key-voltmeter-3spd-wired-for-fardriver-controller · **The Watts Shop** Sur-Ron-style bundle: https://thewattsshop.com/products/controller-essentials-prewired-fd-bundle-inc-surron-style-throttle-w-choice-of-grips-key-voltmeter-3-speed |
+| [ ] Spare **FarDriver control harness** (if your loom is the “open lug” style) | Lets aftermarket throttle / 3-speed / key / meter plug in. | https://econiccycles.com/products/fardriver-sinewave-controller-replacement-wire-harness-small |
+
+### 6.2 If you buy pieces instead of a kit
+
+| Action | FarDriver pin / spec | Buy |
+|--------|----------------------|-----|
+| [ ] **Waterproof hall thumb throttle 0–5 V** | 12–72 V supply, SM waterproof, 22.2 mm bar | https://www.amazon.com/Tsinghwang-Waterproof-Connector-Accessories-Accelerator/dp/B0CVVL4PL1 · https://www.amazon.com/Honses-Electric-Scooter-Throttle-Bike/dp/B09P61CXQB · search https://www.amazon.com/s?k=waterproof+hall+thumb+throttle+0-5V+72V |
+| [ ] **Ignition key switch** 2-wire, rated for **pack voltage** (~63 V, 48–72 V class) | Series with FarDriver **orange** ignition. Not a 12 V car key unless you use a relay. | https://www.amazon.com/s?k=electric+bike+ignition+key+switch+48v+72v · https://www.amazon.com/s?k=ebike+key+lock+power+switch+waterproof |
+| [ ] **Kill / cutoff** in series with ignition (physical, not app-only) | Marine/moto kill or 48–72 V breaker | https://www.amazon.com/s?k=motorcycle+kill+switch+waterproof · https://www.amazon.com/s?k=48v+72v+battery+circuit+breaker |
+| [ ] **E-brake cutoff levers** (pair) | 2-pin waterproof; land on FarDriver **brake** input (high-brake 12 V after DC–DC, or low-brake if configured) | https://www.amazon.com/WIROJ-Waterproof-Electronic-Accessories-Connector/dp/B0D1TWZDFY · https://www.amazon.com/s?k=ebike+brake+lever+power+cutoff+waterproof+2+pin |
+| [ ] **3-speed switch** (optional) | FarDriver 3-speed plug | https://www.amazon.com/s?k=ebike+3+speed+switch+waterproof |
+
+### 6.3 Wireless lighting (the fold stays clean)
+
+These are **12 V / self-powered**. They do **not** plug into the FarDriver throttle port.
+
+| Action | Notes | Buy |
+|--------|--------|-----|
+| [ ] **Wireless turn-signal kit** (bar remote + front/rear, IP65) | RF remote on the bars; lamps on fork + rack. No loom through the hinge. | **Antfire 4-pc USB kit:** https://www.amazon.com/Antfire-Rechargeable-Wireless-Waterproof-Mountain/dp/B09BQMKNF4 · **CarThree:** https://www.amazon.com/dp/B07QWK4GFQ · motorcycle 12 V LED kit: https://www.amazon.com/s?k=wireless+motorcycle+turn+signal+kit+IP65+12V |
+| [ ] **Wireless / RF brake lamp** (or tail that reads a brake switch over radio) | Pair with e-brake lever or a hydraulic brake-light switch. | https://www.amazon.com/s?k=motorcycle+wireless+brake+light+12V · https://www.amazon.com/s?k=ebike+wireless+brake+tail+light |
+| [ ] **Headlamp** 12 V LED, short local loom at the tree | Power from the 12 V DC–DC below. | https://www.amazon.com/s?k=motorcycle+LED+headlight+12V+waterproof+hi+lo |
+| [ ] **48–72 V → 12 V DC–DC** (lights, horn, high-brake, lock coil) | Pack is **~63 V**. Need 12 V for FarDriver high-brake and lamps. Waterproof, ≥10 A. | **Pro Chaser 48–72 V → 12 V:** https://www.amazon.com/Pro-Chaser-Regulator-Scooters-Bicycles/dp/B07GPZWG1S · 15 A: https://www.amazon.com/clp/B07GNTC1D7 · search https://www.amazon.com/s?k=72V+60V+48V+to+12V+10A+DC+DC+converter+waterproof |
+
+### 6.4 Range and temperature (FarDriver + pack BMS)
+
+Nothing extra for motor temp if the QS205 KTY83/122 pigtail is intact — plug it into the FarDriver temp input.
+
+| Action | What you see | Buy / app |
+|--------|----------------|-----------|
+| [ ] **FarDriver app** (BT module already on the ND72360) | Pack voltage, battery/phase current, **controller temp**, **motor temp**, speed, errors, tune | Android APK: https://www.far-driver.com/the-controller-app-for-android/ · iOS App Store: search **FarDriver** · install notes: https://support.arctic-leopard-usa.com/kb/article/8-how-to-install-the-fardriver-app-for-ios-and-android/ |
+| [ ] **Bluetooth BMS app** (ships with the inbound 8.5 kWh pack) | **SOC, remaining Ah, cell temps, charge/discharge A** → this is **range** | Use the OEM app that matches the BMS (Daly / ANT / JK / SmartBMS). Generic: https://play.google.com/store/apps/details?id=com.ble.vanomize12 |
+| [ ] **Puca dash** | GPS speed, trip, software IGN, maps | https://www.skeletkey.com/app/ |
+| [ ] Spare **KTY83/122** only if the hub pigtail is damaged | FarDriver motor-temp input | https://www.amazon.com/s?k=KTY83+122+motor+temperature+sensor · QS default is already KTY83/122 |
+| [ ] Confirm FarDriver **temp-sensor type** in app = KTY83 (not NTC) | Wrong type = bogus temps / limp mode | Set in FarDriver app after auto-learn |
+
+### 6.5 Fold crossing (keep analog signals wired)
+
+| Action | Notes | Buy |
+|--------|--------|-----|
+| [ ] **Waterproof 5–6 pin extension** (throttle + ignition + brake sense) across the hinge | Short, strain-relieved, left or right of the fold. Lights stay wireless. | https://www.amazon.com/s?k=waterproof+aviation+connector+5+pin+motorcycle · https://www.amazon.com/s?k=IP67+circular+connector+6+pin+cable |
+| [ ] Optional **12 V 4-ch wireless relay** only for ignition-enable / lights — **never throttle** | Bar remote closes a relay at the FarDriver. Key still in series. | https://www.amazon.com/s?k=12V+4+channel+wireless+relay+module+IP65 |
+| [ ] Magnetic phone mount + ring | Stem below bars | Already on the site; clamp on the black stem |
+
+---
 
 ---
 
