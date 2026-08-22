@@ -779,6 +779,7 @@ a {
 
 .battery-caption {
   font-size: 0.95rem;
+  font-weight: 400;
   color: var(--text-muted);
   text-align: left;
   padding: 1rem 1.15rem 1.15rem;
@@ -786,19 +787,21 @@ a {
   margin: 0;
 }
 
-.battery-pack-copy {
-  padding: 0 1.15rem 1.15rem;
+.battery-caption p {
+  margin: 0 0 0.85rem;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
 }
 
-.battery-pack-copy p {
-  color: var(--text-secondary);
-  font-size: 0.98rem;
-  line-height: 1.65;
-  margin: 0 0 1rem;
-}
-
-.battery-pack-copy p:last-child {
+.battery-caption p:last-child {
   margin-bottom: 0;
+}
+
+.battery-caption strong {
+  font-weight: 400;
+  color: inherit;
 }
 
 .battery-copy h3 {
