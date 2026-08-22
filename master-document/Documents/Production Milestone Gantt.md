@@ -30,7 +30,7 @@ PHASE 4: RATE
 
 ### Phase notes
 
-**Phase 0** is the real bike on the bench: sourced **9.2 lb** carbon steel folder, **QS205 3T 28.6 lb HAVE**, **FarDriver ND72360 HAVE**.
+**Phase 0** is the real bike on the bench: sourced **9.2 lb** carbon steel folder, **QS205 V3 50 3T 28.6 lb HAVE**, **FarDriver ND72360 HAVE**.
 
 **Phase 1** buys **assembly and test fixtures**, not extrusion dies.
 

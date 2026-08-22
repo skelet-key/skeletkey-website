@@ -35,7 +35,7 @@ SkeletKey **sources frames and parts** and uses **contract assemblers** for **5,
 - Wireless programming + live telemetry via **FarDriver app**
 - Product reference: https://econiccycles.com/products/fardriver-sinewave-controller-nd72360-w-bluetooth
 
-### QS205 3T @ ~60 V
+### QS205 V3 50 3T @ ~63 V
 - 3T winding can reach **~70 mph** under ideal conditions on suitable tire diameter
 - Requires adequate continuous current and low voltage sag (quality cells / BMS)
 - Thermal: consider **Statorade** + hubsinks for sustained high speed  
