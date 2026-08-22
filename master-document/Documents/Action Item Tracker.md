@@ -114,8 +114,6 @@ Datasheet: https://www.far-driver.com/nd72360/
 | **Range / SOC / cell temp** | Pack Bluetooth BMS | No extra radio |
 | **Controller V / A / temps** | FarDriver Bluetooth | Already on ND72360 |
 
-Phone dash: https://www.skeletkey.com/app/ · FarDriver tune app: https://www.far-driver.com/the-controller-app-for-android/ (iOS: App Store “FarDriver”).
-
 **Skip:** ESP32 + SN65HVD230 CAN. That was the Votol path. https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO
 
 ### 6.1 Waterproof transmitter + receiver (the fold radio)
