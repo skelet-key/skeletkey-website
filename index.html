@@ -380,10 +380,10 @@
         <input class="calc-input" id="savMiles" name="miles" type="number" min="1" max="500" step="0.1" inputmode="decimal" placeholder="40" value="40" required />
 
         <label class="calc-label" for="savGas">Average gas price ($ / gallon)</label>
-        <input class="calc-input" id="savGas" name="gas" type="number" min="1" max="12" step="0.01" inputmode="decimal" value="4.11" required />
+        <input class="calc-input" id="savGas" name="gas" type="number" min="1" max="12" step="any" inputmode="decimal" value="4.11" required />
 
         <label class="calc-label" for="savKwh">Average electricity price ($ / kWh)</label>
-        <input class="calc-input" id="savKwh" name="kwh" type="number" min="0.05" max="0.8" step="0.001" inputmode="decimal" value="0.1844" required />
+        <input class="calc-input" id="savKwh" name="kwh" type="number" min="0.05" max="0.8" step="any" inputmode="decimal" value="0.1844" required />
 
         <button type="submit" class="btn btn-primary calc-submit">Calculate</button>
         <p class="calc-footnote">U.S. regular gas ~$4.11/gal (AAA / EIA, Aug 2026). Home electricity 18.44¢/kWh (EIA residential). Edit either. Counted 365 days a year.</p>
