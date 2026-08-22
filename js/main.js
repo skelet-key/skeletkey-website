@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!root) return;
     const img = root.querySelector("img");
     const hint = root.querySelector(".spin-hint");
-    const n = 8;
+    const n = 16;
     const frames = [];
     for (let i = 0; i < n; i++) {
       const el = new Image();
@@ -190,21 +190,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let dragging = false;
     let lastX = 0;
     let acc = 0;
-    let auto = true;
-    const PX = 36;
+    const PX = 24;
 
     function show(i) {
       idx = ((i % n) + n) % n;
       img.src = frames[idx].src;
     }
 
-    setInterval(function () {
-      if (auto && !dragging) show(idx + 1);
-    }, 1400);
-
     function start(x) {
       dragging = true;
-      auto = false;
       lastX = x;
       acc = 0;
       if (hint) hint.style.opacity = "0";
