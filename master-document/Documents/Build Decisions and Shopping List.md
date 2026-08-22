@@ -106,13 +106,14 @@ Throttle / ignition / brake cutoff stay **wired** into FarDriver. Lighting is **
 
 | Item | Compatible because | Buy |
 |------|--------------------|-----|
+| **8CH waterproof TX + RX pair** (numbered 1–8) | Wire replacement across the fold | https://www.amazon.com/clp/B0G2XJ6XKF · https://www.amazon.com/s?k=8+channel+433MHz+wireless+relay+transmitter+receiver+12V+momentary |
+| **0–5 V analog wireless TX/RX** (throttle) | Hall throttle in / FarDriver throttle out | https://www.signal-fire.com/product/wireless-io-module/ · https://appliedwireless.com/analog-sensor-transmitters-receivers/ |
 | **Throttle + key + voltmeter + 3-speed kit** prewired for FarDriver | 0–5 V hall, ignition, 3-speed | https://www.hotpaxx.com/product-page/throttlekeymeter3spdfardriver · https://www.electricvelocitypnw.com/product/throttle-key-voltmeter-3spd-wired-for-fardriver-controller · https://thewattsshop.com/products/controller-essentials-prewired-fd-bundle-inc-surron-style-throttle-w-choice-of-grips-key-voltmeter-3-speed |
-| Waterproof **hall thumb throttle** 0–5 V | FarDriver throttle is 0–5 V hall, 12–72 V | https://www.amazon.com/Tsinghwang-Waterproof-Connector-Accessories-Accelerator/dp/B0CVVL4PL1 |
-| **Ignition key** 48–72 V | FarDriver orange is **pack voltage** | https://www.amazon.com/s?k=electric+bike+ignition+key+switch+48v+72v |
-| **E-brake cutoff levers** | FarDriver high-brake **12 V** | https://www.amazon.com/WIROJ-Waterproof-Electronic-Accessories-Connector/dp/B0D1TWZDFY |
-| **Wireless turn signals** IP65 | Independent RF; no FarDriver pin | https://www.amazon.com/Antfire-Rechargeable-Wireless-Waterproof-Mountain/dp/B09BQMKNF4 · https://www.amazon.com/dp/B07QWK4GFQ |
-| **Wireless brake / tail lamp** | RF | https://www.amazon.com/s?k=motorcycle+wireless+brake+light+12V |
-| **Headlamp** 12 V LED | From DC–DC | https://www.amazon.com/s?k=motorcycle+LED+headlight+12V+waterproof |
+| Waterproof **hall thumb throttle** 0–5 V | Feeds analog TX | https://www.amazon.com/Tsinghwang-Waterproof-Connector-Accessories-Accelerator/dp/B0CVVL4PL1 |
+| **Ignition key** 48–72 V | TX #5; RX coil in series with FarDriver orange | https://www.amazon.com/s?k=electric+bike+ignition+key+switch+48v+72v |
+| **E-brake cutoff levers** | TX #3 | https://www.amazon.com/WIROJ-Waterproof-Electronic-Accessories-Connector/dp/B0D1TWZDFY |
+| **12 V LED lamps** | Loads on RX #1–4 | https://www.amazon.com/s?k=motorcycle+LED+turn+signal+12V+IP65 |
+| **DC–DC 48–72 V → 12 V** ≥10 A | Powers TX/RX + lamps | https://www.amazon.com/Pro-Chaser-Regulator-Scooters-Bicycles/dp/B07GPZWG1S |
 | **DC–DC 48–72 V → 12 V** ≥10 A | 63 V pack → lamps + high-brake | https://www.amazon.com/Pro-Chaser-Regulator-Scooters-Bicycles/dp/B07GPZWG1S |
 | **FarDriver app** | Voltage, current, **temps** | https://www.far-driver.com/the-controller-app-for-android/ |
 | Pack **Bluetooth BMS app** | **Range / SOC / cell temp** | Inbound with 8.5 kWh pack |

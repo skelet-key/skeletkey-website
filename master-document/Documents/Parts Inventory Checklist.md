@@ -58,18 +58,18 @@ Controller **HAVE**. These are the matching bar, light, range, and temp parts. F
 
 | # | Item | Compatible with ND72360 because | Buy |
 |---|------|--------------------------------|-----|
-| 1 | Prewired **throttle + key + voltmeter + 3-speed** | 0–5 V hall, ignition, 3-speed plugs FarDriver expects | https://www.hotpaxx.com/product-page/throttlekeymeter3spdfardriver · https://www.electricvelocitypnw.com/product/throttle-key-voltmeter-3spd-wired-for-fardriver-controller · https://thewattsshop.com/products/controller-essentials-prewired-fd-bundle-inc-surron-style-throttle-w-choice-of-grips-key-voltmeter-3-speed |
-| 2 | Waterproof **hall thumb throttle** (if not buying the kit) | 0–5 V, 12–72 V | https://www.amazon.com/Tsinghwang-Waterproof-Connector-Accessories-Accelerator/dp/B0CVVL4PL1 |
-| 3 | **Ignition key** 48–72 V | FarDriver orange is pack voltage, not 12 V logic | https://www.amazon.com/s?k=electric+bike+ignition+key+switch+48v+72v |
-| 4 | **E-brake levers** with cutoff | High-brake 12 V input on FarDriver | https://www.amazon.com/WIROJ-Waterproof-Electronic-Accessories-Connector/dp/B0D1TWZDFY |
-| 5 | **Wireless turn signals** IP65 | Independent of FarDriver; remote on bars | https://www.amazon.com/Antfire-Rechargeable-Wireless-Waterproof-Mountain/dp/B09BQMKNF4 · https://www.amazon.com/dp/B07QWK4GFQ |
-| 6 | **Wireless brake / tail lamp** | RF; no loom through fold | https://www.amazon.com/s?k=motorcycle+wireless+brake+light+12V |
-| 7 | **Headlamp** 12 V LED | From DC–DC below | https://www.amazon.com/s?k=motorcycle+LED+headlight+12V+waterproof |
-| 8 | **DC–DC 48–72 V → 12 V ≥10 A** | 63 V pack → lamps + high-brake | https://www.amazon.com/Pro-Chaser-Regulator-Scooters-Bicycles/dp/B07GPZWG1S |
+| 1 | **Waterproof 8CH TX + RX pair** (numbered 1–8) | Wire replacement across the fold: turns, brake lamp, headlamp, ignition, cutoff. Momentary. 12–36 V from DC–DC. | https://www.amazon.com/clp/B0G2XJ6XKF · https://www.amazon.com/Mangood-4-Channel-Wireless-Switch-12V-36V/dp/B0FDL913NP · https://www.amazon.com/s?k=8+channel+433MHz+wireless+relay+transmitter+receiver+12V+momentary |
+| 2 | **0–5 V analog wireless TX/RX** (throttle) | Hall 0–5 V in / 0–5 V out at FarDriver. Not a digital relay. | https://www.signal-fire.com/product/wireless-io-module/ · https://www.phoenixcontact.com/en-pc/products/wireless-module-rad-ism-900-data-bd-plus-2902277 · https://appliedwireless.com/analog-sensor-transmitters-receivers/ |
+| 3 | Prewired **throttle + key + voltmeter + 3-speed** | 0–5 V hall, ignition, 3-speed plugs FarDriver expects | https://www.hotpaxx.com/product-page/throttlekeymeter3spdfardriver · https://www.electricvelocitypnw.com/product/throttle-key-voltmeter-3spd-wired-for-fardriver-controller · https://thewattsshop.com/products/controller-essentials-prewired-fd-bundle-inc-surron-style-throttle-w-choice-of-grips-key-voltmeter-3-speed |
+| 4 | Waterproof **hall thumb throttle** (if not buying the kit) | 0–5 V, 12–72 V — feeds analog TX | https://www.amazon.com/Tsinghwang-Waterproof-Connector-Accessories-Accelerator/dp/B0CVVL4PL1 |
+| 5 | **Ignition key** 48–72 V | FarDriver orange is pack voltage; RX #5 is a 12 V coil in series | https://www.amazon.com/s?k=electric+bike+ignition+key+switch+48v+72v |
+| 6 | **E-brake levers** with cutoff | TX #3 input; RX #3 → lamp + FarDriver high-brake | https://www.amazon.com/WIROJ-Waterproof-Electronic-Accessories-Connector/dp/B0D1TWZDFY |
+| 7 | **12 V LED lamps** (loads on RX 1–4) | Turns / tail / headlamp | https://www.amazon.com/s?k=motorcycle+LED+turn+signal+12V+IP65 |
+| 8 | **DC–DC 48–72 V → 12 V ≥10 A** | Powers TX/RX boards + lamps + high-brake | https://www.amazon.com/Pro-Chaser-Regulator-Scooters-Bicycles/dp/B07GPZWG1S |
 | 9 | **FarDriver app** (BT already on controller) | Voltage, current, **motor/controller temp** | https://www.far-driver.com/the-controller-app-for-android/ |
 | 10 | **Bluetooth BMS app** (with inbound pack) | **Range / SOC / cell temperature** | Pack OEM app |
 | 11 | Motor temp sensor | QS205 **KTY83/122 already in hub** — plug into FarDriver temp | Spare only: https://www.amazon.com/s?k=KTY83+122+motor+temperature+sensor |
-| 12 | Waterproof 5–6 pin **fold jumper** | Throttle + ignition + brake stay **wired**; lights stay wireless | https://www.amazon.com/s?k=IP67+circular+connector+6+pin+cable |
+| 12 | Numbered **GX16 8-pin** pigtails + IP67 boxes | Same pin numbers on TX and RX | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
 | 13 | Optional FarDriver **control harness** | Aftermarket plugs | https://econiccycles.com/products/fardriver-sinewave-controller-replacement-wire-harness-small |
 
 ---
