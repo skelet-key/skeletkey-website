@@ -23,7 +23,8 @@ SkeletKey **sources frames and parts** and uses **contract assemblers** for **5,
 | **Battery** | Modular semi-solid **NMC+**, **~60 lb**, ~**19–20″ × 6.5″ × 4.5–5″**, ~**8.5 kWh**, **63 V nominal**, Bluetooth BMS, **6–8 kW** charge / **8 kW** discharge, dual **QS8** |
 | **Seat** | **No seatpost seat** — rear **battery deck** + **café-racer solo seat on top** |
 | **Rack** | Custom **6061 aluminum** deck bolted to steel stay tabs (not light tourist rack) |
-| **CAN / ESP32 bridge** | **Not required** for FarDriver path (optional later) |
+| **Fold radio** | **8CH LoRa I/O ON THE WAY $20** — [AliExpress 3256807076294851](https://www.aliexpress.us/item/3256807076294851.html) (RTTXA08/RTRXB08). Analog throttle still NEED. |
+| **12 V aux** | **Cllena 40–90 V → 12 V 10 A ON THE WAY $20** — [amazon.com/dp/B09B72KPYY](https://www.amazon.com/dp/B09B72KPYY) |
 
 ---
 
@@ -106,7 +107,8 @@ Waterproof **TX at the bars / RX at the rear**, numbered 1–8. Separate analog 
 
 | Item | Compatible because | Buy |
 |------|--------------------|-----|
-| **eletechsup RTTXA08 + RTRXB08 with shell** | Enclosed 8DI TX + 8-relay RX. ~$50 pair. Not a fob. | https://eletechsup.com/products/8ch-433m-dc-12v-lora-bidirectional-remote-io-controller-led-feedback-indicator-npn-in-relay-out-swicth-module-board · https://www.aliexpress.com/item/1005006919833785.html |
+| **8CH LoRa I/O TX + RX** | **ON THE WAY $20** — 8DI TX + 8-relay RX | https://www.aliexpress.us/item/3256807076294851.html |
+| **Cllena 12 V 10 A DC–DC** | **ON THE WAY $20** — 40–90 V → 12 V | https://www.amazon.com/dp/B09B72KPYY |
 | **0–5 V analog RF pair** (throttle) | Hall in → 0–5 V out at FarDriver. Digital 8CH cannot do this. | https://www.aliexpress.com/item/1005006843832014.html · https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
 | **Falcon PEV wireless throttle** (hall TX + RX) | RX → FarDriver throttle red / black / green. Fail-to-zero on RF loss. | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
 | Numbered **GX16** pigtails + IP67 boxes | Same pin numbers on both boards | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |

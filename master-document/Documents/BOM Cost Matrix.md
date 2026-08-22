@@ -1,7 +1,7 @@
 # Bill of Materials (BOM) Cost Tracking Matrix
-## Target: **5,000 / year** · parts **$2,942** · assembly **$500** · **all-in $3,442**
+## Target: **5,000 / year** · parts **$2,950** · assembly **$500** · **all-in $3,450**
 ## Frame **$375** (rear shock included) · Pack **$1,200** · FarDriver **$150** (factory lot) · MSRP $6,999
-## Updated: 2026-08-21
+## Updated: 2026-08-22
 
 Kalosse **includes the rear shock** — not a separate line. **$500 contract assembly is inside all-in COGS**, not a footnote. Parts are **5,000-unit lots** (OEM / FOB) except the pack, which stays at the realistic **$1,200** you set.
 
@@ -13,11 +13,11 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 
 | Line | Per unit | Annual 5k | % MSRP |
 |------|----------|-----------|--------|
-| Sourced parts (below) | **$2,942** | $14,710,000 | 42.0% |
+| Sourced parts (below) | **$2,950** | $14,750,000 | 42.1% |
 | Contract assembly & QA | **$500** | $2,500,000 | 7.1% |
-| **All-in COGS** | **$3,442** | **$17,210,000** | **49.2%** |
+| **All-in COGS** | **$3,450** | **$17,250,000** | **49.3%** |
 | MSRP | $6,999 | $34,995,000 | 100% |
-| **Gross margin** | **$3,557** | **$17,785,000** | **50.8%** |
+| **Gross margin** | **$3,549** | **$17,745,000** | **50.7%** |
 
 ---
 
@@ -33,15 +33,15 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 | Rear hub install | Tire, 6×44 rotor, left caliper, M16 arms, phase/Hall | 70 | 350,000 |
 | Deck / seat / hardware | 6061 deck+rails+legs, café pan, Grade 8, straps | 108 | 540,000 |
 | HV pack interface | Dock, interlock, cam lock, 200 A fuse, precharge, QS8 | 62 | 310,000 |
-| CCS1 stack | Inlet+Küster, EVCC, IMD, contactors, 6–8 kW DC–DC, 12 V | 430 | 2,150,000 |
+| CCS1 stack | Inlet+Küster, EVCC, IMD, contactors, 6–8 kW DC–DC, 12 V | **438** | 2,190,000 |
 | Controls / wireless / dash | Signals, brake, headlamp, BLE IGN, throttle, mount, screen | 64 | 320,000 |
 | Crate / pack-out | Export crate, foam, labels | 25 | 125,000 |
 | Kickstand | Folding-frame side stand | 15 | 75,000 |
 | Home overnight brick | ~63 V AC–DC, 120/240 V household (not CCS) | 20 | 100,000 |
 | Statorade | Grin ferrofluid ~10 mL fill, OEM lot | 18 | 90,000 |
-| **Parts subtotal** | | **2,942** | **14,710,000** |
+| **Parts subtotal** | | **2,950** | **14,750,000** |
 | **Assembly** | Consigned-kit labor + in-line QA | **500** | **2,500,000** |
-| **All-in** | | **3,442** | **17,210,000** |
+| **All-in** | | **3,450** | **17,250,000** |
 
 ---
 
@@ -114,15 +114,15 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 | H4 | HV contactors ×2 | 50 |
 | H5 | IVT / current sensor | 20 |
 | H6 | Isolated DC–DC HV → ~63 V, 6–8 kW | 200 |
-| H7 | 12 V aux DC–DC | 12 |
+| H7 | 12 V aux DC–DC (Cllena 40–90 V → 12 V 10 A class; proto **$20**) | **20** |
 | H8 | HV cable, PE | 13 |
 | H9 | **Home overnight brick** ~63 V AC–DC, 120/240 V household (trickle / overnight — **not** 8 kW CCS) | **20** |
-| | **CCS + home brick** | **450** |
+| | **CCS + home brick** | **458** |
 
 ### I. Controls
 | # | Part | Lot $ |
 |---|------|------:|
-| I1 | Wireless turn signals IP65 | 14 |
+| I1 | Wireless 8CH LoRa I/O (RTTXA08/RTRXB08; proto **$20** ON THE WAY) | 14 |
 | I2 | Wireless brake lamp | 8 |
 | I3 | Headlamp | 12 |
 | I4 | ESP32 BLE ignition relay | 6 |
@@ -136,7 +136,7 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 |---|------|------:|
 | J1 | Export crate | 25 |
 
-**Parts $2,942 + assembly $500 = all-in $3,442.**
+**Parts $2,950 + assembly $500 = all-in $3,450.**
 
 ---
 

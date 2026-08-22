@@ -32,9 +32,13 @@ Canonical production model: source frames & parts; contract assemblers to 5,000/
 - Envelope **19–20″ × ~6.5″ × 4.5–5″** · **~8.5 kWh** · **~63 V** · **8 kW** discharge · **6–8 kW** charge · Bluetooth BMS · **two QS8** (bottom + side) · semi-solid NMC+ · enclosure + cables included.
 - Still **NEED** (below): slide-in ± contacts on the **bike**, rails, lock, deck. The pack itself is incoming.
 
----
+### 8CH fold radio + 12 V supply (ordered 2026-08-22)
+- [x] **8CH LoRa I/O TX + RX** — **ON THE WAY** · **$20** · eletechsup RTTXA08 / RTRXB08 · 8 NPN in / 8 relay out · https://www.aliexpress.us/item/3256807076294851.html
+- [x] **Cllena DC–DC** — **ON THE WAY** · **$20** · **40–90 V → 12 V 10 A** · fuse pack+ 10–15 A · 12 V to RX; 12 V + GND through the fold to TX · https://www.amazon.com/dp/B09B72KPYY
 
-## 2. NEED — Front end (HIMALO through 44 mm head tube)
+Throttle analog radio is still **NEED**. These two do **not** carry hall 0–5 V.
+
+---
 
 Fits the fork already chosen. Steerer **28.6 mm / 1-1/8″ straight**.
 
@@ -162,7 +166,7 @@ Order **both** halves. These are plastic-shell boards (115×90×40 mm TX / 145×
 
 | Kit | Enclosed | ~$ | Buy |
 |-----|----------|----|-----|
-| **eletechsup RTTXA08 + RTRXB08 with shell** (primary, cheapest enclosed pair) | Yes — factory case | **$50 pair** | Factory: https://eletechsup.com/products/8ch-433m-dc-12v-lora-bidirectional-remote-io-controller-led-feedback-indicator-npn-in-relay-out-swicth-module-board (SKU RTTXA08+RTRXB08+TB450×2) · AliExpress ~$15/board: https://www.aliexpress.com/item/1005006919833785.html · https://www.aliexpress.com/item/1005007074526359.html · https://www.aliexpress.com/item/1005005402005835.html |
+| **eletechsup RTTXA08 + RTRXB08 with shell** | **ON THE WAY $20** — [AliExpress 3256807076294851](https://www.aliexpress.us/item/3256807076294851.html) | **$20** (actual) | Ordered; factory/alt links only if this pair fails |
 | **RFSIA08 + RFSOB08 with shell** (same maker) | Yes | ~$27–50 | https://eletechsup.com/products/rfsia08-rfsob08-with-feedback-switch-433m-868m-915m-lora-transceiver-quantity-io-wireless-remote-transmission-industrial-motor-remote-controller |
 | Amazon same module | Pick **A Transmitter** *and* **B Receiver** | ~$55–70 | https://www.amazon.com/Transceiver-Remote-Controller-Feedback-Wireless/dp/B0DPQ9LXNR · https://www.amazon.com/ENDYAK-8-Channel-Feedback-Wireless-Suitable/dp/B0CQLSZFMK |
 | **4CH LoRa I/O ×2** (cheaper split) | Usually shelled | ~$25×2 | https://www.aliexpress.com/item/1005005219805622.html |
@@ -207,11 +211,11 @@ No 433 MHz analog tap on the 63 V pack. Don’t run HV sense across the fold.
 
 | Action | What it is | Buy |
 |--------|------------|-----|
-| [ ] **RTTXA08 + RTRXB08 with shell** (both boards) | Enclosed digital 1–8 | https://eletechsup.com/products/8ch-433m-dc-12v-lora-bidirectional-remote-io-controller-led-feedback-indicator-npn-in-relay-out-swicth-module-board |
+| [x] **RTTXA08 + RTRXB08** | **ON THE WAY $20** | https://www.aliexpress.us/item/3256807076294851.html |
 | [ ] **Falcon PEV wireless throttle** (or analog 0–5 V pair) | Hall throttle | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
 | [ ] **IP67 boxes** for TX (stem) and RX (rear deck) | Keep boards dry | https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
 | [ ] Numbered **GX16 / JST** pigtails (same 1–8 on both ends) | Swap a switch or lamp by number | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=JST+SM+numbered+pigtail |
-| [ ] 12 V DC–DC (from ~63 V pack) | Power TX, RX, lamps, orange lock — not the 63 V bus | Already on the CCS / 12 V accessory list |
+| [x] **Cllena 12 V DC–DC** 40–90 V → 12 V 10 A | **ON THE WAY $20** — TX, RX, lamps | https://www.amazon.com/dp/B09B72KPYY |
 
 **Production upgrade (optional, one box does digital + analog):** Phoenix Contact **ILB BT ADIO MUX** (16 digital + 2 analog, bidirectional, fail-safe, replaces a 40-wire loom). Pair: [2702875](https://www.phoenixcontact.com/en-us/products/multiplexer-ilb-bt-adio-mux-2702875) / [2884208 Omni](https://www.phoenixcontact.com/en-us/products/multiplexer-ilb-bt-adio-mux-omni-2884208). ~$1.8k — overkill for the $6,999 bike, right if we ever need SIL-style I/O.
 
