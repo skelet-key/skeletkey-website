@@ -148,29 +148,28 @@ Fail-safe: RF loss → all RX channels **OFF** (no runaway lamp, no stuck igniti
 
 #### Buy this week (prototype)
 
-**1. Digital pair — turns, brake lamp, headlamp, ignition, cutoff**
+**Wrong form factor:** Mangood / WOODGUILIN / GUIRUIMOON / Serounder / ZHOFONET kits are a **keyfob + one receiver**. They do not give you a transmitter *board* with switch inputs. Do not buy those for the fold radio.
 
-Primary: **Mangood 8CH wireless relay, DC 12–36 V, 10 A, 6 modes (incl. momentary), numbered quick-connect terminals.** Power both boards from the **12 V DC–DC**, never the 63 V pack.
+**What we actually need:** a **point-to-point wireless I/O pair**
 
-- Buy: [amazon.com/dp/B0G2XJ6XKF](https://www.amazon.com/dp/B0G2XJ6XKF) (~$45)
-- **Cheaper waterproof alternatives** (same job — numbered 1–8, 12 V lamps + orange lock):
+- **Transmitter (bars):** 8 dry-contact / NPN **screw-terminal inputs** — each handlebar switch closes a numbered input. No remote.
+- **Receiver (rear):** 8 **relay outputs**, same numbers 1–8 → lamps + FarDriver orange.
+- Power both from the **12 V DC–DC**. RF loss → all outputs OFF.
 
-| Kit | Water | CH | ~$ | Buy |
-|-----|-------|----|----|-----|
-| **WOODGUILIN 4CH IP65** 12 V, 328 ft, sealed for car/moto lamps — **buy two kits** = 8 channels | **IP65 housing** | 4×2 | cheaper than Mangood | https://www.amazon.com/WOODGUILIN-Wireless-Switch-Waterproof-Control/dp/B0DGFQMDB7 |
-| **ZHOFONET IP65 1CH** 12–72 V, 40 A, sealed — use for ignition / headlamp / kill (high current) | **IP65** | 1 | ~$15–25 | https://www.amazon.com/ZHOFONET-Control-Wireless-Waterproof-Switches/dp/B0BYD3F9BC · https://www.amazon.com/ZHOFONET-Waterproof-Control-Wireless-Switches/dp/B09SPD7R65 |
-| **Tevacohn IP67 1CH** 8–80 V, 30 A, fully sealed | **IP67** | 1 | ~$20 | https://www.amazon.com/s?k=Tevacohn+IP67+Waterproof+DC8-80V+30A+433mhz |
-| **GUIRUIMOON 8CH mini** 5/12/24 V, 3 A, 164 ft — put in an IP67 box | box it | 8 | **$30** | https://www.amazon.com/GUIRUIMOON-Miniature-Wireless-Transmitter-Receiver/dp/B0DF59M58Q |
-| **Serounder 8CH** 12 V 433 MHz — box it | box it | 8 | ~$20 | https://www.amazon.com/Serounder-Wireless-Control-Channel-Receiver/dp/B07WR79B8T |
-| **AliExpress 8CH 12 V 433 MHz** TX+RX | box it | 8 | **~$16** | https://www.aliexpress.com/item/1005009138593798.html · https://www.aliexpress.com/i/1005012263750108.html · https://www.aliexpress.com/i/1005012065518530.html |
-| IP67 project boxes (if the board is bare) | **IP67** | — | few $ | https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
+**1. Digital pair — 8DI transmitter + 8-relay receiver (no fob)**
 
-Best cheap waterproof path: **two WOODGUILIN IP65 4CH kits** (channels 1–4 + 5–8) so the receivers are already sealed — no extra box. Use a **ZHOFONET / Tevacohn IP65–67 1CH** on FarDriver **orange** if you want a sealed high-amp ignition relay.
+Order **both** halves. Listings sell “A Transmitter” and “B Receiver” as separate sizes.
 
-- 4-channel fallback (Mangood, if 8CH is out of stock): [Mangood 4CH 12–36 V](https://www.amazon.com/Mangood-4-Channel-Wireless-Switch-12V-36V/dp/B0FDL913NP)
-- Alternate 8CH 433 MHz receiver: [Serounder 8CH 12 V 433 MHz](https://www.amazon.com/Serounder-Wireless-Control-Channel-Receiver/dp/B07WR79B8T)
+| Kit | What it is | Buy |
+|-----|------------|-----|
+| **8CH 433 MHz LoRa I/O** (primary) | TX = 8 digital inputs; RX = 8× 10 A relays; point-to-point, feedback LED | **AliExpress pair:** https://www.aliexpress.com/item/1005005402005835.html · https://www.aliexpress.com/item/1005007074526359.html · https://www.aliexpress.com/item/1005012419576735.html (pick **433M Transmitter** *and* **433M Receiver**) · search https://www.aliexpress.com/w/wholesale-8CH-433MHz-Lora-Remote-I-O.html |
+| **ENDYAK / same module on Amazon** | Same 8CH LoRa I/O. Buy **Size: A Transmitter** *and* **Size: B Receiver** | TX+RX kit: https://www.amazon.com/Transceiver-Remote-Controller-Feedback-Wireless/dp/B0DPQ9LXNR · Receiver-only listing (also pick Transmitter size): https://www.amazon.com/ENDYAK-8-Channel-Feedback-Wireless-Suitable/dp/B0CQLSZFMK · TX half: https://www.amazon.com/Long-Transmitter-Automation-Bidirectional-Controller/dp/B0CXCQZQ2G · eBay pair: https://www.ebay.com/itm/366037496594 |
+| **4CH LoRa I/O** (cheaper, buy two pairs = 8) | Same idea, 4 inputs / 4 relays each | https://www.aliexpress.com/item/1005005219805622.html |
+| **Phoenix Contact Wireless MUX** (production) | 16 digital + 2 analog, true cable replacement, fail-safe | https://www.phoenixcontact.com/en-us/products/multiplexer-ilb-bt-adio-mux-2702875 |
 
-The Mangood “transmitter” is an 8-button fob. For bar switches: open the fob and **solder each handlebar switch in parallel with buttons 1–8** (EV1527 pads), or pair a bare **433 MHz 8-input encoder board** to the same receiver. Keep the same **1–8** numbers on the GX16 pigtails.
+Wire handlebar switches as **dry contacts** across TX inputs 1–8 (common GND). Number the RX relays the same. Momentary channels (turns, brake, kill) follow the switch; latch ignition and headlamp in the module’s mode jumpers.
+
+Do **not** buy Mangood / WOODGUILIN / GUIRUIMOON / ZHOFONET / Serounder — those are a **keyfob + one receiver**, not a transmitter board.
 
 **2. Analog pair — throttle only (FarDriver hall)**
 
@@ -203,7 +202,7 @@ No 433 MHz analog tap on the 63 V pack. Don’t run HV sense across the fold.
 
 | Action | What it is | Buy |
 |--------|------------|-----|
-| [ ] **Mangood 8CH 12–36 V TX+RX** | Digital 1–8 | https://www.amazon.com/dp/B0G2XJ6XKF |
+| [ ] **8CH LoRa I/O TX + RX** (A transmitter *and* B receiver) | Digital 1–8, no fob | https://www.amazon.com/Transceiver-Remote-Controller-Feedback-Wireless/dp/B0DPQ9LXNR · https://www.aliexpress.com/item/1005005402005835.html |
 | [ ] **Falcon PEV wireless throttle** (or analog 0–5 V pair) | Hall throttle | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
 | [ ] **IP67 boxes** for TX (stem) and RX (rear deck) | Keep boards dry | https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
 | [ ] Numbered **GX16 / JST** pigtails (same 1–8 on both ends) | Swap a switch or lamp by number | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=JST+SM+numbered+pigtail |
