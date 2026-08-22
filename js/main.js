@@ -102,4 +102,93 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // Commute savings calculator
+  (function initSavings() {
+    const mpgEl = document.getElementById("savMpg");
+    const milesEl = document.getElementById("savMiles");
+    const gasEl = document.getElementById("savGas");
+    const kwhEl = document.getElementById("savKwh");
+    const results = document.getElementById("savingsResults");
+    const prompt = document.getElementById("savingsPrompt");
+    const form = document.getElementById("savingsForm");
+    if (!mpgEl || !milesEl || !results) return;
+
+    const PUCA_KWH_PER_MI = 8.5 / 100; // 8.5 kWh pack, 100 mi @ 45 mph
+    const MSRP = 6999;
+    const DAYS_YEAR = 365;
+
+    function money(n) {
+      const abs = Math.abs(n);
+      const formatted = abs.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: abs >= 100 ? 0 : 2,
+      });
+      return n < 0 ? "−" + formatted : formatted;
+    }
+
+    function paybackCopy(years) {
+      if (!isFinite(years) || years <= 0) return "—";
+      const totalMonths = Math.round(years * 12);
+      if (totalMonths < 1) return "under a month";
+      const y = Math.floor(totalMonths / 12);
+      const m = totalMonths % 12;
+      if (y === 0) return m === 1 ? "1 month" : m + " months";
+      if (m === 0) return y === 1 ? "1 year" : y + " years";
+      return (y === 1 ? "1 year" : y + " years") + ", " + (m === 1 ? "1 month" : m + " months");
+    }
+
+    function calc() {
+      const mpg = parseFloat(mpgEl.value);
+      const milesDay = parseFloat(milesEl.value);
+      const gas = parseFloat(gasEl.value);
+      const kwh = parseFloat(kwhEl.value);
+      const ready =
+        mpg > 0 && milesDay > 0 && gas > 0 && kwh > 0;
+
+      if (!ready) {
+        results.hidden = true;
+        if (prompt) prompt.hidden = false;
+        return;
+      }
+
+      const milesYear = milesDay * DAYS_YEAR;
+      const gasCostYear = (milesYear / mpg) * gas;
+      const pucaCostYear = milesYear * PUCA_KWH_PER_MI * kwh;
+      const saveYear = gasCostYear - pucaCostYear;
+      const saveWeek = saveYear / 52;
+      const saveMonth = saveYear / 12;
+      const years = saveYear > 0 ? MSRP / saveYear : Infinity;
+
+      document.getElementById("savWeek").textContent = money(saveWeek);
+      document.getElementById("savMonth").textContent = money(saveMonth);
+      document.getElementById("savYear").textContent = money(saveYear);
+      const pb = document.getElementById("savPayback");
+      const note = document.getElementById("savPaybackNote");
+      if (saveYear <= 0) {
+        pb.textContent = "N/A";
+        if (note) note.textContent = "This commute costs more on Puca than gas at those rates.";
+      } else {
+        pb.textContent = paybackCopy(years);
+        if (note) {
+          note.textContent =
+            "At $6,999 MSRP from commute fuel savings alone — charging at home, 7 days a week.";
+        }
+      }
+      results.hidden = false;
+      if (prompt) prompt.hidden = true;
+    }
+
+    [mpgEl, milesEl, gasEl, kwhEl].forEach((el) => {
+      el.addEventListener("input", calc);
+      el.addEventListener("change", calc);
+    });
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        calc();
+      });
+    }
+  })();
 });

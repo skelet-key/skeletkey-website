@@ -106,6 +106,7 @@
       <li><a href="#bike">The Bike</a></li>
       <li><a href="#specs">Range & Specs</a></li>
       <li><a href="#fold">Fold & Travel</a></li>
+      <li><a href="#savings">Savings</a></li>
       <li><a href="#display">Display</a></li>
       <li><a href="#battery">Battery</a></li>
       <li><a href="#charge">Charge</a></li>
@@ -367,6 +368,68 @@
           <p>Skip gas. <strong>Save thousands a year</strong> on commuting while keeping highway-capable speed and 100+ mile real-world range at 45 mph.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- SAVINGS CALCULATOR -->
+  <section class="section savings-section" id="savings">
+    <div class="section-inner">
+      <div class="section-label">Commute Savings</div>
+      <h2 class="section-title">See how fast Puca pays for itself.</h2>
+      <p class="section-lead">
+        Enter your gas car’s MPG and daily round-trip commute (including weekends).
+        We use today’s U.S. regular gas price and home electricity so you can see weekly, monthly, and yearly savings — then the payback on a <strong>$6,999</strong> Puca charged at home.
+      </p>
+
+      <form class="savings-form" id="savingsForm" action="#" method="get">
+        <div class="savings-fields">
+          <label>
+            Your car’s MPG
+            <input id="savMpg" name="mpg" type="number" min="5" max="80" step="0.1" inputmode="decimal" placeholder="e.g. 28" required />
+          </label>
+          <label>
+            Daily commute, round-trip (miles)
+            <input id="savMiles" name="miles" type="number" min="1" max="400" step="0.1" inputmode="decimal" placeholder="e.g. 40" required />
+          </label>
+          <label>
+            Gas price ($ / gallon)
+            <input id="savGas" name="gas" type="number" min="1" max="12" step="0.01" inputmode="decimal" value="4.11" />
+            <span class="field-hint">U.S. regular average ~$4.11 (AAA / EIA, Aug 2026). Edit yours.</span>
+          </label>
+          <label>
+            Home electricity ($ / kWh)
+            <input id="savKwh" name="kwh" type="number" min="0.05" max="0.8" step="0.001" inputmode="decimal" value="0.1844" />
+            <span class="field-hint">U.S. residential average 18.44¢/kWh (EIA, Aug 2026). Edit yours.</span>
+          </label>
+        </div>
+        <p class="savings-assumptions">
+          Puca energy use is modeled at <strong>0.085 kWh/mi</strong> (8.5 kWh pack ÷ 100 miles at 45 mph). Commute is <strong>7 days a week</strong>, 365 days a year. Charging at home — not CCS1.
+        </p>
+      </form>
+
+      <div class="savings-results" id="savingsResults" hidden>
+        <div class="sav-card">
+          <div class="sav-label">Every week</div>
+          <div class="sav-value" id="savWeek">—</div>
+          <p class="sav-note">vs. your gas car, charging Puca at home</p>
+        </div>
+        <div class="sav-card">
+          <div class="sav-label">Every month</div>
+          <div class="sav-value" id="savMonth">—</div>
+          <p class="sav-note">Average month (365 ÷ 12)</p>
+        </div>
+        <div class="sav-card">
+          <div class="sav-label">Every year</div>
+          <div class="sav-value" id="savYear">—</div>
+          <p class="sav-note">365 days of that commute</p>
+        </div>
+        <div class="sav-card sav-card-payback">
+          <div class="sav-label">Puca pays for itself in</div>
+          <div class="sav-value" id="savPayback">—</div>
+          <p class="sav-note" id="savPaybackNote">At $6,999 MSRP from commute fuel savings alone</p>
+        </div>
+      </div>
+      <p class="savings-prompt" id="savingsPrompt">Enter MPG and daily miles to see your savings.</p>
     </div>
   </section>
 
@@ -1688,6 +1751,7 @@
           <li><a href="#bike">The Bike</a></li>
           <li><a href="#specs">Specs</a></li>
           <li><a href="#fold">Fold & Travel</a></li>
+          <li><a href="#savings">Savings</a></li>
           <li><a href="#battery">Battery</a></li>
       <li><a href="#charge">Charge</a></li>
           <li><a href="#display">Display</a></li>
@@ -1722,6 +1786,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=sav1"></script>
 </body>
 </html>
