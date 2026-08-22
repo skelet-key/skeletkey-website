@@ -777,6 +777,35 @@ a {
   line-height: 1.45;
 }
 
+.battery-pack-shot {
+  margin: 0 0 1.5rem;
+  background: #0a0a0f;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.battery-pack-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+}
+
+.battery-pack-copy {
+  max-width: 780px;
+  margin: 0 0 2.5rem;
+}
+
+.battery-pack-copy p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 1.15rem;
+}
+
 .battery-copy h3 {
   font-size: 1.15rem;
   font-weight: 600;
