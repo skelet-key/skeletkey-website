@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return (y === 1 ? "1 year" : y + " years") + ", " + (m === 1 ? "1 month" : m + " months");
     }
 
-    function calc(opts) {
+    function calc() {
       const mpg = parseFloat(mpgEl.value);
       const dailyMiles = parseFloat(milesEl.value);
       const gas = parseFloat(gasEl.value);
@@ -162,15 +162,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
       results.hidden = false;
-      if (!opts || !opts.silent) {
-        results.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
+      results.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       calc();
     });
-    calc({ silent: true });
   })();
 });
