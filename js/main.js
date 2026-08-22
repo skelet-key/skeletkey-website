@@ -149,6 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("savWeek").textContent = money(saveYear / 52);
       document.getElementById("savMonth").textContent = money(saveYear / 12);
       document.getElementById("savYear").textContent = money(saveYear);
+      document.getElementById("savWarranty").textContent = money(saveYear * 3.5);
       const pb = document.getElementById("savPayback");
       const note = document.getElementById("savPaybackNote");
       if (saveYear <= 0) {
