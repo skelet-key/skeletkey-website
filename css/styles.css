@@ -777,33 +777,26 @@ a {
   line-height: 1.45;
 }
 
-.battery-pack-shot {
-  margin: 0 0 1.5rem;
-  background: #0a0a0f;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.battery-pack-shot img {
+.battery-visual .pack-follow {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  object-position: center;
+  padding: 0 0.75rem 0.75rem;
+  object-fit: contain;
+  background: #0a0a0f;
 }
 
-.battery-pack-copy {
-  max-width: 780px;
-  margin: 0 0 2.5rem;
+.battery-visual .battery-pack-copy {
+  padding: 0 1.1rem 1.25rem;
+  max-width: none;
+  margin: 0;
 }
 
-.battery-pack-copy p {
+.battery-visual .battery-pack-copy p {
   color: var(--text-secondary);
-  font-size: 1.05rem;
-  line-height: 1.7;
-  margin-bottom: 1.15rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  margin-bottom: 0.9rem;
 }
 
 .battery-copy h3 {
