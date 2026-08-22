@@ -26,7 +26,7 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 | Category | Spec | Unit $ | Annual $ |
 | :--- | :--- | ---: | ---: |
 | Folding frame | Kalosse carbon steel · 9.2 lb · 190 mm · **rear shock in** | **375** | 1,875,000 |
-| Battery module | ~8.5 kWh · ~63 V · ~60 lb · NMC+ · BT BMS · dual QS8 | **1,200** | 6,000,000 |
+| Battery module | ~8.5 kWh · 63 V nominal · ~60 lb · NMC+ · BT BMS · dual QS8 | **1,200** | 6,000,000 |
 | Hub motor | QS205 V3 50H 3T · 20×4.0 · 190 mm | 255 | 1,275,000 |
 | Controller | FarDriver ND72360 BT · factory lot | **150** | 750,000 |
 | Front end | HIMALO 135 mm, ZS44, stem, 20×4.0 wheel, tire, disc | 150 | 750,000 |

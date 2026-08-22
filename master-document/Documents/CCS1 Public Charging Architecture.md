@@ -222,7 +222,7 @@ Pack ── (small isolated DC–DC) ──► 12 V bus
 
 | Document | Relationship |
 |----------|----------------|
-| **Technical Fact Sheet** | Pack **8 kW** charge rating; 60.8 V nominal |
+| **Technical Fact Sheet** | Pack **8 kW** charge rating; **63 V nominal** |
 | **Build Decisions and Shopping List** | Locked battery decision; this doc owns CCS1 BOM links |
 | **Puca Schematics and Design Plan** | Powertrain envelope; CCS1 is additive public-charge path |
 

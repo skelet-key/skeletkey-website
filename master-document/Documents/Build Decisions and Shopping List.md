@@ -20,7 +20,7 @@ SkeletKey **sources frames and parts** and uses **contract assemblers** for **5,
 | **Controller** | **FarDriver ND72360 with Bluetooth** (not Votol EM150 CAN) |
 | **Dash / phone UI** | **SkeletKey Puca app** at `/app/` — GPS speedometer (GPS Speedometer Premium–style) + **software ignition** + trip computer + optional Maps |
 | **Companion apps** | FarDriver official app for tuning; Puca app for ride instruments |
-| **Battery** | Modular semi-solid **NMC+**, **~60 lb**, ~**19–20″ × 6.5″ × 4.5–5″**, ~**8.5 kWh**, ~**63 V**, Bluetooth BMS, **6–8 kW** charge / **8 kW** discharge, dual **QS8** |
+| **Battery** | Modular semi-solid **NMC+**, **~60 lb**, ~**19–20″ × 6.5″ × 4.5–5″**, ~**8.5 kWh**, **63 V nominal**, Bluetooth BMS, **6–8 kW** charge / **8 kW** discharge, dual **QS8** |
 | **Seat** | **No seatpost seat** — rear **battery deck** + **café-racer solo seat on top** |
 | **Rack** | Custom **6061 aluminum** deck bolted to steel stay tabs (not light tourist rack) |
 | **CAN / ESP32 bridge** | **Not required** for FarDriver path (optional later) |
@@ -30,7 +30,7 @@ SkeletKey **sources frames and parts** and uses **contract assemblers** for **5,
 ## 2. POWERTRAIN NOTES
 
 ### FarDriver ND72360 BT
-- Operating voltage: **48–72 V** (matches ~60.8 V 16S pack)
+- Operating voltage: **48–72 V** (matches **63 V nominal** pack)
 - ~190 A battery / ~360 A phase class
 - Wireless programming + live telemetry via **FarDriver app**
 - Product reference: https://econiccycles.com/products/fardriver-sinewave-controller-nd72360-w-bluetooth

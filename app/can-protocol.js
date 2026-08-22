@@ -152,7 +152,7 @@
 
   /**
    * Parse bridge payload:
-   *  - JSON: {"rpm":1200,"voltage":60.8,"current":15,"soc":80,...}
+   *  - JSON: {"rpm":1200,"voltage":63,"current":15,"soc":80,...}
    *  - JSON Votol stream: {"id":0x3FE,"data":[...8 bytes...]} repeated
    *  - Binary: [id_lo, id_hi, d0..d7]
    *  - 24-byte raw live buffer

@@ -13,7 +13,7 @@ window.PUCA_CONFIG = {
   units: "mph",
 
   seriesCells: 16,
-  nominalVoltage: 60.8,
+  nominalVoltage: 63,
 
   ble: {
     deviceNameHints: ["PucaIgn", "SkeletKey", "Puca"],

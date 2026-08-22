@@ -11,7 +11,7 @@
 * **Frame:** sourced carbon steel folder · **9.2 lb** measured · **190 mm** dropout · IQC only (no production weld cell).
 * **Motor HAVE:** QS205 V3 50H 3T · **28.6 lb**.
 * **Controller HAVE:** FarDriver ND72360 BT.
-* **Pack:** ~8.5 kWh · ~63 V · ~60 lb · slide-in · dual QS8.
+* **Pack:** ~8.5 kWh · 63 V nominal · ~60 lb · slide-in · dual QS8.
 * **Deck:** 6061 bolted to steel — never weld Al to frame.
 
 ## 3. QA firewall (00:35–00:55)
