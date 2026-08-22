@@ -515,6 +515,14 @@ a {
   padding: 2rem;
 }
 
+.own-icon {
+  width: 2.85rem;
+  height: 2.85rem;
+  margin-bottom: 0.85rem;
+  display: block;
+  overflow: visible;
+}
+
 .own-card h3 {
   font-size: 1.15rem;
   margin-bottom: 0.6rem;
