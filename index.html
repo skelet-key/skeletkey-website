@@ -139,12 +139,11 @@
     <div class="section-inner">
       <div class="bike-grid">
         <div class="bike-visual">
-          <figure class="bike-card bike-spin-card">
-            <div class="bike-spin" id="bikeSpin" role="img" aria-label="360-degree WebGL view of the Puca motorcycle. Drag to rotate.">
-              <img src="assets/spin/00.jpg" alt="SkeletKey Puca folding electric motorcycle — drag to rotate 360 degrees" class="bike-image spin-fallback" draggable="false" />
-              <canvas class="spin-canvas" id="bikeSpinCanvas" aria-hidden="true"></canvas>
-              <div class="spin-hint">Drag to rotate · 360°</div>
-            </div>
+          <figure class="bike-card">
+            <picture>
+              <source srcset="assets/skeletkey-bike.webp?v=13" type="image/webp" />
+              <img src="assets/skeletkey-bike.jpg?v=13" alt="SkeletKey Puca folding electric motorcycle in a workshop" class="bike-image" />
+            </picture>
           </figure>
           <figure class="bike-card">
             <picture>
@@ -244,6 +243,13 @@
         <strong>Puca</strong> matches the range of expensive non-folding competitors while undercutting them by thousands — with a <strong>9.2 lb carbon steel foldable frame</strong>, <strong>59 lb lock-in modular battery</strong>, contracted <strong>350 Wh/kg semi-solid NMC+</strong> cutting-edge energy dense batteries, and real travel flexibility they simply do not have.
       </p>
 
+      <figure class="angle-shot">
+        <picture>
+          <source srcset="assets/puca-angle-front.webp" type="image/webp" />
+          <img src="assets/puca-angle-front.jpg" alt="Puca folding electric motorcycle, front three-quarter workshop view" />
+        </picture>
+      </figure>
+
       <table class="compare-table">
         <thead>
           <tr>
@@ -302,6 +308,13 @@
         A <strong>9.2 lb</strong> carbon steel folding frame and <strong>28.6 lb</strong> hub motor that still <strong>fold</strong> with the bike — plus a <strong>59 lb</strong> lock-in pack you can remove and ship on its own.
         Apartment, trunk, train, or checked luggage. <strong>No other long-range electric motorcycle offers this freedom.</strong>
       </p>
+
+      <figure class="angle-shot">
+        <picture>
+          <source srcset="assets/puca-angle-front-left.webp" type="image/webp" />
+          <img src="assets/puca-angle-front-left.jpg" alt="Puca folding electric motorcycle, left front workshop view" />
+        </picture>
+      </figure>
 
       <div class="fold-grid">
         <div class="fold-card">
@@ -1406,6 +1419,13 @@
         SkeletKey ships with <strong>complete documentation</strong> and an easy-to-read wiring chart covering turn signals, brake lights, throttle, ignition, cutoff switch, and headlamp — all accessible through the dashboard app on the phone that magnetically docks to the bike.
       </p>
 
+      <figure class="angle-shot">
+        <picture>
+          <source srcset="assets/puca-angle-right.webp" type="image/webp" />
+          <img src="assets/puca-angle-right.jpg" alt="Puca folding electric motorcycle, right-side workshop view" />
+        </picture>
+      </figure>
+
       <div class="maintain-grid">
         <div class="maintain-card">
           <svg class="maintain-icon" viewBox="0 0 48 48" aria-hidden="true">
@@ -1475,6 +1495,13 @@
       <p class="section-lead">
         Modular architecture, asset-light manufacturing, and a focus on real-world usability mean SkeletKey is designed to stay useful and upgradeable for years.
       </p>
+
+      <figure class="angle-shot">
+        <picture>
+          <source srcset="assets/puca-angle-rear.webp" type="image/webp" />
+          <img src="assets/puca-angle-rear.jpg" alt="Puca folding electric motorcycle, rear workshop view" />
+        </picture>
+      </figure>
 
       <div class="ownership-grid">
         <div class="own-card">
@@ -1776,8 +1803,6 @@
     </div>
   </footer>
 
-  <script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
-  <script src="js/main.js?v=spin4"></script>
-  <script src="js/bike-spin.js?v=1"></script>
+  <script src="js/main.js?v=spin5"></script>
 </body>
 </html>

@@ -365,56 +365,27 @@ a {
   object-position: center 45%;
 }
 
-.bike-spin {
-  position: relative;
-  cursor: grab;
-  user-select: none;
-  touch-action: none;
+.angle-shot {
+  margin: 1.5rem 0 0;
+  background: #0a0a0f;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
 }
 
-.bike-spin:active {
-  cursor: grabbing;
-}
-
-.bike-spin .bike-image {
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-}
-
-.bike-spin.is-webgl .spin-fallback {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.spin-canvas {
-  display: none;
+.angle-shot img {
   width: 100%;
   height: auto;
   aspect-ratio: 3 / 2;
-  vertical-align: top;
-}
-
-.bike-spin.is-webgl .spin-canvas {
+  object-fit: cover;
   display: block;
 }
 
-.spin-hint {
-  position: absolute;
-  left: 50%;
-  bottom: 0.85rem;
-  transform: translateX(-50%);
-  background: rgba(10, 12, 18, 0.78);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: #f8fafc;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0.4rem 0.85rem;
-  border-radius: 999px;
-  pointer-events: none;
-  white-space: nowrap;
+.specs .angle-shot,
+.maintain-section .angle-shot,
+#fold .angle-shot,
+#ownership .angle-shot {
+  margin-bottom: 1.75rem;
 }
 
 .bike-copy h2 {
