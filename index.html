@@ -140,8 +140,9 @@
       <div class="bike-grid">
         <div class="bike-visual">
           <figure class="bike-card bike-spin-card">
-            <div class="bike-spin" id="bikeSpin" role="img" aria-label="360-degree view of the Puca motorcycle. Drag to rotate.">
-              <img src="assets/spin/00.jpg" alt="SkeletKey Puca folding electric motorcycle — drag to rotate 360 degrees" class="bike-image" draggable="false" />
+            <div class="bike-spin" id="bikeSpin" role="img" aria-label="360-degree WebGL view of the Puca motorcycle. Drag to rotate.">
+              <img src="assets/spin/00.jpg" alt="SkeletKey Puca folding electric motorcycle — drag to rotate 360 degrees" class="bike-image spin-fallback" draggable="false" />
+              <canvas class="spin-canvas" id="bikeSpinCanvas" aria-hidden="true"></canvas>
               <div class="spin-hint">Drag to rotate · 360°</div>
             </div>
           </figure>
@@ -1775,6 +1776,8 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=spin3"></script>
+  <script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
+  <script src="js/main.js?v=spin4"></script>
+  <script src="js/bike-spin.js?v=1"></script>
 </body>
 </html>

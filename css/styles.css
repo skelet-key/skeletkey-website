@@ -369,7 +369,7 @@ a {
   position: relative;
   cursor: grab;
   user-select: none;
-  touch-action: pan-y;
+  touch-action: none;
 }
 
 .bike-spin:active {
@@ -379,6 +379,24 @@ a {
 .bike-spin .bike-image {
   aspect-ratio: 3 / 2;
   object-fit: cover;
+}
+
+.bike-spin.is-webgl .spin-fallback {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.spin-canvas {
+  display: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  vertical-align: top;
+}
+
+.bike-spin.is-webgl .spin-canvas {
+  display: block;
 }
 
 .spin-hint {
