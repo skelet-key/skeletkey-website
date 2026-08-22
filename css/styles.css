@@ -1547,6 +1547,10 @@ p strong,
   max-width: 920px;
 }
 
+.savings-results[hidden] {
+  display: none !important;
+}
+
 .sav-card {
   background: var(--surface);
   border: 1px solid var(--border);
