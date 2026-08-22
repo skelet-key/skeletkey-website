@@ -376,8 +376,8 @@
         <label class="calc-label" for="savMpg">Current MPG (or estimated for a similar gas motorcycle)</label>
         <input class="calc-input" id="savMpg" name="mpg" type="number" min="5" max="120" step="0.1" inputmode="decimal" placeholder="45" value="45" required />
 
-        <label class="calc-label" for="savMiles">Weekly mileage (in miles)</label>
-        <input class="calc-input" id="savMiles" name="miles" type="number" min="1" max="3000" step="0.1" inputmode="decimal" placeholder="100" value="100" required />
+        <label class="calc-label" for="savMiles">Daily miles (round-trip, including weekends)</label>
+        <input class="calc-input" id="savMiles" name="miles" type="number" min="1" max="500" step="0.1" inputmode="decimal" placeholder="40" value="40" required />
 
         <label class="calc-label" for="savGas">Average gas price ($ / gallon)</label>
         <input class="calc-input" id="savGas" name="gas" type="number" min="1" max="12" step="0.01" inputmode="decimal" value="4.11" required />
@@ -386,7 +386,7 @@
         <input class="calc-input" id="savKwh" name="kwh" type="number" min="0.05" max="0.8" step="0.001" inputmode="decimal" value="0.1844" required />
 
         <button type="submit" class="btn btn-primary calc-submit">Calculate</button>
-        <p class="calc-footnote">U.S. regular gas ~$4.11/gal (AAA / EIA, Aug 2026). Home electricity 18.44¢/kWh (EIA residential). Edit either. Weekly miles include weekends.</p>
+        <p class="calc-footnote">U.S. regular gas ~$4.11/gal (AAA / EIA, Aug 2026). Home electricity 18.44¢/kWh (EIA residential). Edit either. Counted 365 days a year.</p>
       </form>
 
       <div class="savings-results" id="savingsResults" hidden>
@@ -398,12 +398,12 @@
         <div class="sav-card">
           <div class="sav-label">Every month</div>
           <div class="sav-value" id="savMonth">—</div>
-          <p class="sav-note">Weekly savings × 52 ÷ 12</p>
+          <p class="sav-note">Daily × 365 ÷ 12</p>
         </div>
         <div class="sav-card">
           <div class="sav-label">Every year</div>
           <div class="sav-value" id="savYear">—</div>
-          <p class="sav-note">52 weeks of that mileage</p>
+          <p class="sav-note">365 days of that commute</p>
         </div>
         <div class="sav-card sav-card-payback">
           <div class="sav-label">Puca pays for itself in</div>
@@ -1770,6 +1770,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=sav3"></script>
+  <script src="js/main.js?v=sav4"></script>
 </body>
 </html>

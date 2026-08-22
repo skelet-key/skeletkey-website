@@ -137,14 +137,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return (y === 1 ? "1 year" : y + " years") + ", " + (m === 1 ? "1 month" : m + " months");
     }
 
-    function calc() {
+    function calc(opts) {
       const mpg = parseFloat(mpgEl.value);
-      const weeklyMiles = parseFloat(milesEl.value);
+      const dailyMiles = parseFloat(milesEl.value);
       const gas = parseFloat(gasEl.value);
       const kwh = parseFloat(kwhEl.value);
-      if (!(mpg > 0 && weeklyMiles > 0 && gas > 0 && kwh > 0)) return;
+      if (!(mpg > 0 && dailyMiles > 0 && gas > 0 && kwh > 0)) return;
 
-      const milesYear = weeklyMiles * 52;
+      const milesYear = dailyMiles * 365;
       const saveYear = (milesYear / mpg) * gas - milesYear * PUCA_KWH_PER_MI * kwh;
       document.getElementById("savWeek").textContent = money(saveYear / 52);
       document.getElementById("savMonth").textContent = money(saveYear / 12);
@@ -162,12 +162,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
       results.hidden = false;
-      results.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      if (!opts || !opts.silent) {
+        results.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
     }
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       calc();
     });
+    calc({ silent: true });
   })();
 });
