@@ -171,4 +171,70 @@ document.addEventListener("DOMContentLoaded", () => {
       calc();
     });
   })();
+
+  // 360 bike spinner
+  (function initBikeSpin() {
+    const root = document.getElementById("bikeSpin");
+    if (!root) return;
+    const img = root.querySelector("img");
+    const hint = root.querySelector(".spin-hint");
+    const n = 8;
+    const frames = [];
+    for (let i = 0; i < n; i++) {
+      const el = new Image();
+      const id = String(i).padStart(2, "0");
+      el.src = "assets/spin/" + id + ".jpg";
+      frames.push(el);
+    }
+    let idx = 0;
+    let dragging = false;
+    let lastX = 0;
+    let acc = 0;
+    let auto = true;
+    const PX = 36;
+
+    function show(i) {
+      idx = ((i % n) + n) % n;
+      img.src = frames[idx].src;
+    }
+
+    setInterval(function () {
+      if (auto && !dragging) show(idx + 1);
+    }, 1400);
+
+    function start(x) {
+      dragging = true;
+      auto = false;
+      lastX = x;
+      acc = 0;
+      if (hint) hint.style.opacity = "0";
+    }
+    function move(x) {
+      if (!dragging) return;
+      acc += x - lastX;
+      lastX = x;
+      while (acc > PX) {
+        acc -= PX;
+        show(idx - 1);
+      }
+      while (acc < -PX) {
+        acc += PX;
+        show(idx + 1);
+      }
+    }
+    function end() {
+      dragging = false;
+    }
+
+    root.addEventListener("pointerdown", function (e) {
+      root.setPointerCapture(e.pointerId);
+      start(e.clientX);
+    });
+    root.addEventListener("pointermove", function (e) {
+      move(e.clientX);
+    });
+    root.addEventListener("pointerup", end);
+    root.addEventListener("pointercancel", end);
+    root.addEventListener("lostpointercapture", end);
+  })();
 });

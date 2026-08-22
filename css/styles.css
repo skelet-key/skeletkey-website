@@ -365,6 +365,40 @@ a {
   object-position: center 45%;
 }
 
+.bike-spin {
+  position: relative;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.bike-spin:active {
+  cursor: grabbing;
+}
+
+.bike-spin .bike-image {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.spin-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 0.85rem;
+  transform: translateX(-50%);
+  background: rgba(10, 12, 18, 0.78);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: #f8fafc;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
 .bike-copy h2 {
   font-size: 1.9rem;
   font-weight: 700;
