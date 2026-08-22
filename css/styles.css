@@ -754,49 +754,51 @@ a {
   margin-bottom: 3rem;
 }
 
-.battery-visual {
+.battery-media {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.battery-card {
+  margin: 0;
   background: #0a0a0f;
   border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
 }
 
-.battery-visual .bike-image {
-  padding: 0.75rem;
-  object-fit: contain;
+.battery-card img {
+  display: block;
   width: 100%;
-  aspect-ratio: 6/5;
+  height: auto;
+  padding: 1.15rem 1.15rem 0;
+  object-fit: contain;
   background: #0a0a0f;
 }
 
 .battery-caption {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
-  text-align: center;
-  padding: 0 1rem 1.25rem;
-  line-height: 1.45;
-}
-
-.battery-visual .pack-follow {
-  display: block;
-  width: 100%;
-  height: auto;
-  padding: 0 0.75rem 0.75rem;
-  object-fit: contain;
-  background: #0a0a0f;
-}
-
-.battery-visual .battery-pack-copy {
-  padding: 0 1.1rem 1.25rem;
-  max-width: none;
+  text-align: left;
+  padding: 1rem 1.15rem 1.15rem;
+  line-height: 1.65;
   margin: 0;
 }
 
-.battery-visual .battery-pack-copy p {
+.battery-pack-copy {
+  padding: 0 1.15rem 1.15rem;
+}
+
+.battery-pack-copy p {
   color: var(--text-secondary);
   font-size: 0.98rem;
   line-height: 1.65;
-  margin-bottom: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+.battery-pack-copy p:last-child {
+  margin-bottom: 0;
 }
 
 .battery-copy h3 {
