@@ -1,314 +1,144 @@
 # Action Item Tracker
-## Puca prototype kit — categorized by feature
-## Updated: 2026-08-22
+## Puca prototype kit
+## Updated: 2026-08-23
 
-Status: **HAVE** · **ON THE WAY** · **NEED** (buy / fab)
+**HAVE** · **ON THE WAY** · **NEED**
 
-Canonical production model: source frames & parts; contract assemblers to 5,000/year.
-
----
-
-## 0. HAVE (on the bench)
-
-| Item | Specs | Link / ID |
-|------|--------|-----------|
-| Hub motor | **20×4.0 QS205 V3 50H · 190 mm dropout · 3T · 28.6 lb** · disc, PCD 6×44, IP65 · received 2026-08-20 | https://www.amazon.com/Dropout-Brushless-Electric-Bicycle-60-100kph/dp/B0FRXWR3MG |
-| Controller | **FarDriver ND72360 BT** · 48–72 V · ~190 A batt / ~360 A phase | https://econiccycles.com/products/fardriver-sinewave-controller-nd72360-w-bluetooth?variant=46851442835698 |
-| CCS1 inlet | **EV-T1GBIE12-1ACDC80A200A2-DM** · 80 A AC / 200 A DC · cables + pinouts | On hand |
-| CCS lock | **KÜSTER 03S · 0188793** + signal harness | On hand with inlet |
-| Fork (chosen) | **HIMALO** 20×4.0, **135 mm**, 1-1/8″ straight, lockout | https://www.amazon.com/HIMALO-Suspension-Travel-Straight-Lockout/dp/B0D6G83TFY |
+Source frames & parts. Contract assemblers to 5,000/year.
 
 ---
 
-## 1. ON THE WAY
+## 1. HAVE
 
-### Folding frame
-- [ ] Receive and measure: https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa
-- **What it is:** Full-suspension **carbon steel** folding chassis, **9.2 lb**, **190 mm rear dropout** (QS205), **44 mm** headset class, assume **135 mm** front dropout, stay/tab geometry for the battery deck.
-- On arrival check: rear 190 mm, front 135 mm, head-tube ID 44 mm, fold latch play, blue stay tabs, mass, tire clearance for 20×4.0 at full sag.
-
-### Battery pack
-- [ ] Track inbound **~60 lb** module (mark **ON THE WAY** — not NEED).
-- Envelope **19–20″ × ~6.5″ × 4.5–5″** · **~8.5 kWh** · **~63 V** · **8 kW** discharge · **6–8 kW** charge · Bluetooth BMS · **two QS8** (bottom + side) · semi-solid NMC+ · enclosure + cables included.
-- Still **NEED** (below): slide-in ± contacts on the **bike**, rails, lock, deck. The pack itself is incoming.
-
-### 8CH fold radio + 12 V supply (ordered 2026-08-22)
-- [x] **8CH LoRa I/O TX + RX** — **ON THE WAY** · **$20** · eletechsup RTTXA08 / RTRXB08 · 8 NPN in / 8 relay out · https://www.aliexpress.us/item/3256807076294851.html
-- [x] **Cllena DC–DC** — **ON THE WAY** · **$20** · **40–90 V → 12 V 10 A** · fuse pack+ 10–15 A · 12 V to RX; 12 V + GND through the fold to TX · https://www.amazon.com/dp/B09B72KPYY
-
-Throttle analog radio is still **NEED**. These two do **not** carry hall 0–5 V.
+| Item | Spec | Link |
+|------|------|------|
+| Hub motor | QS205 V3 50H · 20×4.0 · 190 mm · 3T · 28.6 lb | https://www.amazon.com/Dropout-Brushless-Electric-Bicycle-60-100kph/dp/B0FRXWR3MG |
+| Controller | FarDriver ND72360 BT | https://econiccycles.com/products/fardriver-sinewave-controller-nd72360-w-bluetooth?variant=46851442835698 |
+| CCS1 inlet | EV-T1GBIE12-1ACDC80A200A2-DM | On hand |
+| CCS lock | KÜSTER 03S · 0188793 | On hand |
+| Fork | HIMALO 20×4.0 · 135 mm · 1-1/8″ | https://www.amazon.com/HIMALO-Suspension-Travel-Straight-Lockout/dp/B0D6G83TFY |
+| Tires ×2 | Shinko SR567 110/70-16 52S · rear hub + front | https://www.americanmototire.com/shinko-sr567-sr568/110-70-16-52s-front-87-4285.html |
+| Wireless TX/RX | 8CH LoRa pair · turn signals, brakes, lights | https://www.aliexpress.us/item/3256807076294851.html |
+| 72 V → 12 V converter | Cllena · 40–90 V in · 12 V 10 A out | https://www.amazon.com/dp/B09B72KPYY |
 
 ---
 
-Fits the fork already chosen. Steerer **28.6 mm / 1-1/8″ straight**.
+## 2. ON THE WAY
 
-| Action | Buy |
-|--------|-----|
-| [ ] **ZS44 / 28.6 headset** (cups + bearings + 30 mm crown race) | https://www.amazon.com/s?k=ZS44+headset+1-1/8+straight |
-| [ ] **1-1/8″ star nut** (or compression plug) ~15 mm below steerer top | https://www.amazon.com/s?k=1-1/8+star+nut |
-| [ ] **Top cap + bolt** (often in headset kit) | Included with headset if listed |
-| [ ] **Steerer spacers** 5/10/15 mm pack, 28.6 mm | https://www.amazon.com/s?k=1-1/8+headset+spacers+aluminum |
-| [ ] **Stem** 28.6 mm steerer → **31.8 mm** bar, 60–90 mm, black | https://www.amazon.com/Mountain-31-8mm-Degree-Lightweight-Cycling/dp/B0CNPRLWV6 · https://www.amazon.com/Aluminum-Stem-31-8mm-Handlebar-Compatible/dp/B0G8F6N6BV · https://www.amazon.com/KRSEC-Aluminum-31-8mm-Handlebar-Mountain/dp/B07CNN68VB |
-| [ ] **Front wheel 20×4.0**, **9×135 mm**, 6-bolt disc, black | https://www.amazon.com/Inch-Bike-Front-Wheel-Bike/dp/B0FNL97L66 · https://www.amazon.com/20x4-0-Front-Aluminum-Release-9X135mm/dp/B0DYJJPJ7S · https://www.ridewill.com/p/en/ridewill-bike-1141pz40-front-fat-bike-wheel-20x400-disc-135mm-quick-release-black/1785607/ |
-| [ ] **20×4.0 tire + tube** if the wheel is bare | Match ETRTO 406 |
-| [ ] **Front disc** 160–180 mm 6-bolt + caliper | https://www.amazon.com/s?k=Shimano+MT200+hydraulic+disc+brake · https://www.amazon.com/Corki-Cycles-180mm-Brake-Mountain/dp/B0CSCN9V27 |
-| [ ] **Bars, grips** matching 31.8 mm stem | Black, folding-width |
+| Item | Spec | Link |
+|------|------|------|
+| Folding frame | Carbon steel · 9.2 lb · 190 mm rear · 44 mm HT | https://www.aliexpress.us/item/3256808448955861.html |
+| Battery pack | ~8.5 kWh · ~63 V · ~60 lb · dual QS8 | Inbound |
 
-Do **not** buy: tapered 1.5″ steerers, 100 mm front hubs, 20″ forks max 2.5–3.0″ tire.
+On frame arrival: check 190 mm rear, 135 mm front, 44 mm HT, fold latch, stay tabs, mass.
 
 ---
 
-## 3. NEED — Rear hub (QS205 already HAVE)
+## 3. NEED — Front end
 
-Left side stays open for disc + cables.
-
-| Action | Buy |
-|--------|-----|
-| [ ] **M16 torque arms** (pair) on axle flats before high power | https://www.amazon.com/s?k=M16+torque+arm+electric+bike · https://www.ebay.com/sch/i.html?_nkw=M16+torque+arm+electric+bike · https://www.aliexpress.com/w/wholesale-M16-torque-arm-electric-bike.html |
-| [ ] **6-bolt rotor 6×44 mm** 180 or 203 mm | https://www.amazon.com/Corki-Cycles-180mm-Brake-Mountain/dp/B0CSCN9V27 · https://www.ebay.com/sch/i.html?_nkw=180mm+6+bolt+disc+rotor+44mm |
-| [ ] **Rear caliper + lever** (left-side clearance) | https://www.amazon.com/s?k=Shimano+MT200+hydraulic+disc+brake · https://www.amazon.com/s?k=Tektro+HD-M275 |
-| [ ] **Phase / Hall extensions**, waterproof, left path | https://www.amazon.com/s?k=waterproof+motor+phase+extension+ebike |
-| [ ] **Statorade** (optional, 3T @ ~63 V heat) | https://ebikes.ca/product-info/grin-products/statorade.html |
-
----
-
-## 4. NEED — Rear rack, load-bearing supports, pack deck
-
-Rack must hold **~60 lb** (19–20″ pack) **plus** café seat. High **side-mounted** deck; **left open** for disc. Bolt to **blue stay tabs** — no Al→steel weld. Must still **fold**.
-
-| Action | Buy / fab |
-|--------|-----------|
-| [ ] **6061-T6 deck ~20″ × 8″ × ⅛″** | https://sendcutsend.com · https://www.onlinemetals.com · https://www.metalsupermarkets.com |
-| [ ] **Load-bearing legs** 1″ × 1″ × 0.125″ tube to stay tabs | Same aluminum vendors; TIG sub-assembly |
-| [ ] **Gussets** 3″ × 3″ × ⅛″ triangles (qty 4) | SendCutSend |
-| [ ] **Stay clamps** + **Grade 8 / 8.8** bolts, nylocks, thread locker | https://www.fastenal.com · https://www.amazon.com/s?k=Grade+8+hex+bolt+assortment+M6+M8 · https://www.mcmaster.com/ |
-| [ ] **Slide rails** two thin 6061 plates (pack ± contacts) | Fab with deck |
-| [ ] **Heavy rack alternative** if not custom plate | https://www.aliexpress.com/w/wholesale-electric-bike-rear-rack-steel.html · https://www.ebay.com/sch/i.html?_nkw=heavy+duty+steel+electric+bike+rear+rack |
-| [ ] **Cam straps 1″** + **non-slip mat** | https://www.amazon.com/s?k=1+inch+cam+buckle+strap · https://www.amazon.com/s?k=tool+box+liner+non+slip |
-| [ ] **P-clamps** rubber-lined (phase/Hall path) | https://www.aliexpress.com/w/wholesale-rubber-lined-P-clamp.html · https://www.mcmaster.com/ |
-
-Cut list (locked): deck 20×8×⅛; optional side walls 20×3×⅛; seat rails 18×1.5×⅛; four gussets; legs measured on the real stays.
+| Item | Buy |
+|------|-----|
+| **Front rim 20×4.0** · 9×135 mm QR · 6-bolt disc · 406 mm | https://www.amazon.com/s?k=YFGSFWTS+20in+X4.0+9x135mm+6+bolt |
+| ZS44 / 28.6 headset | https://www.amazon.com/s?k=ZS44+headset+1-1/8+straight |
+| 1-1/8″ star nut | https://www.amazon.com/s?k=1-1/8+star+nut |
+| Steerer spacers 5/10/15 mm | https://www.amazon.com/s?k=1-1/8+headset+spacers+aluminum |
+| Stem 28.6 → 31.8 mm | https://www.amazon.com/Mountain-31-8mm-Degree-Lightweight-Cycling/dp/B0CNPRLWV6 |
+| Front disc 160–180 mm 6-bolt + caliper | https://www.amazon.com/s?k=Shimano+MT200+hydraulic+disc+brake |
+| Bars + grips | 31.8 mm, folding width |
+| Tubes ×2 if rims are not tubeless | https://www.amazon.com/s?k=110/70-16+motorcycle+tube |
 
 ---
 
-## 5. NEED — Café seat (no seatpost)
+## 4. NEED — Rear hub
 
-| Action | Buy |
-|--------|-----|
-| [ ] **Café solo / two-up pan** + foam | https://www.lowbrowcustoms.com/collections/seats · https://www.tcbroschoppers.com/collections/seats · https://www.ebay.com/sch/i.html?_nkw=cafe+racer+solo+seat |
-| [ ] **Rubber isolators / bushings** at pan bolts | See **Seating Installation.md** |
-| [ ] Confirm pan does not block pack **slide-out** | Hinge or removable pan if needed |
-
----
-
-## 6. NEED — FarDriver controls, wireless lights, range & temperature
-
-**Controller on hand:** FarDriver **ND72360 BT** (48–72 V, ~190 A battery / ~360 A phase).  
-Product: https://econiccycles.com/products/fardriver-sinewave-controller-nd72360-w-bluetooth?variant=46851442835698  
-Datasheet: https://www.far-driver.com/nd72360/
-
-**How this bike is wired (do not mix this up):**
-
-FarDriver **does not** speak turn-signal or brake-lamp protocol. Those are 12 V lamps. The controller only cares about **throttle analog, ignition (orange lock), high-brake, and Bluetooth telemetry**. Everything else is a fold-radio job so the hinge stays empty.
-
-| Signal | Path | Why |
-|--------|------|-----|
-| **Turn L/R, brake lamp, headlamp, ignition enable, cutoff, horn** | Bar **TX board** → 433 MHz / FHSS → rear **RX board** numbered relays | Replaces the 5 ft hinge loom |
-| **Throttle** (hall ~0.8–4.2 V) | **Dedicated analog wireless TX/RX** (not a digital relay) | FarDriver 3-pin throttle: red +5 V, black GND, green signal |
-| **Brake cutoff (motor inhibit)** | Same brake switch → RX ch.3 **and** FarDriver **high-brake** | Lamp + cut drive |
-| **Ignition / de-ignition** | RX ch.5 relay on FarDriver **orange lock** + Puca app BLE IGN | Two-key: radio enable AND phone IGN |
-| **Battery level / SOC / cell temp** | Pack **Bluetooth BMS** + FarDriver BT (V / A / MOSFET °C) | No extra radio. Puca dash shows GPS range; FarDriver / BMS apps show pack |
-| **Motor temp** | QS205 **KTY83/122** → FarDriver temp plug | Local at the hub, no fold |
-
-**FarDriver ND72360 pins this radio actually hits:**
-
-| FarDriver wire | Function | From the fold radio |
-|----------------|----------|---------------------|
-| Orange (electric lock) | Ignition — pack+ through this wire turns the controller on | RX **ch.5** NO contact |
-| Throttle red / black / green | +5 V / GND / 0.8–4.2 V hall | Analog RX only (never a relay) |
-| High-brake (typically 12 V) | Motor inhibit when brakes applied | RX **ch.3** paralleled with brake lamp |
-| Bluetooth module (included) | Live V, A, W, temps, errors | Phone — not the 433 MHz pair |
-
-**Skip:** ESP32 + SN65HVD230 CAN. That was the Votol path. https://www.amazon.com/SN65HVD230-CAN-Board-Communication-Development/dp/B00KM6XMXO
-
-### 6.1 Waterproof transmitter + receiver (the fold radio)
-
-This is the **wire-replacement pair**: one **TX** at the bars (switch inputs), one **RX** at the rear (numbered outputs to lamps + FarDriver). Number the connectors **1–8** and keep the same diagram on both boards — that is how you repair or swap a lamp without tracing a 5 ft loom.
-
-**Numbered connector map:**
-
-| # | TX input (bars) | RX output (rear / FarDriver) | RX mode |
-|---|-----------------|------------------------------|---------|
-| 1 | Left turn switch | Left turn lamps | Momentary |
-| 2 | Right turn switch | Right turn lamps | Momentary |
-| 3 | Brake switch | Brake / tail lamp **and** FarDriver **high-brake** | Momentary |
-| 4 | Headlamp switch | Headlamp | Latch |
-| 5 | Ignition key / IGN enable | Relay in series with FarDriver **orange** | Latch |
-| 6 | Kill / cutoff | Opens enable / contactor coil (de-ignition) | Momentary (NC path) |
-| 7 | Horn (optional) | Horn | Momentary |
-| 8 | Spare / 3-speed | FarDriver 3-speed or spare | Latch |
-
-Fail-safe: RF loss → all RX channels **OFF** (no runaway lamp, no stuck ignition). Throttle analog RX must fall **below 0.8 V** (or open) on RF loss so FarDriver throws a throttle error and cuts the motor.
-
-#### Buy this week (prototype)
-
-**Wrong form factor:** Mangood / WOODGUILIN / GUIRUIMOON / Serounder / ZHOFONET kits are a **keyfob + one receiver**. They do not give you a transmitter *board* with switch inputs. Do not buy those for the fold radio.
-
-**What we actually need:** a **point-to-point wireless I/O pair**
-
-- **Transmitter (bars):** 8 dry-contact / NPN **screw-terminal inputs** — each handlebar switch closes a numbered input. No remote.
-- **Receiver (rear):** 8 **relay outputs**, same numbers 1–8 → lamps + FarDriver orange.
-- Power both from the **12 V DC–DC**. RF loss → all outputs OFF.
-
-**1. Digital pair — 8DI transmitter + 8-relay receiver (enclosed, no fob)**
-
-Order **both** halves. These are plastic-shell boards (115×90×40 mm TX / 145×90×40 mm RX), not keyfobs.
-
-| Kit | Enclosed | ~$ | Buy |
-|-----|----------|----|-----|
-| **eletechsup RTTXA08 + RTRXB08 with shell** | **ON THE WAY $20** — [AliExpress 3256807076294851](https://www.aliexpress.us/item/3256807076294851.html) | **$20** (actual) | Ordered; factory/alt links only if this pair fails |
-| **RFSIA08 + RFSOB08 with shell** (same maker) | Yes | ~$27–50 | https://eletechsup.com/products/rfsia08-rfsob08-with-feedback-switch-433m-868m-915m-lora-transceiver-quantity-io-wireless-remote-transmission-industrial-motor-remote-controller |
-| Amazon same module | Pick **A Transmitter** *and* **B Receiver** | ~$55–70 | https://www.amazon.com/Transceiver-Remote-Controller-Feedback-Wireless/dp/B0DPQ9LXNR · https://www.amazon.com/ENDYAK-8-Channel-Feedback-Wireless-Suitable/dp/B0CQLSZFMK |
-| **4CH LoRa I/O ×2** (cheaper split) | Usually shelled | ~$25×2 | https://www.aliexpress.com/item/1005005219805622.html |
-
-TX inputs are **NPN / dry contact**. Handlebar switches close 1–8 to GND. RX relays 1–8: turns, brake+high-brake, headlamp, FarDriver **orange**, kill, horn. DIP: momentary for turns/brake/kill, latch for ignition/headlamp.
-
-**This board is digital only. It cannot carry hall throttle.**
-
-**2. RF throttle that actually works (0–5 V analog — separate pair, same 12 V / 433 M family)**
-
-A relay channel will not PWM 0.8–4.2 V. FarDriver throttle is **red +5 / black GND / green signal**. Buy a **0–5 V analog TX/RX** and park it in the same IP boxes as the 8CH pair.
-
-| Kit | Why it works with the fold radio | Buy |
-|-----|----------------------------------|-----|
-| **0–5 V / 0–10 V analog wireless pair** (TX hall in → RX 0–5 V out) | Same 433 M point-to-point idea; analog in/out, not relays | https://www.aliexpress.com/item/1005006843832014.html (1–8 ch analog 0–10 V / 4–20 mA) · search https://www.aliexpress.com/w/wholesale-0-5V-analog-wireless-transmitter-receiver.html |
-| **Lensen 2-ch 0–5 V analog I/O** (enclosed industrial) | 0–5 V AI on TX, 0–5 V AO on RX, 433 MHz, boxed | https://www.wirelesscontrolmodule.com/sale-12084005-2-channels-wireless-i-o-module-0-5v-analog-input-output-433mhz-rs485-interface.html · https://www.lensen-tech.com/Product/AnalogIOmodule/ |
-| **Falcon PEV wireless hall throttle** | Purpose-built e-bike TX+RX; RX plugs into FarDriver 3-pin; fail-to-zero | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
-| **Phoenix Contact Wireless MUX** | One enclosed pair does **16 digital + 2 analog** — lights and throttle on the same radio | https://www.phoenixcontact.com/en-us/products/multiplexer-ilb-bt-adio-mux-2702875 |
-
-**Latency:** LoRa digital I/O is fine for lamps/ignition. Throttle at 70 mph needs fast analog. Prefer the **Falcon PEV** or a dedicated **0–5 V analog pair** over stuffing throttle onto LoRa digital channels. Analog RX must drop **below 0.8 V** (or open) on RF loss so FarDriver throws a throttle error.
-
-- Industrial analog (DIN-rail): [SignalFire Wireless I/O](https://www.signal-fire.com/product/wireless-io-module/) · [Applied Wireless analog TX/RX](https://appliedwireless.com/analog-sensor-transmitters-receivers/)
-
-**3. Battery level — not a fold-radio channel**
-
-SOC, pack volts, and cell temp already have radios:
-
-| Source | What you see | App |
-|--------|--------------|-----|
-| FarDriver Bluetooth (module in the ND72360 box) | Pack V, line A, W, MOSFET / motor temp, faults | FarDriver / GDriver app |
-| Pack Bluetooth BMS | SOC %, cell V, charge/discharge A | BMS vendor app |
-| Puca dash (`/app/`) | GPS speed, trip, software IGN, estimated range | skeletkey.com/app |
-
-No 433 MHz analog tap on the 63 V pack. Don’t run HV sense across the fold.
-
-**4. Ignition and de-ignition (two interlocks)**
-
-1. **Hardware:** RX **ch.5** closes FarDriver **orange** to ignition+. RX **ch.6** (kill) opens that path. RF loss = OFF.
-2. **Software:** Puca app BLE IGN relay (already in `/app/`). Bike is live only when **orange is closed AND app IGN is ON**.
-
-**5. Housings and numbered pigtails**
-
-| Action | What it is | Buy |
-|--------|------------|-----|
-| [x] **RTTXA08 + RTRXB08** | **ON THE WAY $20** | https://www.aliexpress.us/item/3256807076294851.html |
-| [ ] **Falcon PEV wireless throttle** (or analog 0–5 V pair) | Hall throttle | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
-| [ ] **IP67 boxes** for TX (stem) and RX (rear deck) | Keep boards dry | https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
-| [ ] Numbered **GX16 / JST** pigtails (same 1–8 on both ends) | Swap a switch or lamp by number | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=JST+SM+numbered+pigtail |
-| [x] **Cllena 12 V DC–DC** 40–90 V → 12 V 10 A | **ON THE WAY $20** — TX, RX, lamps | https://www.amazon.com/dp/B09B72KPYY |
-
-**Production upgrade (optional, one box does digital + analog):** Phoenix Contact **ILB BT ADIO MUX** (16 digital + 2 analog, bidirectional, fail-safe, replaces a 40-wire loom). Pair: [2702875](https://www.phoenixcontact.com/en-us/products/multiplexer-ilb-bt-adio-mux-2702875) / [2884208 Omni](https://www.phoenixcontact.com/en-us/products/multiplexer-ilb-bt-adio-mux-omni-2884208). ~$1.8k — overkill for the $6,999 bike, right if we ever need SIL-style I/O.
+| Item | Buy |
+|------|-----|
+| M16 torque arms (pair) | https://www.amazon.com/s?k=M16+torque+arm+electric+bike |
+| 6-bolt rotor 6×44 mm · 180 or 203 mm | https://www.amazon.com/Corki-Cycles-180mm-Brake-Mountain/dp/B0CSCN9V27 |
+| Rear caliper + lever (left side) | https://www.amazon.com/s?k=Tektro+HD-M275 |
+| Phase / Hall extensions | https://www.amazon.com/s?k=waterproof+motor+phase+extension+ebike |
+| Statorade (optional) | https://ebikes.ca/product-info/grin-products/statorade.html |
 
 ---
 
----
+## 5. NEED — Rear rack + pack deck
 
-## 7. NEED — HV / pack interface on the bike
+Hold ~60 lb pack + café seat. Left side open for disc. Bolt to stay tabs. Must fold.
 
-**What this is for.** The ~60 lb / ~8.5 kWh / ~63 V module is a **removable high-voltage battery**, not a welded-in car pack. The **bike-side HV interface** is how that pack becomes the motorcycle’s power source when you slide it in, and how it becomes **dead metal** when you pull it out for apartments, trunks, trains, or air shipping.
-
-It has to do four jobs at once:
-
-1. **Carry traction current** (~8 kW discharge into the FarDriver / QS205). At ~63 V that is on the order of **~130 A** continuous, with peaks higher — so the ± path is a **high-current contact**, not a barrel jack.
-2. **Make and break power by sliding.** Guide rails + **blind-mate + and −** so full insertion completes the circuit; removal opens it. Wipe action cleans the faces. Polarity is keyed so you cannot reverse-mate.
-3. **Refuse to live until it is locked.** A **pilot / microswitch “fully seated”** interlock tells the BMS/controller the pack is home. No enable, no FarDriver, no dash IGN if the latch is open — so a half-in pack cannot arc or drop at 70 mph.
-4. **Feed the rest of the bike without a 5-foot hinge loom.** Pack **QS8** ports (bottom + side, incoming on the module) land on short deck leads to the FarDriver. CCS1 charge still goes **inlet → DC–DC → BMS charge port**, never station HV onto the cells through this slide interface.
-
-**Why it is separate from CCS1.** CCS1 is **public DC in** (200–500+ V) stepped down to ~63 V. The slide interface is **pack ↔ motorcycle** at pack voltage. Different connectors, different safety.
-
-Pack is **ON THE WAY**. What you still **buy/fab on the frame/deck**:
-
-**Prototype path:** pack already has **two QS8** (bottom + side) — land short QS8 leads + a mechanical lock. **Production path:** true **blind-mate ±** in the rails so insertion *is* the connection.
-
-| Action | What it does | Buy |
-|--------|----------------|-----|
-| [ ] Blind-mate **+ / −** contacts **≥150 A cont.** (200 A+ better) | Traction + and − make up on full insertion. Silver/nickel copper, spring/wipe; dielectric so only intended faces touch. | **Dock (prototype):** Anderson **SB175** (175 A) https://www.amazon.com/GZSH-Anderson-Connectors-Disconnect-Waterproof/dp/B0G79TWHNF · **SB350** (350 A) https://www.amazon.com/s?k=anderson+SB350 · spec https://www.andersonpower.com/product-lines/sb-connector-series/ · **Production drawer:** Amphenol Floating Mate https://amphenol-industrial.com/products/floating-mate-connector-series/ · JAE DW 100–500 A https://www.jae.com/en/connectors/series/detail/id=64181&type_code=T1120 · 200 A ESS hybrid https://www.alibaba.com/product-detail/Stacked-Energy-Storage-Connector-Stackable_1601290947223.html |
-| [ ] Slide rails / lead-in chamfer | Aligns the 19–20″ pack between thin **6061** plates | Cut plate: https://sendcutsend.com · https://www.onlinemetals.com · https://www.metalsupermarkets.com · UHMW wear strips: https://www.mcmaster.com/uhmw/ |
-| [ ] **Fully seated** interlock (microswitch / pilot) | HV enable only when locked. Series with ignition / BMS output. | Omron **D4N** IP67: https://www.amazon.com/D4N-1120-170095-OMRON-Limit-Switch/dp/B00IP1SEHC · DigiKey https://www.digikey.com/en/products/detail/omron-automation-and-safety/D4N-4D26/4077434 · family https://automation.omron.com/en/us/products/family/D4N · cheaper roller NC: https://www.amazon.com/s?k=IP67+roller+limit+switch+NC |
-| [ ] Cam / over-center **lock** | Stops the 60 lb pack from walking out under braking. Tool-free; optional strap. | Southco TL https://southco.com/en_us_int/latches/draw-latches/fixed-grip-draw-latches/tl-over-center-series-latches · Zoro A1-11-902-20 https://www.zoro.com/southco-over-center-draw-latch-heavy-duty-size-without-keeper-steel-zinc-plate-bright-chromate-a1-11-902-20/i/G715615473/ · Amazon HD https://www.amazon.com/s?k=over+center+draw+latch+heavy+duty · McMaster https://www.mcmaster.com/products/latches/draw-latches/ · strap: https://www.amazon.com/s?k=1+inch+cam+buckle+strap |
-| [ ] **Main fuse / precharge** for 8 kW class | Limits fault current; soft-starts FarDriver caps. ~63 V × ~130 A ≈ 8 kW. | **Fuse:** ANL/MEGA **200 A** holder https://www.amazon.com/clp/B06WRVM461 · https://www.amazon.com/s?k=ANL+fuse+200A+holder · **Resistor:** 50–100 Ω, 50 W+ https://www.amazon.com/s?k=50W+50+ohm+wirewound+resistor · **Contactor:** Gigavac GV200 https://www.mouser.com/new/sensata/gigavac-gv200-dc-contactors/ · precharge calc https://www.sensata.com/calculator/precharge |
-| [ ] **QS8** caps / leads to FarDriver | Bottom and/or side QS8 on the inbound pack. Short, left-side path, clear of disc. | QS8-S anti-spark 8 mm https://www.aliexpress.com/item/1005010610028026.html · https://www.aliexpress.com/w/wholesale-qs8-connector.html · https://www.amazon.com/s?k=QS8+anti+spark+connector · 6 AWG silicone https://www.amazon.com/s?k=6+AWG+silicone+wire+battery |
-
-Until this interface exists, the inbound pack can sit on the deck with **straps only** — do **not** ride high-power with flying QS8 leads as the production design.
+| Item | Buy / fab |
+|------|-----------|
+| 6061-T6 deck ~20″ × 8″ × ⅛″ | https://sendcutsend.com |
+| Load-bearing legs 1″ × 1″ × 0.125″ | Online Metals / Metal Supermarkets |
+| Gussets 3″ × 3″ × ⅛″ ×4 | SendCutSend |
+| Stay clamps + Grade 8 hardware | https://www.fastenal.com |
+| Slide rails (two thin 6061 plates) | Fab with deck |
+| Cam straps + non-slip mat | https://www.amazon.com/s?k=1+inch+cam+buckle+strap |
+| Rubber-lined P-clamps | https://www.mcmaster.com/ |
 
 ---
 
-## 8. NEED — CCS1 public charge (inlet HAVE)
+## 6. NEED — Café seat
 
-Never land station DC on cells: inlet → fuses → contactors → DC–DC → BMS.
-
-| Action | Link |
-|--------|------|
-| [ ] EVCC | https://store.advantics.fr/charge-controllers/24-ev-charge-controller-ccs.html · https://www.evcreate.com/ccs-fast-charging-solution/ |
-| [ ] IMD | https://www.benderinc.com/products/ground-fault-monitoring-ungrounded/isometer-iso165c-iso165c-1/ |
-| [ ] HV contactors ×2 | https://www.mouser.com/new/sensata/gigavac-gv200-dc-contactors/ |
-| [ ] Precharge + resistor | TE / Gigavac |
-| [ ] HV fuses both poles | Match current |
-| [ ] IVT-S or equiv. | https://www.digikey.com/en/product-highlight/i/isabellenhuette/ivt-s-current-voltage-and-temperature-sensors |
-| [ ] Isolated DC–DC HV → 60–72 V, 6–8 kW | https://www.powerstream.com/high-voltage-input-48V-and-72V--battery-chargers.htm |
-| [ ] 12 V aux | https://www.powerstream.com/pbcd-7212-charger.htm |
-| [ ] Home: CCS1 on breaker **or** ~63 V AC–DC brick on 120/240 V | Household overnight |
+| Item | Buy |
+|------|-----|
+| Café solo / two-up pan + foam | https://www.lowbrowcustoms.com/collections/seats |
+| Rubber isolators | See Seating Installation.md |
 
 ---
 
-## 9. Scale (not prototype cart)
+## 7. NEED — Lights, throttle, dash
 
-**Frame OEM source 1 (inbound prototype + small lots):** Kalosse **carbon steel, foldable, 20×4.0**, 190 mm rear dropout.
+TX/RX and the **72 V → 12 V converter** are **bought**. Still need:
 
-https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa
+| Item | Buy |
+|------|-----|
+| Headlamp (12 V) | Motorcycle LED / projector |
+| Hall throttle 0–5 V | https://www.amazon.com/s?k=hall+throttle+ebike+waterproof |
+| Magnetic phone mount + ring | Stem clamp below bars |
+| Cutoff / kill in series with pack | Marine breaker |
+| BLE ignition relay (ESP32) | https://www.amazon.com/ESP-WROOM-32-Development-Microcontroller-Integrated-Compatible/dp/B08D5ZD528 |
 
-**Frame OEM source 2 (dual-source — added 2026-08-21):** same Kalosse foldable 20×4.0 chassis from a **second AliExpress listing** (different product ID / storefront — not the same cart as source 1):
-
-https://www.aliexpress.com/item/1005012630592144.html
-
-Title/class: Kalosse hidden-battery / beach e-bike frame, **190 mm** rear, foldable 20×4.0 family. **Do not PO 5k until** this unit is measured against source 1: rear **190 mm**, front ~**135 mm**, **44 mm** head tube, fold latch, stay-tab layout, mass ~**9.2 lb** carbon steel.
-
-**Factory RFQ (volume, not a different geometry):** Kalosse-brand factory on Alibaba — **Jinhua Epower Technology Co., Ltd.** Catalog 20×4.0 / 190 mm frames are often **aluminum and non-fold**. Send them the **source-1 drawing** (fold + carbon steel + 190 mm) and quote MOQ for 5k/year:
-
-https://www.alibaba.com/product-detail/KALOSSE-Electric-Mountain-Cyclocross-Snow-Bike_1601687149121.html
-
-**Backup folding OEM** (can copy the Kalosse fold if Jinhua will not): Hebei Xiaotianhang Bicycle — Alibaba #1 folding-bike OEM.
-
-https://hbxiaotianhang.en.alibaba.com/
-
-Must-match for any source 2 / factory: **190 mm** dropout · **20×4.0** · **folding hinge** · **44 mm** HT · steel ~9 lb · stay tabs for the ~60 lb deck.
-
-- [x] Source 1 identified (AliExpress Kalosse foldable).
-- [x] Source 2 identified (second AliExpress Kalosse listing + factory RFQ path).
-- [ ] Buy **one** source-2 frame and CMM/tape against the inbound source-1 unit before assembler rate.
-- [ ] RFQ Jinhua Epower + Xiaotianhang for 5k/year of the **folding steel** drawing (not their rigid aluminum 190 mm).
-- [ ] Assembler RFP / LOI / NDA (cofounder).
-- [ ] Assembly jig + EOL NRE (~$160k class) — **not** extrusion dies.
-- [ ] UN38.3 + motorcycle classification.
+Dash: https://www.skeletkey.com/app/
 
 ---
 
-## 10. Related
+## 8. NEED — Pack interface (bike side)
 
-| Doc | Use |
-|-----|-----|
-| Parts Inventory Checklist | HAVE / ON THE WAY / NEED counts |
-| Build Decisions and Shopping List | Locked architecture |
-| Seating Installation | Café pan + isolators |
-| CCS1 Public Charging Architecture | HV path |
-| Puca Dash App | https://www.skeletkey.com/app/ |
+Pack is inbound. Bike still needs:
+
+| Item | Buy |
+|------|-----|
+| Blind-mate +/− ≥150 A | https://www.amazon.com/GZSH-Anderson-Connectors-Disconnect-Waterproof/dp/B0G79TWHNF |
+| Slide rails / lead-in | https://sendcutsend.com |
+| Fully seated interlock | https://www.amazon.com/s?k=IP67+roller+limit+switch+NC |
+| Cam / over-center lock | https://www.amazon.com/s?k=over+center+draw+latch+heavy+duty |
+| Main fuse / precharge 200 A | https://www.amazon.com/s?k=ANL+fuse+200A+holder |
+| QS8 leads to FarDriver | https://www.amazon.com/s?k=QS8+anti+spark+connector |
+
+---
+
+## 9. NEED — CCS1 (inlet HAVE)
+
+| Item | Buy |
+|------|-----|
+| EVCC | https://store.advantics.fr/charge-controllers/24-ev-charge-controller-ccs.html |
+| IMD | https://www.benderinc.com/products/ground-fault-monitoring-ungrounded/isometer-iso165c-iso165c-1/ |
+| HV contactors ×2 | https://www.mouser.com/new/sensata/gigavac-gv200-dc-contactors/ |
+| Precharge + resistor | TE / Gigavac |
+| HV fuses both poles | Match current |
+| Isolated DC–DC HV → 60–72 V, 6–8 kW | https://www.powerstream.com/high-voltage-input-48V-and-72V--battery-chargers.htm |
+| Home brick ~63 V AC–DC | 120/240 V overnight |
+
+---
+
+## 10. Scale
+
+| Item | Link / note |
+|------|-------------|
+| Frame source 1 (inbound) | https://www.aliexpress.us/item/3256808448955861.html |
+| Frame source 2 | https://www.aliexpress.com/item/1005012630592144.html |
+| Factory RFQ | Jinhua Epower — folding **steel** 190 mm drawing |
+| Backup OEM | https://hbxiaotianhang.en.alibaba.com/ |
+| [ ] Tape source-2 frame against source 1 | Before 5k PO |
+| [ ] Assembler RFP / LOI / NDA | Cofounder |
+| [ ] UN38.3 + motorcycle class | Pack + vehicle |

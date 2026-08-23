@@ -23,8 +23,9 @@ SkeletKey **sources frames and parts** and uses **contract assemblers** for **5,
 | **Battery** | Modular semi-solid **NMC+**, **~60 lb**, ~**19–20″ × 6.5″ × 4.5–5″**, ~**8.5 kWh**, **63 V nominal**, Bluetooth BMS, **6–8 kW** charge / **8 kW** discharge, dual **QS8** |
 | **Seat** | **No seatpost seat** — rear **battery deck** + **café-racer solo seat on top** |
 | **Rack** | Custom **6061 aluminum** deck bolted to steel stay tabs (not light tourist rack) |
-| **Fold radio** | **8CH LoRa I/O ON THE WAY $20** — [AliExpress 3256807076294851](https://www.aliexpress.us/item/3256807076294851.html) (RTTXA08/RTRXB08). Analog throttle still NEED. |
-| **12 V aux** | **Cllena 40–90 V → 12 V 10 A ON THE WAY $20** — [amazon.com/dp/B09B72KPYY](https://www.amazon.com/dp/B09B72KPYY) |
+| **Tires** | **Shinko SR567 110/70-16 52S** ×2 **bought** (rear hub + front). Still need **20×4.0 front rim**. |
+| **Wireless I/O** | **8CH LoRa TX/RX bought** — https://www.aliexpress.us/item/3256807076294851.html |
+| **72 V → 12 V converter** | **Cllena bought** — 40–90 V in, 12 V 10 A out — https://www.amazon.com/dp/B09B72KPYY |
 
 ---
 

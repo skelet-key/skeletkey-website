@@ -27,7 +27,7 @@
 * EOL roll test + spray on seals (IP65).
 
 ### SLIDE 6: UNIT ECONOMICS
-* MSRP $6,999 · parts **$2,942** + assembly **$500** = all-in **$3,442** · gross **~$3,557 (51%)**. Frame **$375** (shock in) · pack **$1,200** · FarDriver **$150** · kickstand $15 · home brick $20 · Statorade $18.
+* MSRP $6,999 · parts **$2,956** + assembly **$500** = all-in **$3,456** · gross **~$3,543 (51%)**. Frame **$375** (shock in) · pack **$1,200** · FarDriver **$150** · kickstand $15 · home brick $20 · Statorade $18. Tires: **Shinko SR567 110/70-16** ×2.
 * 5,000 units → ~$35M revenue · **~$17.8M** gross.
 
 ### SLIDE 7: CAPITAL USE

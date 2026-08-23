@@ -1,5 +1,5 @@
 # Bill of Materials (BOM) Cost Tracking Matrix
-## Target: **5,000 / year** · parts **$2,950** · assembly **$500** · **all-in $3,450**
+## Target: **5,000 / year** · parts **$2,956** · assembly **$500** · **all-in $3,456**
 ## Frame **$375** (rear shock included) · Pack **$1,200** · FarDriver **$150** (factory lot) · MSRP $6,999
 ## Updated: 2026-08-22
 
@@ -13,11 +13,11 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 
 | Line | Per unit | Annual 5k | % MSRP |
 |------|----------|-----------|--------|
-| Sourced parts (below) | **$2,950** | $14,750,000 | 42.1% |
+| Sourced parts (below) | **$2,956** | $14,780,000 | 42.2% |
 | Contract assembly & QA | **$500** | $2,500,000 | 7.1% |
-| **All-in COGS** | **$3,450** | **$17,250,000** | **49.3%** |
+| **All-in COGS** | **$3,456** | **$17,280,000** | **49.4%** |
 | MSRP | $6,999 | $34,995,000 | 100% |
-| **Gross margin** | **$3,549** | **$17,745,000** | **50.7%** |
+| **Gross margin** | **$3,543** | **$17,715,000** | **50.6%** |
 
 ---
 
@@ -29,8 +29,8 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 | Battery module | ~8.5 kWh · 63 V nominal · ~60 lb · NMC+ · BT BMS · dual QS8 | **1,200** | 6,000,000 |
 | Hub motor | QS205 V3 50H 3T · 20×4.0 · 190 mm | 255 | 1,275,000 |
 | Controller | FarDriver ND72360 BT · factory lot | **150** | 750,000 |
-| Front end | HIMALO 135 mm, ZS44, stem, 20×4.0 wheel, tire, disc | 150 | 750,000 |
-| Rear hub install | Tire, 6×44 rotor, left caliper, M16 arms, phase/Hall | 70 | 350,000 |
+| Front end | HIMALO 135 mm, ZS44, stem, **20×4.0 rim**, **SR567**, disc | 156 | 780,000 |
+| Rear hub install | **SR567**, 6×44 rotor, left caliper, M16 arms, phase/Hall | 78 | 390,000 |
 | Deck / seat / hardware | 6061 deck+rails+legs, café pan, Grade 8, straps | 108 | 540,000 |
 | HV pack interface | Dock, interlock, cam lock, 200 A fuse, precharge, QS8 | 62 | 310,000 |
 | CCS1 stack | Inlet+Küster, EVCC, IMD, contactors, 6–8 kW DC–DC, 12 V | **438** | 2,190,000 |
@@ -39,9 +39,9 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 | Kickstand | Folding-frame side stand | 15 | 75,000 |
 | Home overnight brick | ~63 V AC–DC, 120/240 V household (not CCS) | 20 | 100,000 |
 | Statorade | Grin ferrofluid ~10 mL fill, OEM lot | 18 | 90,000 |
-| **Parts subtotal** | | **2,950** | **14,750,000** |
+| **Parts subtotal** | | **2,956** | **14,780,000** |
 | **Assembly** | Consigned-kit labor + in-line QA | **500** | **2,500,000** |
-| **All-in** | | **3,450** | **17,250,000** |
+| **All-in** | | **3,456** | **17,280,000** |
 
 ---
 
@@ -72,19 +72,19 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 | D2 | ZS44/28.6 headset + race + star nut + cap + spacers | 16 |
 | D3 | Stem 28.6 → 31.8 | 5 |
 | D4 | Bars + grips | 8 |
-| D5 | Front wheel 20×4.0, 9×135, 6-bolt | 40 |
-| D6 | Front 20×4.0 tire + tube | 16 |
+| D5 | Front **20×4.0 (4×20″) rim**, 9×135, 6-bolt, 406 mm | 40 |
+| D6 | Front **Shinko SR567 110/70-16 52S** + tube | 22 |
 | D7 | Front disc + caliper | 23 |
-| | **Front** | **150** |
+| | **Front** | **156** |
 
 ### E. Rear hub
 | # | Part | Lot $ |
 |---|------|------:|
-| E1 | Rear 20×4.0 tire + tube | 14 |
+| E1 | Rear **Shinko SR567 110/70-16 52S** + tube (on QS205 rim) | 22 |
 | E2 | 6×44 rotor + left caliper/lever | 32 |
 | E3 | M16 torque arms pair | 12 |
 | E4 | Phase / Hall IP65 | 12 |
-| | **Rear** | **70** |
+| | **Rear** | **78** |
 
 ### F. Deck / seat
 | # | Part | Lot $ |
@@ -136,7 +136,7 @@ Research used: QS Motor factory ND72360 **$137.89–$158.50** → lot **$150** (
 |---|------|------:|
 | J1 | Export crate | 25 |
 
-**Parts $2,950 + assembly $500 = all-in $3,450.**
+**Parts $2,956 + assembly $500 = all-in $3,456.**
 
 ---
 

@@ -1,7 +1,7 @@
 # PARTS INVENTORY CHECKLIST
 ## Document Reference: PIC-2026-V1
 ## Classification: Internal · Shareable with cofounder
-## Updated: 2026-08-22
+## Updated: 2026-08-23
 
 Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED** = still to buy or fabricate
 
@@ -17,7 +17,10 @@ Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED*
 | 2 | **Controller** | **FarDriver ND72360 with Bluetooth** · received | https://econiccycles.com/products/fardriver-sinewave-controller-nd72360-w-bluetooth?variant=46851442835698 |
 | 3 | **CCS1 vehicle inlet** | **EV-T1GBIE12-1ACDC80A200A2-DM** (DESAYSV class) · **80 A 250 V AC / 200 A 850 V DC** · cables & pinouts included | On hand; see CCS1 architecture doc |
 | 4 | **CCS lock / actuator** | **KÜSTER 03S · 0188793** + signal harness | On hand with inlet assembly |
-| 5 | **Front fork** | **HIMALO** 20×4.0 · **135 mm** · 1-1/8″ straight · lockout (chosen / ordered) | https://www.amazon.com/HIMALO-Suspension-Travel-Straight-Lockout/dp/B0D6G83TFY |
+| 5 | **Front fork** | **HIMALO** 20×4.0 · **135 mm** · 1-1/8″ straight · lockout | https://www.amazon.com/HIMALO-Suspension-Travel-Straight-Lockout/dp/B0D6G83TFY |
+| 6 | **Tires ×2** | **Shinko SR567 110/70-16 52S** · one rear (QS205) · one front | https://www.americanmototire.com/shinko-sr567-sr568/110-70-16-52s-front-87-4285.html |
+| 7 | **Wireless TX/RX** | 8CH LoRa pair · turn signals, brakes, lights | https://www.aliexpress.us/item/3256807076294851.html |
+| 8 | **72 V → 12 V converter** | Cllena · 40–90 V in · 12 V 10 A out | https://www.amazon.com/dp/B09B72KPYY |
 
 ---
 
@@ -28,10 +31,8 @@ Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED*
 | 1 | **Folding frame** | Full-suspension **carbon steel** · **9.2 lb** · **190 mm rear dropout** · **44 mm** headset class · front **~135 mm** assumed · stay tabs for deck · **source 1 for 5k/year** | https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa |
 | 1b | **Folding frame source 2** | Dual-source: same Kalosse foldable 20×4.0 / 190 mm family, **different listing**. Tape against source 1 before volume. Factory RFQ: Jinhua Epower (confirm fold + steel). Backup OEM: Hebei Xiaotianhang. | https://www.aliexpress.com/item/1005012630592144.html · https://www.alibaba.com/product-detail/KALOSSE-Electric-Mountain-Cyclocross-Snow-Bike_1601687149121.html · https://hbxiaotianhang.en.alibaba.com/ |
 | 2 | **Battery pack** | **ON THE WAY** · **19–20″ × ~6.5″ × 4.5–5″** · **~60 lb** with enclosure/BMS/cables · **~8.5 kWh** · **~63 V** · 8 kW discharge · 6–8 kW charge · Bluetooth BMS · **two QS8** (bottom + side) · semi-solid NMC+ | Pack OEM inbound |
-| 3 | **8CH LoRa I/O TX + RX** | **ON THE WAY** · eletechsup **RTTXA08 / RTRXB08** · 8 NPN inputs + 8 relays · enclosed · **$20** | https://www.aliexpress.us/item/3256807076294851.html |
-| 4 | **Cllena 12 V DC–DC** | **ON THE WAY** · **40–90 V → 12 V 10 A** · powers TX/RX + lamps · **$20** | https://www.amazon.com/dp/B09B72KPYY |
 
-*On frame arrival: verify dropout, headset ID, mass, tabs. Pack is inbound — bike-side rails/contacts still NEED (see Action Item Tracker §7).*
+*On frame arrival: verify dropout, headset ID, mass, tabs. Pack inbound — bike-side rails/contacts still NEED.*
 
 ---
 
@@ -42,7 +43,8 @@ Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED*
 | 1 | M16 torque arms (pair) | QS205 axle anti-rotate | NEED |
 | 2 | 6-bolt disc rotor | PCD **6×44 mm** · 180 or 203 mm | NEED |
 | 3 | Rear disc caliper + lever | Left-side clearance with motor cables | NEED |
-| 4 | Front wheel **20×4.0** | Match fork dropout (confirm **135 mm** QR when frame arrives) | NEED |
+| 4 | Front **20×4.0 (4×20″) rim** | **406 mm** bead · **9×135 mm** · 6-bolt disc — mounts inbound front **SR567**; rear uses QS205 motor rim | NEED |
+| 4b | Inner tubes ×2 | 110/70-16 or 3.50/4.00-16 if rims are not tubeless | NEED |
 | 5 | Front fork + stem + headset | 1-1/8″ straight steerer · **ZS44** class if 44 mm head tube | NEED |
 | 6 | Front brake | Lightweight disc preferred | NEED |
 | 7 | Handlebars / grips | See TX/RX in §3.1 | NEED |
@@ -50,17 +52,7 @@ Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED*
 | 9 | Main pack fuse / precharge as required | Sized for **8 kW** class discharge | NEED |
 | 10 | Statorade (optional thermal) | Sustained high speed on 3T @ ~63 V | NEED optional |
 
-### 3.1 NEED — FarDriver fold radio (TX / RX)
-
-Controller **HAVE**. **8CH LoRa I/O pair ON THE WAY** ($20). **Cllena 12 V DC–DC ON THE WAY** ($20). Still NEED analog throttle radio. Pin map: **Action Item Tracker.md §6**.
-
-| # | Item | Status | Buy |
-|---|------|--------|-----|
-| 1 | **8CH LoRa I/O (RTTXA08 + RTRXB08)** | **ON THE WAY** · $20 · [AliExpress 3256807076294851](https://www.aliexpress.us/item/3256807076294851.html) | Ordered |
-| 2 | **Cllena 40–90 V → 12 V 10 A** | **ON THE WAY** · $20 · [amazon.com/dp/B09B72KPYY](https://www.amazon.com/dp/B09B72KPYY) | Ordered |
-| 3 | **Falcon PEV wireless throttle** (hall TX + RX) | NEED | https://www.falconpev.com.sg/products/wireless-throttle-for-e-scooter-e-bike |
-| 3 | Numbered **GX16 8-pin** pigtails + IP67 boxes | Same pin numbers on TX and RX | https://www.amazon.com/s?k=GX16+8+pin+aviation+connector+pair · https://www.amazon.com/s?k=IP67+project+box+waterproof+electronics |
-| 4 | Battery level | **Not a fold-radio channel.** FarDriver BT (V/A/temp) + pack Bluetooth BMS (SOC). | FarDriver app · BMS vendor app · Puca `/app/` |
+Still NEED: analog throttle radio, lamps, mount. TX/RX and 72 V → 12 V converter are **HAVE**.
 
 ---
 
@@ -115,8 +107,7 @@ Inlet + cables + Küster lock are **on hand**. Remaining stack for **6–8 kW** 
 | 5 | **HV fuses** | Both poles, DC-rated | Match contactor/DC–DC current |
 | 6 | **IVT-S or equiv. current/voltage sensor** | CAN feedback for EVCC / BMS | https://www.digikey.com/en/product-highlight/i/isabellenhuette/ivt-s-current-voltage-and-temperature-sensors |
 | 7 | **Isolated DC–DC** | **CCS HV in (~200–500+ V) → ~60–72 V out**, **6–8 kW** class, current-limited by BMS | Bring-up: https://www.powerstream.com/high-voltage-input-48V-and-72V--battery-chargers.htm · Production: custom ~8 kW quote |
-| 8 | **12 V aux DC–DC** | EVCC, lock, contactor coils | https://www.powerstream.com/pbcd-7212-charger.htm |
-| 9 | HV cable, PE bond, strain relief, interlock wiring | Vehicle harness from inlet → contactors → DC–DC → BMS charge input | NEED fab |
+| 8 | HV cable, PE bond, strain relief, interlock wiring | Vehicle harness from inlet → contactors → DC–DC → BMS charge input | NEED fab |
 
 **Hard rule:** Never land inlet **DC+ / DC−** on the cells. Path is always:
 
@@ -142,9 +133,9 @@ Full wiring map: **CCS1 Public Charging Architecture.md**
 
 | Status | Count (line items) |
 |--------|---------------------|
-| **HAVE** | Motor, FarDriver, CCS inlet, Küster lock, HIMALO fork (chosen) |
-| **ON THE WAY** | Folding frame (AliExpress) + **~60 lb pack** |
-| **NEED** | Headset/stem/front wheel, rear torque/disc, **load-bearing rack + supports**, café seat, **8CH TX/RX + analog throttle radio**, pack slide contacts, CCS electronics |
+| **HAVE** | Motor, FarDriver, CCS inlet, Küster lock, HIMALO fork, **SR567 ×2**, **8CH LoRa TX/RX**, **72 V → 12 V converter** |
+| **ON THE WAY** | Folding frame + **~60 lb pack** |
+| **NEED** | Headset/stem/**20×4.0 front rim**, rear torque/disc, rack, café seat, lamps/throttle/mount, pack slide contacts, CCS electronics |
 
 ---
 

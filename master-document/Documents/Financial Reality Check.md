@@ -1,19 +1,19 @@
 # FINANCIAL REALITY CHECK
 ## Document Reference: FRC-2026-V2
 ## Supersedes: Financial Reality Check.pdf (raw 6061 extrusion mill language withdrawn)
-## Updated: 2026-08-21
+## Updated: 2026-08-22
 
 ### 1. Unit economics (5,000 units)
 
 | Metric | Per unit | Annualized |
 |--------|----------|------------|
 | MSRP | **$6,999** | $34,995,000 |
-| Sourced BOM | $2,942 | $14,710,000 |
+| Sourced BOM | $2,956 | $14,780,000 |
 | Contract assembly & QA | $500 | $2,500,000 |
-| **All-in COGS** | **$3,442** | **$17,210,000** |
-| Gross margin | **$3,557 (51%)** | **$17,785,000** |
+| **All-in COGS** | **$3,456** | **$17,280,000** |
+| Gross margin | **$3,543 (51%)** | **$17,715,000** |
 
-We **buy** frames and parts in **5,000-unit lots**. All-in is **$3,442** (parts **$2,942** + assembly **$500**). Frame **$375 includes rear shock**. Pack **$1,200**. FarDriver factory **$150**. Kickstand **$15**, overnight brick **$20**, Statorade **$18**.
+We **buy** frames and parts in **5,000-unit lots**. All-in is **$3,456** (parts **$2,956** + assembly **$500**). Frame **$375 includes rear shock**. Pack **$1,200**. FarDriver factory **$150**. Kickstand **$15**, overnight brick **$20**, Statorade **$18**. Street tires: **Shinko SR567 110/70-16** ×2.
 
 ### 2. Where margin is spent
 
