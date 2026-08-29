@@ -1971,15 +1971,16 @@ p strong,
 
 .hero-rotator-clip {
   position: relative;
-  display: inline-flex;
-  height: 1.5em;
+  display: inline-block;
+  height: 1.55em;
   overflow: hidden;
   vertical-align: bottom;
-  color: var(--accent-hover);
-  font-weight: 600;
-  font-style: italic;
+  color: var(--text);
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0.01em;
   max-width: 100%;
-  transition: width 0.55s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: width 0.75s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .hero-rotator-clip::after {
@@ -1987,47 +1988,59 @@ p strong,
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0.08em;
-  height: 1.5px;
-  background: currentColor;
+  bottom: 0.12em;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-hover) 0%, rgba(154, 163, 176, 0.15) 100%);
   pointer-events: none;
+  transform: scaleX(0);
   transform-origin: left center;
+  opacity: 0;
+}
+
+.hero-rotator-clip.is-drawn::after {
+  animation: rotator-underline 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .hero-rotator-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  will-change: transform;
+  display: block;
+  position: relative;
+  height: 1.55em;
 }
 
 .hero-rotator-inner span {
-  flex: 0 0 1.5em;
-  height: 1.5em;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1.55em;
   display: flex;
   align-items: center;
   white-space: nowrap;
   line-height: 1;
-  padding: 0 0.05em;
+  padding: 0 0.04em;
+  opacity: 0;
+  transform: translate3d(0, 0.28em, 0);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
 }
 
-.hero-rotator-inner .rot-and {
-  font-style: normal;
-  font-weight: 400;
-  color: inherit;
-  margin-right: 0.28em;
+.hero-rotator-inner span.is-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
-@keyframes hero-rotate {
-  0%, 10%     { transform: translate3d(0, 0, 0); }
-  12.5%, 22.5% { transform: translate3d(0, -1.5em, 0); }
-  25%, 35%    { transform: translate3d(0, -3em, 0); }
-  37.5%, 47.5% { transform: translate3d(0, -4.5em, 0); }
-  50%, 60%    { transform: translate3d(0, -6em, 0); }
-  62.5%, 72.5% { transform: translate3d(0, -7.5em, 0); }
-  75%, 85%    { transform: translate3d(0, -9em, 0); }
-  87.5%, 97.5% { transform: translate3d(0, -10.5em, 0); }
-  100%        { transform: translate3d(0, -12em, 0); }
+.hero-rotator-inner span.is-exit {
+  opacity: 0;
+  transform: translate3d(0, -0.22em, 0);
+}
+
+@keyframes rotator-underline {
+  0%   { transform: scaleX(0); opacity: 0; }
+  14%  { opacity: 0.95; }
+  26%  { transform: scaleX(1); }
+  78%  { transform: scaleX(1); opacity: 0.7; }
+  100% { transform: scaleX(1); opacity: 0; }
 }
 
 html.js-motion .reveal {
@@ -2132,8 +2145,19 @@ html.js-motion .hero .reveal {
   .hero-rotator-inner {
     animation: none;
   }
+  .hero-rotator-inner span {
+    position: static;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
   .hero-rotator-inner span:not(:first-child) {
     display: none;
+  }
+  .hero-rotator-clip::after {
+    animation: none;
+    transform: scaleX(1);
+    opacity: 0.5;
   }
   .diff-card:hover,
   .phone-card:hover,

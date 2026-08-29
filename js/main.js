@@ -67,37 +67,44 @@ document.addEventListener("DOMContentLoaded", () => {
     const items = Array.from(inner.children);
     if (!items.length) return;
 
-    function measure() {
-      return items.map((el) => el.scrollWidth);
-    }
-
-    function apply(index, animate) {
-      const line = items[0].offsetHeight || Math.round(parseFloat(getComputedStyle(items[0]).height)) || 24;
-      inner.style.transition = animate
-        ? "transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)"
-        : "none";
-      clip.style.transition = animate
-        ? "width 0.55s cubic-bezier(0.76, 0, 0.24, 1)"
-        : "none";
-      inner.style.transform = "translate3d(0," + (-index * line) + "px,0)";
-      const widths = measure();
-      clip.style.width = (widths[index] || widths[0] || 0) + "px";
-    }
-
     inner.style.animation = "none";
-    apply(0, false);
+
+    function setWidth(el, animate) {
+      clip.style.transition = animate
+        ? "width 0.75s cubic-bezier(0.22, 1, 0.36, 1)"
+        : "none";
+      clip.style.width = Math.ceil(el.scrollWidth) + "px";
+    }
+
+    function drawUnderline() {
+      clip.classList.remove("is-drawn");
+      void clip.offsetWidth;
+      clip.classList.add("is-drawn");
+    }
+
+    function show(index, animate) {
+      items.forEach((el, n) => {
+        el.classList.toggle("is-active", n === index);
+        el.classList.toggle("is-exit", animate && n !== index);
+      });
+      setWidth(items[index], animate);
+      if (animate) drawUnderline();
+      else clip.classList.add("is-drawn");
+    }
+
+    show(0, false);
 
     if (reduceMotion || items.length < 2) return;
 
     let i = 0;
-    const tick = () => {
+    setInterval(() => {
       i = (i + 1) % items.length;
-      apply(i, true);
-    };
-    setInterval(tick, 3200);
-    window.addEventListener("resize", () => apply(i, false), { passive: true });
+      show(i, true);
+    }, 3600);
+
+    window.addEventListener("resize", () => setWidth(items[i], false), { passive: true });
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => apply(i, false));
+      document.fonts.ready.then(() => setWidth(items[i], false));
     }
   }
   initHeroRotator();
