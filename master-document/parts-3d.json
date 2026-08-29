@@ -61,5 +61,23 @@
     "notes": "Rear shock for the Kalosse folding frame. Eyelet mounts, rubber-sleeved body. Comes with the inbound chassis.",
     "src": "https://www.3daistudio.com/public/5b7d7e85-d8ec-439e-94cd-a7127cc428df",
     "thumb": "https://s.3daistudio.com/media/thumbnails/1485305659380531200_thumbnail.png"
+  },
+  {
+    "id": "torque-arm-left",
+    "label": "Torque arm — left",
+    "studioTitle": "Black metal bracket on wooden surface.",
+    "tags": ["torque-arm", "left", "SelfS1"],
+    "notes": "Left-side QS205 / M16 anti-rotate plate. Keep this side open for the disc rotor, caliper, and phase/Hall cables.",
+    "src": "https://www.3daistudio.com/public/40b9764d-1d84-4227-bd46-426264289138",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485305545329008640_thumbnail.png"
+  },
+  {
+    "id": "torque-arm-right",
+    "label": "Torque arm — right",
+    "studioTitle": "Black metal bracket on wooden surface.",
+    "tags": ["torque-arm", "right", "SelfS1"],
+    "notes": "Right-side QS205 / M16 anti-rotate plate. Mirror of the left; same 3D, opposite dropout.",
+    "src": "https://www.3daistudio.com/public/40b9764d-1d84-4227-bd46-426264289138",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485305545329008640_thumbnail.png"
   }
 ]
