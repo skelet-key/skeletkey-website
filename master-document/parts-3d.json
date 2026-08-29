@@ -81,6 +81,20 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_101545_Metal_U_shaped_object_with_two_protruding_ends_Hunyuan_3D_v31_3b9ec6df.glb"
   },
   {
+    "id": "himalo-front-fork",
+    "label": "HIMALO front fork",
+    "studioTitle": "Bike suspension fork with adjustable features.",
+    "tags": [
+      "fork",
+      "front",
+      "HAVE"
+    ],
+    "notes": "Bought. HIMALO 20\u00d74.0 air fork, 110 mm travel, 135 mm \u00d7 9 mm QR, 1-1/8\u2033 / 28.6 mm straight steerer, disc. Pairs with the ZTZ 20\u00d74 front wheel and ZS44 headset.",
+    "src": "https://www.3daistudio.com/public/374be5dd-1699-46b3-9fef-b04a00dd322c",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/0c54ceab-cdb7-4806-b629-e0ffa367c40d_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/02_himalo_fork_Bike_suspension_fork_with_adjustable_features_Prism_31_42909d50.glb"
+  },
+  {
     "id": "hub-dropout-190",
     "label": "190 mm hub dropout",
     "studioTitle": "Metal bracket with curved arms and mounting holes.",
