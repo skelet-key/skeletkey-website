@@ -34,5 +34,14 @@
     "notes": "Rigid U-blade fork for the 20×4 front wheel. Dropout slots on both ends; steerer for the 44 mm head tube. Pairs with the 20×4 rim and street tire on order.",
     "src": "https://www.3daistudio.com/public/304b1271-4696-4e94-92af-26ef4643d572",
     "thumb": "https://s.3daistudio.com/media/thumbnails/1485309183057256448_thumbnail.png"
+  },
+  {
+    "id": "dc-dc-72-12",
+    "label": "72V to 12V DC-DC",
+    "studioTitle": "Metallic heat sink with three wires attached.",
+    "tags": ["12V", "ON THE WAY", "SelfS1"],
+    "notes": "Finned buck converter. Drops pack voltage to 12V for the LoRa TX/RX, lights, and ignition. Cllena unit on the way (~$20).",
+    "src": "https://www.3daistudio.com/public/084a0586-ab30-4e75-b80b-cefc61fdc3dc",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485306086536839168_thumbnail.png"
   }
 ]
