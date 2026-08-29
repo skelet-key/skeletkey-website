@@ -224,5 +224,15 @@
     "src": "https://www.3daistudio.com/public/6a1a8e38-28a2-4f32-be4e-5b252da26789",
     "thumb": "https://s.3daistudio.com/media/thumbnails/c7de60ea-77ca-4a51-bfc5-7c5b315a06ae_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125918_Small_white_circular_object_on_surface_Prism_31_05910ed2.glb"
+  },
+  {
+    "id": "loom-tape",
+    "label": "Electrical tape",
+    "studioTitle": "Small, circular, adhesive tape roll.",
+    "tags": ["cables", "hardware", "SelfS1"],
+    "notes": "Loom / electrical tape. Wraps phase/Hall and 12V bundles, dielectric on QS8 boots, strain relief on the pack leads.",
+    "src": "https://www.3daistudio.com/public/e0998295-e26a-4753-b5db-288e7a5d882e",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/ca6ad36f-7be2-4464-9b4d-75efd11514b7_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125927_Small_circular_adhesive_tape_roll_Prism_31_6231b30d.glb"
   }
 ]
