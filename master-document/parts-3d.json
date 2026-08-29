@@ -7,5 +7,14 @@
     "notes": "Bluetooth sinewave ND72360-W. Green ECU with phase, Hall, and ignition connectors. Sample in hand (~$199).",
     "src": "https://www.3daistudio.com/public/b2271fe7-1137-4cc2-bf4d-707b710672e2",
     "thumb": "https://s.3daistudio.com/media/thumbnails/1480180287294996480_thumbnail.png"
+  },
+  {
+    "id": "dual-magnet-bar-clamp",
+    "label": "Dual-magnet bar clamp",
+    "studioTitle": "Black two-sided mirror with adjustable arm.",
+    "tags": ["dash", "windscreen", "SelfS1"],
+    "notes": "Center 22.2 mm clamp. MagSafe pad (raised ring, ~3 mm) on the short arm for the phone dash; 4.5″ magnet on the longer arm for the detachable windscreen. Both faces point at the rider.",
+    "src": "https://www.3daistudio.com/public/9d4ddf41-c66b-4a58-be56-236bf437da29",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/b2c6406e-e3ac-4b8b-9d1d-9bd04bd55588_thumbnail.png"
   }
 ]
