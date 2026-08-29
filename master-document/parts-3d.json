@@ -144,5 +144,25 @@
     "src": "https://www.3daistudio.com/public/676923c7-3c78-411d-ab6d-be28b72b2833",
     "thumb": "https://s.3daistudio.com/media/thumbnails/2be5b0e7-8826-4a49-9aa5-bc76de6900e8_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125656_Metal_bolt_with_a_plastic_washer_attached_Prism_31_c041f6a8.glb"
+  },
+  {
+    "id": "hex-bolt",
+    "label": "Hex-head bolt",
+    "studioTitle": "Metal bolt with hexagonal head and shaft.",
+    "tags": ["hardware", "SelfS1"],
+    "notes": "Grade 8 hex-head bolt. Frame, rack, and dropout hardware — pairs with the nylon-washer isolator bolt.",
+    "src": "https://www.3daistudio.com/public/99090f11-cf06-4350-974b-c89ec5871168",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/f291ffb4-1e48-438b-95d6-eeda1635bde0_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125713_Metal_bolt_with_hexagonal_head_and_shaft_Prism_31_c8892755.glb"
+  },
+  {
+    "id": "cable-p-clamp",
+    "label": "Cable P-clamp",
+    "studioTitle": "Metal clip with screw and washer attachment.",
+    "tags": ["cables", "hardware", "SelfS1"],
+    "notes": "P-clamp with screw and washer. Routes phase/Hall and 12V looms along the left stay, clear of the disc.",
+    "src": "https://www.3daistudio.com/public/608489cf-8d95-4b74-8dce-6d03e9a24aa8",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/c8be0d6d-c7c8-4d4b-9774-4107373e02d8_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125722_Metal_clip_with_screw_and_washer_attachment_Prism_31_Multi_Image_c045c6e3.glb"
   }
 ]
