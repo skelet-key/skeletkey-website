@@ -163,14 +163,15 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125328_Black_wheel_with_gear_mechanism_attached_Prism_31_Multi_Image_d2659f53.glb"
   },
   {
-    "id": "street-tire-20x4",
-    "label": "20\u00d74 street tire",
+    "id": "hub-motor-tire",
+    "label": "Hub motor tire",
     "studioTitle": "Black rubber tire with detailed tread design.",
     "tags": [
       "tire",
+      "motor",
       "HAVE"
     ],
-    "notes": "Here this week. 20\u00d74 street tire \u2014 one on the QS205 hub, one for the front wheel. Bought pair.",
+    "notes": "Here this week. 20\u00d74 street tire for the QS205 V3 50H 3T hub motor (190 mm dropout).",
     "src": "https://www.3daistudio.com/public/890924b9-f641-47dc-9bab-f898955ae1b9",
     "thumb": "https://s.3daistudio.com/media/thumbnails/df41111f-9c2d-42a0-8848-11c702ff4686_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/chrome_wkTRTGfaHt_Black_rubber_tire_with_detailed_tread_design_Prism_31_7e484136.glb"
