@@ -150,20 +150,6 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125328_Black_wheel_with_gear_mechanism_attached_Prism_31_Multi_Image_d2659f53.glb"
   },
   {
-    "id": "cable-p-clamp",
-    "label": "Cable P-clamp",
-    "studioTitle": "Metal clip with screw and washer attachment.",
-    "tags": [
-      "cables",
-      "hardware",
-      "HAVE"
-    ],
-    "notes": "P-clamp with screw and washer. Routes phase/Hall and 12V looms along the left stay, clear of the disc.",
-    "src": "https://www.3daistudio.com/public/608489cf-8d95-4b74-8dce-6d03e9a24aa8",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/c8be0d6d-c7c8-4d4b-9774-4107373e02d8_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125722_Metal_clip_with_screw_and_washer_attachment_Prism_31_Multi_Image_c045c6e3.glb"
-  },
-  {
     "id": "headset-bearing",
     "label": "Headset bearing",
     "studioTitle": "Small white circular object on surface.",
@@ -204,6 +190,21 @@
     "src": "https://www.3daistudio.com/public/e0998295-e26a-4753-b5db-288e7a5d882e",
     "thumb": "https://s.3daistudio.com/media/thumbnails/ca6ad36f-7be2-4464-9b4d-75efd11514b7_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125927_Small_circular_adhesive_tape_roll_Prism_31_6231b30d.glb"
+  },
+  {
+    "id": "cable-p-clamp",
+    "label": "Folding-frame fastener",
+    "studioTitle": "Metal clip with screw and washer attachment.",
+    "tags": [
+      "chassis",
+      "hardware",
+      "HAVE"
+    ],
+    "notes": "Folding-frame fastener (P-clamp / clip with screw and washer). Holds the chassis together at the fold.",
+    "src": "https://www.3daistudio.com/public/608489cf-8d95-4b74-8dce-6d03e9a24aa8",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/c8be0d6d-c7c8-4d4b-9774-4107373e02d8_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125722_Metal_clip_with_screw_and_washer_attachment_Prism_31_Multi_Image_c045c6e3.glb",
+    "group": "fasteners"
   },
   {
     "id": "isolator-bolt",
