@@ -46,10 +46,10 @@
     body.locked .md-page { display: none; }
     body.unlocked .pw-gate { display: none; }
 
-    .md-page { max-width: 880px; margin: 0 auto; padding: 6.5rem 1.5rem 4rem; }
+    .md-page { max-width: 1080px; margin: 0 auto; padding: 6.5rem 1.5rem 4rem; }
     .eyebrow { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
     .md-page h1 { font-size: clamp(1.75rem, 4vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
-    .lead { color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.5rem; max-width: 40rem; }
+    .lead { color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.5rem; }
     .doc-list { list-style: none; margin: 0; padding: 0; }
     .doc-item {
       padding: 1rem 0; border-bottom: 1px solid var(--border);
@@ -84,9 +84,7 @@
     .app-embed-wrap .app-copy a { color: #ff6b7a; }
     .app-embed-wrap ul { margin: 0 0 1rem 1.15rem; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.55; }
     .app-phone-stage {
-      width: min(1080px, calc(100vw - 1.5rem));
-      margin-left: 50%;
-      transform: translateX(-50%);
+      width: 100%;
     }
     .app-phone {
       position: relative;
@@ -139,7 +137,6 @@
       background: #0B0F19;
     }
     @media (max-width: 720px) {
-      .app-phone-stage { width: 100%; margin-left: 0; transform: none; }
       .app-phone { max-height: none; aspect-ratio: 2 / 1; border-radius: 1.4rem; padding: 0.35rem; }
       .app-phone-screen { border-radius: 1.05rem; }
       .part-frame { max-height: none; aspect-ratio: 2 / 1; }
