@@ -254,5 +254,15 @@
     "src": "https://www.3daistudio.com/public/9a152d94-1eee-4662-bf2f-d6ce53470c13",
     "thumb": "https://s.3daistudio.com/media/thumbnails/88cb959f-1fea-42d6-b6e5-68663ee362b4_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_130036_Metal_screw_with_a_rounded_head_Prism_31_7133a65c.glb"
+  },
+  {
+    "id": "pan-head-screw-2",
+    "label": "Pan-head screw + washer (2)",
+    "studioTitle": "Metal screw with a rounded head.",
+    "tags": ["hardware", "SelfS1"],
+    "notes": "Second captured-washer pan-head. Same duty as the first: covers, clamps, accessory mounts.",
+    "src": "https://www.3daistudio.com/public/88b6faf8-48aa-4a68-98cc-f2c8c21f2897",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/15fd54c9-f92d-4b3a-bd8d-4ea414a61cc1_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_130036_Metal_screw_with_a_rounded_head_Prism_31_045995b4.glb"
   }
 ]
