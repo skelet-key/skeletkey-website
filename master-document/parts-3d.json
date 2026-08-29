@@ -16,5 +16,14 @@
     "notes": "Center 22.2 mm clamp. MagSafe pad (raised ring, ~3 mm) on the short arm for the phone dash; 4.5″ magnet on the longer arm for the detachable windscreen. Both faces point at the rider.",
     "src": "https://www.3daistudio.com/public/9d4ddf41-c66b-4a58-be56-236bf437da29",
     "thumb": "https://s.3daistudio.com/media/thumbnails/b2c6406e-e3ac-4b8b-9d1d-9bd04bd55588_thumbnail.png"
+  },
+  {
+    "id": "detachable-windscreen",
+    "label": "Detachable windscreen",
+    "studioTitle": "Translucent brown shield with mounting holes.",
+    "tags": ["windscreen", "travel", "SelfS1"],
+    "notes": "Smoked shield, 17″ tall, 13″ wide at the bottom, tapering toward the top. 4.5″ rider-facing magnet snaps to the long arm of the bar clamp. Detaches for travel.",
+    "src": "https://www.3daistudio.com/public/d1d10506-bcf5-49e2-9aeb-c9c5056f0d34",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485318116656340992_thumbnail.png"
   }
 ]
