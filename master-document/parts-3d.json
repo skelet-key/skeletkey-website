@@ -164,5 +164,15 @@
     "src": "https://www.3daistudio.com/public/608489cf-8d95-4b74-8dce-6d03e9a24aa8",
     "thumb": "https://s.3daistudio.com/media/thumbnails/c8be0d6d-c7c8-4d4b-9774-4107373e02d8_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125722_Metal_clip_with_screw_and_washer_attachment_Prism_31_Multi_Image_c045c6e3.glb"
+  },
+  {
+    "id": "fold-hinge-pin",
+    "label": "Fold-hinge pin",
+    "studioTitle": "Metal cylindrical object with a hole.",
+    "tags": ["chassis", "hardware", "SelfS1"],
+    "notes": "Clevis / fold-lock pin with a cross-hole. Holds the carbon-steel chassis open for riding; pulls for travel fold.",
+    "src": "https://www.3daistudio.com/public/0630a014-2c08-4d6d-ae43-5b1957cad422",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/dccd9c71-21bb-4f05-8020-e90180176d5f_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125805_Metal_cylindrical_object_with_a_hole_Prism_31_35b6d663.glb"
   }
 ]
