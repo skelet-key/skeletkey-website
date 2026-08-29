@@ -124,5 +124,15 @@
     "src": "https://www.3daistudio.com/public/40b9764d-1d84-4227-bd46-426264289138",
     "thumb": "https://s.3daistudio.com/media/thumbnails/1485305545329008640_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_101434_Black_metal_bracket_on_wooden_surface_Hunyuan_3D_v31_b45ca87e.glb"
+  },
+  {
+    "id": "qs205-hub-motor",
+    "label": "QS205 V3 50H 3T hub motor",
+    "studioTitle": "Black wheel with gear mechanism attached.",
+    "tags": ["motor", "HAVE", "SelfS1"],
+    "notes": "QS205 V3 (50H) 3T spoke hub, 190 mm dropout, 20×4.0. 28.6 lb. 5,000W continuous / 12,000W peak. Disc 6-bolt (6×44). HAVE.",
+    "src": "https://www.3daistudio.com/public/aa976106-2ee4-4d49-b78b-6a28554f1ed3",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/d17ecc91-a5d4-43bc-9199-bc67b204f721_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125328_Black_wheel_with_gear_mechanism_attached_Prism_31_Multi_Image_d2659f53.glb"
   }
 ]
