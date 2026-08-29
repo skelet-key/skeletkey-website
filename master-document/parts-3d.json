@@ -194,5 +194,15 @@
     "src": "https://www.3daistudio.com/public/df472aac-0036-4332-b203-089cbb8e29ab",
     "thumb": "https://s.3daistudio.com/media/thumbnails/21b850c6-f02c-405c-b7f2-7bd2a00afa16_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125836_Small_white_circular_plastic_washer_on_surface_Prism_31_29e1c44f.glb"
+  },
+  {
+    "id": "threadlocker-bolt",
+    "label": "Threadlocker bolt",
+    "studioTitle": "Metallic bolt with blue threaded section.",
+    "tags": ["hardware", "SelfS1"],
+    "notes": "Cap-head bolt with blue (medium) threadlocker. Rotor, caliper, and torque-arm fasteners that must not back out at 70 mph.",
+    "src": "https://www.3daistudio.com/public/b82aed63-fcf9-4fc6-819e-62aaa055720a",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/7d3ef2a3-8ad2-402a-a330-b9750fbadafa_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125846_Metallic_bolt_with_blue_threaded_section_Prism_31_9f2986c6.glb"
   }
 ]
