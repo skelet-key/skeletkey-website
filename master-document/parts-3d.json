@@ -204,5 +204,15 @@
     "src": "https://www.3daistudio.com/public/b82aed63-fcf9-4fc6-819e-62aaa055720a",
     "thumb": "https://s.3daistudio.com/media/thumbnails/7d3ef2a3-8ad2-402a-a330-b9750fbadafa_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125846_Metallic_bolt_with_blue_threaded_section_Prism_31_9f2986c6.glb"
+  },
+  {
+    "id": "round-head-screw",
+    "label": "Round-head screw",
+    "studioTitle": "Metallic screw with rounded ends, threaded shaft.",
+    "tags": ["hardware", "SelfS1"],
+    "notes": "Button / pan-head screw through a spacer sleeve. Lighter fixtures: P-clamps, dash clamp, plastics — not rotor or axle.",
+    "src": "https://www.3daistudio.com/public/fa157701-db4b-40a1-a623-b22e7fb1d20c",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/90857dc4-e013-46f1-a179-af21d1f38278_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125856_Metallic_screw_with_rounded_ends_threaded_shaft_Prism_31_6b251698.glb"
   }
 ]
