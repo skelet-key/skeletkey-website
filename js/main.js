@@ -59,6 +59,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // WiCi-style fade-up reveals
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function initHeroRotator() {
+    const clip = document.querySelector(".hero-rotator-clip");
+    const inner = document.querySelector(".hero-rotator-inner");
+    if (!clip || !inner) return;
+    const items = Array.from(inner.children);
+    if (!items.length) return;
+
+    function measure() {
+      return items.map((el) => el.scrollWidth);
+    }
+
+    function apply(index, animate) {
+      const line = items[0].offsetHeight || Math.round(parseFloat(getComputedStyle(items[0]).height)) || 24;
+      inner.style.transition = animate
+        ? "transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)"
+        : "none";
+      clip.style.transition = animate
+        ? "width 0.55s cubic-bezier(0.76, 0, 0.24, 1)"
+        : "none";
+      inner.style.transform = "translate3d(0," + (-index * line) + "px,0)";
+      const widths = measure();
+      clip.style.width = (widths[index] || widths[0] || 0) + "px";
+    }
+
+    inner.style.animation = "none";
+    apply(0, false);
+
+    if (reduceMotion || items.length < 2) return;
+
+    let i = 0;
+    const tick = () => {
+      i = (i + 1) % items.length;
+      apply(i, true);
+    };
+    setInterval(tick, 3200);
+    window.addEventListener("resize", () => apply(i, false), { passive: true });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => apply(i, false));
+    }
+  }
+  initHeroRotator();
+
   const revealNodes = document.querySelectorAll(".reveal, .section-inner, .diff-card, .phone-card, .maintain-card, .fold-card, .bike-card, .own-card");
   if (reduceMotion) {
     revealNodes.forEach((el) => el.classList.add("is-visible"));
