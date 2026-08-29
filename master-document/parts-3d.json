@@ -174,5 +174,15 @@
     "src": "https://www.3daistudio.com/public/0630a014-2c08-4d6d-ae43-5b1957cad422",
     "thumb": "https://s.3daistudio.com/media/thumbnails/dccd9c71-21bb-4f05-8020-e90180176d5f_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125805_Metal_cylindrical_object_with_a_hole_Prism_31_35b6d663.glb"
+  },
+  {
+    "id": "nylon-bushing",
+    "label": "Nylon isolator bushing",
+    "studioTitle": "Small, light-colored circular plastic object.",
+    "tags": ["hardware", "seat", "SelfS1"],
+    "notes": "Shoulder bushing for the café racer seat pan and stay clamps. Isolates vibration between the seat/rack and the carbon-steel frame.",
+    "src": "https://www.3daistudio.com/public/600540e1-9317-4509-9bc8-00ff4012d7e7",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/0d9e13cb-2857-42e0-a123-bd28590b1d9e_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125828_Small_light_colored_circular_plastic_object_Prism_31_8e386a32.glb"
   }
 ]
