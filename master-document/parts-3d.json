@@ -234,5 +234,15 @@
     "src": "https://www.3daistudio.com/public/e0998295-e26a-4753-b5db-288e7a5d882e",
     "thumb": "https://s.3daistudio.com/media/thumbnails/ca6ad36f-7be2-4464-9b4d-75efd11514b7_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125927_Small_circular_adhesive_tape_roll_Prism_31_6231b30d.glb"
+  },
+  {
+    "id": "o-ring",
+    "label": "O-ring seal",
+    "studioTitle": "Small, circular, translucent plastic ring on surface.",
+    "tags": ["hardware", "IP65", "SelfS1"],
+    "notes": "Translucent elastomer O-ring. Headset dust seal, QS8 boots, and pack lock faces — keeps the IP65 rating.",
+    "src": "https://www.3daistudio.com/public/6188f804-1cf5-4762-8a93-659fefa08037",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/afa96d3a-5751-4331-a654-6155b18c959b_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125939_Small_circular_translucent_plastic_ring_on_surface_Prism_31_d05c3ac0.glb"
   }
 ]
