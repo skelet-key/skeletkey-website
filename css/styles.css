@@ -179,6 +179,10 @@ a {
   display: none;
 }
 
+.nav-balance {
+  display: none;
+}
+
 html.nav-menu-open,
 html.nav-menu-open body {
   overflow: hidden;
@@ -776,6 +780,7 @@ html.nav-menu-open body {
     margin: 0 auto;
     padding: 0 12px 0 14px;
     gap: 0;
+    justify-content: space-between;
     background: transparent;
     border-bottom: none;
     border-radius: 18px;
@@ -784,8 +789,25 @@ html.nav-menu-open body {
     -webkit-backdrop-filter: blur(0);
   }
 
+  .nav-balance {
+    display: block;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    transition: flex-basis 1.2s var(--ease), flex-grow 1.2s var(--ease), width 1.2s var(--ease);
+  }
+
+  .nav-logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
   .nav-toggle {
     display: flex;
+    margin-left: auto;
+    flex-shrink: 0;
   }
 
   .nav-logo-key {
@@ -811,6 +833,20 @@ html.nav-menu-open body {
   .nav.is-scrolled .nav-logo-text,
   .nav.is-menu-open .nav-logo-text {
     display: none;
+  }
+
+  .nav.is-scrolled .nav-logo,
+  .nav.is-menu-open .nav-logo {
+    position: static;
+    left: auto;
+    transform: none;
+  }
+
+  .nav.is-scrolled .nav-balance,
+  .nav.is-menu-open .nav-balance {
+    flex: 0 0 0;
+    width: 0;
+    overflow: hidden;
   }
 
   .nav.is-scrolled {
