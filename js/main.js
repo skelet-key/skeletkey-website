@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const onNavScroll = () => {
     if (!nav || nav.classList.contains("is-menu-open")) return;
-    nav.classList.toggle("is-scrolled", window.scrollY > 24);
+    nav.classList.toggle("is-scrolled", window.scrollY > 80);
   };
   onNavScroll();
   window.addEventListener("scroll", onNavScroll, { passive: true });
