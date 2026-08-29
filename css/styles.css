@@ -1744,7 +1744,7 @@ html.js-motion .own-card {
   transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
 }
 
-.reveal.is-visible,
+html.js-motion .reveal.is-visible,
 html.js-motion .section-inner.is-visible,
 html.js-motion .diff-card.is-visible,
 html.js-motion .phone-card.is-visible,
@@ -1756,11 +1756,22 @@ html.js-motion .own-card.is-visible {
   transform: translateY(0);
 }
 
-.hero .reveal:nth-child(1) { transition-delay: 0.04s; }
-.hero .reveal:nth-child(2) { transition-delay: 0.12s; }
-.hero .reveal:nth-child(3) { transition-delay: 0.2s; }
-.hero .reveal:nth-child(4) { transition-delay: 0.28s; }
-.hero .reveal:nth-child(5) { transition-delay: 0.36s; }
+/* Hero copy must never stay hidden — CSS plays the intro even if JS is late. */
+html.js-motion .hero .reveal {
+  animation: hero-in 0.75s var(--ease) forwards;
+}
+html.js-motion .hero .reveal:nth-child(1) { animation-delay: 0.05s; }
+html.js-motion .hero .reveal:nth-child(2) { animation-delay: 0.14s; }
+html.js-motion .hero .reveal:nth-child(3) { animation-delay: 0.22s; }
+html.js-motion .hero .reveal:nth-child(4) { animation-delay: 0.3s; }
+html.js-motion .hero .reveal:nth-child(5) { animation-delay: 0.38s; }
+
+@keyframes hero-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .diff-card,
 .phone-card,
@@ -1793,10 +1804,19 @@ html.js-motion .own-card.is-visible {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal {
+  html.js-motion .reveal,
+  html.js-motion .section-inner,
+  html.js-motion .diff-card,
+  html.js-motion .phone-card,
+  html.js-motion .maintain-card,
+  html.js-motion .fold-card,
+  html.js-motion .bike-card,
+  html.js-motion .own-card,
+  html.js-motion .hero .reveal {
     opacity: 1;
     transform: none;
     transition: none;
+    animation: none;
   }
   .hero-rotator-inner {
     animation: none;
