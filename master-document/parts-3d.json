@@ -108,6 +108,19 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/03_ztto_headset_Bicycle_headset_parts_in_black_and_silver_Prism_31_d5847a4c.glb"
   },
   {
+    "id": "stem-286-222",
+    "label": "Stem 28.6 \u00d7 22.2",
+    "studioTitle": "Black metal clamp with multiple screws.",
+    "tags": [
+      "stem",
+      "HAVE"
+    ],
+    "notes": "Bought. 28.6 mm (1-1/8\u2033) steerer clamp, 22.2 mm / 7/8\u2033 bar clamp. Goes on the HIMALO steerer; holds the PRO+ 872 bars.",
+    "src": "https://www.3daistudio.com/public/41f4d811-ca5b-43dc-aeaa-6c8ccc83fb9a",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/31046641-8942-4bee-a119-28e3acab8ef3_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/05_stem_286_222_Black_metal_clamp_with_multiple_screws_Prism_31_ee6b149a.glb"
+  },
+  {
     "id": "hub-dropout-190",
     "label": "190 mm hub dropout",
     "studioTitle": "Metal bracket with curved arms and mounting holes.",
