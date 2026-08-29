@@ -14,6 +14,7 @@
   --radius: 12px;
   --max-width: 1440px;
   --font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 *, *::before, *::after {
@@ -61,6 +62,12 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: background 0.9s var(--ease), box-shadow 0.9s var(--ease);
+}
+
+.nav.is-scrolled {
+  background: rgba(11, 15, 25, 0.96);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
 }
 
 .nav-logo {
@@ -112,7 +119,7 @@ a {
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.9rem;
-  transition: background 0.2s, transform 0.15s;
+  transition: background 0.2s var(--ease), transform 0.25s var(--ease);
 }
 
 .nav-cta:hover {
@@ -197,7 +204,8 @@ a {
   border-radius: 999px;
   font-weight: 600;
   font-size: 1rem;
-  transition: all 0.2s;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.25s var(--ease);
+
   cursor: pointer;
   border: none;
 }
@@ -209,7 +217,17 @@ a {
 
 .btn-primary:hover {
   background: var(--brake-red-hover);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
+}
+
+.btn.has-arrow svg {
+  margin-left: 0.45rem;
+  transition: transform 0.25s var(--ease);
+  flex-shrink: 0;
+}
+
+.btn.has-arrow:hover svg {
+  transform: translateX(3px);
 }
 
 .btn-secondary {
@@ -242,11 +260,13 @@ a {
   border-radius: var(--radius);
   padding: 2rem 1.75rem;
   text-align: center;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 
 .diff-card:hover {
   border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
 }
 
 .diff-card .icon {
@@ -1649,3 +1669,151 @@ p strong,
     grid-column: auto;
   }
 }
+
+/* ========== WICI-STYLE MOTION ========== */
+.hero-rotator {
+  margin: 0 0 1.75rem;
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-rotator-clip {
+  position: relative;
+  display: inline-flex;
+  height: 1.45em;
+  overflow: hidden;
+  vertical-align: bottom;
+  color: var(--accent-hover);
+  font-weight: 600;
+  font-style: italic;
+}
+
+.hero-rotator-clip::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  pointer-events: none;
+}
+
+.hero-rotator-inner {
+  display: flex;
+  flex-direction: column;
+  animation: hero-rotate 12s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+}
+
+.hero-rotator-inner span {
+  flex: 0 0 1.45em;
+  height: 1.45em;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+@keyframes hero-rotate {
+  0%, 22%   { transform: translate3d(0, 0, 0); }
+  33%, 55%  { transform: translate3d(0, -1.45em, 0); }
+  66%, 88%  { transform: translate3d(0, -2.9em, 0); }
+  100%      { transform: translate3d(0, -4.35em, 0); }
+}
+
+html.js-motion .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+html.js-motion .section-inner,
+html.js-motion .diff-card,
+html.js-motion .phone-card,
+html.js-motion .maintain-card,
+html.js-motion .fold-card,
+html.js-motion .bike-card,
+html.js-motion .own-card {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.reveal.is-visible,
+html.js-motion .section-inner.is-visible,
+html.js-motion .diff-card.is-visible,
+html.js-motion .phone-card.is-visible,
+html.js-motion .maintain-card.is-visible,
+html.js-motion .fold-card.is-visible,
+html.js-motion .bike-card.is-visible,
+html.js-motion .own-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero .reveal:nth-child(1) { transition-delay: 0.04s; }
+.hero .reveal:nth-child(2) { transition-delay: 0.12s; }
+.hero .reveal:nth-child(3) { transition-delay: 0.2s; }
+.hero .reveal:nth-child(4) { transition-delay: 0.28s; }
+.hero .reveal:nth-child(5) { transition-delay: 0.36s; }
+
+.diff-card,
+.phone-card,
+.maintain-card,
+.fold-card,
+.bike-card,
+.own-card,
+.faq-item,
+.spec-item,
+.stat {
+  transition: border-color 0.2s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.phone-card:hover,
+.maintain-card:hover,
+.fold-card:hover,
+.own-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+}
+
+.bike-card img {
+  transition: transform 0.7s var(--ease);
+}
+
+.bike-card:hover img {
+  transform: scale(1.025);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hero-rotator-inner {
+    animation: none;
+  }
+  .hero-rotator-inner span:not(:first-child) {
+    display: none;
+  }
+  .diff-card:hover,
+  .phone-card:hover,
+  .maintain-card:hover,
+  .fold-card:hover,
+  .own-card:hover,
+  .bike-card:hover img,
+  .btn:hover,
+  .nav-cta:hover,
+  .btn.has-arrow:hover svg {
+    transform: none;
+  }
+}
+

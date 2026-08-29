@@ -17,13 +17,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Subtle nav background on scroll
   const nav = document.querySelector(".nav");
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 40) {
-      nav.style.background = "rgba(11, 15, 25, 0.95)";
-    } else {
-      nav.style.background = "rgba(11, 15, 25, 0.85)";
-    }
-  });
+  const onNavScroll = () => {
+    if (!nav) return;
+    nav.classList.toggle("is-scrolled", window.scrollY > 40);
+  };
+  onNavScroll();
+  window.addEventListener("scroll", onNavScroll, { passive: true });
+
+  // WiCi-style fade-up reveals
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const revealNodes = document.querySelectorAll(".reveal, .section-inner, .diff-card, .phone-card, .maintain-card, .fold-card, .bike-card, .own-card");
+  if (reduceMotion) {
+    revealNodes.forEach((el) => el.classList.add("is-visible"));
+  } else if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    revealNodes.forEach((el, i) => {
+      el.classList.add("reveal");
+      if (el.parentElement && el.parentElement.classList.contains("diff-grid")) {
+        el.style.transitionDelay = (i % 6) * 70 + "ms";
+      }
+      io.observe(el);
+    });
+    requestAnimationFrame(() => {
+      document.querySelectorAll(".hero .reveal").forEach((el) => el.classList.add("is-visible"));
+    });
+  } else {
+    revealNodes.forEach((el) => el.classList.add("is-visible"));
+  }
 
   // Toast helper
   function showToast(message, isError) {

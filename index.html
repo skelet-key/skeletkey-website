@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <script>document.documentElement.classList.add("js-motion");</script>
   <script src="https://unpkg.com/globe.gl/dist/globe.gl.min.js"></script>
   <style>
     #charge-globe {
@@ -122,14 +123,25 @@
 
   <!-- HERO -->
   <header class="hero">
-    <div class="hero-badge">Now Accepting Reservations</div>
-    <h1>Puca<br><span class="gold">The ultimate travel companion.</span></h1>
-    <p class="hero-sub">
+    <div class="hero-badge reveal">Now Accepting Reservations</div>
+    <h1 class="reveal">Puca<br><span class="gold">The ultimate travel companion.</span></h1>
+    <p class="hero-rotator reveal" aria-label="Folding, electric, and modular">
+      The first motorcycle that
+      <span class="hero-rotator-clip">
+        <span class="hero-rotator-inner">
+          <span>folds.</span>
+          <span>is electric.</span>
+          <span>is modular.</span>
+          <span aria-hidden="true">folds.</span>
+        </span>
+      </span>
+    </p>
+    <p class="hero-sub reveal">
       Store it in your apartment, car trunk, or train. Ship the frame as luggage. Send the ultra-dense battery separately.
       Explore the world — and <strong>save thousands a year</strong> on gas commuting. <strong>$6,999.</strong>
     </p>
-    <div class="hero-ctas">
-      <a href="#order" class="btn btn-primary">Reserve Yours</a>
+    <div class="hero-ctas reveal">
+      <a href="#order" class="btn btn-primary has-arrow">Reserve Yours<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a href="#bike" class="btn btn-secondary">Explore Puca</a>
     </div>
   </header>
