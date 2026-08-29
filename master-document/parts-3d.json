@@ -52,5 +52,14 @@
     "notes": "Carbon steel folding chassis, 9.2 lb. 190 mm rear dropout for the QS205 50H 3T. 44 mm head tube. AliExpress frame inbound.",
     "src": "https://www.3daistudio.com/public/89af1658-2198-47b1-b6d6-df0cf2d17c76",
     "thumb": "https://s.3daistudio.com/media/thumbnails/1485305878126059520_thumbnail.png"
+  },
+  {
+    "id": "rear-shock",
+    "label": "Rear shock",
+    "studioTitle": "Metal and rubber component with threaded ends.",
+    "tags": ["suspension", "chassis", "SelfS1"],
+    "notes": "Rear shock for the Kalosse folding frame. Eyelet mounts, rubber-sleeved body. Comes with the inbound chassis.",
+    "src": "https://www.3daistudio.com/public/5b7d7e85-d8ec-439e-94cd-a7127cc428df",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485305659380531200_thumbnail.png"
   }
 ]
