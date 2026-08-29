@@ -264,5 +264,15 @@
     "src": "https://www.3daistudio.com/public/88b6faf8-48aa-4a68-98cc-f2c8c21f2897",
     "thumb": "https://s.3daistudio.com/media/thumbnails/15fd54c9-f92d-4b3a-bd8d-4ea414a61cc1_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_130036_Metal_screw_with_a_rounded_head_Prism_31_045995b4.glb"
+  },
+  {
+    "id": "rear-rack",
+    "label": "Rear rack / battery deck",
+    "studioTitle": "Metal bracket with curved arms and mounting holes.",
+    "tags": ["rack", "battery", "SelfS1"],
+    "notes": "Stay-mounted deck for the 59 lb lock-in pack (19–20″ × 6.5″ × 4.5–5″). Left side stays open for disc, caliper, and phase/Hall.",
+    "src": "https://www.3daistudio.com/public/2e948a0f-75fd-40ac-8b8a-0eee94dcc93d",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/b5ce4e33-e9da-4261-9aa1-7d5552e0efa2_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125336_Metal_bracket_with_curved_arms_and_mounting_holes_Prism_31_Multi_Image_abba4c7e.glb"
   }
 ]
