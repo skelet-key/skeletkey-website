@@ -2007,8 +2007,8 @@ p strong,
 
 .hero-rotator-inner .rot-and {
   font-style: normal;
-  font-weight: 700;
-  color: #fff;
+  font-weight: 400;
+  color: inherit;
   margin-right: 0.28em;
 }
 
