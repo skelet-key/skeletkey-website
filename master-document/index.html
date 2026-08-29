@@ -204,6 +204,69 @@
     .md-body iframe.doc-embed {
       width: 100%; min-height: 75vh; border: 1px solid var(--border); border-radius: 12px; background: #fff;
     }
+
+    .parts-3d { margin: 0 0 2.25rem; }
+    .parts-3d > h2 { font-size: 1.15rem; margin: 0 0 0.4rem; }
+    .parts-3d .parts-intro {
+      color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin: 0 0 0.85rem;
+    }
+    .parts-glossary {
+      display: flex; flex-wrap: wrap; gap: 0.4rem 0.55rem;
+      margin: 0 0 0.75rem; padding: 0.75rem 0.85rem;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    }
+    .parts-glossary a {
+      font-size: 0.82rem; font-weight: 600; color: var(--text);
+      text-decoration: none; border-bottom: 1px dashed rgba(255,255,255,0.25);
+    }
+    .parts-glossary a:hover { color: #fff; border-bottom-color: #ff6b7a; }
+    .parts-glossary .gl-tag {
+      font-weight: 500; color: var(--text-muted); border-bottom: 0; font-size: 0.72rem;
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .parts-toolbar { display: flex; gap: 0.5rem; margin: 0 0 0.85rem; }
+    .parts-toolbar button {
+      padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    }
+    .parts-toolbar button:hover { color: #fff; border-color: var(--text-muted); }
+    .part-card {
+      margin: 0 0 0.65rem; border: 1px solid var(--border); border-radius: 12px;
+      background: var(--surface); overflow: hidden;
+    }
+    .part-card > summary {
+      list-style: none; cursor: pointer; display: flex; align-items: center; gap: 0.85rem;
+      padding: 0.7rem 0.9rem; user-select: none;
+    }
+    .part-card > summary::-webkit-details-marker { display: none; }
+    .part-card > summary::before {
+      content: "▸"; color: var(--text-muted); font-size: 0.75rem; width: 0.9rem; flex: none;
+    }
+    .part-card[open] > summary::before { content: "▾"; }
+    .part-thumb {
+      width: 56px; height: 56px; object-fit: cover; border-radius: 8px;
+      background: #0B0F19; flex: none;
+    }
+    .part-sum-text { min-width: 0; flex: 1; }
+    .part-sum-text strong { display: block; color: var(--text); font-size: 0.98rem; }
+    .part-sum-text .studio { display: block; color: var(--text-muted); font-size: 0.78rem; margin-top: 0.1rem; }
+    .part-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.35rem; }
+    .part-tags span {
+      font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 0.12rem 0.4rem; border-radius: 999px;
+      border: 1px solid var(--border); color: var(--text-muted);
+    }
+    .part-body { padding: 0 0.9rem 0.95rem; border-top: 1px solid var(--border); }
+    .part-notes { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; margin: 0.75rem 0 0.65rem; }
+    .part-frame {
+      width: 100%; height: min(480px, 62vh); border: 0; border-radius: 10px;
+      background: #0B0F19; display: block;
+    }
+    .part-open {
+      display: inline-block; margin-top: 0.55rem; font-size: 0.82rem; color: #ff6b7a;
+    }
+    .part-open:hover { color: #fff; }
+
   </style>
   <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
 </head>
@@ -241,6 +304,20 @@
     </p>
 
     <div id="docIndex">
+    <section class="parts-3d" id="parts-3d">
+      <h2>3D parts library</h2>
+      <p class="parts-intro">
+        Interactive 3D AI Studio models for every Puca part. Glossary is linkable
+        (<code>#part=id</code>). Expand a card to load the viewer.
+      </p>
+      <nav class="parts-glossary" id="partsGlossary" aria-label="Parts glossary"></nav>
+      <div class="parts-toolbar">
+        <button type="button" id="partsExpandAll">Expand all</button>
+        <button type="button" id="partsCollapseAll">Collapse all</button>
+      </div>
+      <div id="parts3dList"></div>
+    </section>
+
     <div class="app-phone-stage">
     <figure class="diagram-card">
       <video
@@ -603,9 +680,147 @@
       function maybeOpenFromHash() {
         if (!isUnlocked()) return;
         var doc = currentHashDoc();
-        if (doc) openDoc(doc);
-        else showIndex();
+        if (doc) { openDoc(doc); return; }
+        showIndex();
+        openPartFromHash();
       }
+
+      function currentHashPart() {
+        var h = (window.location.hash || "").replace(/^#/, "");
+        if (h.indexOf("part=") === 0) {
+          try { return decodeURIComponent(h.slice(5)); }
+          catch (e) { return ""; }
+        }
+        if (h.indexOf("part-") === 0) return h.slice(5);
+        return "";
+      }
+      function openPartFromHash() {
+        var id = currentHashPart();
+        if (!id) return;
+        var el = document.getElementById("part-" + id);
+        if (!el) return;
+        el.open = true;
+        loadPartFrame(el);
+        try { el.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
+      }
+      function loadPartFrame(details) {
+        var frame = details.querySelector("iframe.part-frame");
+        if (!frame || frame.getAttribute("src")) return;
+        var src = frame.getAttribute("data-src");
+        if (src) frame.src = src;
+      }
+      function renderParts3d(parts) {
+        var list = document.getElementById("parts3dList");
+        var gloss = document.getElementById("partsGlossary");
+        if (!list || !gloss) return;
+        gloss.innerHTML = "";
+        list.innerHTML = "";
+        if (!parts.length) {
+          gloss.textContent = "No 3D parts yet.";
+          return;
+        }
+        parts.forEach(function (p, i) {
+          var ga = document.createElement("a");
+          ga.href = "#part=" + encodeURIComponent(p.id);
+          ga.textContent = (i + 1) + ". " + p.label;
+          gloss.appendChild(ga);
+          (p.tags || []).forEach(function (t) {
+            var s = document.createElement("span");
+            s.className = "gl-tag";
+            s.textContent = t;
+            gloss.appendChild(s);
+          });
+
+          var d = document.createElement("details");
+          d.className = "part-card";
+          d.id = "part-" + p.id;
+          if (i === 0) d.open = true;
+
+          var sum = document.createElement("summary");
+          if (p.thumb) {
+            var img = document.createElement("img");
+            img.className = "part-thumb";
+            img.src = p.thumb;
+            img.alt = "";
+          }
+          var txt = document.createElement("div");
+          txt.className = "part-sum-text";
+          var strong = document.createElement("strong");
+          strong.textContent = p.label;
+          txt.appendChild(strong);
+          if (p.studioTitle) {
+            var st = document.createElement("span");
+            st.className = "studio";
+            st.textContent = p.studioTitle;
+            txt.appendChild(st);
+          }
+          if (p.tags && p.tags.length) {
+            var tags = document.createElement("div");
+            tags.className = "part-tags";
+            p.tags.forEach(function (t) {
+              var chip = document.createElement("span");
+              chip.textContent = t;
+              tags.appendChild(chip);
+            });
+            txt.appendChild(tags);
+          }
+          if (p.thumb) sum.appendChild(img);
+          sum.appendChild(txt);
+          d.appendChild(sum);
+
+          var body = document.createElement("div");
+          body.className = "part-body";
+          if (p.notes) {
+            var notes = document.createElement("p");
+            notes.className = "part-notes";
+            notes.textContent = p.notes;
+            body.appendChild(notes);
+          }
+          var frame = document.createElement("iframe");
+          frame.className = "part-frame";
+          frame.title = p.label;
+          frame.setAttribute("data-src", p.src);
+          frame.setAttribute("allow", "fullscreen; xr-spatial-tracking; autoplay");
+          frame.setAttribute("loading", "lazy");
+          frame.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+          body.appendChild(frame);
+          var open = document.createElement("a");
+          open.className = "part-open";
+          open.href = p.src;
+          open.target = "_blank";
+          open.rel = "noopener";
+          open.textContent = "Open in 3D AI Studio ↗";
+          body.appendChild(open);
+          d.appendChild(body);
+
+          d.addEventListener("toggle", function () {
+            if (d.open) loadPartFrame(d);
+          });
+          list.appendChild(d);
+          if (d.open) loadPartFrame(d);
+        });
+      }
+      fetch("parts-3d.json", { credentials: "same-origin" })
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .then(function (parts) {
+          renderParts3d(Array.isArray(parts) ? parts : []);
+          if (isUnlocked()) openPartFromHash();
+        })
+        .catch(function () { renderParts3d([]); });
+
+      var expandAll = document.getElementById("partsExpandAll");
+      var collapseAll = document.getElementById("partsCollapseAll");
+      if (expandAll) expandAll.addEventListener("click", function () {
+        Array.prototype.forEach.call(document.querySelectorAll(".part-card"), function (d) {
+          d.open = true;
+          loadPartFrame(d);
+        });
+      });
+      if (collapseAll) collapseAll.addEventListener("click", function () {
+        Array.prototype.forEach.call(document.querySelectorAll(".part-card"), function (d) {
+          d.open = false;
+        });
+      });
 
       function unlock() {
         document.body.classList.remove("locked");
