@@ -174,7 +174,8 @@
     "notes": "Sealed cartridge for the 44 mm head tube (ZS44 / 28.6 mm steerer). Pairs with the crown race, star nut, and top cap.",
     "src": "https://www.3daistudio.com/public/6a1a8e38-28a2-4f32-be4e-5b252da26789",
     "thumb": "https://s.3daistudio.com/media/thumbnails/c7de60ea-77ca-4a51-bfc5-7c5b315a06ae_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125918_Small_white_circular_object_on_surface_Prism_31_05910ed2.glb"
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125918_Small_white_circular_object_on_surface_Prism_31_05910ed2.glb",
+    "group": "fasteners"
   },
   {
     "id": "o-ring",
@@ -188,7 +189,8 @@
     "notes": "Translucent elastomer O-ring. Headset dust seal, QS8 boots, and pack lock faces \u2014 keeps the IP65 rating.",
     "src": "https://www.3daistudio.com/public/6188f804-1cf5-4762-8a93-659fefa08037",
     "thumb": "https://s.3daistudio.com/media/thumbnails/afa96d3a-5751-4331-a654-6155b18c959b_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125939_Small_circular_translucent_plastic_ring_on_surface_Prism_31_d05c3ac0.glb"
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125939_Small_circular_translucent_plastic_ring_on_surface_Prism_31_d05c3ac0.glb",
+    "group": "fasteners"
   },
   {
     "id": "o-ring-2",
@@ -202,7 +204,8 @@
     "notes": "Second elastomer O-ring. Same duty as the first: headset, QS8 boots, pack lock faces \u2014 IP65.",
     "src": "https://www.3daistudio.com/public/e0998295-e26a-4753-b5db-288e7a5d882e",
     "thumb": "https://s.3daistudio.com/media/thumbnails/ca6ad36f-7be2-4464-9b4d-75efd11514b7_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125927_Small_circular_adhesive_tape_roll_Prism_31_6231b30d.glb"
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125927_Small_circular_adhesive_tape_roll_Prism_31_6231b30d.glb",
+    "group": "fasteners"
   },
   {
     "id": "cable-p-clamp",
