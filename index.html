@@ -91,34 +91,55 @@
 <body>
 
   <!-- NAV -->
-  <nav class="nav">
-    <a href="/" class="nav-logo">
-      <img
-        src="assets/skeletkey-logo-key-nav.png"
-        srcset="assets/skeletkey-logo-key-nav.png 2x, assets/skeletkey-logo-key-nav@3x.png 3x"
-        alt=""
-        class="nav-logo-key"
-        width="42"
-        height="40"
-      />
-      <span class="nav-logo-text">Skelet<span>Key</span></span>
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#bike">The Bike</a></li>
-      <li><a href="#specs">Range & Specs</a></li>
-      <li><a href="#fold">Fold & Travel</a></li>
-      <li><a href="#savings">Savings</a></li>
-      <li><a href="#display">Display</a></li>
-      <li><a href="#battery">Battery</a></li>
-      <li><a href="#charge">Charge</a></li>
-      <li><a href="#maintain">Maintain</a></li>
-      <li><a href="#history">History</a></li>
-      <li><a href="#story">Story</a></li>
-      <li><a href="#work">Work with us</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#order" class="nav-cta">Order</a></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+  <nav class="nav" id="siteNav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img
+          src="assets/skeletkey-logo-key-nav.png"
+          srcset="assets/skeletkey-logo-key-nav.png 2x, assets/skeletkey-logo-key-nav@3x.png 3x"
+          alt=""
+          class="nav-logo-key"
+          width="42"
+          height="40"
+        />
+        <span class="nav-logo-text">Skelet<span>Key</span></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#bike">The Bike</a></li>
+        <li><a href="#specs">Range & Specs</a></li>
+        <li><a href="#fold">Fold & Travel</a></li>
+        <li><a href="#savings">Savings</a></li>
+        <li><a href="#display">Display</a></li>
+        <li><a href="#battery">Battery</a></li>
+        <li><a href="#charge">Charge</a></li>
+        <li><a href="#maintain">Maintain</a></li>
+        <li><a href="#history">History</a></li>
+        <li><a href="#story">Story</a></li>
+        <li><a href="#work">Work with us</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#order" class="nav-cta">Order</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="navMobile" aria-hidden="true">
+      <div class="nav-mobile-links">
+        <a href="#bike">The Bike</a>
+        <a href="#specs">Range & Specs</a>
+        <a href="#fold">Fold & Travel</a>
+        <a href="#savings">Savings</a>
+        <a href="#display">Display</a>
+        <a href="#battery">Battery</a>
+        <a href="#charge">Charge</a>
+        <a href="#maintain">Maintain</a>
+        <a href="#history">History</a>
+        <a href="#story">Story</a>
+        <a href="#work">Work with us</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a href="#order" class="nav-mobile-cta">Reserve Yours</a>
+    </div>
   </nav>
 
   <!-- HERO -->

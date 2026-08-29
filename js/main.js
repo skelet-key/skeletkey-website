@@ -2,24 +2,57 @@
 document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.getElementById("navToggle");
   const links = document.getElementById("navLinks");
+  const nav = document.getElementById("siteNav") || document.querySelector(".nav");
+  const mobile = document.getElementById("navMobile");
+  let menuScrollY = 0;
 
-  if (toggle && links) {
+  function setMenuOpen(open) {
+    if (!nav) return;
+    nav.classList.toggle("is-menu-open", open);
+    if (toggle) {
+      toggle.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    }
+    if (mobile) {
+      mobile.classList.toggle("is-open", open);
+      mobile.setAttribute("aria-hidden", open ? "false" : "true");
+    }
+    document.documentElement.classList.toggle("nav-menu-open", open);
+    if (open) {
+      menuScrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = "-" + menuScrollY + "px";
+      document.body.style.width = "100%";
+    } else {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      window.scrollTo(0, menuScrollY);
+    }
+  }
+
+  if (toggle) {
     toggle.addEventListener("click", () => {
-      links.classList.toggle("open");
-    });
-
-    links.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => {
-        links.classList.remove("open");
-      });
+      setMenuOpen(!nav.classList.contains("is-menu-open"));
     });
   }
 
-  // Subtle nav background on scroll
-  const nav = document.querySelector(".nav");
+  if (mobile) {
+    mobile.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => setMenuOpen(false));
+    });
+  }
+
+  if (links) {
+    links.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => setMenuOpen(false));
+    });
+  }
+
   const onNavScroll = () => {
-    if (!nav) return;
-    nav.classList.toggle("is-scrolled", window.scrollY > 40);
+    if (!nav || nav.classList.contains("is-menu-open")) return;
+    nav.classList.toggle("is-scrolled", window.scrollY > 24);
   };
   onNavScroll();
   window.addEventListener("scroll", onNavScroll, { passive: true });
