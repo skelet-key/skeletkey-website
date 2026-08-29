@@ -13,15 +13,28 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/controller_upscaled_Bright_green_electronic_control_unit_with_connecto_Hunyuan_3D_v31_d8fe8a9c.glb"
   },
   {
+    "id": "fardriver-harness",
+    "label": "FarDriver ND72360 plugin harness",
+    "studioTitle": "Multi-colored electrical connectors on a harness.",
+    "tags": [
+      "controller",
+      "HAVE"
+    ],
+    "notes": "30-pin signal pigtail that plugs into the FarDriver ND72360-W. Phase U/V/W and pack B+/B\u2212 are the thick leads on the ECU itself, not this block.\n\nThrottle (3-pin white) \u2014 red +5 V, black GND, green 0.8\u20134.2 V signal. Goes to the 7/8\u2033 throttle, or to the LoRa RX throttle output.\n\nE-lock / ignition (2-pin) \u2014 switched enable. Series with the BLE ignition relay and a physical e-stop. Controller is dead until this closes.\n\nBrake cutoff (2-pin) \u2014 grounds when a lever is pulled. Front and rear in parallel; also the LoRa RX brake line.\n\nHall (5\u20136 pin white) \u2014 +5 V, GND, HU / HV / HW from the QS205 waterproof hall plug.\n\nMotor temp \u2014 KTY83/122 from the QS205 (in the hall loom or a separate 2-pin).\n\nSerial (3-pin) \u2014 RX / TX / GND. Optional USB adapter; this -W unit uses the FarDriver Bluetooth app as primary.",
+    "src": "https://www.3daistudio.com/public/abfa0da5-250d-44fa-b570-904d50453bdd",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485303693338279936_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_103906_Multi_colored_electrical_connectors_on_a_harness_Hunyuan_3D_v31_a1945707.glb"
+  },
+  {
     "id": "dual-magnet-bar-clamp",
     "label": "Dual-magnet bar clamp",
     "studioTitle": "Black two-sided mirror with adjustable arm.",
     "tags": [
       "dash",
       "windscreen",
-      "HAVE"
+      "NEED"
     ],
-    "notes": "Center 22.2 mm clamp. MagSafe pad (raised ring, ~3 mm) on the short arm for the phone dash; 4.5\u2033 magnet on the longer arm for the detachable windscreen. Both faces point at the rider.",
+    "notes": "NEED \u2014 not in hand. Center 22.2 mm clamp. MagSafe pad (raised ring, ~3 mm) on the short arm for the phone dash; 4.5\u2033 magnet on the longer arm for the detachable windscreen. Both faces point at the rider.",
     "src": "https://www.3daistudio.com/public/9d4ddf41-c66b-4a58-be56-236bf437da29",
     "thumb": "https://s.3daistudio.com/media/thumbnails/b2c6406e-e3ac-4b8b-9d1d-9bd04bd55588_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/mag_Black_two_sided_mirror_with_adjustable_arm_Prism_31_3ce736bd.glb"

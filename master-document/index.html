@@ -257,8 +257,15 @@
       padding: 0.12rem 0.4rem; border-radius: 999px;
       border: 1px solid var(--border); color: var(--text-muted);
     }
+    .part-tags span.tag-need,
+    .parts-glossary .gl-tag.tag-need {
+      color: #ff6b7a; border-color: rgba(255,107,122,0.55);
+    }
+    .part-tags span.tag-have {
+      color: #8fd9a8; border-color: rgba(143,217,168,0.4);
+    }
     .part-body { padding: 0.75rem 0 0.95rem; border-top: 1px solid var(--border); }
-    .part-notes { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; margin: 0.75rem 0.9rem 0.65rem; }
+    .part-notes { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; margin: 0.75rem 0.9rem 0.65rem; white-space: pre-line; }
     .part-frame {
       display: block;
       width: 100%;
@@ -795,7 +802,7 @@
           row.appendChild(ga);
           (p.tags || []).forEach(function (t) {
             var s = document.createElement("span");
-            s.className = "gl-tag";
+            s.className = "gl-tag" + (t === "NEED" ? " tag-need" : t === "HAVE" ? " tag-have" : "");
             s.textContent = t;
             row.appendChild(s);
           });
@@ -830,6 +837,7 @@
             tags.className = "part-tags";
             p.tags.forEach(function (t) {
               var chip = document.createElement("span");
+              chip.className = t === "NEED" ? "tag-need" : t === "HAVE" ? "tag-have" : "";
               chip.textContent = t;
               tags.appendChild(chip);
             });
