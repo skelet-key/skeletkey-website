@@ -142,6 +142,7 @@
       .app-phone-stage { width: 100%; margin-left: 0; transform: none; }
       .app-phone { max-height: none; aspect-ratio: 2 / 1; border-radius: 1.4rem; padding: 0.35rem; }
       .app-phone-screen { border-radius: 1.05rem; }
+      .part-frame { max-height: none; aspect-ratio: 2 / 1; }
     }
     .diagram-card figcaption {
       padding: 0.65rem 1rem 0.85rem; font-size: 0.85rem; color: var(--text-muted);
@@ -235,7 +236,7 @@
     .parts-toolbar button:hover { color: #fff; border-color: var(--text-muted); }
     .part-card {
       margin: 0 0 0.65rem; border: 1px solid var(--border); border-radius: 12px;
-      background: var(--surface); overflow: hidden;
+      background: var(--surface); overflow: visible;
     }
     .part-card > summary {
       list-style: none; cursor: pointer; display: flex; align-items: center; gap: 0.85rem;
@@ -259,15 +260,21 @@
       padding: 0.12rem 0.4rem; border-radius: 999px;
       border: 1px solid var(--border); color: var(--text-muted);
     }
-    .part-body { padding: 0 0.9rem 0.95rem; border-top: 1px solid var(--border); }
-    .part-notes { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; margin: 0.75rem 0 0.65rem; }
+    .part-body { padding: 0.75rem 0 0.95rem; border-top: 1px solid var(--border); }
+    .part-notes { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; margin: 0.75rem 0.9rem 0.65rem; }
     .part-frame {
-      width: 100%; height: min(480px, 62vh); border: 0; border-radius: 10px;
-      background: #0B0F19; display: block;
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1280 / 658;
+      max-height: min(520px, 72vh);
+      border: 0;
+      border-radius: 12px;
+      background: #0B0F19;
     }
     model-viewer.part-frame { --poster-color: #0B0F19; }
     .part-open {
-      display: inline-block; margin-top: 0.55rem; font-size: 0.82rem; color: #ff6b7a;
+      display: inline-block; margin: 0.55rem 0.9rem 0; font-size: 0.82rem; color: #ff6b7a;
     }
     .part-open:hover { color: #fff; }
 
@@ -824,7 +831,13 @@
             frame.setAttribute("loading", "lazy");
             frame.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
           }
-          body.appendChild(frame);
+          var stage = document.createElement("div");
+          stage.className = "app-phone-stage";
+          var shell = document.createElement("div");
+          shell.className = "diagram-card";
+          shell.appendChild(frame);
+          stage.appendChild(shell);
+          body.appendChild(stage);
           var open = document.createElement("a");
           open.className = "part-open";
           open.href = p.src;
