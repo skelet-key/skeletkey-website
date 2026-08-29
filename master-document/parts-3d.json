@@ -121,6 +121,19 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/05_stem_286_222_Black_metal_clamp_with_multiple_screws_Prism_31_ee6b149a.glb"
   },
   {
+    "id": "pro-872-bars",
+    "label": "PRO+ 872 handlebars",
+    "studioTitle": "Black BMX bicycle handlebars.",
+    "tags": [
+      "bars",
+      "HAVE"
+    ],
+    "notes": "Bought. PRO+ 872 steel, 22.2 mm / 7/8\u2033 the whole bar, 28\u2033 wide \u00d7 8\u2033 rise. Fits the 22.2 stem and 7/8\u2033 throttle/levers.",
+    "src": "https://www.3daistudio.com/public/7d6e225a-16d5-45c4-8c45-6c53ab5e1640",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1ecea753-ec0a-4b60-903f-877043291638_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/bars_angle2_Black_BMX_bicycle_handlebars_Prism_31_4ab121f1.glb"
+  },
+  {
     "id": "hub-dropout-190",
     "label": "190 mm hub dropout",
     "studioTitle": "Metal bracket with curved arms and mounting holes.",
