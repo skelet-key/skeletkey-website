@@ -184,5 +184,15 @@
     "src": "https://www.3daistudio.com/public/600540e1-9317-4509-9bc8-00ff4012d7e7",
     "thumb": "https://s.3daistudio.com/media/thumbnails/0d9e13cb-2857-42e0-a123-bd28590b1d9e_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125828_Small_light_colored_circular_plastic_object_Prism_31_8e386a32.glb"
+  },
+  {
+    "id": "nylon-washer",
+    "label": "Nylon washer",
+    "studioTitle": "Small white circular plastic washer on surface.",
+    "tags": ["hardware", "SelfS1"],
+    "notes": "Flat nylon washer. Sits under hex-head bolts and P-clamp screws so hardware doesn’t chew the frame paint.",
+    "src": "https://www.3daistudio.com/public/df472aac-0036-4332-b203-089cbb8e29ab",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/21b850c6-f02c-405c-b7f2-7bd2a00afa16_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125836_Small_white_circular_plastic_washer_on_surface_Prism_31_29e1c44f.glb"
   }
 ]
