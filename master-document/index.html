@@ -733,7 +733,24 @@
         if (h.indexOf("part-") === 0) return h.slice(5);
         return "";
       }
+      function currentHashGroup() {
+        var h = (window.location.hash || "").replace(/^#/, "");
+        if (h.indexOf("group=") === 0) {
+          try { return decodeURIComponent(h.slice(6)); }
+          catch (e) { return ""; }
+        }
+        return "";
+      }
       function openPartFromHash() {
+        var gid = currentHashGroup();
+        if (gid) {
+          var g = document.getElementById("group-" + gid);
+          if (g) {
+            g.open = true;
+            try { g.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
+          }
+          return;
+        }
         var id = currentHashPart();
         if (!id) return;
         var el = document.getElementById("part-" + id);
@@ -792,21 +809,24 @@
         if (cur.items.length) groups.push(cur);
 
         var n = 0;
-        function addCard(p, host, startOpen) {
+        function addGlossRow(label, href, tags) {
           n += 1;
           var row = document.createElement("div");
           row.className = "gl-row";
           var ga = document.createElement("a");
-          ga.href = "#part=" + encodeURIComponent(p.id);
-          ga.textContent = n + ". " + p.label;
+          ga.href = href;
+          ga.textContent = n + ". " + label;
           row.appendChild(ga);
-          (p.tags || []).forEach(function (t) {
+          (tags || []).forEach(function (t) {
             var s = document.createElement("span");
             s.className = "gl-tag" + (t === "NEED" ? " tag-need" : t === "HAVE" ? " tag-have" : "");
             s.textContent = t;
             row.appendChild(s);
           });
           gloss.appendChild(row);
+        }
+        function addCard(p, host, startOpen, skipGloss) {
+          if (!skipGloss) addGlossRow(p.label, "#part=" + encodeURIComponent(p.id), p.tags);
 
           var d = document.createElement("details");
           d.className = "part-card";
@@ -919,12 +939,9 @@
             list.appendChild(wrap);
             host = inner;
             startOpen = false;
-            var gh = document.createElement("div");
-            gh.className = "gl-row gl-group";
-            gh.textContent = "Fasteners (collapsed)";
-            gloss.appendChild(gh);
+            addGlossRow("Fasteners", "#group=fasteners", ["HAVE"]);
           }
-          g.items.forEach(function (p) { addCard(p, host, startOpen); });
+          g.items.forEach(function (p) { addCard(p, host, startOpen, g.id === "fasteners"); });
         });
       }
       fetch("parts-3d.json", { credentials: "same-origin" })
