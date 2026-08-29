@@ -274,6 +274,29 @@
       display: inline-block; margin: 0.55rem 0.9rem 0; font-size: 0.82rem; color: #ff6b7a;
     }
     .part-open:hover { color: #fff; }
+    .part-group {
+      margin: 1.1rem 0 0.65rem; border: 1px solid var(--border); border-radius: 12px;
+      background: var(--surface);
+    }
+    .part-group > summary {
+      list-style: none; cursor: pointer; padding: 0.85rem 1rem;
+      font-weight: 600; font-size: 0.98rem; user-select: none;
+      display: flex; align-items: center; gap: 0.55rem;
+    }
+    .part-group > summary::-webkit-details-marker { display: none; }
+    .part-group > summary::before {
+      content: "▸"; color: var(--text-muted); font-size: 0.75rem; width: 0.9rem;
+    }
+    .part-group[open] > summary::before { content: "▾"; }
+    .part-group > summary .count {
+      margin-left: auto; font-size: 0.75rem; font-weight: 500; color: var(--text-muted);
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .part-group-body { padding: 0 0.55rem 0.55rem; }
+    .parts-glossary .gl-group {
+      color: var(--text-muted); font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.55rem;
+    }
 
   </style>
   <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
@@ -708,6 +731,8 @@
         if (!id) return;
         var el = document.getElementById("part-" + id);
         if (!el) return;
+        var group = el.closest(".part-group");
+        if (group) group.open = true;
         el.open = true;
         loadPartFrame(el);
         try { el.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
@@ -747,12 +772,26 @@
           gloss.textContent = "No 3D parts yet.";
           return;
         }
-        parts.forEach(function (p, i) {
+        var groups = [];
+        var cur = { id: null, items: [] };
+        parts.forEach(function (p) {
+          var g = p.group || null;
+          if (g !== cur.id) {
+            if (cur.items.length) groups.push(cur);
+            cur = { id: g, items: [] };
+          }
+          cur.items.push(p);
+        });
+        if (cur.items.length) groups.push(cur);
+
+        var n = 0;
+        function addCard(p, host, startOpen) {
+          n += 1;
           var row = document.createElement("div");
           row.className = "gl-row";
           var ga = document.createElement("a");
           ga.href = "#part=" + encodeURIComponent(p.id);
-          ga.textContent = (i + 1) + ". " + p.label;
+          ga.textContent = n + ". " + p.label;
           row.appendChild(ga);
           (p.tags || []).forEach(function (t) {
             var s = document.createElement("span");
@@ -765,11 +804,12 @@
           var d = document.createElement("details");
           d.className = "part-card";
           d.id = "part-" + p.id;
-          d.open = true;
+          d.open = !!startOpen;
 
           var sum = document.createElement("summary");
+          var img;
           if (p.thumb) {
-            var img = document.createElement("img");
+            img = document.createElement("img");
             img.className = "part-thumb";
             img.src = p.thumb;
             img.alt = "";
@@ -795,7 +835,7 @@
             });
             txt.appendChild(tags);
           }
-          if (p.thumb) sum.appendChild(img);
+          if (img) sum.appendChild(img);
           sum.appendChild(txt);
           d.appendChild(sum);
 
@@ -847,8 +887,36 @@
           d.addEventListener("toggle", function () {
             if (d.open) watchPart(d);
           });
-          list.appendChild(d);
+          host.appendChild(d);
           if (d.open) watchPart(d);
+        }
+
+        groups.forEach(function (g) {
+          var host = list;
+          var startOpen = true;
+          if (g.id === "fasteners") {
+            var wrap = document.createElement("details");
+            wrap.className = "part-group";
+            wrap.id = "group-fasteners";
+            var gsum = document.createElement("summary");
+            gsum.appendChild(document.createTextNode("Fasteners — bolts, screws, nuts, washers"));
+            var count = document.createElement("span");
+            count.className = "count";
+            count.textContent = g.items.length + " parts";
+            gsum.appendChild(count);
+            wrap.appendChild(gsum);
+            var inner = document.createElement("div");
+            inner.className = "part-group-body";
+            wrap.appendChild(inner);
+            list.appendChild(wrap);
+            host = inner;
+            startOpen = false;
+            var gh = document.createElement("div");
+            gh.className = "gl-row gl-group";
+            gh.textContent = "Fasteners (collapsed)";
+            gloss.appendChild(gh);
+          }
+          g.items.forEach(function (p) { addCard(p, host, startOpen); });
         });
       }
       fetch("parts-3d.json", { credentials: "same-origin" })
@@ -862,13 +930,14 @@
       var expandAll = document.getElementById("partsExpandAll");
       var collapseAll = document.getElementById("partsCollapseAll");
       if (expandAll) expandAll.addEventListener("click", function () {
+        Array.prototype.forEach.call(document.querySelectorAll(".part-group"), function (d) { d.open = true; });
         Array.prototype.forEach.call(document.querySelectorAll(".part-card"), function (d) {
           d.open = true;
           watchPart(d);
         });
       });
       if (collapseAll) collapseAll.addEventListener("click", function () {
-        Array.prototype.forEach.call(document.querySelectorAll(".part-card"), function (d) {
+        Array.prototype.forEach.call(document.querySelectorAll(".part-group, .part-card"), function (d) {
           d.open = false;
         });
       });

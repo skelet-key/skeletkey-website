@@ -44,19 +44,34 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/windscreen_real_Translucent_brown_shield_with_mounting_holes_Hunyuan_3D_v31_c05ff503.glb"
   },
   {
-    "id": "front-fork",
-    "label": "Front fork",
+    "id": "back-fork",
+    "label": "Back fork",
     "studioTitle": "Metal U-shaped object with two protruding ends.",
     "tags": [
       "fork",
-      "front-end",
+      "rear",
       "HAVE",
       "SelfS1"
     ],
-    "notes": "Rigid U-blade fork for the 20\u00d74 front wheel. Dropout slots on both ends; steerer for the 44 mm head tube. Pairs with the 20\u00d74 rim and street tire on order.",
+    "notes": "Rear / back fork. Dropout ends take the driven-wheel side of the chassis.",
     "src": "https://www.3daistudio.com/public/304b1271-4696-4e94-92af-26ef4643d572",
     "thumb": "https://s.3daistudio.com/media/thumbnails/1485309183057256448_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_101545_Metal_U_shaped_object_with_two_protruding_ends_Hunyuan_3D_v31_3b9ec6df.glb"
+  },
+  {
+    "id": "hub-dropout-190",
+    "label": "190 mm hub dropout",
+    "studioTitle": "Metal bracket with curved arms and mounting holes.",
+    "tags": [
+      "dropout",
+      "motor",
+      "HAVE",
+      "SelfS1"
+    ],
+    "notes": "190 mm rear dropout for the QS205 50H 3T hub motor. Left side stays open for disc, caliper, and phase/Hall.",
+    "src": "https://www.3daistudio.com/public/2e948a0f-75fd-40ac-8b8a-0eee94dcc93d",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/b5ce4e33-e9da-4261-9aa1-7d5552e0efa2_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125336_Metal_bracket_with_curved_arms_and_mounting_holes_Prism_31_Multi_Image_abba4c7e.glb"
   },
   {
     "id": "dc-dc-72-12",
@@ -146,34 +161,6 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125328_Black_wheel_with_gear_mechanism_attached_Prism_31_Multi_Image_d2659f53.glb"
   },
   {
-    "id": "isolator-bolt",
-    "label": "Mount bolt + nylon washer",
-    "studioTitle": "Metal bolt with a plastic washer attached.",
-    "tags": [
-      "hardware",
-      "HAVE",
-      "SelfS1"
-    ],
-    "notes": "Grade 8 fastener with a nylon isolator washer. Seat pan, stay clamps, and shock eyelets \u2014 keeps the chassis from metal-to-metal rattle.",
-    "src": "https://www.3daistudio.com/public/676923c7-3c78-411d-ab6d-be28b72b2833",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/2be5b0e7-8826-4a49-9aa5-bc76de6900e8_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125656_Metal_bolt_with_a_plastic_washer_attached_Prism_31_c041f6a8.glb"
-  },
-  {
-    "id": "hex-bolt",
-    "label": "Hex-head bolt",
-    "studioTitle": "Metal bolt with hexagonal head and shaft.",
-    "tags": [
-      "hardware",
-      "HAVE",
-      "SelfS1"
-    ],
-    "notes": "Grade 8 hex-head bolt. Frame, rack, and dropout hardware \u2014 pairs with the nylon-washer isolator bolt.",
-    "src": "https://www.3daistudio.com/public/99090f11-cf06-4350-974b-c89ec5871168",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/f291ffb4-1e48-438b-95d6-eeda1635bde0_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125713_Metal_bolt_with_hexagonal_head_and_shaft_Prism_31_c8892755.glb"
-  },
-  {
     "id": "cable-p-clamp",
     "label": "Cable P-clamp",
     "studioTitle": "Metal clip with screw and washer attachment.",
@@ -187,78 +174,6 @@
     "src": "https://www.3daistudio.com/public/608489cf-8d95-4b74-8dce-6d03e9a24aa8",
     "thumb": "https://s.3daistudio.com/media/thumbnails/c8be0d6d-c7c8-4d4b-9774-4107373e02d8_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125722_Metal_clip_with_screw_and_washer_attachment_Prism_31_Multi_Image_c045c6e3.glb"
-  },
-  {
-    "id": "fold-hinge-pin",
-    "label": "Fold-hinge pin",
-    "studioTitle": "Metal cylindrical object with a hole.",
-    "tags": [
-      "chassis",
-      "hardware",
-      "HAVE",
-      "SelfS1"
-    ],
-    "notes": "Clevis / fold-lock pin with a cross-hole. Holds the carbon-steel chassis open for riding; pulls for travel fold.",
-    "src": "https://www.3daistudio.com/public/0630a014-2c08-4d6d-ae43-5b1957cad422",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/dccd9c71-21bb-4f05-8020-e90180176d5f_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125805_Metal_cylindrical_object_with_a_hole_Prism_31_35b6d663.glb"
-  },
-  {
-    "id": "nylon-bushing",
-    "label": "Nylon isolator bushing",
-    "studioTitle": "Small, light-colored circular plastic object.",
-    "tags": [
-      "hardware",
-      "seat",
-      "HAVE",
-      "SelfS1"
-    ],
-    "notes": "Shoulder bushing for the caf\u00e9 racer seat pan and stay clamps. Isolates vibration between the seat/rack and the carbon-steel frame.",
-    "src": "https://www.3daistudio.com/public/600540e1-9317-4509-9bc8-00ff4012d7e7",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/0d9e13cb-2857-42e0-a123-bd28590b1d9e_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125828_Small_light_colored_circular_plastic_object_Prism_31_8e386a32.glb"
-  },
-  {
-    "id": "nylon-washer",
-    "label": "Nylon washer",
-    "studioTitle": "Small white circular plastic washer on surface.",
-    "tags": [
-      "hardware",
-      "HAVE",
-      "SelfS1"
-    ],
-    "notes": "Flat nylon washer. Sits under hex-head bolts and P-clamp screws so hardware doesn\u2019t chew the frame paint.",
-    "src": "https://www.3daistudio.com/public/df472aac-0036-4332-b203-089cbb8e29ab",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/21b850c6-f02c-405c-b7f2-7bd2a00afa16_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125836_Small_white_circular_plastic_washer_on_surface_Prism_31_29e1c44f.glb"
-  },
-  {
-    "id": "threadlocker-bolt",
-    "label": "Threadlocker bolt",
-    "studioTitle": "Metallic bolt with blue threaded section.",
-    "tags": [
-      "hardware",
-      "HAVE",
-      "SelfS1"
-    ],
-    "notes": "Cap-head bolt with blue (medium) threadlocker. Rotor, caliper, and torque-arm fasteners that must not back out at 70 mph.",
-    "src": "https://www.3daistudio.com/public/b82aed63-fcf9-4fc6-819e-62aaa055720a",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/7d3ef2a3-8ad2-402a-a330-b9750fbadafa_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125846_Metallic_bolt_with_blue_threaded_section_Prism_31_9f2986c6.glb"
-  },
-  {
-    "id": "round-head-screw",
-    "label": "Round-head screw",
-    "studioTitle": "Metallic screw with rounded ends, threaded shaft.",
-    "tags": [
-      "hardware",
-      "HAVE",
-      "SelfS1"
-    ],
-    "notes": "Button / pan-head screw through a spacer sleeve. Lighter fixtures: P-clamps, dash clamp, plastics \u2014 not rotor or axle.",
-    "src": "https://www.3daistudio.com/public/fa157701-db4b-40a1-a623-b22e7fb1d20c",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/90857dc4-e013-46f1-a179-af21d1f38278_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125856_Metallic_screw_with_rounded_ends_threaded_shaft_Prism_31_6b251698.glb"
   },
   {
     "id": "headset-bearing",
@@ -276,21 +191,6 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125918_Small_white_circular_object_on_surface_Prism_31_05910ed2.glb"
   },
   {
-    "id": "loom-tape",
-    "label": "Electrical tape",
-    "studioTitle": "Small, circular, adhesive tape roll.",
-    "tags": [
-      "cables",
-      "hardware",
-      "HAVE",
-      "SelfS1"
-    ],
-    "notes": "Loom / electrical tape. Wraps phase/Hall and 12V bundles, dielectric on QS8 boots, strain relief on the pack leads.",
-    "src": "https://www.3daistudio.com/public/e0998295-e26a-4753-b5db-288e7a5d882e",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/ca6ad36f-7be2-4464-9b4d-75efd11514b7_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125927_Small_circular_adhesive_tape_roll_Prism_31_6231b30d.glb"
-  },
-  {
     "id": "o-ring",
     "label": "O-ring seal",
     "studioTitle": "Small, circular, translucent plastic ring on surface.",
@@ -306,6 +206,128 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125939_Small_circular_translucent_plastic_ring_on_surface_Prism_31_d05c3ac0.glb"
   },
   {
+    "id": "o-ring-2",
+    "label": "O-ring seal (2)",
+    "studioTitle": "Small, circular, adhesive tape roll.",
+    "tags": [
+      "hardware",
+      "IP65",
+      "HAVE",
+      "SelfS1"
+    ],
+    "notes": "Second elastomer O-ring. Same duty as the first: headset, QS8 boots, pack lock faces \u2014 IP65.",
+    "src": "https://www.3daistudio.com/public/e0998295-e26a-4753-b5db-288e7a5d882e",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/ca6ad36f-7be2-4464-9b4d-75efd11514b7_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125927_Small_circular_adhesive_tape_roll_Prism_31_6231b30d.glb"
+  },
+  {
+    "id": "isolator-bolt",
+    "label": "Mount bolt + nylon washer",
+    "studioTitle": "Metal bolt with a plastic washer attached.",
+    "tags": [
+      "hardware",
+      "HAVE",
+      "SelfS1"
+    ],
+    "notes": "Grade 8 fastener with a nylon isolator washer. Seat pan, stay clamps, and shock eyelets \u2014 keeps the chassis from metal-to-metal rattle.",
+    "src": "https://www.3daistudio.com/public/676923c7-3c78-411d-ab6d-be28b72b2833",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/2be5b0e7-8826-4a49-9aa5-bc76de6900e8_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125656_Metal_bolt_with_a_plastic_washer_attached_Prism_31_c041f6a8.glb",
+    "group": "fasteners"
+  },
+  {
+    "id": "hex-bolt",
+    "label": "Hex-head bolt",
+    "studioTitle": "Metal bolt with hexagonal head and shaft.",
+    "tags": [
+      "hardware",
+      "HAVE",
+      "SelfS1"
+    ],
+    "notes": "Grade 8 hex-head bolt. Frame, rack, and dropout hardware \u2014 pairs with the nylon-washer isolator bolt.",
+    "src": "https://www.3daistudio.com/public/99090f11-cf06-4350-974b-c89ec5871168",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/f291ffb4-1e48-438b-95d6-eeda1635bde0_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125713_Metal_bolt_with_hexagonal_head_and_shaft_Prism_31_c8892755.glb",
+    "group": "fasteners"
+  },
+  {
+    "id": "fold-hinge-pin",
+    "label": "Fold-hinge pin",
+    "studioTitle": "Metal cylindrical object with a hole.",
+    "tags": [
+      "chassis",
+      "hardware",
+      "HAVE",
+      "SelfS1"
+    ],
+    "notes": "Clevis / fold-lock pin with a cross-hole. Holds the carbon-steel chassis open for riding; pulls for travel fold.",
+    "src": "https://www.3daistudio.com/public/0630a014-2c08-4d6d-ae43-5b1957cad422",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/dccd9c71-21bb-4f05-8020-e90180176d5f_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125805_Metal_cylindrical_object_with_a_hole_Prism_31_35b6d663.glb",
+    "group": "fasteners"
+  },
+  {
+    "id": "nylon-bushing",
+    "label": "Nylon isolator bushing",
+    "studioTitle": "Small, light-colored circular plastic object.",
+    "tags": [
+      "hardware",
+      "seat",
+      "HAVE",
+      "SelfS1"
+    ],
+    "notes": "Shoulder bushing for the caf\u00e9 racer seat pan and stay clamps. Isolates vibration between the seat/rack and the carbon-steel frame.",
+    "src": "https://www.3daistudio.com/public/600540e1-9317-4509-9bc8-00ff4012d7e7",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/0d9e13cb-2857-42e0-a123-bd28590b1d9e_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125828_Small_light_colored_circular_plastic_object_Prism_31_8e386a32.glb",
+    "group": "fasteners"
+  },
+  {
+    "id": "nylon-washer",
+    "label": "Nylon washer",
+    "studioTitle": "Small white circular plastic washer on surface.",
+    "tags": [
+      "hardware",
+      "HAVE",
+      "SelfS1"
+    ],
+    "notes": "Flat nylon washer. Sits under hex-head bolts and P-clamp screws so hardware doesn\u2019t chew the frame paint.",
+    "src": "https://www.3daistudio.com/public/df472aac-0036-4332-b203-089cbb8e29ab",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/21b850c6-f02c-405c-b7f2-7bd2a00afa16_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125836_Small_white_circular_plastic_washer_on_surface_Prism_31_29e1c44f.glb",
+    "group": "fasteners"
+  },
+  {
+    "id": "threadlocker-bolt",
+    "label": "Threadlocker bolt",
+    "studioTitle": "Metallic bolt with blue threaded section.",
+    "tags": [
+      "hardware",
+      "HAVE",
+      "SelfS1"
+    ],
+    "notes": "Cap-head bolt with blue (medium) threadlocker. Rotor, caliper, and torque-arm fasteners that must not back out at 70 mph.",
+    "src": "https://www.3daistudio.com/public/b82aed63-fcf9-4fc6-819e-62aaa055720a",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/7d3ef2a3-8ad2-402a-a330-b9750fbadafa_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125846_Metallic_bolt_with_blue_threaded_section_Prism_31_9f2986c6.glb",
+    "group": "fasteners"
+  },
+  {
+    "id": "round-head-screw",
+    "label": "Round-head screw",
+    "studioTitle": "Metallic screw with rounded ends, threaded shaft.",
+    "tags": [
+      "hardware",
+      "HAVE",
+      "SelfS1"
+    ],
+    "notes": "Button / pan-head screw through a spacer sleeve. Lighter fixtures: P-clamps, dash clamp, plastics \u2014 not rotor or axle.",
+    "src": "https://www.3daistudio.com/public/fa157701-db4b-40a1-a623-b22e7fb1d20c",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/90857dc4-e013-46f1-a179-af21d1f38278_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125856_Metallic_screw_with_rounded_ends_threaded_shaft_Prism_31_6b251698.glb",
+    "group": "fasteners"
+  },
+  {
     "id": "pan-head-screw",
     "label": "Pan-head screw + washer",
     "studioTitle": "Metal screw with a rounded head.",
@@ -317,7 +339,8 @@
     "notes": "Short pan-head machine screw with a captured washer. Covers, cable clamps, and accessory mounts.",
     "src": "https://www.3daistudio.com/public/9a152d94-1eee-4662-bf2f-d6ce53470c13",
     "thumb": "https://s.3daistudio.com/media/thumbnails/88cb959f-1fea-42d6-b6e5-68663ee362b4_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_130036_Metal_screw_with_a_rounded_head_Prism_31_7133a65c.glb"
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_130036_Metal_screw_with_a_rounded_head_Prism_31_7133a65c.glb",
+    "group": "fasteners"
   },
   {
     "id": "pan-head-screw-2",
@@ -331,21 +354,7 @@
     "notes": "Second captured-washer pan-head. Same duty as the first: covers, clamps, accessory mounts.",
     "src": "https://www.3daistudio.com/public/88b6faf8-48aa-4a68-98cc-f2c8c21f2897",
     "thumb": "https://s.3daistudio.com/media/thumbnails/15fd54c9-f92d-4b3a-bd8d-4ea414a61cc1_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_130036_Metal_screw_with_a_rounded_head_Prism_31_045995b4.glb"
-  },
-  {
-    "id": "rear-rack",
-    "label": "Rear rack / battery deck",
-    "studioTitle": "Metal bracket with curved arms and mounting holes.",
-    "tags": [
-      "rack",
-      "battery",
-      "HAVE",
-      "SelfS1"
-    ],
-    "notes": "Stay-mounted deck for the 59 lb lock-in pack (19\u201320\u2033 \u00d7 6.5\u2033 \u00d7 4.5\u20135\u2033). Left side stays open for disc, caliper, and phase/Hall.",
-    "src": "https://www.3daistudio.com/public/2e948a0f-75fd-40ac-8b8a-0eee94dcc93d",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/b5ce4e33-e9da-4261-9aa1-7d5552e0efa2_thumbnail.png",
-    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125336_Metal_bracket_with_curved_arms_and_mounting_holes_Prism_31_Multi_Image_abba4c7e.glb"
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_130036_Metal_screw_with_a_rounded_head_Prism_31_045995b4.glb",
+    "group": "fasteners"
   }
 ]
