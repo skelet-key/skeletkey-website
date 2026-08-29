@@ -1756,21 +1756,25 @@ html.js-motion .own-card.is-visible {
   transform: translateY(0);
 }
 
-/* Hero copy must never stay hidden — CSS plays the intro even if JS is late. */
-html.js-motion .hero .reveal {
-  animation: hero-in 0.75s var(--ease) forwards;
+/* Hero copy is always visible — never gated on .reveal / JS. */
+.hero .hero-badge,
+.hero h1,
+.hero .hero-rotator,
+.hero .hero-sub,
+.hero .hero-ctas {
+  opacity: 1;
+  transform: none;
 }
-html.js-motion .hero .reveal:nth-child(1) { animation-delay: 0.05s; }
-html.js-motion .hero .reveal:nth-child(2) { animation-delay: 0.14s; }
-html.js-motion .hero .reveal:nth-child(3) { animation-delay: 0.22s; }
-html.js-motion .hero .reveal:nth-child(4) { animation-delay: 0.3s; }
-html.js-motion .hero .reveal:nth-child(5) { animation-delay: 0.38s; }
 
-@keyframes hero-in {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+html.js-motion .hero .hero-badge,
+html.js-motion .hero h1,
+html.js-motion .hero .hero-rotator,
+html.js-motion .hero .hero-sub,
+html.js-motion .hero .hero-ctas,
+html.js-motion .hero .reveal {
+  opacity: 1;
+  transform: none;
+  animation: none;
 }
 
 .diff-card,

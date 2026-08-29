@@ -41,14 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
     );
     revealNodes.forEach((el, i) => {
+      if (el.closest(".hero")) return;
       el.classList.add("reveal");
       if (el.parentElement && el.parentElement.classList.contains("diff-grid")) {
         el.style.transitionDelay = (i % 6) * 70 + "ms";
       }
       io.observe(el);
-    });
-    requestAnimationFrame(() => {
-      document.querySelectorAll(".hero .reveal").forEach((el) => el.classList.add("is-visible"));
     });
   } else {
     revealNodes.forEach((el) => el.classList.add("is-visible"));
