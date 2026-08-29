@@ -76,20 +76,12 @@ document.addEventListener("DOMContentLoaded", () => {
       clip.style.width = Math.ceil(el.scrollWidth) + "px";
     }
 
-    function drawUnderline() {
-      clip.classList.remove("is-drawn");
-      void clip.offsetWidth;
-      clip.classList.add("is-drawn");
-    }
-
     function show(index, animate) {
       items.forEach((el, n) => {
         el.classList.toggle("is-active", n === index);
         el.classList.toggle("is-exit", animate && n !== index);
       });
       setWidth(items[index], animate);
-      if (animate) drawUnderline();
-      else clip.classList.add("is-drawn");
     }
 
     show(0, false);
