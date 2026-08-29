@@ -95,6 +95,19 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/02_himalo_fork_Bike_suspension_fork_with_adjustable_features_Prism_31_42909d50.glb"
   },
   {
+    "id": "ztto-headset-4444s",
+    "label": "ZTTO 4444S headset",
+    "studioTitle": "Bicycle headset parts in black and silver.",
+    "tags": [
+      "headset",
+      "HAVE"
+    ],
+    "notes": "Bought. ZTTO 4444S ZS44 / 28.6 mm straight \u2014 cups, bearings, crown race for the 44 mm head tube and HIMALO 1-1/8\u2033 steerer. Not tapered.",
+    "src": "https://www.3daistudio.com/public/3e9683d4-3f43-45b5-8814-374b47ed1974",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/7694f37a-df4d-4be0-a84d-f4ba17e7b35b_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/03_ztto_headset_Bicycle_headset_parts_in_black_and_silver_Prism_31_d5847a4c.glb"
+  },
+  {
     "id": "hub-dropout-190",
     "label": "190 mm hub dropout",
     "studioTitle": "Metal bracket with curved arms and mounting holes.",
