@@ -134,5 +134,15 @@
     "src": "https://www.3daistudio.com/public/aa976106-2ee4-4d49-b78b-6a28554f1ed3",
     "thumb": "https://s.3daistudio.com/media/thumbnails/d17ecc91-a5d4-43bc-9199-bc67b204f721_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125328_Black_wheel_with_gear_mechanism_attached_Prism_31_Multi_Image_d2659f53.glb"
+  },
+  {
+    "id": "isolator-bolt",
+    "label": "Mount bolt + nylon washer",
+    "studioTitle": "Metal bolt with a plastic washer attached.",
+    "tags": ["hardware", "SelfS1"],
+    "notes": "Grade 8 fastener with a nylon isolator washer. Seat pan, stay clamps, and shock eyelets — keeps the chassis from metal-to-metal rattle.",
+    "src": "https://www.3daistudio.com/public/676923c7-3c78-411d-ab6d-be28b72b2833",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/2be5b0e7-8826-4a49-9aa5-bc76de6900e8_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125656_Metal_bolt_with_a_plastic_washer_attached_Prism_31_c041f6a8.glb"
   }
 ]
