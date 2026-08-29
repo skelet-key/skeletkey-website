@@ -25,5 +25,14 @@
     "notes": "Smoked shield, 17″ tall, 13″ wide at the bottom, tapering toward the top. 4.5″ rider-facing magnet snaps to the long arm of the bar clamp. Detaches for travel.",
     "src": "https://www.3daistudio.com/public/d1d10506-bcf5-49e2-9aeb-c9c5056f0d34",
     "thumb": "https://s.3daistudio.com/media/thumbnails/1485318116656340992_thumbnail.png"
+  },
+  {
+    "id": "front-fork",
+    "label": "Front fork",
+    "studioTitle": "Metal U-shaped object with two protruding ends.",
+    "tags": ["fork", "front-end", "SelfS1"],
+    "notes": "Rigid U-blade fork for the 20×4 front wheel. Dropout slots on both ends; steerer for the 44 mm head tube. Pairs with the 20×4 rim and street tire on order.",
+    "src": "https://www.3daistudio.com/public/304b1271-4696-4e94-92af-26ef4643d572",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485309183057256448_thumbnail.png"
   }
 ]
