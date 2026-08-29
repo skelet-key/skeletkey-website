@@ -262,6 +262,7 @@
       width: 100%; height: min(480px, 62vh); border: 0; border-radius: 10px;
       background: #0B0F19; display: block;
     }
+    model-viewer.part-frame { --poster-color: #0B0F19; }
     .part-open {
       display: inline-block; margin-top: 0.55rem; font-size: 0.82rem; color: #ff6b7a;
     }
@@ -269,6 +270,7 @@
 
   </style>
   <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
 </head>
 <body class="locked">
   <div class="pw-gate" id="pwGate" hidden>
@@ -704,10 +706,16 @@
         try { el.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
       }
       function loadPartFrame(details) {
+        var mv = details.querySelector("model-viewer.part-frame");
+        if (mv && !mv.getAttribute("src")) {
+          var src = mv.getAttribute("data-src");
+          if (src) mv.setAttribute("src", src);
+        }
         var frame = details.querySelector("iframe.part-frame");
-        if (!frame || frame.getAttribute("src")) return;
-        var src = frame.getAttribute("data-src");
-        if (src) frame.src = src;
+        if (frame && !frame.getAttribute("src")) {
+          var fsrc = frame.getAttribute("data-src");
+          if (fsrc) frame.src = fsrc;
+        }
       }
       function renderParts3d(parts) {
         var list = document.getElementById("parts3dList");
@@ -776,13 +784,27 @@
             notes.textContent = p.notes;
             body.appendChild(notes);
           }
-          var frame = document.createElement("iframe");
-          frame.className = "part-frame";
-          frame.title = p.label;
-          frame.setAttribute("data-src", p.src);
-          frame.setAttribute("allow", "fullscreen; xr-spatial-tracking; autoplay");
-          frame.setAttribute("loading", "lazy");
-          frame.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+          var frame;
+          if (p.glb) {
+            frame = document.createElement("model-viewer");
+            frame.className = "part-frame";
+            frame.setAttribute("alt", p.label);
+            frame.setAttribute("camera-controls", "");
+            frame.setAttribute("touch-action", "pan-y");
+            frame.setAttribute("auto-rotate", "");
+            frame.setAttribute("shadow-intensity", "0.7");
+            frame.setAttribute("exposure", "0.95");
+            if (p.thumb) frame.setAttribute("poster", p.thumb);
+            frame.setAttribute("data-src", "/api/glb?u=" + encodeURIComponent(p.glb));
+          } else {
+            frame = document.createElement("iframe");
+            frame.className = "part-frame";
+            frame.title = p.label;
+            frame.setAttribute("data-src", p.src);
+            frame.setAttribute("allow", "fullscreen; xr-spatial-tracking; autoplay");
+            frame.setAttribute("loading", "lazy");
+            frame.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+          }
           body.appendChild(frame);
           var open = document.createElement("a");
           open.className = "part-open";

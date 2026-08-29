@@ -3,81 +3,126 @@
     "id": "fardriver-nd72360",
     "label": "FarDriver ND72360",
     "studioTitle": "Bright green electronic control unit with connectors.",
-    "tags": ["controller", "HAVE", "SelfS1"],
+    "tags": [
+      "controller",
+      "HAVE",
+      "SelfS1"
+    ],
     "notes": "Bluetooth sinewave ND72360-W. Green ECU with phase, Hall, and ignition connectors. Sample in hand (~$199).",
     "src": "https://www.3daistudio.com/public/b2271fe7-1137-4cc2-bf4d-707b710672e2",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/1480180287294996480_thumbnail.png"
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1480180287294996480_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/controller_upscaled_Bright_green_electronic_control_unit_with_connecto_Hunyuan_3D_v31_d8fe8a9c.glb"
   },
   {
     "id": "dual-magnet-bar-clamp",
     "label": "Dual-magnet bar clamp",
     "studioTitle": "Black two-sided mirror with adjustable arm.",
-    "tags": ["dash", "windscreen", "SelfS1"],
-    "notes": "Center 22.2 mm clamp. MagSafe pad (raised ring, ~3 mm) on the short arm for the phone dash; 4.5″ magnet on the longer arm for the detachable windscreen. Both faces point at the rider.",
+    "tags": [
+      "dash",
+      "windscreen",
+      "SelfS1"
+    ],
+    "notes": "Center 22.2 mm clamp. MagSafe pad (raised ring, ~3 mm) on the short arm for the phone dash; 4.5\u2033 magnet on the longer arm for the detachable windscreen. Both faces point at the rider.",
     "src": "https://www.3daistudio.com/public/9d4ddf41-c66b-4a58-be56-236bf437da29",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/b2c6406e-e3ac-4b8b-9d1d-9bd04bd55588_thumbnail.png"
+    "thumb": "https://s.3daistudio.com/media/thumbnails/b2c6406e-e3ac-4b8b-9d1d-9bd04bd55588_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/mag_Black_two_sided_mirror_with_adjustable_arm_Prism_31_3ce736bd.glb"
   },
   {
     "id": "detachable-windscreen",
     "label": "Detachable windscreen",
     "studioTitle": "Translucent brown shield with mounting holes.",
-    "tags": ["windscreen", "travel", "SelfS1"],
-    "notes": "Smoked shield, 17″ tall, 13″ wide at the bottom, tapering toward the top. 4.5″ rider-facing magnet snaps to the long arm of the bar clamp. Detaches for travel.",
+    "tags": [
+      "windscreen",
+      "travel",
+      "SelfS1"
+    ],
+    "notes": "Smoked shield, 17\u2033 tall, 13\u2033 wide at the bottom, tapering toward the top. 4.5\u2033 rider-facing magnet snaps to the long arm of the bar clamp. Detaches for travel.",
     "src": "https://www.3daistudio.com/public/d1d10506-bcf5-49e2-9aeb-c9c5056f0d34",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/1485318116656340992_thumbnail.png"
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485318116656340992_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/windscreen_real_Translucent_brown_shield_with_mounting_holes_Hunyuan_3D_v31_c05ff503.glb"
   },
   {
     "id": "front-fork",
     "label": "Front fork",
     "studioTitle": "Metal U-shaped object with two protruding ends.",
-    "tags": ["fork", "front-end", "SelfS1"],
-    "notes": "Rigid U-blade fork for the 20×4 front wheel. Dropout slots on both ends; steerer for the 44 mm head tube. Pairs with the 20×4 rim and street tire on order.",
+    "tags": [
+      "fork",
+      "front-end",
+      "SelfS1"
+    ],
+    "notes": "Rigid U-blade fork for the 20\u00d74 front wheel. Dropout slots on both ends; steerer for the 44 mm head tube. Pairs with the 20\u00d74 rim and street tire on order.",
     "src": "https://www.3daistudio.com/public/304b1271-4696-4e94-92af-26ef4643d572",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/1485309183057256448_thumbnail.png"
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485309183057256448_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_101545_Metal_U_shaped_object_with_two_protruding_ends_Hunyuan_3D_v31_3b9ec6df.glb"
   },
   {
     "id": "dc-dc-72-12",
     "label": "72V to 12V DC-DC",
     "studioTitle": "Metallic heat sink with three wires attached.",
-    "tags": ["12V", "ON THE WAY", "SelfS1"],
+    "tags": [
+      "12V",
+      "ON THE WAY",
+      "SelfS1"
+    ],
     "notes": "Finned buck converter. Drops pack voltage to 12V for the LoRa TX/RX, lights, and ignition. Cllena unit on the way (~$20).",
     "src": "https://www.3daistudio.com/public/084a0586-ab30-4e75-b80b-cefc61fdc3dc",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/1485306086536839168_thumbnail.png"
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485306086536839168_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_101635_Metallic_heat_sink_with_three_wires_attached_Hunyuan_3D_v31_222de54e.glb"
   },
   {
     "id": "folding-frame",
     "label": "Folding frame",
     "studioTitle": "Metal component with various attachment points.",
-    "tags": ["chassis", "IN TRANSIT", "SelfS1"],
+    "tags": [
+      "chassis",
+      "IN TRANSIT",
+      "SelfS1"
+    ],
     "notes": "Carbon steel folding chassis, 9.2 lb. 190 mm rear dropout for the QS205 50H 3T. 44 mm head tube. AliExpress frame inbound.",
     "src": "https://www.3daistudio.com/public/89af1658-2198-47b1-b6d6-df0cf2d17c76",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/1485305878126059520_thumbnail.png"
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485305878126059520_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_101516_Metal_component_with_various_attachment_points_Hunyuan_3D_v31_d9ec83c7.glb"
   },
   {
     "id": "rear-shock",
     "label": "Rear shock",
     "studioTitle": "Metal and rubber component with threaded ends.",
-    "tags": ["suspension", "chassis", "SelfS1"],
+    "tags": [
+      "suspension",
+      "chassis",
+      "SelfS1"
+    ],
     "notes": "Rear shock for the Kalosse folding frame. Eyelet mounts, rubber-sleeved body. Comes with the inbound chassis.",
     "src": "https://www.3daistudio.com/public/5b7d7e85-d8ec-439e-94cd-a7127cc428df",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/1485305659380531200_thumbnail.png"
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485305659380531200_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_101503_Metal_and_rubber_component_with_threaded_ends_Hunyuan_3D_v31_3e1556e0.glb"
   },
   {
     "id": "torque-arm-left",
-    "label": "Torque arm — left",
+    "label": "Torque arm \u2014 left",
     "studioTitle": "Black metal bracket on wooden surface.",
-    "tags": ["torque-arm", "left", "SelfS1"],
+    "tags": [
+      "torque-arm",
+      "left",
+      "SelfS1"
+    ],
     "notes": "Left-side QS205 / M16 anti-rotate plate. Keep this side open for the disc rotor, caliper, and phase/Hall cables.",
     "src": "https://www.3daistudio.com/public/40b9764d-1d84-4227-bd46-426264289138",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/1485305545329008640_thumbnail.png"
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485305545329008640_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_101434_Black_metal_bracket_on_wooden_surface_Hunyuan_3D_v31_b45ca87e.glb"
   },
   {
     "id": "torque-arm-right",
-    "label": "Torque arm — right",
+    "label": "Torque arm \u2014 right",
     "studioTitle": "Black metal bracket on wooden surface.",
-    "tags": ["torque-arm", "right", "SelfS1"],
+    "tags": [
+      "torque-arm",
+      "right",
+      "SelfS1"
+    ],
     "notes": "Right-side QS205 / M16 anti-rotate plate. Mirror of the left; same 3D, opposite dropout.",
     "src": "https://www.3daistudio.com/public/40b9764d-1d84-4227-bd46-426264289138",
-    "thumb": "https://s.3daistudio.com/media/thumbnails/1485305545329008640_thumbnail.png"
+    "thumb": "https://s.3daistudio.com/media/thumbnails/1485305545329008640_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_101434_Black_metal_bracket_on_wooden_surface_Hunyuan_3D_v31_b45ca87e.glb"
   }
 ]
