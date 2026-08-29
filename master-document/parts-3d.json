@@ -214,5 +214,15 @@
     "src": "https://www.3daistudio.com/public/fa157701-db4b-40a1-a623-b22e7fb1d20c",
     "thumb": "https://s.3daistudio.com/media/thumbnails/90857dc4-e013-46f1-a179-af21d1f38278_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125856_Metallic_screw_with_rounded_ends_threaded_shaft_Prism_31_6b251698.glb"
+  },
+  {
+    "id": "headset-bearing",
+    "label": "Headset bearing",
+    "studioTitle": "Small white circular object on surface.",
+    "tags": ["headset", "front-end", "SelfS1"],
+    "notes": "Sealed cartridge for the 44 mm head tube (ZS44 / 28.6 mm steerer). Pairs with the crown race, star nut, and top cap.",
+    "src": "https://www.3daistudio.com/public/6a1a8e38-28a2-4f32-be4e-5b252da26789",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/c7de60ea-77ca-4a51-bfc5-7c5b315a06ae_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_125918_Small_white_circular_object_on_surface_Prism_31_05910ed2.glb"
   }
 ]
