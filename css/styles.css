@@ -819,15 +819,30 @@ html.nav-menu-open body {
   .nav.is-scrolled .nav-inner,
   .nav.is-menu-open .nav-inner {
     pointer-events: auto;
-    max-width: 118px;
-    height: 64px;
-    transform: translateY(6px);
-    padding: 0 10px 0 12px;
+    max-width: 92px;
+    height: 48px;
+    transform: translateY(4px);
+    padding: 0 6px;
+    gap: 2px;
+    justify-content: center;
     background: rgba(18, 22, 32, 0.72);
     border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.55);
     backdrop-filter: blur(18px) saturate(140%);
     -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+
+  .nav.is-scrolled .nav-logo-key,
+  .nav.is-menu-open .nav-logo-key {
+    width: 24px;
+    height: 23px;
+  }
+
+  .nav.is-scrolled .nav-toggle,
+  .nav.is-menu-open .nav-toggle {
+    width: 32px;
+    height: 32px;
+    margin-left: 0;
   }
 
   .nav.is-scrolled .nav-logo-text,
@@ -860,7 +875,7 @@ html.nav-menu-open body {
 
   @keyframes nav-fly-in {
     from { transform: translateY(calc(-100% - 24px)); }
-    to   { transform: translateY(6px); }
+    to   { transform: translateY(4px); }
   }
 
   .nav.is-menu-open .nav-inner {
@@ -913,7 +928,7 @@ html.nav-menu-open body {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 11px 0;
+    padding: 7px 0;
     font-size: clamp(1.35rem, 5.6vw, 1.85rem);
     font-weight: 600;
     letter-spacing: -0.02em;
