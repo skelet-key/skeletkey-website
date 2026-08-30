@@ -108,6 +108,20 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/02_himalo_fork_Bike_suspension_fork_with_adjustable_features_Prism_31_42909d50.glb"
   },
   {
+    "id": "ztz-front-wheel",
+    "label": "ZTZ 20\u00d74 front wheel",
+    "studioTitle": "Black and yellow bicycle wheel with spokes.",
+    "tags": [
+      "wheel",
+      "front",
+      "HAVE"
+    ],
+    "notes": "HAVE. ZTZ 20\u00d74.0 aluminum QR wheelset, 135 mm \u00d7 9 mm, 6-bolt disc. Mounts in the HIMALO fork; takes one of the Innova 20\u00d74.0 tires.",
+    "src": "https://www.3daistudio.com/public/5c320796-1afd-4e6c-a86c-e96519dbd107",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/ebffe647-07ca-47cb-9707-17e33876c63e_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/chrome_PO5nIAX3WW_Black_and_yellow_bicycle_wheel_with_spokes_Prism_31_2b06699d.glb"
+  },
+  {
     "id": "ztto-headset-4444s",
     "label": "ZTTO 4444S headset",
     "studioTitle": "Bicycle headset parts in black and silver.",
