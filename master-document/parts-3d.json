@@ -26,17 +26,30 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/20260829_103906_Multi_colored_electrical_connectors_on_a_harness_Hunyuan_3D_v31_a1945707.glb"
   },
   {
-    "id": "wireless-rx",
-    "label": "Wireless receiver",
+    "id": "wireless-tx",
+    "label": "Wireless transmitter",
     "studioTitle": "Electronic device with multiple channel inputs.",
     "tags": [
       "wireless",
       "HAVE"
     ],
-    "notes": "8-channel LoRa receiver at the FarDriver. Numbered connectors for turn signals, lights, ignition, brakes, and spare signal lines \u2014 no 5-foot harness through the fold. 12 V from the 72\u219212 DC-DC. Pairs with the bar-side transmitter.",
+    "notes": "HAVE. Bar-side 8-channel LoRa transmitter for turn signals, lights, ignition, brakes, throttle. 12 V from the 72\u219212 DC-DC. Pairs with the FarDriver-side receiver.",
     "src": "https://www.3daistudio.com/public/dfa472e3-24cc-424e-8ffe-ba9d0191ebf7",
     "thumb": "https://s.3daistudio.com/media/thumbnails/d38398a9-1cf2-4aeb-a9bc-91700b09d17a_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/transmitter_Electronic_device_with_multiple_channel_inputs_Prism_31_223b79ed.glb"
+  },
+  {
+    "id": "wireless-rx",
+    "label": "Wireless receiver",
+    "studioTitle": "Electronic circuit board with connectors and labels.",
+    "tags": [
+      "wireless",
+      "HAVE"
+    ],
+    "notes": "HAVE. 8-channel LoRa receiver at the FarDriver. Numbered connectors for turn signals, lights, ignition, brakes, and spare signal lines \u2014 no 5-foot harness through the fold. 12 V from the 72\u219212 DC-DC. Pairs with the bar-side transmitter.",
+    "src": "https://www.3daistudio.com/public/41b2da7c-5cd0-488f-8fcb-68ed1a292461",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/443ac06d-27de-4368-a6be-dc7c985415cf_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/receiver_Electronic_circuit_board_with_connectors_and_label_Prism_31_6324368c.glb"
   },
   {
     "id": "dual-magnet-bar-clamp",
