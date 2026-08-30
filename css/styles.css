@@ -252,7 +252,13 @@ html.nav-menu-open body {
 }
 
 .hero h1 .gold {
+  display: block;
   color: var(--accent);
+  font-size: clamp(1.2rem, 3.1vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-top: 0.55rem;
 }
 
 .hero-sub + .hero-sub {
