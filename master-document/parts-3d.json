@@ -122,6 +122,20 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/chrome_PO5nIAX3WW_Black_and_yellow_bicycle_wheel_with_spokes_Prism_31_2b06699d.glb"
   },
   {
+    "id": "front-tire",
+    "label": "Front tire (Innova 20\u00d74.0)",
+    "studioTitle": "Black rubber tire with detailed tread design.",
+    "tags": [
+      "tire",
+      "front",
+      "HAVE"
+    ],
+    "notes": "HAVE. Second Innova 20\u00d74.0 \u2014 same tire as the hub-motor rear. Mounts on the ZTZ 20\u00d74 front rim.",
+    "src": "https://www.3daistudio.com/public/890924b9-f641-47dc-9bab-f898955ae1b9",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/df41111f-9c2d-42a0-8848-11c702ff4686_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/chrome_wkTRTGfaHt_Black_rubber_tire_with_detailed_tread_design_Prism_31_7e484136.glb"
+  },
+  {
     "id": "ztto-headset-4444s",
     "label": "ZTTO 4444S headset",
     "studioTitle": "Bicycle headset parts in black and silver.",
