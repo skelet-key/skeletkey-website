@@ -4,7 +4,7 @@
 
 ### SLIDE 1: THE VEHICLE
 * Puca: folding electric motorcycle for cities and travel.
-* **$6,999** MSRP · ~70 mph class · 100+ miles at 45 mph · modular ~60 lb pack.
+* **$6,999** MSRP · ~70 mph class · 100+ miles at 40 mph average · modular ~60 lb pack.
 * Frame folds; pack slides out; 9.2 lb sourced steel chassis + 28.6 lb QS205 hub.
 
 ### SLIDE 2: THE PROBLEM
