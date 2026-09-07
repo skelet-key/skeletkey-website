@@ -214,6 +214,19 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/e_bike_peg_kit_full_silver_sup_Metal_motorcycle_footpegs_with_spikes_Prism_31_230ecd48.glb"
   },
   {
+    "id": "footpegs-4",
+    "label": "Footpegs (4)",
+    "studioTitle": "Metal socket tool with a ridged design.",
+    "tags": [
+      "pegs",
+      "HAVE"
+    ],
+    "notes": "HAVE. Fourth peg 3D \u2014 Metal socket tool with a ridged design..",
+    "src": "https://www.3daistudio.com/public/8f8b85c3-9ced-4d74-870b-6ef3168b0cbc",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/4d5e3e88-0359-4928-8dc8-d85977a0549c_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/71yWxeCEnL_AC_SL1500_Metal_socket_tool_with_a_ridged_design_Prism_31_737a245f.glb"
+  },
+  {
     "id": "hub-dropout-190",
     "label": "190 mm hub dropout",
     "studioTitle": "Metal bracket with curved arms and mounting holes.",
