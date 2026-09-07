@@ -201,6 +201,19 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/porkchop_bmx_bicycle_m8_crank_Two_black_hexagonal_headed_bolts_Prism_31_be8c8c69.glb"
   },
   {
+    "id": "footpegs-3",
+    "label": "Footpegs (3)",
+    "studioTitle": "Metal motorcycle footpegs with spikes.",
+    "tags": [
+      "pegs",
+      "HAVE"
+    ],
+    "notes": "HAVE. Third peg 3D \u2014 Metal motorcycle footpegs with spikes..",
+    "src": "https://www.3daistudio.com/public/bcdc5c25-d01b-4a8a-bbd5-f433658b84e4",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/bdb6fa58-9e20-43e5-8942-27a8a3389641_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/e_bike_peg_kit_full_silver_sup_Metal_motorcycle_footpegs_with_spikes_Prism_31_230ecd48.glb"
+  },
+  {
     "id": "hub-dropout-190",
     "label": "190 mm hub dropout",
     "studioTitle": "Metal bracket with curved arms and mounting holes.",
