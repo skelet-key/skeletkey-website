@@ -188,6 +188,19 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/380623_01_1_Bicycle_bottom_bracket_with_threaded_ends_Prism_31_dba2fbf2.glb"
   },
   {
+    "id": "footpegs-2",
+    "label": "Footpegs (2)",
+    "studioTitle": "Two black hexagonal-headed bolts.",
+    "tags": [
+      "pegs",
+      "HAVE"
+    ],
+    "notes": "HAVE. Second peg 3D \u2014 pair/mount with Footpegs.",
+    "src": "https://www.3daistudio.com/public/d3595f92-7c5b-4154-9cdc-fa23d60c2723",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/3fe6d48c-5345-4f3a-99e2-577959dd166a_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/porkchop_bmx_bicycle_m8_crank_Two_black_hexagonal_headed_bolts_Prism_31_be8c8c69.glb"
+  },
+  {
     "id": "hub-dropout-190",
     "label": "190 mm hub dropout",
     "studioTitle": "Metal bracket with curved arms and mounting holes.",
