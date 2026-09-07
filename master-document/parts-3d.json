@@ -175,6 +175,19 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/bars_angle2_Black_BMX_bicycle_handlebars_Prism_31_4ab121f1.glb"
   },
   {
+    "id": "footpegs",
+    "label": "Footpegs",
+    "studioTitle": "Bicycle bottom bracket with threaded ends.",
+    "tags": [
+      "pegs",
+      "HAVE"
+    ],
+    "notes": "HAVE. Rider footpegs. Threaded mount ends; 3D AI Studio tagged the scan as a bottom bracket \u2014 these are the pegs.",
+    "src": "https://www.3daistudio.com/public/1a8b8c3e-0e33-4d41-8099-a921db6548fc",
+    "thumb": "https://s.3daistudio.com/media/thumbnails/6674b657-5e7f-4dbc-bf44-f7687bfe2a19_thumbnail.png",
+    "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/380623_01_1_Bicycle_bottom_bracket_with_threaded_ends_Prism_31_dba2fbf2.glb"
+  },
+  {
     "id": "hub-dropout-190",
     "label": "190 mm hub dropout",
     "studioTitle": "Metal bracket with curved arms and mounting holes.",
