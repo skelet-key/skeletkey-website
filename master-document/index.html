@@ -208,10 +208,11 @@
     .parts-3d .parts-intro {
       color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin: 0 0 0.85rem;
     }
-    .parts-glossary {
-      display: flex; flex-direction: column; gap: 0.28rem;
-      margin: 0 0 0.75rem; padding: 0.75rem 0.85rem;
+    .parts-glossary { display: none; }
+    .parts-list {
+      margin: 0 0 0.75rem; padding: 0.15rem 0;
       background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      overflow: hidden;
     }
     .parts-glossary .gl-row {
       display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.5rem;
@@ -232,9 +233,11 @@
     }
     .parts-toolbar button:hover { color: #fff; border-color: var(--text-muted); }
     .part-card {
-      margin: 0 0 0.65rem; border: 1px solid var(--border); border-radius: 12px;
-      background: var(--surface); overflow: visible;
+      margin: 0; border: 0; border-bottom: 1px solid var(--border); border-radius: 0;
+      background: transparent; overflow: visible;
     }
+    .part-card:last-child { border-bottom: 0; }
+    .part-card.part-card--hw { background: transparent; }
     .part-card > summary {
       list-style: none; cursor: pointer; display: flex; align-items: center; gap: 0.85rem;
       padding: 0.7rem 0.9rem; user-select: none;
@@ -247,6 +250,10 @@
     .part-thumb {
       width: 56px; height: 56px; object-fit: cover; border-radius: 8px;
       background: #0B0F19; flex: none;
+    }
+    .part-num {
+      flex: none; width: 1.7rem; font-size: 0.82rem; font-weight: 600;
+      color: var(--text-muted); letter-spacing: 0.02em;
     }
     .part-sum-text { min-width: 0; flex: 1; }
     .part-sum-text strong { display: block; color: var(--text); font-size: 0.98rem; }
@@ -282,9 +289,11 @@
     }
     .part-open:hover { color: #fff; }
     .part-group {
-      margin: 1.1rem 0 0.65rem; border: 1px solid var(--border); border-radius: 12px;
-      background: var(--surface);
+      margin: 0; border: 0; border-top: 1px solid var(--border); border-radius: 0;
+      background: transparent;
     }
+    .part-group .part-card { border-color: var(--border); }
+    .part-group .part-card > summary { padding-left: 1.4rem; }
     .part-group > summary {
       list-style: none; cursor: pointer; padding: 0.85rem 1rem;
       font-weight: 600; font-size: 0.98rem; user-select: none;
@@ -346,15 +355,15 @@
     <section class="parts-3d" id="parts-3d">
       <h2>3D parts library</h2>
       <p class="parts-intro">
-        Interactive 3D AI Studio models for every Puca part. Glossary is linkable
-        (<code>#part=id</code>). Expand a card to load the viewer.
+        Numbered primary parts expand with a 3D model between listings
+        (<code>#part=id</code>). Washers, nuts, bolts, and other fasteners stay collapsed with no 3D.
       </p>
-      <nav class="parts-glossary" id="partsGlossary" aria-label="Parts glossary"></nav>
+      <nav class="parts-glossary" id="partsGlossary" aria-label="Parts glossary" hidden></nav>
       <div class="parts-toolbar">
-        <button type="button" id="partsExpandAll">Expand all</button>
-        <button type="button" id="partsCollapseAll">Collapse all</button>
+        <button type="button" id="partsExpandAll">Expand 3D</button>
+        <button type="button" id="partsCollapseAll">List only</button>
       </div>
-      <div id="parts3dList"></div>
+      <div class="parts-list" id="parts3dList"></div>
     </section>
 
     <div class="app-phone-stage">
@@ -825,15 +834,23 @@
           });
           gloss.appendChild(row);
         }
-        function addCard(p, host, startOpen, skipGloss) {
-          if (!skipGloss) addGlossRow(p.label, "#part=" + encodeURIComponent(p.id), p.tags);
+        function addCard(p, host, startOpen, opts) {
+          opts = opts || {};
+          var with3d = !opts.hardware;
+          if (!opts.skipGloss) addGlossRow(p.label, "#part=" + encodeURIComponent(p.id), p.tags);
 
           var d = document.createElement("details");
-          d.className = "part-card";
+          d.className = "part-card" + (opts.hardware ? " part-card--hw" : " part-card--primary");
           d.id = "part-" + p.id;
-          d.open = !!startOpen;
+          d.open = !!startOpen && with3d;
 
           var sum = document.createElement("summary");
+          if (!opts.hardware) {
+            var num = document.createElement("span");
+            num.className = "part-num";
+            num.textContent = n + ".";
+            sum.appendChild(num);
+          }
           var img;
           if (p.thumb) {
             img = document.createElement("img");
@@ -875,46 +892,48 @@
             notes.textContent = p.notes;
             body.appendChild(notes);
           }
-          var frame;
-          if (p.glb) {
-            frame = document.createElement("model-viewer");
-            frame.className = "part-frame";
-            frame.setAttribute("alt", p.label);
-            frame.setAttribute("camera-controls", "");
-            frame.setAttribute("touch-action", "pan-y");
-            frame.setAttribute("auto-rotate", "");
-            frame.setAttribute("shadow-intensity", "0.7");
-            frame.setAttribute("exposure", "0.95");
-            if (p.thumb) frame.setAttribute("poster", p.thumb);
-            frame.setAttribute("data-src", "/api/glb?u=" + encodeURIComponent(p.glb));
-          } else {
-            frame = document.createElement("iframe");
-            frame.className = "part-frame";
-            frame.title = p.label;
-            frame.setAttribute("data-src", p.src);
-            frame.setAttribute("allow", "fullscreen; xr-spatial-tracking; autoplay");
-            frame.setAttribute("loading", "lazy");
-            frame.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+          if (with3d) {
+            var frame;
+            if (p.glb) {
+              frame = document.createElement("model-viewer");
+              frame.className = "part-frame";
+              frame.setAttribute("alt", p.label);
+              frame.setAttribute("camera-controls", "");
+              frame.setAttribute("touch-action", "pan-y");
+              frame.setAttribute("auto-rotate", "");
+              frame.setAttribute("shadow-intensity", "0.7");
+              frame.setAttribute("exposure", "0.95");
+              if (p.thumb) frame.setAttribute("poster", p.thumb);
+              frame.setAttribute("data-src", "/api/glb?u=" + encodeURIComponent(p.glb));
+            } else {
+              frame = document.createElement("iframe");
+              frame.className = "part-frame";
+              frame.title = p.label;
+              frame.setAttribute("data-src", p.src);
+              frame.setAttribute("allow", "fullscreen; xr-spatial-tracking; autoplay");
+              frame.setAttribute("loading", "lazy");
+              frame.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+            }
+            var stage = document.createElement("div");
+            stage.className = "app-phone-stage";
+            var shell = document.createElement("div");
+            shell.className = "diagram-card";
+            shell.appendChild(frame);
+            stage.appendChild(shell);
+            body.appendChild(stage);
+            var open = document.createElement("a");
+            open.className = "part-open";
+            open.href = p.src;
+            open.target = "_blank";
+            open.rel = "noopener";
+            open.textContent = "Open in 3D AI Studio ↗";
+            body.appendChild(open);
+            d.addEventListener("toggle", function () {
+              if (d.open) watchPart(d);
+            });
           }
-          var stage = document.createElement("div");
-          stage.className = "app-phone-stage";
-          var shell = document.createElement("div");
-          shell.className = "diagram-card";
-          shell.appendChild(frame);
-          stage.appendChild(shell);
-          body.appendChild(stage);
-          var open = document.createElement("a");
-          open.className = "part-open";
-          open.href = p.src;
-          open.target = "_blank";
-          open.rel = "noopener";
-          open.textContent = "Open in 3D AI Studio ↗";
-          body.appendChild(open);
           d.appendChild(body);
 
-          d.addEventListener("toggle", function () {
-            if (d.open) watchPart(d);
-          });
           host.appendChild(d);
           if (d.open) watchPart(d);
         }
@@ -922,15 +941,21 @@
         groups.forEach(function (g) {
           var host = list;
           var startOpen = true;
-          if (g.id === "fasteners") {
+          var hardware = g.id === "fasteners";
+          if (hardware) {
             var wrap = document.createElement("details");
             wrap.className = "part-group";
             wrap.id = "group-fasteners";
             var gsum = document.createElement("summary");
-            gsum.appendChild(document.createTextNode("Fasteners — bolts, screws, nuts, washers"));
+            var gnum = document.createElement("span");
+            gnum.className = "part-num";
+            n += 1;
+            gnum.textContent = n + ".";
+            gsum.appendChild(gnum);
+            gsum.appendChild(document.createTextNode("Fasteners — washers, nuts, bolts, screws"));
             var count = document.createElement("span");
             count.className = "count";
-            count.textContent = g.items.length + " parts";
+            count.textContent = g.items.length + " parts · no 3D";
             gsum.appendChild(count);
             wrap.appendChild(gsum);
             var inner = document.createElement("div");
@@ -941,7 +966,9 @@
             startOpen = false;
             addGlossRow("Fasteners", "#group=fasteners", ["HAVE"]);
           }
-          g.items.forEach(function (p) { addCard(p, host, startOpen, g.id === "fasteners"); });
+          g.items.forEach(function (p) {
+            addCard(p, host, startOpen, { hardware: hardware, skipGloss: hardware });
+          });
         });
       }
       fetch("parts-3d.json", { credentials: "same-origin" })
@@ -955,8 +982,7 @@
       var expandAll = document.getElementById("partsExpandAll");
       var collapseAll = document.getElementById("partsCollapseAll");
       if (expandAll) expandAll.addEventListener("click", function () {
-        Array.prototype.forEach.call(document.querySelectorAll(".part-group"), function (d) { d.open = true; });
-        Array.prototype.forEach.call(document.querySelectorAll(".part-card"), function (d) {
+        Array.prototype.forEach.call(document.querySelectorAll(".part-card--primary"), function (d) {
           d.open = true;
           watchPart(d);
         });
