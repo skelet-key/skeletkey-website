@@ -74,10 +74,20 @@
       "travel",
       "HAVE"
     ],
-    "notes": "Smoked shield, 17\u2033 tall, 13\u2033 wide at the bottom, tapering toward the top. 4.5\u2033 rider-facing magnet snaps to the long arm of the bar clamp. Detaches for travel.",
+    "notes": "Smoked shield, 17\u2033 tall, 13\u2033 wide at the bottom, tapering toward the top. Snaps to the long arm of the bar clamp. The lock is the 1.26\u2033 cup magnet, not a 4.5\u2033 disc. Detaches for travel.",
     "src": "https://www.3daistudio.com/public/d1d10506-bcf5-49e2-9aeb-c9c5056f0d34",
     "thumb": "https://s.3daistudio.com/media/thumbnails/1485318116656340992_thumbnail.png",
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/windscreen_real_Translucent_brown_shield_with_mounting_holes_Hunyuan_3D_v31_c05ff503.glb"
+  },
+  {
+    "id": "windscreen-cup-magnets",
+    "label": "Windscreen cup magnets",
+    "studioTitle": "1.26 inch countersunk neodymium cup, steel strike.",
+    "tags": [
+      "windscreen",
+      "ON THE WAY"
+    ],
+    "notes": "ON THE WAY. Ordered 2026-09-27. CMS Magnetics 1.26 inch countersunk neodymium cups, about 88 lb pull, two-pack. Screw one into the center of the 4.5 inch disc on the long bar arm, face toward the rider. Bolt 1/8 inch steel through the windscreen on the rider side as the strike. Use the second cup lower on the same disc only if the top edge peels off. Do not use a thin phone plate.\nhttps://www.amazon.com/dp/B008H40U10"
   },
   {
     "id": "back-fork",

@@ -95,6 +95,7 @@ TX/RX and the **72 V → 12 V converter** are **bought**. Still need:
 | Headlamp (12 V) | Motorcycle LED / projector |
 | Hall throttle 0–5 V | https://www.amazon.com/s?k=hall+throttle+ebike+waterproof |
 | Magnetic phone mount + ring | Stem clamp below bars |
+| Windscreen cup magnets | **ON THE WAY** — CMS 1.26″ countersunk cups, ~88 lb, 2-pack, ordered 2026-09-27. One in the center of the 4.5″ arm disc; ⅛″ steel strike on the rider side of the screen. https://www.amazon.com/dp/B008H40U10 |
 | Cutoff / kill in series with pack | Marine breaker |
 | BLE ignition relay (ESP32) | https://www.amazon.com/ESP-WROOM-32-Development-Microcontroller-Integrated-Compatible/dp/B08D5ZD528 |
 
