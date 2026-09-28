@@ -73,7 +73,7 @@ Hold ~60 lb pack + café seat. Left side open for disc. Bolt to stay tabs. Must 
 | Stay clamps + Grade 8 hardware | https://www.fastenal.com |
 | Slide rails (two thin 6061 plates) | Fab with deck |
 | Cam straps + non-slip mat | https://www.amazon.com/s?k=1+inch+cam+buckle+strap |
-| Rubber-lined P-clamps | https://www.mcmaster.com/ |
+| Rubber-lined P-clamps | **ON THE WAY** — LOKMAN 1 inch, 20-pack, $15.99, ordered 2026-09-27. Use 2 on the top rear arms. https://www.amazon.com/dp/B01HPE185E |
 
 ---
 
