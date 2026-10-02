@@ -6,14 +6,14 @@ window.PUCA_CONFIG = {
   // Google Maps JavaScript API key — leave empty in git; set via app/config.local.js
   googleMapsApiKey: "",
 
-  packKwh: 8.5,
+  packKwh: 8.2,
   whPerMile: 80,
   maxSpeedMph: 80,
   speedAlertMph: 0,
   units: "mph",
 
-  seriesCells: 16,
-  nominalVoltage: 63,
+  seriesCells: 18,
+  nominalVoltage: 66.6,
 
   ble: {
     deviceNameHints: ["PucaIgn", "SkeletKey", "Puca"],

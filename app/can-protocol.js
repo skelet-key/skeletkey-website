@@ -105,13 +105,13 @@
   }
 
   /**
-   * Rough SOC estimate for 16S NMC from pack voltage (no BMS).
-   * 67.2V = 100%, 48V ≈ 0% (empty under load — conservative).
+   * Rough SOC estimate for 18S NMC from pack voltage (no BMS).
+   * 75.6V = 100%, 54V ≈ 0% (empty under load — conservative).
    */
   function socFromVoltage16s(v) {
     if (v == null || !isFinite(v)) return null;
-    var full = 67.2;
-    var empty = 48.0;
+    var full = 75.6;
+    var empty = 54.0;
     var pct = ((v - empty) / (full - empty)) * 100;
     return Math.max(0, Math.min(100, pct));
   }

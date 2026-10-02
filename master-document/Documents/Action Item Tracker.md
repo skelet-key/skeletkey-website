@@ -28,7 +28,7 @@ Source frames & parts. Contract assemblers to 5,000/year.
 | Item | Spec | Link |
 |------|------|------|
 | Folding frame | Carbon steel · 9.2 lb · 190 mm rear · 44 mm HT | https://www.aliexpress.us/item/3256808448955861.html |
-| Battery pack | ~8.5 kWh · ~63 V · ~60 lb · dual QS8 | Inbound |
+| Battery pack | 18S1P · 66.6 V · ~8.2 kWh · 123 Ah · QS90 | Inbound |
 
 On frame arrival: check 190 mm rear, 135 mm front, 44 mm HT, fold latch, stay tabs, mass.
 

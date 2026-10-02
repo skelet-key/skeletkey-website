@@ -12,13 +12,13 @@ export const PUCA_CONFIG = {
   // For Expo: set in app.json ios.config.googleMapsApiKey / android.config.googleMaps.apiKey after prebuild
   googleMapsApiKey: 'YOUR_GOOGLE_MAPS_API_KEY',
 
-  packKwh: 8.5,
+  packKwh: 8.2,
   whPerMile: 80,
   maxSpeedMph: 80,
   unitsDefault: 'mph',
 
-  seriesCells: 16,
-  nominalVoltage: 63,
+  seriesCells: 18,
+  nominalVoltage: 66.6,
 
   ble: {
     deviceNameHints: ['PucaIgn', 'SkeletKey', 'Puca'],

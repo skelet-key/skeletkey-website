@@ -30,7 +30,7 @@ Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED*
 |---|------|----------------|--------|
 | 1 | **Folding frame** | Full-suspension **carbon steel** · **9.2 lb** · **190 mm rear dropout** · **44 mm** headset class · front **~135 mm** assumed · stay tabs for deck · **source 1 for 5k/year** | https://www.aliexpress.us/item/3256808448955861.html?spm=a2g0o.order_list.order_list_main.5.23811802Vm2a2e&gatewayAdapt=glo2usa |
 | 1b | **Folding frame source 2** | Dual-source: same Kalosse foldable 20×4.0 / 190 mm family, **different listing**. Tape against source 1 before volume. Factory RFQ: Jinhua Epower (confirm fold + steel). Backup OEM: Hebei Xiaotianhang. | https://www.aliexpress.com/item/1005012630592144.html · https://www.alibaba.com/product-detail/KALOSSE-Electric-Mountain-Cyclocross-Snow-Bike_1601687149121.html · https://hbxiaotianhang.en.alibaba.com/ |
-| 2 | **Battery pack** | **ON THE WAY** · **19–20″ × ~6.5″ × 4.5–5″** · **~60 lb** with enclosure/BMS/cables · **~8.5 kWh** · **~63 V** · 8 kW discharge · 6–8 kW charge · Bluetooth BMS · **two QS8** (bottom + side) · semi-solid NMC+ | Pack OEM inbound |
+| 2 | **Battery pack** | **ON THE WAY** · **600 × 170 × 175 mm** · sample **~29 kg**, production target **~59 lb** · **18S1P** · **3.7 V 123 Ah** cells · **66.6 V nominal** · **~8.2 kWh** · BMS **150 A** continuous / **300 A** peak · Bluetooth · **QS90** · semi-solid NMC+ | Pack OEM inbound |
 | 3 | **1 inch stay P-clamps** | **ON THE WAY** · ordered 2026-09-27 · **LOKMAN** rubber-cushioned stainless · **1 inch ID** · ¼ inch ear holes · **20-pack, $15.99** · use **2** on the Kalosse top rear arms, bolted through the 1½ × 1½ × ⅛ inch angle into the lower rack beam | https://www.amazon.com/dp/B01HPE185E |
 | 4 | **Windscreen cup magnets** | **ON THE WAY** · ordered 2026-09-27 · **CMS Magnetics** 1.26″ countersunk neodymium cups · ~88 lb pull · **2-pack** · one screws into the center of the 4.5″ bar-arm disc · ⅛″ steel strike bolts through the rider side of the windscreen · second cup only if the top edge peels | https://www.amazon.com/dp/B008H40U10 |
 
@@ -66,8 +66,8 @@ Still NEED: analog throttle radio, lamps, mount. TX/RX and 72 V → 12 V convert
 |-----------|--------|
 | Envelope | **19″–20″ L × ~6.5″ W × 4.5″–5″ H** |
 | Mass | **~60 lb** including enclosure, BMS, and cables |
-| Energy | **~8.5 kWh** |
-| Voltage | **~63 V** nominal class (align BMS / FarDriver 48–72 V) |
+| Energy | **~8.2 kWh** |
+| Voltage | **66.6 V** nominal (18S1P, 3.7 V cells) |
 | Discharge | Up to **8,000 W** |
 | Charge | **6,000–8,000 W** |
 | Discharge connectors | **Two QS8** — one on **bottom**, one on **side** |

@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const kwhEl = document.getElementById("savKwh");
     const results = document.getElementById("savingsResults");
 
-    const PUCA_KWH_PER_MI = 8.5 / 100;
+    const PUCA_KWH_PER_MI = 8.2 / 100;
     const MSRP = 6999;
 
     function money(n) {
