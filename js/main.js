@@ -146,20 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3000);
   }
 
-  // Pre-select co-founder interest when arriving from Work with us CTA
-  function selectCofounderInterest() {
-    const interest = document.getElementById("interest");
-    if (interest) interest.value = "cofounder";
-  }
-  document.querySelectorAll('a[href="#order"]').forEach((a) => {
-    if (a.textContent.toLowerCase().includes("co-founder") || a.closest("#work")) {
-      a.addEventListener("click", () => setTimeout(selectCofounderInterest, 0));
-    }
-  });
-  if (window.location.hash === "#order" && /cofounder|co-founder/i.test(window.location.search + document.referrer)) {
-    selectCofounderInterest();
-  }
-
   // Order form — AJAX to FormSubmit so user stays on skeletkey.com
   const form = document.getElementById("orderForm");
   if (form) {
@@ -174,10 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const data = new FormData(form);
-        const interestVal = data.get("interest");
-        if (interestVal === "cofounder") {
-          data.set("_subject", "SkeletKey Co-Founder Application");
-        }
         const res = await fetch("https://formsubmit.co/ajax/nateclaudemcdowel@gmail.com", {
           method: "POST",
           body: data,
@@ -186,11 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (res.ok) {
           form.reset();
-          const msg =
-            interestVal === "cofounder"
-              ? "Application sent — we'll be in touch."
-              : "Request sent — we'll follow up within 24–48 hours.";
-          showToast(msg);
+          showToast("Request sent — we'll follow up within 24–48 hours.");
         } else {
           showToast("Something went wrong. Please try again or email nate@skeletkey.com.", true);
         }
