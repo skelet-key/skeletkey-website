@@ -2,7 +2,7 @@
   "expo": {
     "name": "SkeletKey Puca",
     "slug": "skeletkey-puca-app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -15,25 +15,21 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.skeletkey.puca",
-      "buildNumber": "1",
+      "buildNumber": "7",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Puca uses GPS for speed, trip distance, heading, and map position.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Puca uses GPS while you ride for the speedometer and trip computer.",
         "NSBluetoothAlwaysUsageDescription": "Puca connects to the SkeletKey ignition relay over Bluetooth.",
         "NSBluetoothPeripheralUsageDescription": "Puca connects to the SkeletKey ignition relay over Bluetooth.",
         "UIBackgroundModes": [
-          "location",
           "location"
         ],
         "ITSAppUsesNonExemptEncryption": false
-      },
-      "config": {
-        "googleMapsApiKey": "YOUR_GOOGLE_MAPS_API_KEY"
       }
     },
     "android": {
       "package": "com.skeletkey.puca",
-      "versionCode": 1,
+      "versionCode": 7,
       "adaptiveIcon": {
         "backgroundColor": "#0B0F19",
         "foregroundImage": "./assets/icon.png"
@@ -41,21 +37,11 @@
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
-        "ACCESS_BACKGROUND_LOCATION",
         "BLUETOOTH",
         "BLUETOOTH_ADMIN",
         "BLUETOOTH_CONNECT",
-        "BLUETOOTH_SCAN",
-        "FOREGROUND_SERVICE",
-        "FOREGROUND_SERVICE_LOCATION",
-        "android.permission.ACCESS_COARSE_LOCATION",
-        "android.permission.ACCESS_FINE_LOCATION"
-      ],
-      "config": {
-        "googleMaps": {
-          "apiKey": "YOUR_GOOGLE_MAPS_API_KEY"
-        }
-      }
+        "BLUETOOTH_SCAN"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
