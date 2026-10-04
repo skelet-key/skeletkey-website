@@ -2,7 +2,7 @@
   "expo": {
     "name": "SkeletKey Puca",
     "slug": "skeletkey-puca-app",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.skeletkey.puca",
-      "buildNumber": "8",
+      "buildNumber": "9",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Puca uses GPS for speed, trip distance, heading, and map position.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Puca uses GPS while you ride for the speedometer and trip computer.",
@@ -29,7 +29,7 @@
     },
     "android": {
       "package": "com.skeletkey.puca",
-      "versionCode": 8,
+      "versionCode": 9,
       "adaptiveIcon": {
         "backgroundColor": "#0B0F19",
         "foregroundImage": "./assets/icon.png"
