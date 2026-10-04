@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { WebView } from 'react-native-webview';
@@ -31,6 +31,8 @@ export default function App() {
           javaScriptEnabled
           domStorageEnabled
           geolocationEnabled
+          mixedContentMode="compatibility"
+          thirdPartyCookiesEnabled
           setSupportMultipleWindows={false}
           allowsInlineMediaPlayback
           mediaPlaybackRequiresUserAction={false}
@@ -44,7 +46,10 @@ export default function App() {
           )}
           renderError={() => (
             <View style={styles.loading}>
-              <Text style={styles.loadingText}>No connection. Open the app again on Wi-Fi.</Text>
+              <Text style={styles.loadingText}>This phone’s browser engine could not open the dash.</Text>
+              <Pressable onPress={() => Linking.openURL(DASH).catch(() => {})}>
+                <Text style={styles.link}>Open in Chrome</Text>
+              </Pressable>
             </View>
           )}
         />
@@ -68,4 +73,5 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   loadingText: { color: '#e8e8e8', marginTop: 12, textAlign: 'center' },
+  link: { color: '#ff4d4d', marginTop: 16, fontSize: 16 },
 });
