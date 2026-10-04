@@ -185,6 +185,16 @@
     "glb": "https://3dai-service-fs.fsn1.your-objectstorage.com/1748573/bars_angle2_Black_BMX_bicycle_handlebars_Prism_31_4ab121f1.glb"
   },
   {
+    "id": "andicoop-twist-throttle",
+    "label": "Andicoop full-twist throttle",
+    "studioTitle": "Hall twist grip, 7/8 inch bar, SM 3-pin.",
+    "tags": [
+      "throttle",
+      "ON THE WAY"
+    ],
+    "notes": "ON THE WAY. Ordered 2026-10-04. Andicoop hall full-twist for the PRO+ 872 bars (22.2 mm / 7/8 in) and the FarDriver ND72360. 12–72 V. SM 3-pin: black ground, red +5 V, white signal. Match white to the FarDriver green throttle signal. The plug does not seat in the controller’s white 3-pin — splice the three wires.\nhttps://www.amazon.com/dp/B0G24NG7KH"
+  },
+  {
     "id": "footpegs",
     "label": "Footpegs",
     "studioTitle": "Bicycle bottom bracket with threaded ends.",

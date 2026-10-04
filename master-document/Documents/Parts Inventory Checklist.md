@@ -33,6 +33,7 @@ Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED*
 | 2 | **Battery pack** | **ON THE WAY** · **600 × 170 × 175 mm** · sample **~29 kg**, production target **~59 lb** · **18S1P** · **3.7 V 123 Ah** cells · **66.6 V nominal** · **~8.2 kWh** · BMS **150 A** continuous / **300 A** peak · Bluetooth · **QS90** · semi-solid NMC+ | Pack OEM inbound |
 | 3 | **1 inch stay P-clamps** | **ON THE WAY** · ordered 2026-09-27 · **LOKMAN** rubber-cushioned stainless · **1 inch ID** · ¼ inch ear holes · **20-pack, $15.99** · use **2** on the Kalosse top rear arms, bolted through the 1½ × 1½ × ⅛ inch angle into the lower rack beam | https://www.amazon.com/dp/B01HPE185E |
 | 4 | **Windscreen cup magnets** | **ON THE WAY** · ordered 2026-09-27 · **CMS Magnetics** 1.26″ countersunk neodymium cups · ~88 lb pull · **2-pack** · one screws into the center of the 4.5″ bar-arm disc · ⅛″ steel strike bolts through the rider side of the windscreen · second cup only if the top edge peels | https://www.amazon.com/dp/B008H40U10 |
+| 5 | **Full-twist throttle** | **ON THE WAY** · ordered 2026-10-04 · **Andicoop** hall full-twist · **7/8″ / 22.2 mm** · 12–72 V · SM 3-pin (black GND, red +5 V, white signal → FarDriver green) | https://www.amazon.com/dp/B0G24NG7KH |
 
 *On frame arrival: verify dropout, headset ID, mass, tabs. Pack inbound — bike-side rails/contacts still NEED.*
 
@@ -54,7 +55,7 @@ Status key: **HAVE** = on hand · **ON THE WAY** = ordered / shipping · **NEED*
 | 9 | Main pack fuse / precharge as required | Sized for **8 kW** class discharge | NEED |
 | 10 | Statorade (optional thermal) | Sustained high speed on 3T @ ~63 V | NEED optional |
 
-Still NEED: analog throttle radio, lamps, mount. TX/RX and 72 V → 12 V converter are **HAVE**.
+Still NEED: analog throttle radio, lamps, mount. Wired hall throttle is **ON THE WAY**. TX/RX and 72 V → 12 V converter are **HAVE**.
 
 ---
 
@@ -137,8 +138,8 @@ Full wiring map: **CCS1 Public Charging Architecture.md**
 | Status | Count (line items) |
 |--------|---------------------|
 | **HAVE** | Motor, FarDriver, CCS inlet, Küster lock, HIMALO fork, **SR567 ×2**, **8CH LoRa TX/RX**, **72 V → 12 V converter** |
-| **ON THE WAY** | Folding frame + **~60 lb pack** + **LOKMAN 1 inch P-clamps** + **CMS 1.26″ windscreen cups** |
-| **NEED** | Headset/stem/**20×4.0 front rim**, rear torque/disc, rack, café seat, lamps/throttle/mount, pack slide contacts, CCS electronics |
+| **ON THE WAY** | Folding frame + **~60 lb pack** + **LOKMAN 1 inch P-clamps** + **CMS 1.26″ windscreen cups** + **Andicoop 7/8″ hall throttle** |
+| **NEED** | Headset/stem/**20×4.0 front rim**, rear torque/disc, rack, café seat, lamps/mount, pack slide contacts, CCS electronics |
 
 ---
 
