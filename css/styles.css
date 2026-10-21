@@ -473,7 +473,7 @@ html.nav-menu-open body {
   font-weight: 600;
   line-height: 0.92;
   letter-spacing: -0.045em;
-  max-width: 16ch;
+  max-width: none;
   margin-bottom: 0.15rem;
 }
 
@@ -483,10 +483,10 @@ html.nav-menu-open body {
   font-size: clamp(1.2rem, 3.5vw, 1.65rem);
   font-weight: 500;
   line-height: 1.35;
-  letter-spacing: -0.02em;
-  max-width: 18em;
+  letter-spacing: -0.015em;
+  max-width: none;
   margin: 0.85rem auto 0;
-  text-wrap: balance;
+  text-wrap: wrap;
 }
 
 .hero-sub + .hero-sub {
