@@ -114,10 +114,10 @@ a {
 
 .nav-logo-key {
   display: block;
-  width: 36px;
-  height: 34px;
+  width: 34px;
+  height: 46px;
   object-fit: contain;
-  margin: 0 0.1rem 0 0;
+  margin: 0 0.15rem 0 0;
   flex-shrink: 0;
 }
 
@@ -223,8 +223,8 @@ html.nav-menu-open body {
 
 .nav--wici.is-scrolled .nav-logo-key,
 .nav--wici.is-menu-open .nav-logo-key {
-  width: 24px;
-  height: 23px;
+  width: 22px;
+  height: 30px;
 }
 
 .nav--wici.is-scrolled .nav-toggle,
@@ -440,8 +440,8 @@ html.nav-menu-open body {
 }
 
 .hero-brand-key {
-  width: 44px;
-  height: 42px;
+  width: 42px;
+  height: 56px;
   object-fit: contain;
   flex-shrink: 0;
 }
