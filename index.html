@@ -101,19 +101,19 @@
   <link rel="shortcut icon" href="/assets/favicon.ico?v=logo1" />
 </head>
 <body>
-  <link rel="stylesheet" href="intro.css?v=4" />
+  <link rel="stylesheet" href="intro.css?v=5" />
   <div class="skx-intro" id="skxIntro" aria-hidden="true">
     <div class="skx-crest">
       <span class="skx-seam skx-seam-v"></span>
       <span class="skx-seam skx-seam-h"></span>
-      <img class="skx-bit skx-b1" src="assets/crest.jpg" alt="" />
-      <img class="skx-bit skx-b2" src="assets/crest.jpg" alt="" />
-      <img class="skx-bit skx-b3" src="assets/crest.jpg" alt="" />
-      <img class="skx-bit skx-b4" src="assets/crest.jpg" alt="" />
-      <img class="skx-bit skx-b5" src="assets/crest.jpg" alt="" />
-      <img class="skx-bit skx-b6" src="assets/crest.jpg" alt="" />
-      <img class="skx-bit skx-b7" src="assets/crest.jpg" alt="" />
-      <img class="skx-bit skx-b8" src="assets/crest.jpg" alt="" />
+      <span class="skx-bit skx-b1"></span>
+      <span class="skx-bit skx-b2"></span>
+      <span class="skx-bit skx-b3"></span>
+      <span class="skx-bit skx-b4"></span>
+      <span class="skx-bit skx-b5"></span>
+      <span class="skx-bit skx-b6"></span>
+      <span class="skx-bit skx-b7"></span>
+      <span class="skx-bit skx-b8"></span>
     </div>
   </div>
   <script>
@@ -124,13 +124,12 @@
         root.remove();
         return;
       }
-      var img = root.querySelector("img");
+      var preload = new Image();
       function start() { if (root.parentNode) root.classList.add("skx-play"); }
-      if (img && img.complete && img.naturalWidth) start();
-      else if (img) {
-        img.addEventListener("load", start);
-        img.addEventListener("error", function () { root.remove(); });
-      } else start();
+      preload.onload = start;
+      preload.onerror = function () { root.remove(); };
+      preload.src = "assets/crest.jpg";
+      if (preload.complete && preload.naturalWidth) start();
       function done(e) {
         if (e && (e.target !== root || e.animationName !== "skx-out")) return;
         if (root.parentNode) root.remove();
