@@ -101,6 +101,37 @@
   <link rel="shortcut icon" href="/assets/favicon.ico?v=logo1" />
 </head>
 <body>
+  <link rel="stylesheet" href="intro.css?v=1" />
+  <div class="skx-intro" id="skxIntro" aria-hidden="true">
+    <div class="skx-crest">
+      <span class="skx-seam skx-seam-v"></span>
+      <span class="skx-seam skx-seam-h"></span>
+      <i class="skx-bit skx-b1"></i>
+      <i class="skx-bit skx-b2"></i>
+      <i class="skx-bit skx-b3"></i>
+      <i class="skx-bit skx-b4"></i>
+      <i class="skx-bit skx-b5"></i>
+      <i class="skx-bit skx-b6"></i>
+      <i class="skx-bit skx-b7"></i>
+      <i class="skx-bit skx-b8"></i>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var root = document.getElementById("skxIntro");
+      if (!root) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        root.remove();
+        return;
+      }
+      function done(e) {
+        if (e && e.target !== root) return;
+        if (root.parentNode) root.remove();
+      }
+      root.addEventListener("animationend", done);
+      setTimeout(done, 5000);
+    })();
+  </script>
 
   <!-- NAV -->
   <nav class="nav nav--wici" id="siteNav">
