@@ -8,7 +8,7 @@
   background: #000;
   overflow: hidden;
   pointer-events: auto;
-  animation: skx-out 4.7s linear forwards;
+  animation: skx-out 3.4s linear forwards;
 }
 
 .skx-crest {
@@ -30,7 +30,7 @@
   mask-repeat: no-repeat;
   -webkit-mask-size: 200% 400%;
   mask-size: 200% 400%;
-  animation: skx-hold 4.7s cubic-bezier(0.45, 0, 0.2, 1) forwards;
+  animation: skx-hold 3.4s cubic-bezier(0.45, 0, 0.2, 1) forwards;
   will-change: transform, filter, opacity;
 }
 
@@ -58,7 +58,7 @@
   width: 1px;
   height: 88%;
   transform: translateX(-50%);
-  animation: skx-seam-v 4.7s linear forwards;
+  animation: skx-seam-v 3.4s linear forwards;
 }
 
 .skx-seam-h {
@@ -67,7 +67,7 @@
   width: 88%;
   height: 1px;
   transform: translateY(-50%);
-  animation: skx-seam-h 4.7s linear forwards;
+  animation: skx-seam-h 3.4s linear forwards;
 }
 
 @keyframes skx-out {
