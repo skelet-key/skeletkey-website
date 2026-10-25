@@ -87,9 +87,9 @@
   width: 22%;
   height: auto;
   left: 51.3%;
-  top: 53%;
+  top: 47.5%;
   transform-origin: 50% 99.3%;
-  transform: translate(-50%, -99.3%);
+  transform: translate(-50%, -99.3%) rotate(180deg);
   pointer-events: none;
   filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.6));
 }
@@ -138,23 +138,23 @@
 
 @keyframes skx-key {
   0%, 18% {
-    transform: translate(-50%, -99.3%) rotate(0deg);
+    transform: translate(-50%, -99.3%) rotate(180deg);
     opacity: 1;
   }
   26% {
-    transform: translate(-50%, -99.3%) rotate(-18deg);
+    transform: translate(-50%, -99.3%) rotate(162deg);
     opacity: 1;
   }
   46% {
-    transform: translate(-50%, -99.3%) rotate(90deg);
+    transform: translate(-50%, -99.3%) rotate(270deg);
     opacity: 1;
   }
   60% {
-    transform: translate(-50%, -99.3%) rotate(90deg);
+    transform: translate(-50%, -99.3%) rotate(270deg);
     opacity: 1;
   }
   74%, 100% {
-    transform: translate(-50%, -99.3%) rotate(90deg);
+    transform: translate(-50%, -99.3%) rotate(270deg);
     opacity: 0;
   }
 }
