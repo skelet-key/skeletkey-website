@@ -101,7 +101,7 @@
   <link rel="shortcut icon" href="/assets/favicon.ico?v=logo1" />
 </head>
 <body>
-  <link rel="stylesheet" href="intro.css?v=8" />
+  <link rel="stylesheet" href="intro.css?v=9" />
   <div class="skx-intro" id="skxIntro" aria-hidden="true">
     <div class="skx-crest">
       <span class="skx-seam skx-seam-v"></span>
@@ -128,7 +128,7 @@
       function start() { if (root.parentNode) root.classList.add("skx-play"); }
       preload.onload = start;
       preload.onerror = function () { root.remove(); };
-      preload.src = "assets/crest.jpg";
+      preload.src = "assets/skeletkey-logo-mark.png";
       if (preload.complete && preload.naturalWidth) start();
       function done(e) {
         if (e && (e.target !== root || e.animationName !== "skx-out")) return;
