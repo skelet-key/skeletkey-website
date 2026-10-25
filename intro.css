@@ -1,16 +1,16 @@
-/* Full-screen gate. Key is already in the lock. Turn right, then it opens. */
+/* Full-screen gate. Key only clicks left. Doors then open. */
 .skx-intro {
   position: fixed;
   inset: 0;
   z-index: 100000;
   background: transparent;
   overflow: hidden;
-  perspective: 1600px;
+  perspective: 1800px;
   pointer-events: auto;
 }
 
 .skx-intro.skx-play {
-  animation: skx-out 7.2s linear forwards;
+  animation: skx-out 6.6s linear forwards;
 }
 
 .skx-door {
@@ -18,89 +18,91 @@
   top: 0;
   width: 50%;
   height: 100%;
-  overflow: hidden;
-  background: #000;
+  background-image: url("assets/intro-gate.webp?v=19");
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
 .skx-door-l {
   left: 0;
   transform-origin: left center;
+  background-position: left top;
 }
 
 .skx-door-r {
   right: 0;
   transform-origin: right center;
+  background-position: right top;
 }
 
-.skx-door img {
+.skx-door::after {
+  content: "";
   position: absolute;
   top: 0;
-  width: 100vw;
   height: 100%;
-  max-width: none;
-  object-fit: cover;
-  object-position: 51% 47%;
+  width: 22px;
+  background: linear-gradient(#3a3a3a, #141414 40%, #0a0a0a);
+  backface-visibility: hidden;
 }
 
-.skx-door-l img { left: 0; }
-.skx-door-r img { left: -100%; }
+.skx-door-l::after {
+  right: 0;
+  transform-origin: right center;
+  transform: rotateY(90deg);
+}
 
-.skx-play .skx-door-l { animation: skx-open-l 7.2s linear forwards; }
-.skx-play .skx-door-r { animation: skx-open-r 7.2s linear forwards; }
+.skx-door-r::after {
+  left: 0;
+  transform-origin: left center;
+  transform: rotateY(-90deg);
+}
+
+.skx-play .skx-door-l { animation: skx-open-l 6.6s linear forwards; }
+.skx-play .skx-door-r { animation: skx-open-r 6.6s linear forwards; }
 
 .skx-key {
   position: absolute;
-  z-index: 6;
-  width: min(16vw, 150px);
+  z-index: 4;
+  width: 5.4vw;
+  min-width: 42px;
   height: auto;
-  left: 50%;
-  top: 50%;
+  left: 2.5%;
+  top: 56.8%;
   transform-origin: 50% 99.3%;
   transform: translate(-50%, -99.3%) rotate(180deg);
   pointer-events: none;
-  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.65));
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.7));
 }
 
 .skx-play .skx-key {
-  animation: skx-key 7.2s linear forwards;
+  animation: skx-key 6.6s linear forwards;
 }
 
 @keyframes skx-out {
-  0%, 86% { opacity: 1; }
+  0%, 82% { opacity: 1; }
   100% { opacity: 0; visibility: hidden; }
 }
 
 @keyframes skx-key {
-  0%, 16% {
-    transform: translate(-50%, -99.3%) rotate(180deg);
-    opacity: 1;
-  }
-  24% {
-    transform: translate(-50%, -99.3%) rotate(164deg);
-    opacity: 1;
-  }
-  44% {
-    transform: translate(-50%, -99.3%) rotate(270deg);
-    opacity: 1;
-  }
-  56% {
-    transform: translate(-50%, -99.3%) rotate(270deg);
-    opacity: 1;
-  }
-  70%, 100% {
-    transform: translate(-50%, -99.3%) rotate(270deg);
-    opacity: 0;
-  }
+  0%, 18% { transform: translate(-50%, -99.3%) rotate(180deg); }
+  22% { transform: translate(-50%, -99.3%) rotate(168deg); }
+  26%, 100% { transform: translate(-50%, -99.3%) rotate(173deg); }
 }
 
 @keyframes skx-open-l {
-  0%, 46% { transform: rotateY(0deg); }
-  84%, 100% { transform: rotateY(78deg); }
+  0%, 30% { transform: rotateY(0deg); }
+  48% { transform: rotateY(-8deg); }
+  70% { transform: rotateY(-36deg); }
+  100% { transform: rotateY(-58deg); }
 }
 
 @keyframes skx-open-r {
-  0%, 46% { transform: rotateY(0deg); }
-  84%, 100% { transform: rotateY(-78deg); }
+  0%, 30% { transform: rotateY(0deg); }
+  48% { transform: rotateY(8deg); }
+  70% { transform: rotateY(36deg); }
+  100% { transform: rotateY(58deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {

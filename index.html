@@ -101,11 +101,12 @@
   <link rel="shortcut icon" href="/assets/favicon.ico?v=logo1" />
 </head>
 <body>
-  <link rel="stylesheet" href="intro.css?v=18" />
+  <link rel="stylesheet" href="intro.css?v=19" />
   <div class="skx-intro" id="skxIntro" aria-hidden="true">
-    <div class="skx-door skx-door-l"><img src="assets/intro-lock.webp?v=18" alt="" /></div>
-    <div class="skx-door skx-door-r"><img src="assets/intro-lock.webp?v=18" alt="" /></div>
-    <img class="skx-key" src="assets/intro-key.webp?v=18" alt="" />
+    <div class="skx-door skx-door-l"></div>
+    <div class="skx-door skx-door-r">
+      <img class="skx-key" src="assets/intro-key.webp?v=19" alt="" />
+    </div>
   </div>
   <script>
     (function () {
@@ -130,14 +131,14 @@
       var key = new Image();
       watch(preload);
       watch(key);
-      preload.src = "assets/intro-lock.webp?v=18";
-      key.src = "assets/intro-key.webp?v=18";
+      preload.src = "assets/intro-gate.webp?v=19";
+      key.src = "assets/intro-key.webp?v=19";
       function done(e) {
         if (e && (e.target !== root || e.animationName !== "skx-out")) return;
         if (root.parentNode) root.remove();
       }
       root.addEventListener("animationend", done);
-      setTimeout(done, 8200);
+      setTimeout(done, 7400);
     })();
   </script>
 
