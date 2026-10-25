@@ -101,19 +101,11 @@
   <link rel="shortcut icon" href="/assets/favicon.ico?v=logo1" />
 </head>
 <body>
-  <link rel="stylesheet" href="intro.css?v=17" />
+  <link rel="stylesheet" href="intro.css?v=18" />
   <div class="skx-intro" id="skxIntro" aria-hidden="true">
-    <div class="skx-stage">
-      <div class="skx-crest">
-        <span class="skx-seam skx-seam-v"></span>
-        <span class="skx-seam skx-seam-h"></span>
-        <span class="skx-bit skx-b1"></span>
-        <span class="skx-bit skx-b2"></span>
-        <span class="skx-bit skx-b3"></span>
-        <span class="skx-bit skx-b4"></span>
-      </div>
-      <img class="skx-key" src="assets/intro-key.webp?v=15" alt="" />
-    </div>
+    <div class="skx-door skx-door-l"><img src="assets/intro-lock.webp?v=18" alt="" /></div>
+    <div class="skx-door skx-door-r"><img src="assets/intro-lock.webp?v=18" alt="" /></div>
+    <img class="skx-key" src="assets/intro-key.webp?v=18" alt="" />
   </div>
   <script>
     (function () {
@@ -138,14 +130,14 @@
       var key = new Image();
       watch(preload);
       watch(key);
-      preload.src = "assets/intro-lock.webp?v=14";
-      key.src = "assets/intro-key.webp?v=15";
+      preload.src = "assets/intro-lock.webp?v=18";
+      key.src = "assets/intro-key.webp?v=18";
       function done(e) {
         if (e && (e.target !== root || e.animationName !== "skx-out")) return;
         if (root.parentNode) root.remove();
       }
       root.addEventListener("animationend", done);
-      setTimeout(done, 7600);
+      setTimeout(done, 8200);
     })();
   </script>
 
