@@ -101,15 +101,18 @@
   <link rel="shortcut icon" href="/assets/favicon.ico?v=logo1" />
 </head>
 <body>
-  <link rel="stylesheet" href="intro.css?v=10" />
+  <link rel="stylesheet" href="intro.css?v=11" />
   <div class="skx-intro" id="skxIntro" aria-hidden="true">
-    <div class="skx-crest">
-      <span class="skx-seam skx-seam-v"></span>
-      <span class="skx-seam skx-seam-h"></span>
-      <span class="skx-bit skx-b1"></span>
-      <span class="skx-bit skx-b2"></span>
-      <span class="skx-bit skx-b3"></span>
-      <span class="skx-bit skx-b4"></span>
+    <div class="skx-stage">
+      <div class="skx-crest">
+        <span class="skx-seam skx-seam-v"></span>
+        <span class="skx-seam skx-seam-h"></span>
+        <span class="skx-bit skx-b1"></span>
+        <span class="skx-bit skx-b2"></span>
+        <span class="skx-bit skx-b3"></span>
+        <span class="skx-bit skx-b4"></span>
+      </div>
+      <img class="skx-key" src="assets/intro-key.png" alt="" />
     </div>
   </div>
   <script>
@@ -124,14 +127,16 @@
       function start() { if (root.parentNode) root.classList.add("skx-play"); }
       preload.onload = start;
       preload.onerror = function () { root.remove(); };
-      preload.src = "assets/skeletkey-logo-mark.png";
+      preload.src = "assets/intro-lock.png";
+      var key = new Image();
+      key.src = "assets/intro-key.png";
       if (preload.complete && preload.naturalWidth) start();
       function done(e) {
         if (e && (e.target !== root || e.animationName !== "skx-out")) return;
         if (root.parentNode) root.remove();
       }
       root.addEventListener("animationend", done);
-      setTimeout(done, 6400);
+      setTimeout(done, 7600);
     })();
   </script>
 
