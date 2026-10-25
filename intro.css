@@ -83,15 +83,15 @@
 
 .skx-key {
   position: absolute;
-  z-index: 5;
-  width: 52%;
+  z-index: 8;
+  width: 22%;
   height: auto;
   left: 51.3%;
-  top: 46.2%;
-  transform-origin: 50% 50.5%;
-  transform: translate(-50%, -50.5%);
+  top: 53%;
+  transform-origin: 50% 99.3%;
+  transform: translate(-50%, -99.3%);
   pointer-events: none;
-  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.55));
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.6));
 }
 
 .skx-play .skx-key {
@@ -137,24 +137,24 @@
 }
 
 @keyframes skx-key {
-  0%, 28% {
-    transform: translate(-50%, -50.5%) rotate(0deg);
+  0%, 18% {
+    transform: translate(-50%, -99.3%) rotate(0deg);
     opacity: 1;
   }
-  36% {
-    transform: translate(-50%, -50.5%) rotate(-14deg);
+  26% {
+    transform: translate(-50%, -99.3%) rotate(-18deg);
     opacity: 1;
   }
-  52% {
-    transform: translate(-50%, -50.5%) rotate(90deg);
+  46% {
+    transform: translate(-50%, -99.3%) rotate(90deg);
     opacity: 1;
   }
-  64% {
-    transform: translate(-50%, -50.5%) rotate(90deg);
+  60% {
+    transform: translate(-50%, -99.3%) rotate(90deg);
     opacity: 1;
   }
-  78%, 100% {
-    transform: translate(-50%, -50.5%) rotate(90deg);
+  74%, 100% {
+    transform: translate(-50%, -99.3%) rotate(90deg);
     opacity: 0;
   }
 }
