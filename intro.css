@@ -37,7 +37,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  aspect-ratio: 1120 / 1550;
+  aspect-ratio: 1146 / 1690;
 }
 
 .skx-crest::after {
@@ -59,7 +59,7 @@
   position: absolute;
   width: 50%;
   height: 50%;
-  background-image: url("assets/intro-lock.webp?v=13");
+  background-image: url("assets/intro-lock.webp?v=14");
   background-repeat: no-repeat;
   background-size: 200% 200%;
   pointer-events: none;
@@ -86,8 +86,8 @@
   z-index: 5;
   width: 52%;
   height: auto;
-  left: 50%;
-  top: 44.8%;
+  left: 51.3%;
+  top: 46.2%;
   transform-origin: 50% 50.5%;
   transform: translate(-50%, -50.5%);
   pointer-events: none;
