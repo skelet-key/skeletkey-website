@@ -2286,3 +2286,17 @@ html.js-motion .hero .reveal {
   line-height: 1.7;
   color: var(--text);
 }
+
+.diary-date {
+  text-align: center;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted, #9aa3ad);
+  margin: 0 0 0.85rem;
+}
+.diary-copy a {
+  color: var(--brake-red, #c41e3a);
+  font-weight: 600;
+}
