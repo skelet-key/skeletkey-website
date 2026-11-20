@@ -2267,6 +2267,21 @@ html.js-motion .hero .reveal {
   .logo-spark { opacity: 0.35; }
 }
 
+.diary-entry + .diary-entry {
+  margin-top: 3.75rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border);
+}
+.diary-embed {
+  margin: 1.25rem auto 1.5rem;
+  max-width: 540px;
+  display: flex;
+  justify-content: center;
+}
+.diary-embed .instagram-media {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
 .diary-figure {
   margin: 1.25rem auto 1.5rem;
   max-width: 900px;
